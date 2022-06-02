@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
 // import 'package:http/http.dart' as http;
@@ -14,11 +15,19 @@ class ItemsHomePage extends StatefulWidget {
 }
 
 class _ItemsHomePageState extends State<ItemsHomePage> {
-  TextEditingController _item_input_controller =
+  final TextEditingController _item_input_controller =
       TextEditingController(text: "Initial value here");
   @override
   Widget build(BuildContext context) {
-    return ItemAllDataFiltered();
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          _itemSearchBar(),
+          const Expanded(child: ItemAllDataFiltered()),
+        ],
+      ),
+    );
   }
 }
 
@@ -49,17 +58,18 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 //       ),
 //     );
 
-Widget _homeListTileData(String title, String subtitle, BuildContext context) =>
+Widget _homeListTileData(BuildContext context, SingleProduct product) =>
     Container(
       // height: 300,
       child: Card(
         child: ListTile(
-          dense: false,
           onLongPress: () {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => SingleProductDetails(),
+                builder: (BuildContext context) => SingleProductDetails(
+                  product: product,
+                ),
                 fullscreenDialog: true,
               ),
             );
@@ -81,25 +91,33 @@ Widget _homeListTileData(String title, String subtitle, BuildContext context) =>
             );
           },
           leading: Image.network(
-            "https://cdn.pixabay.com/photo/2016/03/18/01/09/cupcake-1264214_960_720.png",
+            product.thumbnail,
             fit: BoxFit.fitWidth,
           ),
-          title: const Text('Cocacora zero',
-              style: TextStyle(
+          title: Text(product.productName,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               )),
-          subtitle:
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
-            Text('Tsh 2,500', style: TextStyle(fontSize: 16, color: patoGrey)),
-            SizedBox(
+          subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Text(
+              'Tsh ${product.productPrice}',
+              style: const TextStyle(fontSize: 16, color: patoGrey),
+            ),
+            const SizedBox(
               width: 10,
             ),
-            Text('Qty: 1000',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                    color: patoGrey)),
+            Text(
+              'Qty: ${product.quantity}',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                  color: product.isOutStock
+                      ? patoWarning
+                      : product.quantity == 0
+                          ? patoRed
+                          : patoGrey),
+            ),
           ]),
           trailing: const CircleAvatar(
             backgroundColor: patoLightGreen,
@@ -131,16 +149,13 @@ class ItemAllDataFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        children: [
-          _itemSearchBar(),
-          _homeListTileData("title", "subtitle", context),
-          _homeListTileData("title", "subtitle", context),
-          _homeListTileData("title", "subtitle", context),
-        ],
-      ),
+    List<Widget> data = [];
+    for (var element in allProductDetails()) {
+      data.add(_homeListTileData(context, element));
+    }
+
+    return ListView(
+      children: data,
     );
   }
 }
@@ -152,7 +167,7 @@ class ActionButtonsSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: IconButton(
-        icon: Icon(Icons.add),
+        icon: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,

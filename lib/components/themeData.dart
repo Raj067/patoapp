@@ -64,3 +64,4 @@ const Color patoRed = Color(0xFFC5032B);
 const Color patoGrey = Color.fromARGB(255, 75, 74, 74);
 const Color patoGreen = Colors.green;
 const Color patoBlue = Colors.blue;
+const Color patoWarning = Colors.yellow;

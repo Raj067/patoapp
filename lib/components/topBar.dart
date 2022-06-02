@@ -156,7 +156,7 @@ class _MyDropdownButtonPartiesState extends State<MyDropdownButtonParties> {
           height: 0,
         ),
         icon: const Icon(
-          Icons.play_arrow,
+          Icons.arrow_drop_down_rounded,
           size: 15,
         ),
         onChanged: (String? newValue) {
@@ -205,7 +205,7 @@ class _MyDropdownButtonBusinessState extends State<MyDropdownButtonBusiness> {
           height: 0,
         ),
         icon: const Icon(
-          Icons.play_arrow,
+          Icons.arrow_drop_down_rounded,
           size: 15,
         ),
         onChanged: (String? newValue) {

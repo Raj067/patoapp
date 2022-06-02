@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/data/productList.dart';
 
 class SingleProductDetails extends StatelessWidget {
+  SingleProductDetails({super.key, required this.product});
+  final SingleProduct product;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'SingleProductDetails',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -21,9 +19,15 @@ class SingleProductDetails extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: const Text("SingleProductDetails"),
-      ),
+      body: Column(children: [
+        Container(
+          height: 200,
+          child: Image.network(
+            product.thumbnail,
+            fit: BoxFit.fitWidth,
+          ),
+        )
+      ]),
     );
   }
 }

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.article_outlined),
             label: 'Inventory',
           ),
           BottomNavigationBarItem(
@@ -49,11 +49,11 @@ class _HomePageState extends State<HomePage> {
             label: 'Business',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.verified_user_rounded),
+            icon: Icon(Icons.assignment_ind_outlined),
             label: 'Parties',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.apps),
             label: 'More',
           ),
         ],

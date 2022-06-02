@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 
 class SingleProduct {
   String productName;
-  String lastName;
-  String amount;
-  bool isToReceive;
+  String thumbnail;
+  String productPrice;
+  int quantity;
+  bool isOutStock;
   int id;
 
   SingleProduct({
     this.productName = "",
-    this.lastName = "",
-    this.amount = "",
-    this.isToReceive = true,
-    this.id = 0,
+    this.thumbnail =
+        "https://cdn.pixabay.com/photo/2016/03/18/01/09/cupcake-1264214_960_720.png",
+    this.productPrice = "",
+    this.quantity = 0,
+    this.isOutStock = true,
+    this.id = 1,
   });
 }
 
@@ -20,51 +23,58 @@ allProductDetails() {
   return [
     SingleProduct(
       productName: "Rajabu",
-      lastName: "Mrisho",
-      amount: "Tsh 27,000",
-      isToReceive: false,
+      // thumbnail: "",
+      productPrice: "Mrisho",
+      quantity: 0,
+      isOutStock: false,
       id: 1,
     ),
     SingleProduct(
       productName: "Salehe",
-      lastName: "Mrisho",
-      amount: "Tsh 30,000",
-      isToReceive: true,
+      // thumbnail: "",
+      productPrice: "Mrisho",
+      quantity: 90,
+      isOutStock: true,
       id: 2,
     ),
     SingleProduct(
       productName: "Ally",
-      lastName: "Juma",
-      amount: "Tsh 27,000",
-      isToReceive: false,
+      // thumbnail: "",
+      productPrice: "Juma",
+      quantity: 67,
+      isOutStock: false,
       id: 3,
     ),
     SingleProduct(
       productName: "Mustapha",
-      lastName: "Abasi",
-      amount: "Tsh 2,00",
-      isToReceive: false,
+      // thumbnail: "",
+      productPrice: "Abasi",
+      quantity: 78,
+      isOutStock: false,
       id: 4,
     ),
     SingleProduct(
       productName: "Jamali",
-      lastName: "Mrisho",
-      amount: "Tsh 10,000",
-      isToReceive: true,
+      // thumbnail: "",
+      productPrice: "Mrisho",
+      quantity: 89,
+      isOutStock: true,
       id: 5,
     ),
     SingleProduct(
       productName: "Ashura",
-      lastName: "Shabani",
-      amount: "Tsh 14,000",
-      isToReceive: false,
+      // thumbnail: "",
+      productPrice: "Shabani",
+      quantity: 55,
+      isOutStock: false,
       id: 6,
     ),
     SingleProduct(
       productName: "Ally",
-      lastName: "Dabaga",
-      amount: "Tsh 32,000",
-      isToReceive: true,
+      // thumbnail: "",
+      productPrice: "Dabaga",
+      quantity: 86,
+      isOutStock: true,
       id: 7,
     ),
   ];
