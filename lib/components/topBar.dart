@@ -9,12 +9,6 @@ PreferredSizeWidget mainTopBar(
         PreferredSizeWidget _button, BuildContext context) =>
     AppBar(
       title: ProfileIcon(),
-      // title: ActionChip(
-      //   // backgroundColor: const Color.fromARGB(255, 151, 186, 180),
-      //   avatar: const CircleAvatar(),
-      //   label: const Text('Action 1'),
-      //   onPressed: () {},
-      // ),
       actions: [NotificationIcon(), const SizedBox(width: 20)],
       bottom: _button,
     );
@@ -49,7 +43,11 @@ class ProfileIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ActionChip(
       // backgroundColor: const Color.fromARGB(255, 151, 186, 180),
-      avatar: const CircleAvatar(),
+      avatar: const CircleAvatar(
+        backgroundColor: patoWhite,
+        foregroundColor: patoBlack,
+        // child: Icon(Icons.add_shopping_cart_rounded),
+      ),
       label: const Text('Mama Shop'),
       onPressed: () {
         Navigator.push(

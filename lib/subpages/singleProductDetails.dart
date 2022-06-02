@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
-import 'package:patoapp/data/customerList.dart';
 
-class SingleCustomerPage extends StatelessWidget {
-  const SingleCustomerPage({super.key, required this.customer});
-  final SingleCustomer customer;
+class SingleProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'SingleCustomer',
+          'SingleProductDetails',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -25,7 +22,7 @@ class SingleCustomerPage extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: const Text("SingleCustomer"),
+        child: const Text("SingleProductDetails"),
       ),
     );
   }

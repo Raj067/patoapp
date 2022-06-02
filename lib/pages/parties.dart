@@ -203,24 +203,9 @@ class CustomerDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // allCustomerDetails().map((e) => _singleCustomerDetails(
-    //       context,
-    //       firstName: e["firstName"],
-    //       lastName: e["lastName"],
-    //       amount: e["amount"],
-    //       isToReceive: e["isToReceive"],
-    //       id: e["id"],
-    //     ));
     List<Widget> data = [];
     for (var element in allCustomerDetails()) {
-      data.add(_singleCustomerDetails(
-        context,
-        firstName: element.firstName,
-        lastName: element.lastName,
-        amount: element.amount,
-        isToReceive: element.isToReceive,
-        id: element.id,
-      ));
+      data.add(_singleCustomerDetails(context, element));
     }
 
     return Column(
@@ -229,40 +214,36 @@ class CustomerDetails extends StatelessWidget {
   }
 }
 
-Widget _singleCustomerDetails(
-  BuildContext context, {
-  String firstName = "",
-  String lastName = "",
-  String amount = "",
-  bool isToReceive = true,
-  int id = 0,
-}) =>
+Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
     Card(
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: patoGreen,
           foregroundColor: patoWhite,
-          child:
-              Text("${firstName.toUpperCase()[0]}${lastName.toUpperCase()[0]}"),
+          child: Text(
+              "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
         ),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => SingleCustomerPage(),
+              builder: (BuildContext context) => SingleCustomerPage(
+                customer: customer,
+              ),
               fullscreenDialog: true,
             ),
           );
         },
-        title: Text("$firstName $lastName"),
+        title: Text("${customer.firstName} ${customer.lastName}"),
         trailing: Column(
           children: [
             const SizedBox(
               height: 10,
             ),
-            Text(amount,
-                style: TextStyle(color: isToReceive ? patoGreen : patoRed)),
-            Text(isToReceive ? "Receive" : "Give",
+            Text(customer.amount,
+                style: TextStyle(
+                    color: customer.isToReceive ? patoGreen : patoRed)),
+            Text(customer.isToReceive ? "Receive" : "Give",
                 style: const TextStyle(fontSize: 10)),
           ],
         ),
