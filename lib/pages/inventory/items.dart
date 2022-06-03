@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
@@ -20,10 +22,10 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Column(
         children: [
-          _itemSearchBar(),
+          _itemSearchBar(context),
           const Expanded(child: ItemAllDataFiltered()),
         ],
       ),
@@ -222,8 +224,7 @@ Future<void> _addDataToCartAutomatic(
                 child: const Text("Cancel")),
             ElevatedButton(
                 onPressed: () {},
-                child:
-                    const Text("Add", style: const TextStyle(color: patoWhite)))
+                child: const Text("Add", style: TextStyle(color: patoWhite)))
           ],
         );
       });
@@ -321,8 +322,7 @@ Future<void> _addDataToCartManual(
                 child: const Text("Cancel")),
             ElevatedButton(
                 onPressed: () {},
-                child:
-                    const Text("Add", style: const TextStyle(color: patoWhite)))
+                child: const Text("Add", style: TextStyle(color: patoWhite)))
           ],
         );
       });
@@ -420,27 +420,46 @@ Future<void> _productAdjustment(
                 child: const Text("Cancel")),
             ElevatedButton(
                 onPressed: () {},
-                child:
-                    const Text("Add", style: const TextStyle(color: patoWhite)))
+                child: const Text("Add", style: TextStyle(color: patoWhite)))
           ],
         );
       });
 }
 
-Widget _itemSearchBar() => const ListTile(
-      contentPadding: EdgeInsets.all(0),
-      title: Card(
-        child: TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Search item',
-            prefixIcon: Icon(Icons.search),
-            enabledBorder: InputBorder.none,
+Widget _itemSearchBar(BuildContext context) => Row(children: [
+      Expanded(
+        child: Container(
+          height: 50,
+          child: const Card(
+            // ignore: unnecessary_const
+            child: const TextField(
+              selectionHeightStyle: BoxHeightStyle.strut,
+              // ignore: unnecessary_const
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Search item',
+                prefixIcon: Icon(Icons.search),
+                enabledBorder: InputBorder.none,
+              ),
+            ),
           ),
         ),
       ),
-      trailing: ActionButtonsSearch(),
-    );
+      Card(
+        child: IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => AddProductPage(),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+        ),
+      ),
+    ]);
 
 class ItemAllDataFiltered extends StatelessWidget {
   const ItemAllDataFiltered({Key? key}) : super(key: key);
@@ -458,24 +477,24 @@ class ItemAllDataFiltered extends StatelessWidget {
   }
 }
 
-class ActionButtonsSearch extends StatelessWidget {
-  const ActionButtonsSearch({Key? key}) : super(key: key);
+// class ActionButtonsSearch extends StatelessWidget {
+//   const ActionButtonsSearch({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: IconButton(
-        icon: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddProductPage(),
-              fullscreenDialog: true,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       child: IconButton(
+//         icon: const Icon(Icons.add),
+//         onPressed: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute<void>(
+//               builder: (BuildContext context) => AddProductPage(),
+//               fullscreenDialog: true,
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

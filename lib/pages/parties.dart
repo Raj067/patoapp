@@ -15,7 +15,7 @@ class PartiesPage extends StatelessWidget {
     return Scaffold(
       appBar: mainPartiesTopBar(context),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: const [
             FirstRowPartiesData(),
