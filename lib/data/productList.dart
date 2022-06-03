@@ -6,7 +6,7 @@ class SingleProduct {
   String productPrice;
   int quantity;
   bool isOutStock;
-  int id;
+  String id;
 
   SingleProduct({
     this.productName = "",
@@ -15,7 +15,7 @@ class SingleProduct {
     this.productPrice = "",
     this.quantity = 0,
     this.isOutStock = true,
-    this.id = 1,
+    this.id = '1',
   });
 }
 
@@ -27,7 +27,7 @@ allProductDetails() {
       productPrice: "Mrisho",
       quantity: 0,
       isOutStock: false,
-      id: 1,
+      id: '1',
     ),
     SingleProduct(
       productName: "Salehe",
@@ -35,7 +35,7 @@ allProductDetails() {
       productPrice: "Mrisho",
       quantity: 90,
       isOutStock: true,
-      id: 2,
+      id: '2',
     ),
     SingleProduct(
       productName: "Ally",
@@ -43,7 +43,7 @@ allProductDetails() {
       productPrice: "Juma",
       quantity: 67,
       isOutStock: false,
-      id: 3,
+      id: '3',
     ),
     SingleProduct(
       productName: "Mustapha",
@@ -51,7 +51,7 @@ allProductDetails() {
       productPrice: "Abasi",
       quantity: 78,
       isOutStock: false,
-      id: 4,
+      id: '4',
     ),
     SingleProduct(
       productName: "Jamali",
@@ -59,7 +59,7 @@ allProductDetails() {
       productPrice: "Mrisho",
       quantity: 89,
       isOutStock: true,
-      id: 5,
+      id: '5',
     ),
     SingleProduct(
       productName: "Ashura",
@@ -67,7 +67,7 @@ allProductDetails() {
       productPrice: "Shabani",
       quantity: 55,
       isOutStock: false,
-      id: 6,
+      id: '6',
     ),
     SingleProduct(
       productName: "Ally",
@@ -75,7 +75,7 @@ allProductDetails() {
       productPrice: "Dabaga",
       quantity: 86,
       isOutStock: true,
-      id: 7,
+      id: '7',
     ),
   ];
 }

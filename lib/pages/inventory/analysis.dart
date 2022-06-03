@@ -18,22 +18,26 @@ class AnalysisHomePage extends StatelessWidget {
   }
 }
 
-Widget _singleCardData() => Container(
-      height: 100,
-      // width: 100,
-      child: Card(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [Text("Hello")],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [Text("World 1")],
-            ),
-          ],
+Widget _singleCardData() => GestureDetector(
+      child: Container(
+        height: 100,
+
+        // width: 100,
+
+        child: Card(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [Text("Hello")],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [Text("World 1")],
+              ),
+            ],
+          ),
         ),
       ),
     );

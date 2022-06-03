@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Parties',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
+            icon: Icon(Icons.dashboard_outlined),
             label: 'More',
           ),
         ],
