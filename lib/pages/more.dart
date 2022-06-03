@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:patoapp/subpages/feedback.dart';
 import 'package:patoapp/subpages/generalSettings.dart';
@@ -30,6 +32,7 @@ class MorePage extends StatelessWidget {
               Card(
                 child: ListTile(
                   title: const Text('Overview'),
+                  leading: const Icon(Icons.generating_tokens),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.push(
@@ -40,6 +43,14 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.youtube_searched_for_outlined),
+                  title: const Text('Business Tips'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {},
                 ),
               ),
               const ListTile(
@@ -163,139 +174,87 @@ class FirstRowData extends StatelessWidget {
       children: [
         Expanded(
           child: SizedBox(
-              height: 150,
-              child: Card(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  InvoiceButton(),
-                  SizedBox(height: 10),
-                  Text("Invoices"),
-                ],
-              ))),
+            height: 150,
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => MainInvoicePage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.file_copy_outlined, size: 40),
+                    SizedBox(height: 10),
+                    Text("Invoices"),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
         Expanded(
           child: SizedBox(
-              height: 150,
-              child: Card(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  ReportsButton(),
-                  SizedBox(height: 10),
-                  Text("Reports"),
-                ],
-              ))),
+            height: 150,
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => MainReportsPage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.graphic_eq, size: 40),
+                    SizedBox(height: 10),
+                    Text("Reports"),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
         Expanded(
           child: SizedBox(
-              height: 150,
-              child: Card(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  GreetingsButton(),
-                  SizedBox(height: 10),
-                  Text("WhatsApp"),
-                  Text("Greetings"),
-                ],
-              ))),
-        ),
-        Expanded(
-          child: SizedBox(
-              height: 150,
-              child: Card(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  TipsButton(),
-                  SizedBox(height: 10),
-                  Text("Business"),
-                  Text("Tips"),
-                ],
-              ))),
+            height: 150,
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => MainGreetingsCards(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.whatsapp, size: 40),
+                    SizedBox(height: 10),
+                    Text("WhatsApp"),
+                    Text("Greetings"),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
       ],
-    );
-  }
-}
-
-class InvoiceButton extends StatelessWidget {
-  const InvoiceButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MainInvoicePage(),
-            fullscreenDialog: true,
-          ),
-        );
-      },
-      icon: const Icon(Icons.file_copy_outlined),
-      iconSize: 40,
-    );
-  }
-}
-
-class ReportsButton extends StatelessWidget {
-  const ReportsButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MainReportPage(),
-            fullscreenDialog: true,
-          ),
-        );
-      },
-      icon: const Icon(Icons.graphic_eq),
-      iconSize: 40,
-    );
-  }
-}
-
-class GreetingsButton extends StatelessWidget {
-  const GreetingsButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => MainGreetingsCards(),
-            fullscreenDialog: true,
-          ),
-        );
-      },
-      icon: const Icon(Icons.whatsapp),
-      iconSize: 40,
-    );
-  }
-}
-
-class TipsButton extends StatelessWidget {
-  const TipsButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {},
-      icon: const Icon(Icons.youtube_searched_for_outlined),
-      iconSize: 40,
     );
   }
 }

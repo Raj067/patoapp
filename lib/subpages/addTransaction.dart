@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 
 class AddTransactionDialog extends StatelessWidget {
+  const AddTransactionDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -20,7 +20,7 @@ class SingleProductDetails extends StatelessWidget {
         ),
       ),
       body: Column(children: [
-        Container(
+        SizedBox(
           height: 200,
           child: Image.network(
             product.thumbnail,

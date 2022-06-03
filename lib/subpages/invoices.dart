@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 
 class MainInvoicePage extends StatelessWidget {
+  const MainInvoicePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +23,85 @@ class MainInvoicePage extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: const Text("Invoices"),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            _InvoiceHeader(),
+            const Center(
+              child: Text("Invoices"),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+Widget _InvoiceHeader() => Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Outstanding"),
+                  Container(
+                    height: 10,
+                  ),
+                  const Text(
+                    "1",
+                    style: const TextStyle(fontSize: 20, color: patoBlue),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Overdue"),
+                  Container(
+                    height: 10,
+                  ),
+                  const Text(
+                    "1",
+                    style: const TextStyle(fontSize: 20, color: patoRed),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Unpaid"),
+                  Container(
+                    height: 10,
+                  ),
+                  const Text(
+                    "1",
+                    style: TextStyle(fontSize: 20, color: patoWarning),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );

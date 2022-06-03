@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 
 class ReminderDialog extends StatelessWidget {
+  const ReminderDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

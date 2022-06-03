@@ -427,15 +427,15 @@ Future<void> _productAdjustment(
 }
 
 Widget _itemSearchBar(BuildContext context) => Row(children: [
-      Expanded(
-        child: Container(
+      const Expanded(
+        child: SizedBox(
           height: 50,
-          child: const Card(
+          child: Card(
             // ignore: unnecessary_const
-            child: const TextField(
+            child: TextField(
               selectionHeightStyle: BoxHeightStyle.strut,
               // ignore: unnecessary_const
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search item',
                 prefixIcon: Icon(Icons.search),
@@ -445,18 +445,21 @@ Widget _itemSearchBar(BuildContext context) => Row(children: [
           ),
         ),
       ),
-      Card(
-        child: IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => AddProductPage(),
-                fullscreenDialog: true,
-              ),
-            );
-          },
+      SizedBox(
+        height: 50,
+        child: Card(
+          child: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => AddProductPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+          ),
         ),
       ),
     ]);
