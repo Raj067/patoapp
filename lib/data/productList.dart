@@ -6,6 +6,11 @@ class SingleProduct {
   String productPrice;
   int quantity;
   bool isOutStock;
+  String sellingPrice;
+  String purchasesPrice;
+  String supplierName;
+  String supplierContact;
+  int totalItemsSold;
   String id;
 
   SingleProduct({
@@ -15,6 +20,11 @@ class SingleProduct {
     this.productPrice = "",
     this.quantity = 0,
     this.isOutStock = true,
+    this.sellingPrice = "1000",
+    this.purchasesPrice = "23000",
+    this.totalItemsSold = 90,
+    this.supplierName = "Rajabu",
+    this.supplierContact = "+255679190720",
     this.id = '1',
   });
 }
@@ -23,7 +33,8 @@ allProductDetails() {
   return [
     SingleProduct(
       productName: "Rajabu",
-      // thumbnail: "",
+      thumbnail:
+          "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_960_720.jpg",
       productPrice: "Mrisho",
       quantity: 0,
       isOutStock: false,
