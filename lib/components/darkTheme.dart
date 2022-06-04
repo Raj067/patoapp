@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-ThemeData patowaveTheme() {
-  final ThemeData base = ThemeData.light();
+ThemeData patoDarkTheme() {
+  final ThemeData base = ThemeData.dark();
   return base.copyWith(
-      colorScheme: _patoColorScheme,
-      scaffoldBackgroundColor: patoBackgroundColor,
-      cardColor: patoWhite,
-      primaryIconTheme: _customIconTheme(base.iconTheme),
-      textTheme: _buildPatoTextTheme(base.textTheme),
-      primaryTextTheme: _buildPatoTextTheme(base.primaryTextTheme),
-      iconTheme: _customIconTheme(base.iconTheme),
+      // colorScheme: _patoColorScheme,
+      // scaffoldBackgroundColor: patoBackgroundColor,
+      // cardColor: patoWhite,
+      // primaryIconTheme: _customIconTheme(base.iconTheme),
+      // textTheme: _buildPatoTextTheme(base.textTheme),
+      // primaryTextTheme: _buildPatoTextTheme(base.primaryTextTheme),
+      // iconTheme: _customIconTheme(base.iconTheme),
       tabBarTheme: _tabBarTheme,
       chipTheme: _chipTheme,
       floatingActionButtonTheme: _floatingActionButtonTheme);
