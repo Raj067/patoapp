@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
+import 'package:patoapp/pages/products/deleteProduct.dart';
 
 import '../pages/products/adjustProduct.dart';
 
@@ -29,7 +30,9 @@ class SingleProductDetails extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              productDelete(context, product);
+            },
             icon: const Icon(
               Icons.delete,
               color: patoRed,

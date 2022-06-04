@@ -9,63 +9,68 @@ class AnalysisHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Column(
+      child: ListView(
         children: [
-          _analysisData(),
+          _singleCardData("2,000", "Instock", "6", "Inventory turnover"),
+          _singleCardData("751", "Stock-In", "821", "Stock-out"),
+          const Card(
+            child: ListTile(
+                title: const Text("Top Selling Items"),
+                trailing: const Icon(Icons.filter)),
+          )
         ],
       ),
     );
   }
 }
 
-Widget _singleCardData() => GestureDetector(
-      child: Container(
-        height: 100,
+Widget _SingleTopSellingProduct() => Row();
 
-        // width: 100,
-
-        child: Card(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [Text("Hello")],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [Text("World 1")],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-// Widget _analysisData() => Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         _singleCardData(),
-//         _singleCardData(),
-//       ],
-//     );
-Widget _analysisData() => Row(
+Widget _singleCardData(
+        String nameData, String figure, String nameData1, String figure1) =>
+    Row(
       children: [
         Expanded(
-          child: Container(
-              height: 100,
-              child: Card(
-                  child: Column(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.home_filled),
-                  Text("Hello"),
+                children: [
+                  Text(
+                    nameData,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Text(figure),
                 ],
-              ))),
+              ),
+            ),
+          ),
         ),
         Expanded(
-          child: Container(height: 100, child: Card()),
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    nameData1,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Text(figure1),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );

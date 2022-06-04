@@ -23,8 +23,48 @@ class GeneralSettingsDialog extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("General Settings"),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ListView(
+          children: [
+            Card(
+              child: ListTile(
+                title: const Text('Application'),
+                onTap: () {},
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text('Transactions'),
+                onTap: () {},
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text('User Management'),
+                onTap: () {},
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text('Print'),
+                onTap: () {},
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text('Taxes'),
+                onTap: () {},
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: const Text('Items'),
+                onTap: () {},
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

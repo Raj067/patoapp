@@ -33,7 +33,6 @@ class MorePage extends StatelessWidget {
                 child: ListTile(
                   title: const Text('Overview'),
                   leading: const Icon(Icons.generating_tokens),
-                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -49,7 +48,6 @@ class MorePage extends StatelessWidget {
                 child: ListTile(
                   leading: const Icon(Icons.youtube_searched_for_outlined),
                   title: const Text('Business Tips'),
-                  trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {},
                 ),
               ),
@@ -74,7 +72,6 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
               Card(
@@ -90,7 +87,6 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
               const ListTile(
@@ -113,7 +109,6 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
               Card(
@@ -130,7 +125,6 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
               Card(
@@ -146,7 +140,6 @@ class MorePage extends StatelessWidget {
                       ),
                     );
                   },
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
               Card(
@@ -154,7 +147,6 @@ class MorePage extends StatelessWidget {
                   leading: const Icon(Icons.star),
                   title: const Text('Rate Patowave'),
                   onTap: () {},
-                  trailing: const Icon(Icons.arrow_forward_ios),
                 ),
               ),
             ],

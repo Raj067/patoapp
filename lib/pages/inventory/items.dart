@@ -19,8 +19,6 @@ class ItemsHomePage extends StatefulWidget {
 }
 
 class _ItemsHomePageState extends State<ItemsHomePage> {
-  final TextEditingController _item_input_controller =
-      TextEditingController(text: "Initial value here");
   @override
   Widget build(BuildContext context) {
     return Padding(

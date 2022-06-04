@@ -90,6 +90,13 @@ class MainReportsPage extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios),
               ),
             ),
+            Card(
+              child: ListTile(
+                title: const Text('All Transactions'),
+                onTap: () {},
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+            ),
           ],
         ),
       ),
@@ -97,7 +104,7 @@ class MainReportsPage extends StatelessWidget {
         Center(
             child: ElevatedButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "Journal",
                   style: TextStyle(color: patoWhite),
                 )))
