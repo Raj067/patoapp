@@ -16,9 +16,13 @@ Future<void> productAdjustment(
             children: [
               Card(
                 child: ListTile(
-                  leading: Image.network(
-                    product.thumbnail,
-                    fit: BoxFit.fitWidth,
+                  leading: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Image.network(
+                      product.thumbnail,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                   title: Text(product.productName,
                       style: const TextStyle(

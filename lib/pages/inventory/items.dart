@@ -92,9 +92,13 @@ Widget _homeListTileData(BuildContext context, SingleProduct product) {
         onTap: () {
           _addDataToCartAutomatic(context, product);
         },
-        leading: Image.network(
-          product.thumbnail,
-          fit: BoxFit.fitWidth,
+        leading: Container(
+          width: 50,
+          height: 50,
+          child: Image.network(
+            product.thumbnail,
+            fit: BoxFit.cover,
+          ),
         ),
         title: Text(product.productName,
             style: const TextStyle(
@@ -146,9 +150,13 @@ Future<void> _addDataToCartAutomatic(
             children: [
               Card(
                 child: ListTile(
-                  leading: Image.network(
-                    product.thumbnail,
-                    fit: BoxFit.fitWidth,
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    child: Image.network(
+                      product.thumbnail,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                   title: Text(product.productName,
                       style: const TextStyle(
@@ -244,9 +252,13 @@ Future<void> _addDataToCartManual(
             children: [
               Card(
                 child: ListTile(
-                  leading: Image.network(
-                    product.thumbnail,
-                    fit: BoxFit.fitWidth,
+                  leading: Container(
+                    width: 50,
+                    height: 50,
+                    child: Image.network(
+                      product.thumbnail,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                   title: Text(product.productName,
                       style: const TextStyle(
