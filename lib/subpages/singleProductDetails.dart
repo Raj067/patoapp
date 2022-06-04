@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
 
+import '../pages/products/adjustProduct.dart';
+
 class SingleProductDetails extends StatelessWidget {
   SingleProductDetails({super.key, required this.product});
   final SingleProduct product;
@@ -85,7 +87,9 @@ class SingleProductDetails extends StatelessWidget {
           child: const Text("Share"),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            productAdjustment(context, product);
+          },
           child: const Text(
             "Adjust Item",
             style: TextStyle(color: patoWhite),
