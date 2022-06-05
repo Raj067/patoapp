@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/parties/invoiceDetails.dart';
 
 class MainInvoicePage extends StatelessWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
@@ -25,9 +26,10 @@ class MainInvoicePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
+        child: ListView(
           children: [
-            _InvoiceHeader(),
+            _invoiceHeader(),
+            const InvoiceDetails(),
             const Center(
               child: Text("Invoices"),
             ),
@@ -38,7 +40,7 @@ class MainInvoicePage extends StatelessWidget {
   }
 }
 
-Widget _InvoiceHeader() => Row(
+Widget _invoiceHeader() => Row(
       children: [
         Expanded(
           child: SizedBox(

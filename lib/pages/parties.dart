@@ -243,11 +243,15 @@ Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
             const SizedBox(
               height: 10,
             ),
-            Text(customer.amount,
-                style: TextStyle(
-                    color: customer.isToReceive ? patoGreen : patoRed)),
-            Text(customer.isToReceive ? "Receive" : "Give",
-                style: const TextStyle(fontSize: 10)),
+            Text(
+              customer.amount,
+              style:
+                  TextStyle(color: customer.isToReceive ? patoGreen : patoRed),
+            ),
+            Text(
+              customer.isToReceive ? "Receive" : "Give",
+              style: const TextStyle(fontSize: 10),
+            ),
           ],
         ),
       ),
