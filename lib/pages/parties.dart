@@ -129,13 +129,16 @@ class SecondRowPartiesData extends StatelessWidget {
       children: const [
         Expanded(
           flex: 4,
-          child: Card(
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                enabledBorder: InputBorder.none,
+          child: SizedBox(
+            height: 50,
+            child: Card(
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  enabledBorder: InputBorder.none,
+                ),
               ),
             ),
           ),
