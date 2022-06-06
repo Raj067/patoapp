@@ -22,7 +22,7 @@ class MorePage extends StatelessWidget {
       appBar: mainMoreTopBar(context),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
           child: Column(
             children: [
               const FirstRowData(),
@@ -166,7 +166,7 @@ class FirstRowData extends StatelessWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 150,
+            height: 100,
             child: Card(
               child: ListTile(
                 onTap: () {
@@ -182,9 +182,12 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Icon(Icons.file_copy_outlined, size: 40),
+                    Icon(Icons.file_copy_outlined, size: 35),
                     SizedBox(height: 10),
-                    Text("Invoices"),
+                    Text(
+                      "Invoices",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ),
@@ -193,7 +196,7 @@ class FirstRowData extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 150,
+            height: 100,
             child: Card(
               child: ListTile(
                 onTap: () {
@@ -209,9 +212,12 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Icon(Icons.graphic_eq, size: 40),
+                    Icon(Icons.graphic_eq, size: 35),
                     SizedBox(height: 10),
-                    Text("Reports"),
+                    Text(
+                      "Reports",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ),
@@ -220,7 +226,7 @@ class FirstRowData extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 150,
+            height: 100,
             child: Card(
               child: ListTile(
                 onTap: () {
@@ -236,10 +242,16 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Icon(Icons.whatsapp, size: 40),
+                    Icon(Icons.whatsapp, size: 35),
                     SizedBox(height: 10),
-                    Text("WhatsApp"),
-                    Text("Greetings"),
+                    Text(
+                      "WhatsApp",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      "Greetings",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ),

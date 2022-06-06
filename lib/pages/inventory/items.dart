@@ -22,7 +22,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: Column(
         children: [
           _itemSearchBar(context),

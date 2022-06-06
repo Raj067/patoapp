@@ -15,7 +15,7 @@ class PartiesPage extends StatelessWidget {
     return Scaffold(
       appBar: mainPartiesTopBar(context),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: const [
             FirstRowPartiesData(),
@@ -46,16 +46,16 @@ class FirstRowPartiesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        height: 130,
+      child: SizedBox(
+        height: 110,
         child: Column(children: [
           Container(
             alignment: AlignmentDirectional.centerStart,
-            height: 80,
+            height: 60,
             child: Row(children: [
               Expanded(
                   child: Container(
-                height: 80,
+                height: 60,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
                   border: Border(
@@ -145,7 +145,7 @@ class SecondRowPartiesData extends StatelessWidget {
         ),
         AddPartiesButton(),
         DateActionButton(),
-        FilterIconButton(),
+        // FilterIconButton(),
       ],
     );
   }
@@ -156,18 +156,21 @@ class AddPartiesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: IconButton(
-        icon: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddCustomerDialog(),
-              fullscreenDialog: true,
-            ),
-          );
-        },
+    return Container(
+      height: 50,
+      child: Card(
+        child: IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => AddCustomerDialog(),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -178,28 +181,31 @@ class DateActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: IconButton(
-        icon: const Icon(Icons.date_range),
-        onPressed: () {},
+    return SizedBox(
+      height: 50,
+      child: Card(
+        child: IconButton(
+          icon: const Icon(Icons.date_range),
+          onPressed: () {},
+        ),
       ),
     );
   }
 }
 
-class FilterIconButton extends StatelessWidget {
-  const FilterIconButton({Key? key}) : super(key: key);
+// class FilterIconButton extends StatelessWidget {
+//   const FilterIconButton({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: IconButton(
-        icon: const Icon(Icons.filter),
-        onPressed: () {},
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       child: IconButton(
+//         icon: const Icon(Icons.filter),
+//         onPressed: () {},
+//       ),
+//     );
+//   }
+// }
 
 class CustomerDetails extends StatelessWidget {
   const CustomerDetails({Key? key}) : super(key: key);

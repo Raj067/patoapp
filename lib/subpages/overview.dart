@@ -24,7 +24,7 @@ class OverviewDialog extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: [
             _expenses(),
