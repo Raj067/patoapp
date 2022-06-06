@@ -33,108 +33,234 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   }
 }
 
-Widget _homeListTileData(BuildContext context, SingleProduct product) {
-  return Card(
-    child: Dismissible(
-      key: Key(product.id),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          _addDataToCartManual(context, product);
-        } else {
-          productAdjustment(context, product);
-        }
-        // if (direction == DismissDirection.startToEnd) {
-        //   setState(() {
-        //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
-        //   });
-        //   return false;
-        // }
-        return false;
-      },
-      background: Container(
-        color: patoPrimaryColor,
-        child: const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Icon(
-              Icons.add_shopping_cart_rounded,
-              color: patoWhite,
-            ),
-          ),
-        ),
-      ),
-      secondaryBackground: Container(
-        color: patoRed,
-        child: const Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.edit,
-              color: patoWhite,
-            ),
-          ),
-        ),
-      ),
-      child: ListTile(
-        onLongPress: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => SingleProductDetails(
-                product: product,
+Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
+      child: Dismissible(
+        key: Key(product.id),
+        confirmDismiss: (direction) async {
+          if (direction == DismissDirection.startToEnd) {
+            _addDataToCartManual(context, product);
+          } else {
+            productAdjustment(context, product);
+          }
+          // if (direction == DismissDirection.startToEnd) {
+          //   setState(() {
+          //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
+          //   });
+          //   return false;
+          // }
+          return false;
+        },
+        background: Container(
+          color: patoPrimaryColor,
+          child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Icon(
+                Icons.add_shopping_cart_rounded,
+                color: patoWhite,
               ),
-              fullscreenDialog: true,
             ),
-          );
-        },
-        onTap: () {
-          _addDataToCartAutomatic(context, product);
-        },
-        leading: Container(
-          width: 50,
-          height: 50,
-          child: Image.network(
-            product.thumbnail,
-            fit: BoxFit.cover,
           ),
         ),
-        title: Text(product.productName,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            )),
-        subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Text(
-            'Tsh ${product.productPrice}',
-            style: const TextStyle(fontSize: 16, color: patoGrey),
+        secondaryBackground: Container(
+          color: patoRed,
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Icon(
+                Icons.edit,
+                color: patoWhite,
+              ),
+            ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            'Qty: ${product.quantity}',
-            style: TextStyle(
-                fontSize: 14,
-                fontStyle: FontStyle.italic,
-                color: product.isOutStock
-                    ? patoWarning
-                    : product.quantity == 0
-                        ? patoRed
-                        : patoGrey),
-          ),
-        ]),
-        trailing: const CircleAvatar(
-          backgroundColor: patoLightGreen,
-          foregroundColor: patoBlack,
-          child: Icon(Icons.add_shopping_cart_rounded),
         ),
-        isThreeLine: true,
+        child: InkWell(
+          onTap: () {
+            _addDataToCartAutomatic(context, product);
+          },
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => SingleProductDetails(
+                  product: product,
+                ),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.network(product.thumbnail,
+                    width: 50, height: 50, fit: BoxFit.fill),
+                Container(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.productName,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Tsh ${product.productPrice}',
+                                  style: const TextStyle(
+                                      fontSize: 16, color: patoGrey),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Qty: ${product.quantity}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontStyle: FontStyle.italic,
+                                    color: product.isOutStock
+                                        ? patoWarning
+                                        : product.quantity == 0
+                                            ? patoRed
+                                            : patoGrey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
+                      Container(
+                        height: 10,
+                      ),
+                      CircleAvatar(
+                        backgroundColor: patoLightGreen,
+                        foregroundColor: patoBlack,
+                        child: Icon(Icons.add_shopping_cart_rounded),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-    ),
-  );
-}
+    );
+
+// Widget _homeListTileData(BuildContext context, SingleProduct product) {
+//   return Card(
+//     child: Dismissible(
+//       key: Key(product.id),
+//       confirmDismiss: (direction) async {
+//         if (direction == DismissDirection.startToEnd) {
+//           _addDataToCartManual(context, product);
+//         } else {
+//           productAdjustment(context, product);
+//         }
+//         // if (direction == DismissDirection.startToEnd) {
+//         //   setState(() {
+//         //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
+//         //   });
+//         //   return false;
+//         // }
+//         return false;
+//       },
+//       background: Container(
+//         color: patoPrimaryColor,
+//         child: const Align(
+//           alignment: Alignment.centerLeft,
+//           child: Padding(
+//             padding: EdgeInsets.only(left: 16),
+//             child: Icon(
+//               Icons.add_shopping_cart_rounded,
+//               color: patoWhite,
+//             ),
+//           ),
+//         ),
+//       ),
+//       secondaryBackground: Container(
+//         color: patoRed,
+//         child: const Align(
+//           alignment: Alignment.centerRight,
+//           child: Padding(
+//             padding: EdgeInsets.only(right: 16),
+//             child: Icon(
+//               Icons.edit,
+//               color: patoWhite,
+//             ),
+//           ),
+//         ),
+//       ),
+//       child: ListTile(
+//         onLongPress: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute<void>(
+//               builder: (BuildContext context) => SingleProductDetails(
+//                 product: product,
+//               ),
+//               fullscreenDialog: true,
+//             ),
+//           );
+//         },
+//         onTap: () {
+//           _addDataToCartAutomatic(context, product);
+//         },
+//         leading: Container(
+//           width: 50,
+//           height: 50,
+//           child: Image.network(
+//             product.thumbnail,
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//         title: Text(product.productName,
+//             style: const TextStyle(
+//               fontWeight: FontWeight.bold,
+//               fontSize: 15,
+//             )),
+//         subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+//           Text(
+//             'Tsh ${product.productPrice}',
+//             style: const TextStyle(fontSize: 16, color: patoGrey),
+//           ),
+//           const SizedBox(
+//             width: 10,
+//           ),
+//           Text(
+//             'Qty: ${product.quantity}',
+//             style: TextStyle(
+//                 fontSize: 14,
+//                 fontStyle: FontStyle.italic,
+//                 color: product.isOutStock
+//                     ? patoWarning
+//                     : product.quantity == 0
+//                         ? patoRed
+//                         : patoGrey),
+//           ),
+//         ]),
+//         trailing: const CircleAvatar(
+//           backgroundColor: patoLightGreen,
+//           foregroundColor: patoBlack,
+//           child: Icon(Icons.add_shopping_cart_rounded),
+//         ),
+//         isThreeLine: true,
+//       ),
+//     ),
+//   );
+// }
 
 Future<void> _addDataToCartAutomatic(
     BuildContext context, SingleProduct product) async {
@@ -149,42 +275,63 @@ Future<void> _addDataToCartAutomatic(
             mainAxisSize: MainAxisSize.min,
             children: [
               Card(
-                child: ListTile(
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    child: Image.network(
-                      product.thumbnail,
-                      fit: BoxFit.fitWidth,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.network(product.thumbnail,
+                          width: 50, height: 50, fit: BoxFit.fill),
+                      Container(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.productName,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Tsh ${product.productPrice}',
+                                        style: const TextStyle(
+                                            fontSize: 16, color: patoGrey),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Qty: ${product.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          color: product.isOutStock
+                                              ? patoWarning
+                                              : product.quantity == 0
+                                                  ? patoRed
+                                                  : patoGrey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  title: Text(product.productName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      )),
-                  subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tsh ${product.productPrice}',
-                          style: const TextStyle(fontSize: 16, color: patoGrey),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Qty: ${product.quantity}',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              color: product.isOutStock
-                                  ? patoWarning
-                                  : product.quantity == 0
-                                      ? patoRed
-                                      : patoGrey),
-                        ),
-                      ]),
                 ),
               ),
               Container(height: 20),
@@ -251,42 +398,63 @@ Future<void> _addDataToCartManual(
             mainAxisSize: MainAxisSize.min,
             children: [
               Card(
-                child: ListTile(
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    child: Image.network(
-                      product.thumbnail,
-                      fit: BoxFit.fitWidth,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.network(product.thumbnail,
+                          width: 50, height: 50, fit: BoxFit.fill),
+                      Container(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.productName,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Tsh ${product.productPrice}',
+                                        style: const TextStyle(
+                                            fontSize: 16, color: patoGrey),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Qty: ${product.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          color: product.isOutStock
+                                              ? patoWarning
+                                              : product.quantity == 0
+                                                  ? patoRed
+                                                  : patoGrey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  title: Text(product.productName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      )),
-                  subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tsh ${product.productPrice}',
-                          style: const TextStyle(fontSize: 16, color: patoGrey),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Qty: ${product.quantity}',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              color: product.isOutStock
-                                  ? patoWarning
-                                  : product.quantity == 0
-                                      ? patoRed
-                                      : patoGrey),
-                        ),
-                      ]),
                 ),
               ),
               Container(height: 20),
@@ -385,7 +553,7 @@ class ItemAllDataFiltered extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> data = [];
     for (var element in allProductDetails()) {
-      data.add(_homeListTileData(context, element));
+      data.add(_singleProductTile(context, element));
     }
 
     return ListView(

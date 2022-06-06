@@ -30,9 +30,6 @@ class MainInvoicePage extends StatelessWidget {
           children: [
             _invoiceHeader(),
             const InvoiceDetails(),
-            const Center(
-              child: Text("Invoices"),
-            ),
           ],
         ),
       ),

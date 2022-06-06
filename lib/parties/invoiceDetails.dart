@@ -21,68 +21,87 @@ class InvoiceDetails extends StatelessWidget {
 
 Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
     Card(
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("INV0001"),
-                    Text("01/01/2020"),
-                  ],
-                ),
-                Text(
-                  "${customer.firstName} ${customer.lastName}",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => SingleCustomerPage(
+                customer: customer,
+              ),
+              fullscreenDialog: true,
             ),
-            Container(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Icon(Icons.wallet),
-                    Text("Update payment"),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.notifications),
-                    Text("Remind"),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      customer.amount,
-                      style: TextStyle(
-                        color: customer.isToReceive ? patoGreen : patoRed,
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("INV0001"),
+                      Text("01/01/2020"),
+                    ],
+                  ),
+                  Text(
+                    "${customer.firstName} ${customer.lastName}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Container(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: const [
+                      Icon(
+                        Icons.wallet,
+                        color: patoLightGreen,
                       ),
-                    ),
-                    InputChip(
-                      label: Text(
-                        customer.isToReceive ? "Outstanding" : "Overdue",
+                      Text("Update payment"),
+                    ],
+                  ),
+                  Column(
+                    children: const [
+                      Icon(
+                        Icons.notifications,
+                        color: patoLightGreen,
+                      ),
+                      Text("Remind"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        customer.amount,
                         style: TextStyle(
-                            color: customer.isToReceive ? patoGreen : patoRed,
-                            fontSize: 10),
+                          color: customer.isToReceive ? patoGreen : patoRed,
+                        ),
                       ),
-                      // backgroundColor: ,
-                      // backgroundColor: Color.fromARGB(255, 248, 76, 76),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: Text(
+                          customer.isToReceive ? "Outstanding" : "Overdue",
+                          style: TextStyle(
+                              color: customer.isToReceive ? patoGreen : patoRed,
+                              fontSize: 10),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
