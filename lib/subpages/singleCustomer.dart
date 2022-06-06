@@ -71,7 +71,7 @@ class SingleCustomerPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "hello",
+                      "Send payment reminder",
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -105,6 +105,25 @@ class SingleCustomerPage extends StatelessWidget {
           ],
         ),
       ),
+      persistentFooterButtons: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          OutlinedButton(
+            style: ButtonStyle(),
+            onPressed: () {},
+            child: const Text(
+              "Payment Out",
+              // style: TextStyle(color: patoWhite),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: const Text(
+              "Payment In",
+              style: TextStyle(color: patoWhite),
+            ),
+          ),
+        ]),
+      ],
     );
   }
 }

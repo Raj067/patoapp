@@ -33,6 +33,17 @@ class MainInvoicePage extends StatelessWidget {
           ],
         ),
       ),
+      persistentFooterButtons: [
+        Center(
+          child: ElevatedButton(
+            onPressed: () {},
+            child: const Text(
+              "Create New Invoice",
+              style: TextStyle(color: patoWhite),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
