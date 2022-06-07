@@ -9,10 +9,9 @@ class AddPaymentDialog extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Payment',
+          'Payments',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
