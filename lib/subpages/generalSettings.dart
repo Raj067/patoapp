@@ -28,39 +28,123 @@ class GeneralSettingsDialog extends StatelessWidget {
         child: ListView(
           children: [
             Card(
-              child: ListTile(
-                title: const Text('Application'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.app_settings_alt,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Application'),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Transactions'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.attach_money,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Transactions'),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('User Management'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.supervised_user_circle_sharp,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('User Management'),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Print'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.print,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Print'),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Taxes'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.grid_view_outlined,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Taxes'),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Items'),
+              child: InkWell(
                 onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.settings_input_component_sharp,
+                        color: Colors.black38,
+                      ),
+                      Container(
+                        width: 10,
+                      ),
+                      const Text('Items'),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

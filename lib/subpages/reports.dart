@@ -28,73 +28,183 @@ class MainReportsPage extends StatelessWidget {
         child: ListView(
           children: [
             Card(
-              child: ListTile(
-                title: const Text('Profit and Loss'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Profit and Loss'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Cashflow'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Cashflow'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Balance sheet'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Balance sheet'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Daybook'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Daybook'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Expenses Reports'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Expenses Reports'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Sales Reports'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Sales Reports'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Purchases Reports'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Purchases Reports'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Inventory Reports'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Inventory Reports'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('Inventory Summary'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('Inventory Summary'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Card(
-              child: ListTile(
-                title: const Text('All Transactions'),
+              child: InkWell(
                 onTap: () {},
-                trailing: const Icon(Icons.arrow_forward_ios),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text('All Transactions'),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black38,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

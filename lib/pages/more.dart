@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:patoapp/components/darkTheme.dart';
 import 'package:patoapp/subpages/feedback.dart';
 import 'package:patoapp/subpages/generalSettings.dart';
 import 'package:patoapp/subpages/greetings.dart';
@@ -30,123 +31,239 @@ class MorePage extends StatelessWidget {
                 height: 10,
               ),
               Card(
-                child: ListTile(
-                  title: const Text('Overview'),
-                  leading: const Icon(Icons.generating_tokens),
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => OverviewDialog(),
+                        builder: (BuildContext context) =>
+                            const OverviewDialog(),
                         fullscreenDialog: true,
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.generating_tokens,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Overview'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.youtube_searched_for_outlined),
-                  title: const Text('Business Tips'),
+                child: InkWell(
                   onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.youtube_searched_for_outlined,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Business Tips'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              const ListTile(
-                // ignore: unnecessary_const
-                title: Text(
-                  'Settings',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Text(
+                    'Settings',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('General Settings'),
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            GeneralSettingsDialog(),
+                            const GeneralSettingsDialog(),
                         fullscreenDialog: true,
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.settings,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('General Settings'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.notifications),
-                  title: const Text('Reminder Automation'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => ReminderDialog(),
-                        fullscreenDialog: true,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const ListTile(
-                title: Text(
-                  'Informations',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.file_copy),
-                  title: const Text('Terms & Conditions'),
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            TermsConditionsDialog(),
+                            const ReminderDialog(),
                         fullscreenDialog: true,
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.notifications,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Reminder Automation'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Text(
+                    'Informations',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.privacy_tip),
-                  title: const Text('Privacy Policy'),
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            PrivacyPolicyDialog(),
+                            const TermsConditionsDialog(),
                         fullscreenDialog: true,
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.file_copy,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Terms & Conditions'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.feedback),
-                  title: const Text('Feedback'),
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => FeedbackDialog(),
+                        builder: (BuildContext context) =>
+                            const PrivacyPolicyDialog(),
                         fullscreenDialog: true,
                       ),
                     );
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.privacy_tip,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Privacy Policy'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text('Rate Patowave'),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const FeedbackDialog(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.feedback,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Feedback'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                child: InkWell(
                   onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.black38,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        const Text('Rate Patowave'),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -173,7 +290,8 @@ class FirstRowData extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => MainInvoicePage(),
+                      builder: (BuildContext context) =>
+                          const MainInvoicePage(),
                       fullscreenDialog: true,
                     ),
                   );
@@ -203,7 +321,8 @@ class FirstRowData extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => MainReportsPage(),
+                      builder: (BuildContext context) =>
+                          const MainReportsPage(),
                       fullscreenDialog: true,
                     ),
                   );
@@ -233,7 +352,8 @@ class FirstRowData extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => MainGreetingsCards(),
+                      builder: (BuildContext context) =>
+                          const MainGreetingsCards(),
                       fullscreenDialog: true,
                     ),
                   );

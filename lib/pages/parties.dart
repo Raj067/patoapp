@@ -156,7 +156,7 @@ class AddPartiesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       child: Card(
         child: IconButton(
@@ -165,7 +165,7 @@ class AddPartiesButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => AddCustomerDialog(),
+                builder: (BuildContext context) => const AddCustomerDialog(),
                 fullscreenDialog: true,
               ),
             );

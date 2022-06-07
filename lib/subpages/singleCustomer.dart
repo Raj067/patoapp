@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
@@ -63,18 +64,15 @@ class SingleCustomerPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: [
-            _firstRowData(),
+            _firstRowData(customer),
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       "Send payment reminder",
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,14 +90,116 @@ class SingleCustomerPage extends StatelessWidget {
               ),
             ),
             Card(
-              child: ListTile(
-                leading: const Icon(Icons.notifications),
-                title: const Text("Reminder Automation"),
-                trailing: Switch(
-                  activeColor: patoPrimaryColor,
-                  value: true,
-                  onChanged: (value) {},
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.notifications,
+                      color: Colors.black38,
+                    ),
+                    Container(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Reminder Automation'),
+                          Switch(
+                            activeColor: patoPrimaryColor,
+                            value: true,
+                            onChanged: (value) {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+            ),
+            Card(
+              child: Column(
+                children: [
+                  Container(
+                    color: patoLightGreen,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text("Note"),
+                          Text("Received"),
+                          Text("Paid"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.keyboard_arrow_up, color: patoRed),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "-",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  "01/01/2020",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const Text("-"),
+                        const Text(
+                          "12,000",
+                          style: TextStyle(color: patoRed),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.keyboard_arrow_down,
+                                color: patoGreen),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Opening Balance",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  "02/01/2020",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "8,900",
+                          style: TextStyle(color: patoGreen),
+                        ),
+                        const Text("-"),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             )
           ],
@@ -108,7 +208,6 @@ class SingleCustomerPage extends StatelessWidget {
       persistentFooterButtons: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           OutlinedButton(
-            style: ButtonStyle(),
             onPressed: () {},
             child: const Text(
               "Payment Out",
@@ -128,23 +227,74 @@ class SingleCustomerPage extends StatelessWidget {
   }
 }
 
-Widget _firstRowData() => Card(
-      child: Column(children: const [
-        ListTile(
-          leading: Icon(Icons.more),
-          title: Text("Debt balance"),
-          subtitle: Text("To be received"),
-          trailing: Icon(Icons.more),
+Widget _firstRowData(SingleCustomer customer) => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  color: customer.isToReceive ? patoGreen : patoRed,
+                  child: Icon(
+                    customer.isToReceive
+                        ? Icons.arrow_downward
+                        : Icons.arrow_upward,
+                    color: patoWhite,
+                  ),
+                ),
+                Container(width: 10),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Debt Balance"),
+                          Text(
+                            "To ${customer.isToReceive ? "receive" : "give"}",
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        customer.amount,
+                        style: TextStyle(
+                            color: customer.isToReceive ? patoGreen : patoRed),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
+            Row(
+              children: [
+                const Icon(Icons.date_range, color: Colors.black38),
+                Container(width: 10),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("Weka Tarehe ya malipo"),
+                          Text(
+                            "Tarehe ya kamilisho",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios,
+                          color: Colors.black38),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        Divider(
-          indent: 10,
-          endIndent: 10,
-        ),
-        ListTile(
-          leading: Icon(Icons.calendar_month),
-          title: Text("Debt balance"),
-          subtitle: Text("To be received"),
-          trailing: Icon(Icons.arrow_forward),
-        ),
-      ]),
+      ),
     );
