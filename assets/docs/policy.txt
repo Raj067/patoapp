@@ -1,0 +1,13 @@
+warning: LF will be replaced by CRLF in windows/flutter/generated_plugin_registrant.h.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in windows/flutter/generated_plugins.cmake.
+The file will have its original line endings in your working directorywarning: LF will be replaced by CRLF in windows/flutter/generated_plugin_registrant.h.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in windows/flutter/generated_plugins.cmake.
+The file will have its original line endings in your working directorywarning: LF will be replaced by CRLF in windows/flutter/generated_plugin_registrant.h.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in windows/flutter/generated_plugins.cmake.
+The file will have its original line endings in your working directorywarning: LF will be replaced by CRLF in windows/flutter/generated_plugin_registrant.h.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in windows/flutter/generated_plugins.cmake.
+The file will have its original line endings in your working directory
