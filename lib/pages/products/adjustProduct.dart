@@ -8,6 +8,7 @@ Future<void> productAdjustment(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
           backgroundColor: patoBackgroundColor,
           title: const Text('Adjust Item'),
           content: Column(
@@ -20,11 +21,11 @@ Future<void> productAdjustment(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.network(product.thumbnail,
-                          width: 50, height: 50, fit: BoxFit.fill),
-                      Container(
-                        width: 10,
-                      ),
+                      // Image.network(product.thumbnail,
+                      //     width: 50, height: 50, fit: BoxFit.fill),
+                      // Container(
+                      //   width: 10,
+                      // ),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +75,7 @@ Future<void> productAdjustment(
                   ),
                 ),
               ),
-              Container(height: 20),
+              Container(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [

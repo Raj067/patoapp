@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment_ind_outlined),
-            label: 'Parties',
+            label: 'Contacts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),
