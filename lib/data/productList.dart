@@ -11,6 +11,7 @@ class SingleProduct {
   String supplierName;
   String supplierContact;
   int totalItemsSold;
+  int addedToCart = 0;
   String id;
 
   SingleProduct({
@@ -25,8 +26,12 @@ class SingleProduct {
     this.totalItemsSold = 90,
     this.supplierName = "Rajabu",
     this.supplierContact = "+255679190720",
+    this.addedToCart = 0,
     this.id = '1',
   });
+  addNewProductToCart(int num) {
+    addedToCart += num;
+  }
 }
 
 allProductDetails() {

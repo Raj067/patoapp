@@ -147,6 +147,7 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
                       Container(
                         height: 10,
                       ),
+                      // Text("${product.addedToCart}"),
                       const CircleAvatar(
                         backgroundColor: patoLightGreen,
                         foregroundColor: patoBlack,
@@ -161,109 +162,6 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
         ),
       ),
     );
-
-// Widget _homeListTileData(BuildContext context, SingleProduct product) {
-//   return Card(
-//     child: Dismissible(
-//       key: Key(product.id),
-//       confirmDismiss: (direction) async {
-//         if (direction == DismissDirection.startToEnd) {
-//           _addDataToCartManual(context, product);
-//         } else {
-//           productAdjustment(context, product);
-//         }
-//         // if (direction == DismissDirection.startToEnd) {
-//         //   setState(() {
-//         //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
-//         //   });
-//         //   return false;
-//         // }
-//         return false;
-//       },
-//       background: Container(
-//         color: patoPrimaryColor,
-//         child: const Align(
-//           alignment: Alignment.centerLeft,
-//           child: Padding(
-//             padding: EdgeInsets.only(left: 16),
-//             child: Icon(
-//               Icons.add_shopping_cart_rounded,
-//               color: patoWhite,
-//             ),
-//           ),
-//         ),
-//       ),
-//       secondaryBackground: Container(
-//         color: patoRed,
-//         child: const Align(
-//           alignment: Alignment.centerRight,
-//           child: Padding(
-//             padding: EdgeInsets.only(right: 16),
-//             child: Icon(
-//               Icons.edit,
-//               color: patoWhite,
-//             ),
-//           ),
-//         ),
-//       ),
-//       child: ListTile(
-//         onLongPress: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute<void>(
-//               builder: (BuildContext context) => SingleProductDetails(
-//                 product: product,
-//               ),
-//               fullscreenDialog: true,
-//             ),
-//           );
-//         },
-//         onTap: () {
-//           _addDataToCartAutomatic(context, product);
-//         },
-//         leading: Container(
-//           width: 50,
-//           height: 50,
-//           child: Image.network(
-//             product.thumbnail,
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         title: Text(product.productName,
-//             style: const TextStyle(
-//               fontWeight: FontWeight.bold,
-//               fontSize: 15,
-//             ),),
-//         subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-//           Text(
-//             'Tsh ${product.productPrice}',
-//             style: const TextStyle(fontSize: 16, color: patoGrey),
-//           ),
-//           const SizedBox(
-//             width: 10,
-//           ),
-//           Text(
-//             'Qty: ${product.quantity}',
-//             style: TextStyle(
-//                 fontSize: 14,
-//                 fontStyle: FontStyle.italic,
-//                 color: product.isOutStock
-//                     ? patoWarning
-//                     : product.quantity == 0
-//                         ? patoRed
-//                         : patoGrey),
-//           ),
-//         ]),
-//         trailing: const CircleAvatar(
-//           backgroundColor: patoLightGreen,
-//           foregroundColor: patoBlack,
-//           child: Icon(Icons.add_shopping_cart_rounded),
-//         ),
-//         isThreeLine: true,
-//       ),
-//     ),
-//   );
-// }
 
 Future<void> _addDataToCartAutomatic(
     BuildContext context, SingleProduct product) async {
@@ -500,7 +398,9 @@ Future<void> _addDataToCartManual(
               child: const Text("Cancel"),
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // product.addNewProductToCart(20);
+                },
                 child: const Text("Add", style: TextStyle(color: patoWhite)))
           ],
         );
@@ -560,25 +460,3 @@ class ItemAllDataFiltered extends StatelessWidget {
     );
   }
 }
-
-// class ActionButtonsSearch extends StatelessWidget {
-//   const ActionButtonsSearch({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: IconButton(
-//         icon: const Icon(Icons.add),
-//         onPressed: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute<void>(
-//               builder: (BuildContext context) => AddProductPage(),
-//               fullscreenDialog: true,
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
