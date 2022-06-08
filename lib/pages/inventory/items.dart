@@ -26,7 +26,9 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
       child: Column(
         children: [
           _itemSearchBar(context),
-          const Expanded(child: ItemAllDataFiltered()),
+          const Expanded(
+            child: ItemAllDataFiltered(),
+          ),
         ],
       ),
     );
@@ -111,7 +113,8 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
                           children: [
                             Text(
                               product.productName,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Container(
                               height: 10,
@@ -230,7 +233,7 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
 //             style: const TextStyle(
 //               fontWeight: FontWeight.bold,
 //               fontSize: 15,
-//             )),
+//             ),),
 //         subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
 //           Text(
 //             'Tsh ${product.productPrice}',
@@ -297,8 +300,8 @@ Future<void> _addDataToCartAutomatic(
                                 children: [
                                   Text(
                                     product.productName,
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Container(
                                     height: 10,
@@ -350,18 +353,22 @@ Future<void> _addDataToCartAutomatic(
                         icon: const Icon(Icons.do_disturb_on_outlined),
                       ),
                       Container(
-                          width: 50,
-                          height: 25,
-                          alignment: AlignmentDirectional.center,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            border: Border(
-                                top: BorderSide(width: 1, color: patoGrey),
-                                left: BorderSide(width: 1, color: patoGrey),
-                                right: BorderSide(width: 1, color: patoGrey),
-                                bottom: BorderSide(width: 1, color: patoGrey)),
+                        width: 50,
+                        height: 25,
+                        alignment: AlignmentDirectional.center,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
                           ),
-                          child: const Text("12")),
+                          border: Border(
+                            top: BorderSide(width: 1, color: patoGrey),
+                            left: BorderSide(width: 1, color: patoGrey),
+                            right: BorderSide(width: 1, color: patoGrey),
+                            bottom: BorderSide(width: 1, color: patoGrey),
+                          ),
+                        ),
+                        child: const Text("12"),
+                      ),
                       IconButton(
                         color: patoPrimaryColor,
                         splashRadius: 25,
@@ -376,8 +383,9 @@ Future<void> _addDataToCartAutomatic(
           ),
           actions: [
             TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Cancel")),
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
             ElevatedButton(
                 onPressed: () {},
                 child: const Text("Add", style: TextStyle(color: patoWhite)))
@@ -421,8 +429,8 @@ Future<void> _addDataToCartManual(
                                 children: [
                                   Text(
                                     product.productName,
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Container(
                                     height: 10,
@@ -488,8 +496,9 @@ Future<void> _addDataToCartManual(
           ),
           actions: [
             TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Cancel")),
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
             ElevatedButton(
                 onPressed: () {},
                 child: const Text("Add", style: TextStyle(color: patoWhite)))
