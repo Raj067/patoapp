@@ -29,7 +29,7 @@ class PartiesPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddPaymentDialog(),
+              builder: (BuildContext context) => const AddPaymentDialog(),
               fullscreenDialog: true,
             ),
           );
@@ -46,7 +46,7 @@ class FirstRowPartiesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
+      child: SizedBox(
         height: 130,
         child: Column(children: [
           Container(
@@ -163,7 +163,7 @@ class AddPartiesButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddCustomerDialog(),
+              builder: (BuildContext context) => const AddCustomerDialog(),
               fullscreenDialog: true,
             ),
           );
@@ -220,10 +220,11 @@ class _CustomerDetailsState extends State<CustomerDetails> {
     }
 
     ;
+
     List<SingleCustomer> sortedData = allCustomerDetails()
         .where((i) => onItemSearch(i.firstName, "rajabu") == true)
         .toList();
-    print(sortedData);
+    // print(sortedData);
 
     return Column(
       children: data,

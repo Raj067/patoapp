@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -25,15 +25,8 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override

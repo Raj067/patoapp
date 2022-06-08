@@ -111,7 +111,7 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
                           children: [
                             Text(
                               product.productName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Container(
                               height: 10,
@@ -144,7 +144,7 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
                       Container(
                         height: 10,
                       ),
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundColor: patoLightGreen,
                         foregroundColor: patoBlack,
                         child: Icon(Icons.add_shopping_cart_rounded),
@@ -298,7 +298,7 @@ Future<void> _addDataToCartAutomatic(
                                   Text(
                                     product.productName,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Container(
                                     height: 10,
@@ -422,7 +422,7 @@ Future<void> _addDataToCartManual(
                                   Text(
                                     product.productName,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Container(
                                     height: 10,
@@ -526,7 +526,7 @@ Widget _itemSearchBar(BuildContext context) => Row(children: [
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => AddProductPage(),
+                  builder: (BuildContext context) => const AddProductPage(),
                   fullscreenDialog: true,
                 ),
               );

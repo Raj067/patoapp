@@ -34,42 +34,42 @@ const TabBarTheme _tabBarTheme = TabBarTheme(
   ),
 );
 
-IconThemeData _customIconTheme(IconThemeData original) {
-  return original.copyWith(color: patoBlack);
-}
+// IconThemeData _customIconTheme(IconThemeData original) {
+//   return original.copyWith(color: patoBlack);
+// }
 
-TextTheme _buildPatoTextTheme(TextTheme base) {
-  return base.apply(
-    fontFamily: 'Rubik',
-    displayColor: patoBlack,
-    bodyColor: patoBlack,
-  );
-}
+// TextTheme _buildPatoTextTheme(TextTheme base) {
+//   return base.apply(
+//     fontFamily: 'Rubik',
+//     displayColor: patoBlack,
+//     bodyColor: patoBlack,
+//   );
+// }
 
-const ColorScheme _patoColorScheme = ColorScheme(
-  primary: patoPrimaryColor,
-  secondary: patoPrimaryColor,
-  surface: patoWhite,
-  background: patoWhite,
-  error: patoRed,
-  onPrimary: patoPrimaryColor,
-  onSecondary: patoPrimaryColor,
-  onSurface: patoPrimaryColor,
-  onBackground: patoPrimaryColor,
-  onError: patoWhite,
-  brightness: Brightness.light,
-);
+// const ColorScheme _patoColorScheme = ColorScheme(
+//   primary: patoPrimaryColor,
+//   secondary: patoPrimaryColor,
+//   surface: patoWhite,
+//   background: patoWhite,
+//   error: patoRed,
+//   onPrimary: patoPrimaryColor,
+//   onSecondary: patoPrimaryColor,
+//   onSurface: patoPrimaryColor,
+//   onBackground: patoPrimaryColor,
+//   onError: patoWhite,
+//   brightness: Brightness.light,
+// );
 
 const Color patoPrimaryColor = Color.fromARGB(255, 51, 121, 111);
 const Color patoLightGreen = Color.fromARGB(255, 151, 186, 180);
-const Color patoBackgroundColor = Color.fromARGB(255, 240, 240, 240);
+// const Color patoBackgroundColor = Color.fromARGB(255, 240, 240, 240);
 const Color patoBlack = Color.fromARGB(255, 0, 0, 0);
 const Color patoWhite = Color.fromARGB(255, 254, 255, 255);
-const Color patoRed = Color(0xFFC5032B);
-const Color patoGrey = Color.fromARGB(255, 75, 74, 74);
-const Color patoGreen = Colors.green;
-const Color patoBlue = Colors.blue;
-const Color patoWarning = Colors.yellow;
+// const Color patoRed = Color(0xFFC5032B);
+// const Color patoGrey = Color.fromARGB(255, 75, 74, 74);
+// const Color patoGreen = Colors.green;
+// const Color patoBlue = Colors.blue;
+// const Color patoWarning = Colors.yellow;
 
 // DARK MODE
 

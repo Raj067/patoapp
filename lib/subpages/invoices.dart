@@ -64,7 +64,7 @@ Widget _invoiceHeader() => Row(
                   ),
                   const Text(
                     "1",
-                    style: const TextStyle(fontSize: 20, color: patoBlue),
+                    style: TextStyle(fontSize: 20, color: patoBlue),
                   ),
                 ],
               ),
@@ -85,7 +85,7 @@ Widget _invoiceHeader() => Row(
                   ),
                   const Text(
                     "1",
-                    style: const TextStyle(fontSize: 20, color: patoRed),
+                    style: TextStyle(fontSize: 20, color: patoRed),
                   ),
                 ],
               ),

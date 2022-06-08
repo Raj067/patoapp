@@ -6,11 +6,11 @@ import 'package:patoapp/subpages/topNotificationIcon.dart';
 import 'package:patoapp/subpages/topProfileIcon.dart';
 
 PreferredSizeWidget mainTopBar(
-        PreferredSizeWidget _button, BuildContext context) =>
+        PreferredSizeWidget button, BuildContext context) =>
     AppBar(
-      title: ProfileIcon(),
-      actions: [NotificationIcon(), const SizedBox(width: 20)],
-      bottom: _button,
+      title: const ProfileIcon(),
+      actions: [const NotificationIcon(), const SizedBox(width: 20)],
+      bottom: button,
     );
 
 class NotificationIcon extends StatelessWidget {
@@ -27,7 +27,7 @@ class NotificationIcon extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TopNotificationIcon(),
+            builder: (BuildContext context) => const TopNotificationIcon(),
             fullscreenDialog: true,
           ),
         );
@@ -53,7 +53,7 @@ class ProfileIcon extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TopProfileIcon(),
+            builder: (BuildContext context) => const TopProfileIcon(),
             fullscreenDialog: true,
           ),
         );
@@ -168,7 +168,7 @@ class _MyDropdownButtonPartiesState extends State<MyDropdownButtonParties> {
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value, style: TextStyle(fontSize: 15)),
+            child: Text(value, style: const TextStyle(fontSize: 15)),
           );
         }).toList(),
       ),
@@ -217,7 +217,7 @@ class _MyDropdownButtonBusinessState extends State<MyDropdownButtonBusiness> {
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value, style: TextStyle(fontSize: 15)),
+            child: Text(value, style: const TextStyle(fontSize: 15)),
           );
         }).toList(),
       ),

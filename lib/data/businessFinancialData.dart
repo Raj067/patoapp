@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class BusinessFinancial {
   String date;
   String income;

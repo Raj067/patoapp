@@ -29,7 +29,7 @@ class PartiesPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddPaymentDialog(),
+              builder: (BuildContext context) => const AddPaymentDialog(),
               fullscreenDialog: true,
             ),
           );
@@ -156,7 +156,7 @@ class AddPartiesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 50,
       child: Card(
         child: IconButton(
