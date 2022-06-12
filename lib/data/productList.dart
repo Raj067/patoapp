@@ -38,7 +38,7 @@ class SingleProduct {
   }
 }
 
-allProductDetails() {
+List<SingleProduct> allProductDetails() {
   return [
     SingleProduct(
       productName: "Product 1",

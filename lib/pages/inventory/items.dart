@@ -22,7 +22,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   List<SingleProduct> customData = [];
 
   fetchData() async {
-    customData = await allProductDetails();
+    customData = allProductDetails();
     setState(() {});
   }
 
@@ -334,6 +334,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                         onPressed: () {
                           setState(() {
                             product.addNewProductToCart(-1);
+                            _onCartChange(product);
                           });
                         },
                         splashRadius: 25,
@@ -362,6 +363,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                         onPressed: () {
                           setState(() {
                             product.addNewProductToCart(1);
+                            _onCartChange(product);
                           });
                         },
                         icon: const Icon(Icons.add_circle_outline_sharp),
@@ -500,6 +502,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               onPressed: () {
                 setState(() {
                   product.addNewProductToCart(20);
+                  _onCartChange(product);
                 });
               },
               child: const Text(
@@ -634,5 +637,22 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
         );
       },
     );
+  }
+
+  // _onItemSearch(name, query) {
+  //   return name!.toLowerCase().contains(query.toLowerCase());
+  // }
+
+  // customData = customData.where((i) => _onItemSearch(i.productName, pName) == true).toList();
+  _onCartChange(SingleProduct pName) {
+    List<SingleProduct> newData = [
+      pName,
+    ];
+    for (var element in customData) {
+      if (element != pName) {
+        newData.add(element);
+      }
+    }
+    customData = newData;
   }
 }
