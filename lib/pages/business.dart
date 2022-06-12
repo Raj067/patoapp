@@ -5,13 +5,20 @@ import 'package:patoapp/data/businessFinancialData.dart';
 import 'package:patoapp/reports/financialReport.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
 
-class BusinessPage extends StatelessWidget {
+class BusinessPage extends StatefulWidget {
   const BusinessPage({Key? key}) : super(key: key);
 
   @override
+  State<BusinessPage> createState() => _BusinessPageState();
+}
+
+class _BusinessPageState extends State<BusinessPage> {
+  String dropdownValue = 'Last Month';
+  bool isWeek = true;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainBusinessTopBar(context),
+      appBar: mainTopBar(_businessButtomTopBar(), context),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
@@ -54,6 +61,62 @@ class BusinessPage extends StatelessWidget {
     );
   }
 
+  PreferredSizeWidget _businessButtomTopBar() => PreferredSize(
+        preferredSize: const Size.fromHeight(48.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    // color: patoWhite,
+                    margin: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(2),
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: patoLightGreen,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      alignment: AlignmentDirectional.topStart,
+                      underline: Container(
+                        height: 0,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down_rounded,
+                        size: 15,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                          dropdownValue == 'Last Month'
+                              ? isWeek = false
+                              : isWeek = true;
+                        });
+                      },
+                      items: <String>['Last Month', 'Last Week']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
   _firstRowBusinessData(BuildContext context) {
     return Card(
       child: SizedBox(
@@ -65,47 +128,63 @@ class BusinessPage extends StatelessWidget {
               height: 60,
               child: Row(children: [
                 Expanded(
-                    child: Container(
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(10)),
-                    border: Border(
+                  child: Container(
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                      ),
+                      border: Border(
                         top: BorderSide(width: 1, color: patoGreen),
                         left: BorderSide(width: 1, color: patoGreen),
                         right: BorderSide(width: 1, color: patoGreen),
-                        bottom: BorderSide(width: 1, color: patoGreen)),
+                        bottom: BorderSide(width: 1, color: patoGreen),
+                      ),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text(
+                            "Sales",
+                            style: TextStyle(color: patoGrey, fontSize: 18),
+                          ),
+                          Text(
+                            "Tsh ${isWeek ? businessGeneral.salesWeek : businessGeneral.salesMonth}",
+                            style:
+                                const TextStyle(color: patoGreen, fontSize: 16),
+                          )
+                        ]),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text("Sales",
-                            style: TextStyle(color: patoGrey, fontSize: 18)),
-                        Text("Tsh 12,000",
-                            style: TextStyle(color: patoGreen, fontSize: 16))
-                      ]),
-                )),
+                ),
                 Expanded(
-                    child: Container(
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topRight: Radius.circular(10)),
-                    border: Border(
+                  child: Container(
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                      ),
+                      border: Border(
                         top: BorderSide(width: 1, color: patoRed),
                         left: BorderSide(width: 1, color: patoRed),
                         right: BorderSide(width: 1, color: patoRed),
-                        bottom: BorderSide(width: 1, color: patoRed)),
+                        bottom: BorderSide(width: 1, color: patoRed),
+                      ),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text(
+                            "Expenses",
+                            style: TextStyle(color: patoGrey, fontSize: 18),
+                          ),
+                          Text(
+                            "Tsh ${isWeek ? businessGeneral.expensesWeek : businessGeneral.expensesMonth}",
+                            style:
+                                const TextStyle(color: patoRed, fontSize: 16),
+                          )
+                        ]),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text("Expenses",
-                            style: TextStyle(color: patoGrey, fontSize: 18)),
-                        Text("Tsh 12,000",
-                            style: TextStyle(color: patoRed, fontSize: 16))
-                      ]),
-                )),
+                ),
               ]),
             ),
             SizedBox(
@@ -114,14 +193,14 @@ class BusinessPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Profit",
                       style: TextStyle(color: patoGrey),
                     ),
                     Text(
-                      "Tshs 13,900",
-                      style: TextStyle(color: patoGreen),
+                      "Tshs ${isWeek ? businessGeneral.profitWeek : businessGeneral.profitMonth}",
+                      style: const TextStyle(color: patoGreen),
                     ),
                   ],
                 ),
@@ -151,8 +230,10 @@ class BusinessPage extends StatelessWidget {
                       Row(
                         children: const [
                           Icon(Icons.file_copy, color: patoBlue),
-                          Text("Financial Reports",
-                              style: TextStyle(color: patoBlue)),
+                          Text(
+                            "Financial Reports",
+                            style: TextStyle(color: patoBlue),
+                          ),
                         ],
                       ),
                       const Icon(Icons.arrow_forward_ios, color: patoBlue),
@@ -167,153 +248,6 @@ class BusinessPage extends StatelessWidget {
     );
   }
 }
-
-// class FirstRowBusinessData extends StatelessWidget {
-//   const FirstRowBusinessData({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: SizedBox(
-//         height: 160,
-//         child: Column(children: [
-//           Container(
-//             alignment: AlignmentDirectional.centerStart,
-//             height: 60,
-//             child: Row(children: [
-//               Expanded(
-//                   child: Container(
-//                 height: 60,
-//                 decoration: const BoxDecoration(
-//                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
-//                   border: Border(
-//                       top: BorderSide(width: 1, color: patoGreen),
-//                       left: BorderSide(width: 1, color: patoGreen),
-//                       right: BorderSide(width: 1, color: patoGreen),
-//                       bottom: BorderSide(width: 1, color: patoGreen)),
-//                 ),
-//                 child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: const [
-//                       Text("Sales",
-//                           style: TextStyle(color: patoGrey, fontSize: 18)),
-//                       Text("Tsh 12,000",
-//                           style: TextStyle(color: patoGreen, fontSize: 16))
-//                     ]),
-//               )),
-//               Expanded(
-//                   child: Container(
-//                 height: 80,
-//                 decoration: const BoxDecoration(
-//                   borderRadius:
-//                       BorderRadius.only(topRight: Radius.circular(10)),
-//                   border: Border(
-//                       top: BorderSide(width: 1, color: patoRed),
-//                       left: BorderSide(width: 1, color: patoRed),
-//                       right: BorderSide(width: 1, color: patoRed),
-//                       bottom: BorderSide(width: 1, color: patoRed)),
-//                 ),
-//                 child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: const [
-//                       Text("Expenses",
-//                           style: TextStyle(color: patoGrey, fontSize: 18)),
-//                       Text("Tsh 12,000",
-//                           style: TextStyle(color: patoRed, fontSize: 16))
-//                     ]),
-//               )),
-//             ]),
-//           ),
-//           SizedBox(
-//             height: 40,
-//             child: Padding(
-//               padding: const EdgeInsets.all(10),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: const [
-//                   Text(
-//                     "Profit",
-//                     style: TextStyle(color: patoGrey),
-//                   ),
-//                   Text(
-//                     "Tshs 13,900",
-//                     style: TextStyle(color: patoGreen),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//           const Divider(
-//             indent: 10,
-//             endIndent: 10,
-//           ),
-//           InkWell(
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute<void>(
-//                   builder: (BuildContext context) => FinancialReportDialog(),
-//                   fullscreenDialog: true,
-//                 ),
-//               );
-//             },
-//             child: SizedBox(
-//               height: 40,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(10),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Row(
-//                       children: const [
-//                         Icon(Icons.file_copy, color: patoBlue),
-//                         Text("Financial Reports",
-//                             style: TextStyle(color: patoBlue)),
-//                       ],
-//                     ),
-//                     const Icon(Icons.arrow_forward_ios, color: patoBlue),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-
-//           // const SizedBox(
-//           //   height: 40,
-//           //   child: ListTile(
-//           //     title: Text("Profit", style: TextStyle(color: patoGrey)),
-//           //     trailing: Text("Tshs 13,900", style: TextStyle(color: patoGreen)),
-//           //   ),
-//           // ),
-//           // const Divider(
-//           //   indent: 10,
-//           //   endIndent: 10,
-//           // ),
-
-//           // SizedBox(
-//           //   height: 40,
-//           //   child: ListTile(
-//           //     // style: ,
-//           //     leading: const Icon(Icons.file_copy, color: patoBlue),
-//           //     title: const Text("Financial Reports",
-//           //         style: TextStyle(color: patoBlue)),
-//           //     trailing: const Icon(Icons.arrow_forward_ios, color: patoBlue),
-//           //     onTap: () {
-//           //       Navigator.push(
-//           //         context,
-//           //         MaterialPageRoute<void>(
-//           //           builder: (BuildContext context) => FinancialReportDialog(),
-//           //           fullscreenDialog: true,
-//           //         ),
-//           //       );
-//           //     },
-//           //   ),
-//           // ),
-//         ]),
-//       ),
-//     );
-//   }
-// }
 
 class SecondRowBusinessData extends StatelessWidget {
   const SecondRowBusinessData({Key? key}) : super(key: key);
@@ -445,7 +379,9 @@ class AllFinancialData extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> data = [];
     for (var element in allBusinessFinancialData()) {
-      data.add(_financialData(context, element));
+      data.add(
+        _financialData(context, element),
+      );
     }
 
     return Column(

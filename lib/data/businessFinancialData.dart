@@ -52,3 +52,23 @@ allBusinessFinancialData() {
     ),
   ];
 }
+
+class BusinessGeneral {
+  String salesWeek;
+  String expensesWeek;
+  String profitWeek;
+  String salesMonth;
+  String expensesMonth;
+  String profitMonth;
+
+  BusinessGeneral({
+    this.salesWeek = "43,000",
+    this.expensesWeek = "12,000",
+    this.profitWeek = "54,000",
+    this.salesMonth = "9,000",
+    this.expensesMonth = "78,900",
+    this.profitMonth = '65000',
+  });
+}
+
+BusinessGeneral businessGeneral = BusinessGeneral();
