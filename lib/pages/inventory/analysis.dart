@@ -14,9 +14,20 @@ class AnalysisHomePage extends StatelessWidget {
         children: [
           _singleCardData("2,000", "Instock", "6", "Inventory turnover"),
           _singleCardData("751", "Stock-In", "821", "Stock-out"),
-          const Card(
-            child: ListTile(
-                title: Text("Top Selling Items"), trailing: Icon(Icons.filter)),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Top Selling Items'),
+                  Icon(
+                    Icons.settings_input_component_sharp,
+                    color: Colors.black38,
+                  ),
+                ],
+              ),
+            ),
           ),
           const AllTopSellingItems(),
         ],

@@ -8,6 +8,7 @@ Future<void> productAdjustment(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
           backgroundColor: patoBackgroundColor,
           title: const Text('Adjust Item'),
