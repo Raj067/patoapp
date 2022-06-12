@@ -6,7 +6,7 @@ import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
 
-import '../products/adjustProduct.dart';
+// import '../products/adjustProduct.dart';
 // import 'package:http/http.dart' as http;
 
 class ItemsHomePage extends StatefulWidget {
@@ -26,16 +26,66 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
       child: Column(
         children: [
           _itemSearchBar(context),
-          const Expanded(
-            child: ItemAllDataFiltered(),
-          ),
+          _itemAllDataFiltered(),
         ],
       ),
     );
   }
-}
 
-Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
+  Widget _itemSearchBar(BuildContext context) => Row(
+        children: [
+          const Expanded(
+            child: SizedBox(
+              height: 50,
+              child: Card(
+                // ignore: unnecessary_const
+                child: TextField(
+                  selectionHeightStyle: BoxHeightStyle.strut,
+                  // ignore: unnecessary_const
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Search item',
+                    prefixIcon: Icon(Icons.search),
+                    enabledBorder: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: Card(
+              child: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const AddProductPage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+
+  Widget _itemAllDataFiltered() {
+    List<Widget> data = [];
+    for (var element in allProductDetails()) {
+      data.add(_singleProductTile(context, element));
+    }
+    return Expanded(
+      child: ListView(
+        children: data,
+      ),
+    );
+  }
+
+  Widget _singleProductTile(BuildContext context, SingleProduct product) {
+    return Card(
       child: Dismissible(
         key: Key(product.id),
         confirmDismiss: (direction) async {
@@ -47,7 +97,7 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
           // if (direction == DismissDirection.startToEnd) {
           //   setState(() {
           //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
-          //   });
+          //   },);
           //   return false;
           // }
           return false;
@@ -108,42 +158,42 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product.productName,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Container(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Tsh ${product.productPrice}',
-                                  style: const TextStyle(
-                                      fontSize: 16, color: patoGrey),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.productName,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Tsh ${product.productPrice}',
+                                style: const TextStyle(
+                                    fontSize: 16, color: patoGrey),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Qty: ${product.quantity}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                  color: product.isOutStock
+                                      ? patoWarning
+                                      : product.quantity == 0
+                                          ? patoRed
+                                          : patoGrey,
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Qty: ${product.quantity}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontStyle: FontStyle.italic,
-                                    color: product.isOutStock
-                                        ? patoWarning
-                                        : product.quantity == 0
-                                            ? patoRed
-                                            : patoGrey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ]),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                       Container(
                         height: 10,
                       ),
@@ -162,10 +212,11 @@ Widget _singleProductTile(BuildContext context, SingleProduct product) => Card(
         ),
       ),
     );
+  }
 
-Future<void> _addDataToCartAutomatic(
-    BuildContext context, SingleProduct product) async {
-  await showDialog(
+  Future<void> _addDataToCartAutomatic(
+      BuildContext context, SingleProduct product) async {
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -193,43 +244,43 @@ Future<void> _addDataToCartAutomatic(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.productName,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Tsh ${product.productPrice}',
-                                        style: const TextStyle(
-                                            fontSize: 16, color: patoGrey),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.productName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Tsh ${product.productPrice}',
+                                      style: const TextStyle(
+                                          fontSize: 16, color: patoGrey),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Qty: ${product.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontStyle: FontStyle.italic,
+                                        color: product.isOutStock
+                                            ? patoWarning
+                                            : product.quantity == 0
+                                                ? patoRed
+                                                : patoGrey,
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Qty: ${product.quantity}',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontStyle: FontStyle.italic,
-                                          color: product.isOutStock
-                                              ? patoWarning
-                                              : product.quantity == 0
-                                                  ? patoRed
-                                                  : patoGrey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ]),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -286,16 +337,21 @@ Future<void> _addDataToCartAutomatic(
               child: const Text("Cancel"),
             ),
             ElevatedButton(
-                onPressed: () {},
-                child: const Text("Add", style: TextStyle(color: patoWhite)))
+              onPressed: () {},
+              child: const Text(
+                "Add",
+                style: TextStyle(color: patoWhite),
+              ),
+            )
           ],
         );
-      });
-}
+      },
+    );
+  }
 
-Future<void> _addDataToCartManual(
-    BuildContext context, SingleProduct product) async {
-  await showDialog(
+  Future<void> _addDataToCartManual(
+      BuildContext context, SingleProduct product) async {
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -323,43 +379,43 @@ Future<void> _addDataToCartManual(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.productName,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Tsh ${product.productPrice}',
-                                        style: const TextStyle(
-                                            fontSize: 16, color: patoGrey),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.productName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Tsh ${product.productPrice}',
+                                      style: const TextStyle(
+                                          fontSize: 16, color: patoGrey),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Qty: ${product.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontStyle: FontStyle.italic,
+                                        color: product.isOutStock
+                                            ? patoWarning
+                                            : product.quantity == 0
+                                                ? patoRed
+                                                : patoGrey,
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Qty: ${product.quantity}',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontStyle: FontStyle.italic,
-                                          color: product.isOutStock
-                                              ? patoWarning
-                                              : product.quantity == 0
-                                                  ? patoRed
-                                                  : patoGrey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ]),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -400,65 +456,136 @@ Future<void> _addDataToCartManual(
               child: const Text("Cancel"),
             ),
             ElevatedButton(
-                onPressed: () {
-                  // product.addNewProductToCart(20);
-                },
-                child: const Text("Add", style: TextStyle(color: patoWhite)))
+              onPressed: () {
+                // product.addNewProductToCart(20);
+              },
+              child: const Text(
+                "Add",
+                style: TextStyle(color: patoWhite),
+              ),
+            )
           ],
         );
-      });
-}
+      },
+    );
+  }
 
-Widget _itemSearchBar(BuildContext context) => Row(children: [
-      const Expanded(
-        child: SizedBox(
-          height: 50,
-          child: Card(
-            // ignore: unnecessary_const
-            child: TextField(
-              selectionHeightStyle: BoxHeightStyle.strut,
-              // ignore: unnecessary_const
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search item',
-                prefixIcon: Icon(Icons.search),
-                enabledBorder: InputBorder.none,
-              ),
-            ),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 50,
-        child: Card(
-          child: IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const AddProductPage(),
-                  fullscreenDialog: true,
+  Future<void> productAdjustment(
+      BuildContext context, SingleProduct product) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+          backgroundColor: patoBackgroundColor,
+          title: const Text('Adjust Item'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Image.network(product.thumbnail,
+                      //     width: 50, height: 50, fit: BoxFit.fill),
+                      // Container(
+                      //   width: 10,
+                      // ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.productName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Tsh ${product.productPrice}',
+                                      style: const TextStyle(
+                                          fontSize: 16, color: patoGrey),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Qty: ${product.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontStyle: FontStyle.italic,
+                                        color: product.isOutStock
+                                            ? patoWarning
+                                            : product.quantity == 0
+                                                ? patoRed
+                                                : patoGrey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
+              ),
+              Container(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text("Qty:"),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: Card(
+                        // ignore: unnecessary_const
+                        child: TextField(
+                          // ignore: unnecessary_const
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            // hintText: 'Quantity',
+                            prefixIcon: Icon(Icons.add),
+                            enabledBorder: InputBorder.none,
+                            // helperText: "Quantity",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-      ),
-    ]);
-
-class ItemAllDataFiltered extends StatelessWidget {
-  const ItemAllDataFiltered({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> data = [];
-    for (var element in allProductDetails()) {
-      data.add(_singleProductTile(context, element));
-    }
-
-    return ListView(
-      children: data,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text(
+                "Add",
+                style: TextStyle(color: patoWhite),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
