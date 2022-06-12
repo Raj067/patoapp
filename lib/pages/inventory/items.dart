@@ -19,6 +19,19 @@ class ItemsHomePage extends StatefulWidget {
 }
 
 class _ItemsHomePageState extends State<ItemsHomePage> {
+  List<SingleProduct> customData = [];
+
+  fetchData() async {
+    customData = await allProductDetails();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,14 +87,24 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 
   Widget _itemAllDataFiltered() {
     List<Widget> data = [];
-    for (var element in allProductDetails()) {
+    for (var element in customData) {
       data.add(_singleProductTile(context, element));
     }
-    return Expanded(
-      child: ListView(
-        children: data,
-      ),
-    );
+    return customData == []
+        ? Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                CircularProgressIndicator(),
+              ],
+            ),
+          )
+        : Expanded(
+            child: ListView(
+              children: data,
+            ),
+          );
   }
 
   Widget _singleProductTile(BuildContext context, SingleProduct product) {
@@ -148,8 +171,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.network(product.thumbnail,
-                    width: 50, height: 50, fit: BoxFit.fill),
+                // Image.network(product.thumbnail,
+                //     width: 50, height: 50, fit: BoxFit.fill),
                 Container(
                   width: 10,
                 ),
@@ -197,12 +220,20 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                       Container(
                         height: 10,
                       ),
-                      // Text("${product.addedToCart}"),
-                      const CircleAvatar(
-                        backgroundColor: patoLightGreen,
-                        foregroundColor: patoBlack,
-                        child: Icon(Icons.add_shopping_cart_rounded),
-                      ),
+                      product.addedToCart == 0
+                          ? const CircleAvatar(
+                              backgroundColor: patoLightGreen,
+                              foregroundColor: patoBlack,
+                              child: Icon(Icons.add_shopping_cart_rounded),
+                            )
+                          : Center(
+                              child: Text(
+                                "${product.addedToCart}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),
@@ -215,7 +246,9 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   }
 
   Future<void> _addDataToCartAutomatic(
-      BuildContext context, SingleProduct product) async {
+    BuildContext context,
+    SingleProduct product,
+  ) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -298,7 +331,11 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                     children: [
                       IconButton(
                         color: patoPrimaryColor,
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            product.addNewProductToCart(-1);
+                          });
+                        },
                         splashRadius: 25,
                         icon: const Icon(Icons.do_disturb_on_outlined),
                       ),
@@ -317,12 +354,16 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                             bottom: BorderSide(width: 1, color: patoGrey),
                           ),
                         ),
-                        child: const Text("12"),
+                        child: Text("${product.addedToCart}"),
                       ),
                       IconButton(
                         color: patoPrimaryColor,
                         splashRadius: 25,
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            product.addNewProductToCart(1);
+                          });
+                        },
                         icon: const Icon(Icons.add_circle_outline_sharp),
                       ),
                     ],
@@ -332,14 +373,14 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
+            // TextButton(
+            //   onPressed: () => Navigator.pop(context),
+            //   child: const Text("Cancel"),
+            // ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pop(context),
               child: const Text(
-                "Add",
+                "Cancel",
                 style: TextStyle(color: patoWhite),
               ),
             )
@@ -457,7 +498,9 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                // product.addNewProductToCart(20);
+                setState(() {
+                  product.addNewProductToCart(20);
+                });
               },
               child: const Text(
                 "Add",
@@ -577,7 +620,11 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               child: const Text("Cancel"),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  product.adjustProductQuantity(10);
+                });
+              },
               child: const Text(
                 "Add",
                 style: TextStyle(color: patoWhite),

@@ -32,6 +32,10 @@ class SingleProduct {
   addNewProductToCart(int num) {
     addedToCart += num;
   }
+
+  adjustProductQuantity(int num) {
+    quantity += num;
+  }
 }
 
 allProductDetails() {
