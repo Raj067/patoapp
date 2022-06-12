@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
+import 'package:patoapp/pages/products/cartProducts.dart';
 import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
 
@@ -46,7 +47,17 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               ? Card(
                   color: patoPrimaryColor,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => ProductsCart(
+                            products: customData,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
