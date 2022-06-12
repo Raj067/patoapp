@@ -45,15 +45,18 @@ class SingleProductDetails extends StatelessWidget {
         Column(children: [
           SizedBox(
             // height: 200,
-            child: Image.network(
-              product.thumbnail,
-              fit: BoxFit.fitWidth,
-            ),
+            // child: Image.network(
+            //   product.thumbnail,
+            //   fit: BoxFit.fitWidth,
+            // ),
+            child: Image.asset("assets/img.jpg", fit: BoxFit.fitWidth),
           )
         ]),
         ListTile(
-          title: Text(product.productName,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(
+            product.productName,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         const Divider(),
         ListTile(

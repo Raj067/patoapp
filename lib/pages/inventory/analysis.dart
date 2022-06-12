@@ -62,7 +62,9 @@ Widget _singleTopSellingProduct(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.network(product.thumbnail,
+              // Image.network(product.thumbnail,
+              //     width: 50, height: 50, fit: BoxFit.fill),
+              Image.asset("assets/img.jpg",
                   width: 50, height: 50, fit: BoxFit.fill),
               Container(
                 width: 10,
@@ -75,7 +77,7 @@ Widget _singleTopSellingProduct(
                         children: [
                           Text(
                             product.productName,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text("${product.totalItemsSold} products"),
                         ]),
@@ -87,7 +89,7 @@ Widget _singleTopSellingProduct(
                         children: [
                           Text(
                             "Qyt: ${product.quantity}",
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: const TextStyle(fontStyle: FontStyle.italic),
                           ),
                           Text("${product.margin} margin"),
                         ]),

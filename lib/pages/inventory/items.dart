@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/pages/products/cartProducts.dart';
@@ -226,6 +227,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               children: [
                 // Image.network(product.thumbnail,
                 //     width: 50, height: 50, fit: BoxFit.fill),
+                Image.asset("assets/img.jpg",
+                    width: 50, height: 50, fit: BoxFit.fill),
                 Container(
                   width: 10,
                 ),
@@ -427,19 +430,19 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               ),
             ],
           ),
-          actions: [
-            // TextButton(
-            //   onPressed: () => Navigator.pop(context),
-            //   child: const Text("Cancel"),
-            // ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text(
-                "Cancel",
-                style: TextStyle(color: patoWhite),
-              ),
-            )
-          ],
+          // actions: [
+          //   // TextButton(
+          //   //   onPressed: () => Navigator.pop(context),
+          //   //   child: const Text("Cancel"),
+          //   // ),
+          //   ElevatedButton(
+          //     onPressed: () => Navigator.pop(context),
+          //     child: const Text(
+          //       "Cancel",
+          //       style: TextStyle(color: patoWhite),
+          //     ),
+          //   )
+          // ],
         );
       },
     );
@@ -447,6 +450,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 
   Future<void> _addDataToCartManual(
       BuildContext context, SingleProduct product) async {
+    TextEditingController controller = TextEditingController(text: "1");
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -522,8 +527,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               Container(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text("Qty:"),
+                children: [
+                  const Text("Qty:"),
                   Expanded(
                     child: SizedBox(
                       height: 50,
@@ -531,10 +536,20 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                         // ignore: unnecessary_const
                         child: TextField(
                           // ignore: unnecessary_const
-                          decoration: InputDecoration(
+                          textAlign: TextAlign.start,
+                          controller: controller,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsetsDirectional.all(10),
                             border: InputBorder.none,
                             // hintText: 'Quantity',
-                            prefixIcon: Icon(Icons.add),
+                            prefixIcon: Icon(
+                              Icons.add,
+                              size: 16,
+                            ),
                             enabledBorder: InputBorder.none,
                             // helperText: "Quantity",
                           ),
@@ -554,9 +569,11 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
+                  // int? val = int.tryParse(controller.text);
                   product.addNewProductToCart(20);
                   _onCartChange(product);
                 });
+                Navigator.pop(context);
               },
               child: const Text(
                 "Add",
@@ -571,6 +588,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 
   Future<void> productAdjustment(
       BuildContext context, SingleProduct product) async {
+    TextEditingController controller = TextEditingController(text: "1");
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -646,8 +664,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               Container(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text("Qty:"),
+                children: [
+                  const Text("Qty:"),
                   Expanded(
                     child: SizedBox(
                       height: 50,
@@ -655,10 +673,20 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                         // ignore: unnecessary_const
                         child: TextField(
                           // ignore: unnecessary_const
-                          decoration: InputDecoration(
+                          textAlign: TextAlign.start,
+                          controller: controller,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsetsDirectional.all(10),
                             border: InputBorder.none,
                             // hintText: 'Quantity',
-                            prefixIcon: Icon(Icons.add),
+                            prefixIcon: Icon(
+                              Icons.add,
+                              size: 16,
+                            ),
                             enabledBorder: InputBorder.none,
                             // helperText: "Quantity",
                           ),
@@ -680,6 +708,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                 setState(() {
                   product.adjustProductQuantity(10);
                 });
+                Navigator.pop(context);
               },
               child: const Text(
                 "Add",
