@@ -13,6 +13,7 @@ import 'package:patoapp/subpages/reports.dart';
 import 'package:patoapp/subpages/termsConditions.dart';
 
 import '../components/topBar.dart';
+// import 'package:koukicons/settings.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -106,6 +107,10 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
+                        // KoukiconsSettings(
+                        //   height: 16,
+                        //   width: 16,
+                        // ),
                         const Icon(
                           Icons.settings,
                           color: Colors.black38,
