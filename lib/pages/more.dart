@@ -11,9 +11,12 @@ import 'package:patoapp/subpages/privacyPolicy.dart';
 import 'package:patoapp/subpages/reminders.dart';
 import 'package:patoapp/subpages/reports.dart';
 import 'package:patoapp/subpages/termsConditions.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../components/topBar.dart';
 // import 'package:koukicons/settings.dart';
+
+// SvgPicture.asset("svg/alarmoff.svg", width: 25, height: 25),
 
 class MorePage extends StatelessWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -47,10 +50,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.generating_tokens,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/viewDetails.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -67,10 +68,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.youtube_searched_for_outlined,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/template.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -107,14 +106,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        // KoukiconsSettings(
-                        //   height: 16,
-                        //   width: 16,
-                        // ),
-                        const Icon(
-                          Icons.settings,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/settings.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -140,10 +133,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.notifications,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/ringing2.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -180,10 +171,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.file_copy,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/rules.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -209,10 +198,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.privacy_tip,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/privacy.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -238,10 +225,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.feedback,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/feedback.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -258,10 +243,8 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.black38,
-                        ),
+                        SvgPicture.asset("svg/favourite2.svg",
+                            width: 25, height: 25),
                         Container(
                           width: 10,
                         ),
@@ -304,10 +287,10 @@ class FirstRowData extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.file_copy_outlined, size: 35),
-                    SizedBox(height: 10),
-                    Text(
+                  children: [
+                    SvgPicture.asset("svg/files.svg", width: 35, height: 35),
+                    const SizedBox(height: 10),
+                    const Text(
                       "Invoices",
                       style: TextStyle(fontSize: 12),
                     ),
@@ -335,12 +318,13 @@ class FirstRowData extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.graphic_eq, size: 35),
-                    SizedBox(height: 10),
-                    Text(
+                  children: [
+                    SvgPicture.asset("svg/positiveDynamic.svg",
+                        width: 35, height: 35),
+                    const SizedBox(height: 10),
+                    const Text(
                       "Reports",
-                      style: TextStyle(fontSize: 12),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
@@ -366,16 +350,16 @@ class FirstRowData extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.whatsapp, size: 35),
-                    SizedBox(height: 10),
-                    Text(
+                  children: [
+                    SvgPicture.asset("svg/whatsapp.svg", width: 35, height: 35),
+                    const SizedBox(height: 10),
+                    const Text(
                       "WhatsApp",
                       style: TextStyle(fontSize: 12),
                     ),
-                    Text(
+                    const Text(
                       "Greetings",
-                      style: TextStyle(fontSize: 12),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),

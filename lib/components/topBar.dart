@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/subpages/topNotificationIcon.dart';
 import 'package:patoapp/subpages/topProfileIcon.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
@@ -19,10 +20,11 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(
-        Icons.notifications,
-        color: patoWhite,
-      ),
+      // icon: const Icon(
+      //   Icons.notifications,
+      //   color: patoWhite,
+      // ),
+      icon: SvgPicture.asset("svg/alarmoff.svg", width: 25, height: 25),
       onPressed: () {
         Navigator.push(
           context,

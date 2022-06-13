@@ -6,6 +6,7 @@ import 'package:patoapp/reports/debtReports.dart';
 import 'package:patoapp/subpages/addCustomer.dart';
 import 'package:patoapp/subpages/addPayment.dart';
 import 'package:patoapp/subpages/singleCustomer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PartiesPage extends StatelessWidget {
   const PartiesPage({Key? key}) : super(key: key);
@@ -188,7 +189,7 @@ class DateActionButton extends StatelessWidget {
       height: 50,
       child: Card(
         child: IconButton(
-          icon: const Icon(Icons.date_range),
+          icon: SvgPicture.asset("svg/calendar.svg", width: 25, height: 25),
           onPressed: () {},
         ),
       ),

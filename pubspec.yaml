@@ -29,9 +29,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  filter_list: 1.0.1
+  
   fl_chart: 0.51.0
+  flutter_svg: 1.1.0
   flutter_launcher_icons: 0.9.3
+  # filter_list: 1.0.1
   # flutter_native_splash: ^2.2.3+1
   # koukicons: 2.0.3
 
