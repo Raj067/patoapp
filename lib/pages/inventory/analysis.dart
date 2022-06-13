@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/topSellingProducts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnalysisHomePage extends StatelessWidget {
   const AnalysisHomePage({
@@ -19,12 +20,10 @@ class AnalysisHomePage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Top Selling Items'),
-                  Icon(
-                    Icons.settings_input_component_sharp,
-                    color: Colors.black38,
-                  ),
+                children: [
+                  const Text('Top Selling Items'),
+                  SvgPicture.asset("svg/genericSortingDesc.svg",
+                      width: 25, height: 25),
                 ],
               ),
             ),

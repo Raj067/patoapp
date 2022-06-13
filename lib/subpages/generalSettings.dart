@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GeneralSettingsDialog extends StatelessWidget {
   const GeneralSettingsDialog({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.app_settings_alt,
-                        color: Colors.black38,
+                        color: Colors.red,
                       ),
                       Container(
                         width: 10,
@@ -54,10 +55,8 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.attach_money,
-                        color: Colors.black38,
-                      ),
+                      SvgPicture.asset("svg/currencyExchange.svg",
+                          width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
@@ -74,10 +73,8 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.supervised_user_circle_sharp,
-                        color: Colors.black38,
-                      ),
+                      SvgPicture.asset("svg/portraitMode.svg",
+                          width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
@@ -94,10 +91,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.print,
-                        color: Colors.black38,
-                      ),
+                      SvgPicture.asset("svg/print.svg", width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
@@ -114,10 +108,8 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.grid_view_outlined,
-                        color: Colors.black38,
-                      ),
+                      SvgPicture.asset("svg/organization.svg",
+                          width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
@@ -134,10 +126,8 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.settings_input_component_sharp,
-                        color: Colors.black38,
-                      ),
+                      SvgPicture.asset("svg/dataConfiguration.svg",
+                          width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
