@@ -48,65 +48,58 @@ class FirstRowPartiesData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: 110,
-        child: Column(children: [
-          Container(
-            alignment: AlignmentDirectional.centerStart,
-            height: 60,
-            child: Row(children: [
-              Expanded(
-                  child: Container(
-                height: 60,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
-                  border: Border(
-                      top: BorderSide(width: 1, color: patoGreen),
-                      left: BorderSide(width: 1, color: patoGreen),
-                      right: BorderSide(width: 1, color: patoGreen),
-                      bottom: BorderSide(width: 1, color: patoGreen)),
-                ),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Text("Tsh 12,000",
-                          style: TextStyle(color: patoGreen, fontSize: 18)),
-                      Text("My total debt",
-                          style: TextStyle(color: patoGrey, fontSize: 14)),
-                    ]),
-              )),
-              Expanded(
-                  child: Container(
-                height: 80,
-                decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(10)),
-                  border: Border(
-                      top: BorderSide(width: 1, color: patoRed),
-                      left: BorderSide(width: 1, color: patoRed),
-                      right: BorderSide(width: 1, color: patoRed),
-                      bottom: BorderSide(width: 1, color: patoRed)),
-                ),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Text("Tsh 12,000",
-                          style: TextStyle(color: patoRed, fontSize: 18)),
-                      Text("Total customer debt",
-                          style: TextStyle(color: patoGrey, fontSize: 14)),
-                    ]),
-              )),
-            ]),
-          ),
-          SizedBox(
-            height: 50,
-            child: ListTile(
-              leading: const Icon(Icons.file_copy, color: patoBlue),
-              title: const Text(
-                "Debt Report",
-                style: TextStyle(color: patoBlue),
-              ),
-              trailing: const Icon(Icons.arrow_forward_ios,
-                  color: patoBlue, size: 14),
+        height: 100,
+        child: Column(
+          children: [
+            Container(
+              alignment: AlignmentDirectional.centerStart,
+              height: 60,
+              child: Row(children: [
+                Expanded(
+                    child: Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(10)),
+                    border: Border(
+                        top: BorderSide(width: 1, color: patoGreen),
+                        left: BorderSide(width: 1, color: patoGreen),
+                        right: BorderSide(width: 1, color: patoGreen),
+                        bottom: BorderSide(width: 1, color: patoGreen)),
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Text("Tsh 12,000",
+                            style: TextStyle(color: patoGreen, fontSize: 18)),
+                        Text("My total debt",
+                            style: TextStyle(color: patoGrey, fontSize: 14)),
+                      ]),
+                )),
+                Expanded(
+                    child: Container(
+                  height: 80,
+                  decoration: const BoxDecoration(
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(10)),
+                    border: Border(
+                        top: BorderSide(width: 1, color: patoRed),
+                        left: BorderSide(width: 1, color: patoRed),
+                        right: BorderSide(width: 1, color: patoRed),
+                        bottom: BorderSide(width: 1, color: patoRed)),
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Text("Tsh 12,000",
+                            style: TextStyle(color: patoRed, fontSize: 18)),
+                        Text("Total customer debt",
+                            style: TextStyle(color: patoGrey, fontSize: 14)),
+                      ]),
+                )),
+              ]),
+            ),
+            InkWell(
               onTap: () {
                 Navigator.push(
                   context,
@@ -116,9 +109,32 @@ class FirstRowPartiesData extends StatelessWidget {
                   ),
                 );
               },
+              child: SizedBox(
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.file_copy, color: patoBlue),
+                          Container(width: 10),
+                          const Text(
+                            "Debt Reports",
+                            style: TextStyle(color: patoBlue),
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios,
+                          color: patoBlue, size: 14),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }

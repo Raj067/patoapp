@@ -120,7 +120,7 @@ class _BusinessPageState extends State<BusinessPage> {
   _firstRowBusinessData(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: 160,
+        height: 140,
         child: Column(
           children: [
             Container(
@@ -206,10 +206,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 ),
               ),
             ),
-            const Divider(
-              indent: 10,
-              endIndent: 10,
-            ),
+            const Divider(height: 0),
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -229,9 +226,10 @@ class _BusinessPageState extends State<BusinessPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
-                          Icon(Icons.file_copy, color: patoBlue),
-                          Text(
+                        children: [
+                          const Icon(Icons.file_copy, color: patoBlue),
+                          Container(width: 10),
+                          const Text(
                             "Financial Reports",
                             style: TextStyle(color: patoBlue),
                           ),
@@ -331,43 +329,105 @@ Widget _financialData(BuildContext context, BusinessFinancial data) => Card(
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.keyboard_arrow_up, color: patoRed),
-                    Text("Purchases"),
-                  ],
-                ),
-                const Text("-"),
-                Text(
-                  data.purchases,
-                  style: const TextStyle(color: patoRed),
-                ),
-              ],
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  // Using Wrap makes the bottom sheet height the height of the content.
+                  // Otherwise, the height will be half the height of the screen.
+                  return Wrap(
+                    children: const [
+                      ListTile(
+                        leading: Icon(Icons.share),
+                        title: Text('Share'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.link),
+                        title: Text('Get link'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text('Edit name'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.delete),
+                        title: Text('Delete collection'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: const [
+                      Icon(Icons.keyboard_arrow_up, color: patoRed),
+                      Text("Purchases"),
+                    ],
+                  ),
+                  const Text("-"),
+                  Text(
+                    data.purchases,
+                    style: const TextStyle(color: patoRed),
+                  ),
+                ],
+              ),
             ),
           ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.keyboard_arrow_down, color: patoGreen),
-                    Text("Sales"),
-                  ],
-                ),
-                Text(
-                  data.sales,
-                  style: const TextStyle(color: patoGreen),
-                ),
-                const Text("-"),
-              ],
+          const Divider(height: 0),
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  // Using Wrap makes the bottom sheet height the height of the content.
+                  // Otherwise, the height will be half the height of the screen.
+                  return Wrap(
+                    children: const [
+                      ListTile(
+                        leading: Icon(Icons.share),
+                        title: Text('Share'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.link),
+                        title: Text('Get link'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text('Edit name'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.delete),
+                        title: Text('Delete collection'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: const [
+                      Icon(Icons.keyboard_arrow_down, color: patoGreen),
+                      Text("Sales"),
+                    ],
+                  ),
+                  Text(
+                    data.sales,
+                    style: const TextStyle(color: patoGreen),
+                  ),
+                  const Text("-"),
+                ],
+              ),
             ),
           ),
         ],
