@@ -73,7 +73,7 @@ class MorePage extends StatelessWidget {
                         Container(
                           width: 10,
                         ),
-                        const Text('Business Tips'),
+                        const Text('Tutorials'),
                       ],
                     ),
                   ),

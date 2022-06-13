@@ -100,14 +100,17 @@ class FirstRowPartiesData extends StatelessWidget {
             height: 50,
             child: ListTile(
               leading: const Icon(Icons.file_copy, color: patoBlue),
-              title:
-                  const Text("Debt Report", style: TextStyle(color: patoBlue)),
-              trailing: const Icon(Icons.arrow_forward_ios, color: patoBlue),
+              title: const Text(
+                "Debt Report",
+                style: TextStyle(color: patoBlue),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios,
+                  color: patoBlue, size: 14),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => DebtReportDialog(),
+                    builder: (BuildContext context) => const DebtReports(),
                     fullscreenDialog: true,
                   ),
                 );

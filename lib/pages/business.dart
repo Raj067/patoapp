@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/data/businessFinancialData.dart';
-import 'package:patoapp/reports/financialReport.dart';
+import 'package:patoapp/reports/profitLoss.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
 
 class BusinessPage extends StatefulWidget {
@@ -215,7 +215,8 @@ class _BusinessPageState extends State<BusinessPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => FinancialReportDialog(),
+                    builder: (BuildContext context) =>
+                        const ProfitLossReports(),
                     fullscreenDialog: true,
                   ),
                 );
@@ -236,7 +237,8 @@ class _BusinessPageState extends State<BusinessPage> {
                           ),
                         ],
                       ),
-                      const Icon(Icons.arrow_forward_ios, color: patoBlue),
+                      const Icon(Icons.arrow_forward_ios,
+                          color: patoBlue, size: 14),
                     ],
                   ),
                 ),

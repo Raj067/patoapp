@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 
-class DebtReports extends StatelessWidget {
-  const DebtReports({Key? key}) : super(key: key);
+class DayBookReports extends StatelessWidget {
+  const DayBookReports({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Debt reports',
+          'Daybook',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -23,7 +23,7 @@ class DebtReports extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: Text("Debt reports"),
+        child: Text("Daybook"),
       ),
     );
   }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 
-class FinancialReportDialog extends StatelessWidget {
+class SalesReports extends StatelessWidget {
+  const SalesReports({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Financial Reports',
+          'Sales Reports',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -22,7 +23,7 @@ class FinancialReportDialog extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: Text("Financial Reports"),
+        child: Text("Sales Reports"),
       ),
     );
   }
