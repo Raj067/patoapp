@@ -41,7 +41,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 ),
               ),
             ),
-            const AllFinancialData(),
+            _allFinancialData(context),
           ],
         ),
       ),
@@ -247,6 +247,197 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
     );
   }
+
+  Widget _singleFinancialData(
+      BuildContext context, BusinessFinancial data, String date) {
+    return InkWell(
+      onLongPress: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            // Using Wrap makes the bottom sheet height the height of the content.
+            // Otherwise, the height will be half the height of the screen.
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Wrap(
+                children: [
+                  const Text(
+                    "Transactions Details:",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Container(height: 4),
+                          Text(
+                            data.description,
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                      Text(
+                        "Tsh. ${data.price}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: data.isIncome ? patoGreen : patoRed,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Date",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Container(height: 4),
+                          Text(
+                            date,
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                      Text(
+                        data.time,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  Container(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(patoRed)),
+                        child: const Text(
+                          "Delete",
+                          style: TextStyle(color: patoWhite),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Edit",
+                          style: TextStyle(color: patoWhite),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                data.isIncome
+                    ? const Icon(Icons.keyboard_arrow_down, color: patoGreen)
+                    : const Icon(Icons.keyboard_arrow_up, color: patoRed),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      data.description,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            data.isIncome
+                ? Text(
+                    "${data.price}",
+                    style: const TextStyle(color: patoGreen),
+                  )
+                : const Text("-"),
+            data.isIncome
+                ? const Text("-")
+                : Text(
+                    "${data.price}",
+                    style: const TextStyle(color: patoRed),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _singleColumnFinancialData(BuildContext context,
+      List<BusinessFinancial> data, var income, var expenses, String date) {
+    List<Widget> myData = [
+      Container(
+        color: patoLightGreen,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(date),
+              Text(
+                income,
+                style: const TextStyle(
+                    color: patoGreen, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                expenses,
+                style: const TextStyle(
+                    color: patoRed, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ];
+    for (BusinessFinancial element in data) {
+      myData.add(_singleFinancialData(context, element, date));
+      myData.add(const Divider(height: 0));
+    }
+    return Card(child: Column(children: myData));
+  }
+
+  _allFinancialData(BuildContext context) {
+    List<Widget> data = [];
+    for (var element in allBusinessFinancialData()) {
+      data.add(
+        _singleColumnFinancialData(
+            context, element[3], element[1], element[2], element[0]),
+      );
+    }
+
+    return Column(
+      children: data,
+    );
+  }
 }
 
 class SecondRowBusinessData extends StatelessWidget {
@@ -300,219 +491,6 @@ class FilterIconButton extends StatelessWidget {
         icon: const Icon(Icons.filter),
         onPressed: () {},
       ),
-    );
-  }
-}
-
-Widget _financialData(BuildContext context, BusinessFinancial data) => Card(
-      child: Column(
-        children: [
-          Container(
-            color: patoLightGreen,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.date),
-                  Text(
-                    data.income,
-                    style: const TextStyle(
-                        color: patoGreen, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    data.expenses,
-                    style: const TextStyle(
-                        color: patoRed, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  // Using Wrap makes the bottom sheet height the height of the content.
-                  // Otherwise, the height will be half the height of the screen.
-                  return Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Wrap(
-                      children: [
-                        const Text(
-                          "Transactions Details:",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Container(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Unga LTD",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Container(height: 4),
-                                const Text(
-                                  "Purchases",
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
-                            ),
-                            const Text(
-                              "Tsh 6000",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        Container(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Date",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Container(height: 4),
-                                const Text(
-                                  "12-05-2022",
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
-                            ),
-                            const Text(
-                              "11:32 AM",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        Container(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(patoRed)),
-                              child: const Text(
-                                "Delete",
-                                style: TextStyle(color: patoWhite),
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "Edit",
-                                style: TextStyle(color: patoWhite),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.keyboard_arrow_up, color: patoRed),
-                      Text("Purchases"),
-                    ],
-                  ),
-                  const Text("-"),
-                  Text(
-                    data.purchases,
-                    style: const TextStyle(color: patoRed),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(height: 0),
-          InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  // Using Wrap makes the bottom sheet height the height of the content.
-                  // Otherwise, the height will be half the height of the screen.
-                  return Wrap(
-                    children: const [
-                      ListTile(
-                        leading: Icon(Icons.share),
-                        title: Text('Share'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.link),
-                        title: Text('Get link'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title: Text('Edit name'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.delete),
-                        title: Text('Delete collection'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.keyboard_arrow_down, color: patoGreen),
-                      Text("Sales"),
-                    ],
-                  ),
-                  Text(
-                    data.sales,
-                    style: const TextStyle(color: patoGreen),
-                  ),
-                  const Text("-"),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-
-class AllFinancialData extends StatelessWidget {
-  const AllFinancialData({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> data = [];
-    for (var element in allBusinessFinancialData()) {
-      data.add(
-        _financialData(context, element),
-      );
-    }
-
-    return Column(
-      children: data,
     );
   }
 }

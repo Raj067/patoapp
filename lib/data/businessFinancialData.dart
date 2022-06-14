@@ -1,55 +1,109 @@
 class BusinessFinancial {
-  String date;
-  String income;
-  String expenses;
-  String purchases;
-  String sales;
+  String time;
+  int price;
+  String description;
+  String name;
+  bool isIncome;
   String id;
+  // DateTime date;
 
   BusinessFinancial({
-    this.date = "",
-    this.income = "12,000",
-    this.expenses = "0",
-    this.sales = "90",
-    this.purchases = "80%",
+    this.time = "",
+    this.price = 0,
+    this.description = "-",
+    this.name = "-",
+    this.isIncome = true,
     this.id = '1',
   });
 }
 
 allBusinessFinancialData() {
   return [
-    BusinessFinancial(
-      date: "01/01/2020",
-      income: "89,00",
-      expenses: "12,000",
-      sales: "670",
-      purchases: "8100",
-      id: '1',
-    ),
-    BusinessFinancial(
-      date: "02/01/2020",
-      expenses: "9,000",
-      income: "23,000",
-      sales: "900",
-      purchases: "900",
-      id: '2',
-    ),
-    BusinessFinancial(
-      date: "03/01/2020",
-      expenses: "6,000",
-      income: "4,500",
-      sales: "9070",
-      purchases: "6500",
-      id: '3',
-    ),
-    BusinessFinancial(
-      date: "04/01/2020",
-      income: "7,689",
-      expenses: "708",
-      sales: "200",
-      purchases: "7100",
-      id: '4',
-    ),
+    [
+      "01/01/2020",
+      "Tsh. 8900",
+      "Tsh. 7890",
+      [
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Rajabu Mrisho",
+          description: "Sale",
+          isIncome: true,
+          id: '1',
+        ),
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 1",
+          description: "Description",
+          isIncome: false,
+          id: '1',
+        ),
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 2",
+          description: "Description",
+          isIncome: true,
+          id: '1',
+        ),
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 3",
+          description: "Description",
+          isIncome: true,
+          id: '1',
+        ),
+      ]
+    ],
+    [
+      "02/01/2020",
+      "Tsh. 8900",
+      "Tsh. 7890",
+      [
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 4",
+          description: "Description",
+          isIncome: false,
+          id: '1',
+        ),
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 5",
+          description: "Description",
+          isIncome: true,
+          id: '1',
+        ),
+      ]
+    ],
+    [
+      "02/01/2020",
+      "Tsh. 8900",
+      "Tsh. 7890",
+      [
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 6",
+          description: "Description",
+          isIncome: false,
+          id: '1',
+        ),
+        BusinessFinancial(
+          time: "11:89 PM",
+          price: 67000,
+          name: "Name 7",
+          description: "Description",
+          isIncome: false,
+          id: '1',
+        ),
+      ]
+    ],
   ];
 }
 
