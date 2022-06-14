@@ -11,7 +11,7 @@ class ProductsCart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Transaction',
+          'Sale Transaction',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -23,6 +23,15 @@ class ProductsCart extends StatelessWidget {
             color: patoWhite,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.cancel,
+              color: patoWhite,
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -31,8 +40,74 @@ class ProductsCart extends StatelessWidget {
             Expanded(
               child: ListView(children: [
                 _allSelectedProducts(context),
+                _discount(),
               ]),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _discount() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Discount",
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+            Container(width: 20),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextField(
+                    // cursorHeight: 1,
+                    decoration: InputDecoration(
+                      // contentPadding: EdgeInsetsDirectional.all(0),
+                      border: InputBorder.none,
+                      fillColor: patoBackgroundColor,
+                      filled: true,
+                      hintText: '0',
+                      prefixIcon: Container(
+                        color: const Color.fromARGB(255, 255, 200, 200),
+                        child: const Icon(
+                          Icons.percent,
+                          color: patoRed,
+                        ),
+                      ),
+                      // enabledBorder: InputBorder.none,
+                    ),
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  TextField(
+                    // cursorHeight: 1,
+                    decoration: InputDecoration(
+                      // contentPadding: EdgeInsetsDirectional.all(0),
+                      border: InputBorder.none,
+                      fillColor: patoBackgroundColor,
+                      filled: true,
+                      hintText: '0',
+                      prefixIcon: Container(
+                        color: Colors.grey,
+                        child: const Text("Tsh",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      // enabledBorder: InputBorder.none,
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -77,12 +152,12 @@ class ProductsCart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  "Item Subtotal:",
-                  style: TextStyle(fontSize: 12),
+                  "Subtotal:",
+                  style: TextStyle(fontSize: 10),
                 ),
                 Text(
-                  "${product.addedToCart} canns x Tsh ${product.productPrice} = Tsh ${product.getTotalPrice()}",
-                  style: const TextStyle(fontSize: 12),
+                  "${product.addedToCart} cans x Tsh ${product.productPrice} = Tsh ${product.getTotalPrice()}",
+                  style: const TextStyle(fontSize: 10),
                 ),
               ],
             ),

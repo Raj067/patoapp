@@ -209,8 +209,12 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           onTap: () {
             // _addDataToCartAutomatic(context, product);
             setState(() {
+              product.addedToCart;
               product.isAddedToCartAutomatic == true
-                  ? product.isAddedToCartAutomatic = false
+                  ? product.addedToCart > 0
+                      ? product.isAddedToCartAutomatic == true
+                      : product.isAddedToCartAutomatic = false
+                  // ? product.isAddedToCartAutomatic = false
                   : product.isAddedToCartAutomatic = true;
             });
           },
@@ -257,7 +261,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                               Text(
                                 'Tsh ${product.productPrice}',
                                 style: const TextStyle(
-                                    fontSize: 14, color: patoGrey),
+                                    fontSize: 12, color: patoGrey),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -278,56 +282,40 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                           ),
                         ],
                       ),
-                      Container(
-                        height: 10,
-                      ),
-                      // product.addedToCart == 0
-                      //     ? const CircleAvatar(
-                      //         backgroundColor: patoLightGreen,
-                      //         foregroundColor: patoBlack,
-                      //         child: Icon(Icons.add_shopping_cart_rounded),
-                      //       )
-                      //     : Center(
-                      //         child: Text(
-                      //           "${product.addedToCart}",
-                      //           style: const TextStyle(
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-
                       product.isAddedToCartAutomatic
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                IconButton(
-                                  color: patoPrimaryColor,
-                                  onPressed: () {
+                                InkWell(
+                                  onTap: () {
                                     setState(() {
                                       product.addNewProductToCart(-1);
                                       _onCartChange(product);
                                     });
                                   },
-                                  splashRadius: 25,
-                                  icon:
-                                      const Icon(Icons.do_disturb_on_outlined),
+                                  child: const Icon(
+                                    Icons.do_disturb_on_outlined,
+                                    color: patoPrimaryColor,
+                                  ),
                                 ),
+                                Container(width: 8),
                                 Text(
                                   "${product.addedToCart}",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                IconButton(
-                                  color: patoPrimaryColor,
-                                  splashRadius: 25,
-                                  onPressed: () {
+                                Container(width: 8),
+                                InkWell(
+                                  onTap: () {
                                     setState(() {
                                       product.addNewProductToCart(1);
                                       _onCartChange(product);
                                     });
                                   },
-                                  icon: const Icon(
-                                      Icons.add_circle_outline_sharp),
+                                  child: const Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: patoPrimaryColor,
+                                  ),
                                 ),
                               ],
                             )
@@ -346,153 +334,6 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
       ),
     );
   }
-
-  // Future<void> _addDataToCartAutomatic(
-  //   BuildContext context,
-  //   SingleProduct product,
-  // ) async {
-  //   await showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         scrollable: true,
-  //         contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-  //         backgroundColor: patoBackgroundColor,
-  //         title: const Text('Add to cart'),
-  //         content: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Card(
-  //               child: Padding(
-  //                 padding: const EdgeInsets.all(8),
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     // Image.network(product.thumbnail,
-  //                     //     width: 50, height: 50, fit: BoxFit.fill),
-  //                     // Container(
-  //                     //   width: 10,
-  //                     // ),
-  //                     Expanded(
-  //                       child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         children: [
-  //                           Column(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             crossAxisAlignment: CrossAxisAlignment.start,
-  //                             children: [
-  //                               Text(
-  //                                 product.productName,
-  //                                 style: const TextStyle(
-  //                                     fontWeight: FontWeight.bold),
-  //                               ),
-  //                               Container(
-  //                                 height: 10,
-  //                               ),
-  //                               Row(
-  //                                 children: [
-  //                                   Text(
-  //                                     'Tsh ${product.productPrice}',
-  //                                     style: const TextStyle(
-  //                                         fontSize: 16, color: patoGrey),
-  //                                   ),
-  //                                   const SizedBox(
-  //                                     width: 10,
-  //                                   ),
-  //                                   Text(
-  //                                     'Qty: ${product.quantity}',
-  //                                     style: TextStyle(
-  //                                       fontSize: 14,
-  //                                       fontStyle: FontStyle.italic,
-  //                                       color: product.isOutStock
-  //                                           ? patoWarning
-  //                                           : product.quantity == 0
-  //                                               ? patoRed
-  //                                               : patoGrey,
-  //                                     ),
-  //                                   ),
-  //                                 ],
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //             Container(height: 20),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 const Text("Qty:"),
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                   children: [
-  //                     IconButton(
-  //                       color: patoPrimaryColor,
-  //                       onPressed: () {
-  //                         setState(() {
-  //                           product.addNewProductToCart(-1);
-  //                           _onCartChange(product);
-  //                         });
-  //                       },
-  //                       splashRadius: 25,
-  //                       icon: const Icon(Icons.do_disturb_on_outlined),
-  //                     ),
-  //                     Container(
-  //                       width: 50,
-  //                       height: 25,
-  //                       alignment: AlignmentDirectional.center,
-  //                       decoration: const BoxDecoration(
-  //                         borderRadius: BorderRadius.all(
-  //                           Radius.circular(5),
-  //                         ),
-  //                         border: Border(
-  //                           top: BorderSide(width: 1, color: patoGrey),
-  //                           left: BorderSide(width: 1, color: patoGrey),
-  //                           right: BorderSide(width: 1, color: patoGrey),
-  //                           bottom: BorderSide(width: 1, color: patoGrey),
-  //                         ),
-  //                       ),
-  //                       child: Text("${product.addedToCart}"),
-  //                     ),
-  //                     IconButton(
-  //                       color: patoPrimaryColor,
-  //                       splashRadius: 25,
-  //                       onPressed: () {
-  //                         setState(() {
-  //                           product.addNewProductToCart(1);
-  //                           _onCartChange(product);
-  //                         });
-  //                       },
-  //                       icon: const Icon(Icons.add_circle_outline_sharp),
-  //                     ),
-  //                   ],
-  //                 )
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //         // actions: [
-  //         //   // TextButton(
-  //         //   //   onPressed: () => Navigator.pop(context),
-  //         //   //   child: const Text("Cancel"),
-  //         //   // ),
-  //         //   ElevatedButton(
-  //         //     onPressed: () => Navigator.pop(context),
-  //         //     child: const Text(
-  //         //       "Cancel",
-  //         //       style: TextStyle(color: patoWhite),
-  //         //     ),
-  //         //   )
-  //         // ],
-  //       );
-  //     },
-  //   );
-  // }
 
   Future<void> _addDataToCartManual(
       BuildContext context, SingleProduct product) async {
