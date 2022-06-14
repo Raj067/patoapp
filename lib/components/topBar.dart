@@ -24,7 +24,7 @@ class NotificationIcon extends StatelessWidget {
       //   Icons.notifications,
       //   color: patoWhite,
       // ),
-      icon: SvgPicture.asset("svg/alarmoff.svg", width: 25, height: 25),
+      icon: SvgPicture.asset("assets/svg/alarmoff.svg", width: 25, height: 25),
       onPressed: () {
         Navigator.push(
           context,

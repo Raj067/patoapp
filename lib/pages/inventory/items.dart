@@ -257,7 +257,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                               Text(
                                 'Tsh ${product.productPrice}',
                                 style: const TextStyle(
-                                    fontSize: 16, color: patoGrey),
+                                    fontSize: 14, color: patoGrey),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -265,7 +265,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                               Text(
                                 'Qty: ${product.quantity}',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontStyle: FontStyle.italic,
                                   color: product.isOutStock
                                       ? patoWarning

@@ -55,7 +55,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      SvgPicture.asset("svg/currencyExchange.svg",
+                      SvgPicture.asset("assets/svg/currencyExchange.svg",
                           width: 25, height: 25),
                       Container(
                         width: 10,
@@ -73,7 +73,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      SvgPicture.asset("svg/portraitMode.svg",
+                      SvgPicture.asset("assets/svg/portraitMode.svg",
                           width: 25, height: 25),
                       Container(
                         width: 10,
@@ -91,7 +91,8 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      SvgPicture.asset("svg/print.svg", width: 25, height: 25),
+                      SvgPicture.asset("assets/svg/print.svg",
+                          width: 25, height: 25),
                       Container(
                         width: 10,
                       ),
@@ -108,7 +109,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      SvgPicture.asset("svg/organization.svg",
+                      SvgPicture.asset("assets/svg/organization.svg",
                           width: 25, height: 25),
                       Container(
                         width: 10,
@@ -126,7 +127,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      SvgPicture.asset("svg/dataConfiguration.svg",
+                      SvgPicture.asset("assets/svg/dataConfiguration.svg",
                           width: 25, height: 25),
                       Container(
                         width: 10,

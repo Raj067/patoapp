@@ -50,7 +50,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/viewDetails.svg",
+                        SvgPicture.asset("assets/svg/viewDetails.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -68,7 +68,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/template.svg",
+                        SvgPicture.asset("assets/svg/template.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -106,7 +106,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/settings.svg",
+                        SvgPicture.asset("assets/svg/settings.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -133,7 +133,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/ringing2.svg",
+                        SvgPicture.asset("assets/svg/ringing2.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -171,7 +171,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/rules.svg",
+                        SvgPicture.asset("assets/svg/rules.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -198,7 +198,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/privacy.svg",
+                        SvgPicture.asset("assets/svg/privacy.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -225,7 +225,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/feedback.svg",
+                        SvgPicture.asset("assets/svg/feedback.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -243,7 +243,7 @@ class MorePage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        SvgPicture.asset("svg/favourite2.svg",
+                        SvgPicture.asset("assets/svg/favourite2.svg",
                             width: 25, height: 25),
                         Container(
                           width: 10,
@@ -288,7 +288,8 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset("svg/files.svg", width: 35, height: 35),
+                    SvgPicture.asset("assets/svg/files.svg",
+                        width: 35, height: 35),
                     const SizedBox(height: 10),
                     const Text(
                       "Invoices",
@@ -319,7 +320,7 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset("svg/positiveDynamic.svg",
+                    SvgPicture.asset("assets/svg/positiveDynamic.svg",
                         width: 35, height: 35),
                     const SizedBox(height: 10),
                     const Text(
@@ -351,7 +352,8 @@ class FirstRowData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset("svg/whatsapp.svg", width: 35, height: 35),
+                    SvgPicture.asset("assets/svg/whatsapp.svg",
+                        width: 35, height: 35),
                     const SizedBox(height: 10),
                     const Text(
                       "WhatsApp",

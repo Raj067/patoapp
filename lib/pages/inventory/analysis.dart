@@ -22,7 +22,7 @@ class AnalysisHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Top Selling Items'),
-                  SvgPicture.asset("svg/genericSortingDesc.svg",
+                  SvgPicture.asset("assets/svg/genericSortingDesc.svg",
                       width: 25, height: 25),
                 ],
               ),

@@ -205,7 +205,7 @@ class DateActionButton extends StatelessWidget {
       height: 50,
       child: Card(
         child: IconButton(
-          icon: SvgPicture.asset("svg/calendar.svg", width: 25, height: 25),
+          icon: SvgPicture.asset("assets/svg/calendar.svg", width: 25, height: 25),
           onPressed: () {},
         ),
       ),
