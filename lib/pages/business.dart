@@ -336,25 +336,90 @@ Widget _financialData(BuildContext context, BusinessFinancial data) => Card(
                 builder: (context) {
                   // Using Wrap makes the bottom sheet height the height of the content.
                   // Otherwise, the height will be half the height of the screen.
-                  return Wrap(
-                    children: const [
-                      ListTile(
-                        leading: Icon(Icons.share),
-                        title: Text('Share'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.link),
-                        title: Text('Get link'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title: Text('Edit name'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.delete),
-                        title: Text('Delete collection'),
-                      ),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Wrap(
+                      children: [
+                        const Text(
+                          "Transactions Details:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        Container(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Unga LTD",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Container(height: 4),
+                                const Text(
+                                  "Purchases",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              ],
+                            ),
+                            const Text(
+                              "Tsh 6000",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        Container(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Date",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Container(height: 4),
+                                const Text(
+                                  "12-05-2022",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              ],
+                            ),
+                            const Text(
+                              "11:32 AM",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        Container(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(patoRed)),
+                              child: const Text(
+                                "Delete",
+                                style: TextStyle(color: patoWhite),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "Edit",
+                                style: TextStyle(color: patoWhite),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
               );
