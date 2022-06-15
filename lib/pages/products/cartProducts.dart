@@ -38,10 +38,80 @@ class ProductsCart extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ListView(children: [
-                _allSelectedProducts(context),
-                _discount(),
-              ]),
+              child: ListView(
+                children: [
+                  Container(height: 10),
+                  SizedBox(
+                    height: 45,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        label: Text("Amount"),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  Container(height: 10),
+                  SizedBox(
+                    height: 45,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        label: Text("Party Name"),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  Container(height: 10),
+                  _allSelectedProducts(context),
+                  _discount(),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Total Amount",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Tsh: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Balance due",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: patoPrimaryColor),
+                      ),
+                      Text(
+                        "Tsh: ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: patoPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  Container(height: 10),
+                  SizedBox(
+                    // height: 180,
+                    child: TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.newline,
+                      minLines: 1,
+                      maxLines: 3,
+                      decoration: const InputDecoration(
+                        label: Text("Descriptions"),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  Container(height: 10),
+                ],
+              ),
             ),
           ],
         ),
@@ -60,54 +130,93 @@ class ProductsCart extends StatelessWidget {
               "Discount",
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
-            Container(width: 20),
+            Container(width: 5),
+            // Expanded(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       TextField(
+            //         // cursorHeight: 1,
+            //         decoration: InputDecoration(
+            //           // contentPadding: EdgeInsetsDirectional.all(0),
+            //           border: InputBorder.none,
+            //           fillColor: patoBackgroundColor,
+            //           filled: true,
+            //           hintText: '0',
+            //           prefixIcon: Container(
+            //             color: const Color.fromARGB(255, 255, 200, 200),
+            //             child: const Icon(
+            //               Icons.percent,
+            //               color: patoRed,
+            //             ),
+            //           ),
+            //           // enabledBorder: InputBorder.none,
+            //         ),
+            //       ),
+            //       Container(
+            //         height: 10,
+            //       ),
+            //       TextField(
+            //         // cursorHeight: 1,
+            //         decoration: InputDecoration(
+            //           // contentPadding: EdgeInsetsDirectional.all(0),
+            //           border: InputBorder.none,
+            //           fillColor: patoBackgroundColor,
+            //           filled: true,
+            //           hintText: '0',
+            //           prefixIcon: Container(
+            //             color: Colors.grey,
+            //             child: const Text("Tsh",
+            //                 style: TextStyle(
+            //                     color: Colors.black,
+            //                     fontSize: 16,
+            //                     fontWeight: FontWeight.bold)),
+            //           ),
+            //           // enabledBorder: InputBorder.none,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // )
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextField(
-                    // cursorHeight: 1,
-                    decoration: InputDecoration(
-                      // contentPadding: EdgeInsetsDirectional.all(0),
-                      border: InputBorder.none,
-                      fillColor: patoBackgroundColor,
-                      filled: true,
-                      hintText: '0',
-                      prefixIcon: Container(
-                        color: const Color.fromARGB(255, 255, 200, 200),
-                        child: const Icon(
-                          Icons.percent,
-                          color: patoRed,
-                        ),
+              child: SizedBox(
+                height: 35,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    prefixIcon: Container(
+                      color: const Color.fromARGB(255, 255, 200, 200),
+                      child: const Icon(
+                        Icons.percent,
+                        color: patoRed,
                       ),
-                      // enabledBorder: InputBorder.none,
                     ),
                   ),
-                  Container(
-                    height: 10,
-                  ),
-                  TextField(
-                    // cursorHeight: 1,
-                    decoration: InputDecoration(
-                      // contentPadding: EdgeInsetsDirectional.all(0),
-                      border: InputBorder.none,
-                      fillColor: patoBackgroundColor,
-                      filled: true,
-                      hintText: '0',
-                      prefixIcon: Container(
-                        color: Colors.grey,
-                        child: const Text("Tsh",
+                ),
+              ),
+            ),
+            Container(width: 10),
+            Expanded(
+              child: SizedBox(
+                height: 35,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    prefixIcon: Container(
+                      color: Colors.grey,
+                      child: const Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text("Tsh",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold)),
                       ),
-                      // enabledBorder: InputBorder.none,
                     ),
                   ),
-                ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

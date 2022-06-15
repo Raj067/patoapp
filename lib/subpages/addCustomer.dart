@@ -12,7 +12,6 @@ class AddCustomerDialog extends StatelessWidget {
           'Add Customer',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -23,8 +22,74 @@ class AddCustomerDialog extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Customer Page"),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ListView(
+          children: [
+            Container(height: 10),
+            SizedBox(
+              height: 45,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Customer Name"),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(height: 10),
+            SizedBox(
+              height: 45,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Phone Number"),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(height: 10),
+            SizedBox(
+              height: 45,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Email Address"),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 45,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.question_mark_outlined),
+                        label: Text(
+                          "Open Balance",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(width: 10),
+                Expanded(
+                  child: SizedBox(
+                    height: 45,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        label: Text("date"),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
