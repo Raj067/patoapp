@@ -13,7 +13,6 @@ class OverviewDialog extends StatelessWidget {
           'Overview',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -28,7 +27,6 @@ class OverviewDialog extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: [
-            // _barChartOverview(),
             Card(
               child: InkWell(
                 onTap: () {},
@@ -45,15 +43,78 @@ class OverviewDialog extends StatelessWidget {
                 ),
               ),
             ),
-
             _firstRow(),
-            const BarChartSample2(),
+            _barChartOverview(),
             _expenses(),
             _invoices(),
             _payable(),
             _receivable(),
             _profitLoss(),
             _balanceSheet(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _barChartOverview() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BarChartSample2(),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "Your next month looks critical",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "You will probably increase earning by Tsh 80,000 you need for your daily operations",
+              // maxLines: 10,
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                border: Border.all(color: Colors.black),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Forcasted Income",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("March, 01 - 20, 2022"),
+                        ]),
+                    const Text(
+                      "Tsh 780,000",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
           ],
         ),
       ),
@@ -157,32 +218,33 @@ Widget _expenses() => Card(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                Text("Paid Invoices"),
-                Text("TZS 120,000"),
+                Text("Total Expenses"),
+                Text("TZS 390,000"),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Unpaid Invoices"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Overdue Invoices"),
-                Text("TZS 80,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Balance"),
-                Text("TZS 120,000"),
-              ],
-            )
+            PieChartSample2(),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: const [
+            //     Text("Unpaid Invoices"),
+            //     Text("TZS 120,000"),
+            //   ],
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: const [
+            //     Text("Overdue Invoices"),
+            //     Text("TZS 80,000"),
+            //   ],
+            // ),
+            // const Divider(),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: const [
+            //     Text("Balance"),
+            //     Text("TZS 120,000"),
+            //   ],
+            // )
           ],
         ),
       ),
@@ -515,219 +577,155 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        // color: const Color(0xff2c4260),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+      aspectRatio: 0.8,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisSize: MainAxisSize.min,
+              // makeTransactionsIcon(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Cash flow",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Text("Past 12 month"),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Tsh 1,320,000",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Text("Cash Balance"),
+                ],
+              ),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  // makeTransactionsIcon(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Cash flow",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.brightness_1, size: 14, color: leftBarColor),
+                      const SizedBox(
+                        width: 10,
                       ),
-                      Text("Past 12 month"),
-                      SizedBox(
-                        height: 4,
+                      const Text(
+                        'Money in',
                       ),
-                      Text(
-                        "Tsh 1,320,000",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Text("Cash Balance"),
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.brightness_1,
-                              size: 14, color: leftBarColor),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            'Money in',
-                          ),
-                        ],
-                      ),
+                      Icon(Icons.brightness_1, size: 14, color: rightBarColor),
                       const SizedBox(
-                        height: 15,
+                        width: 10,
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.brightness_1,
-                              size: 14, color: rightBarColor),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            'Money out',
-                          ),
-                        ],
+                      const Text(
+                        'Money out',
                       ),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 38,
-              ),
-              Expanded(
-                child: BarChart(
-                  BarChartData(
-                    maxY: 20,
-                    barTouchData: BarTouchData(
-                        touchTooltipData: BarTouchTooltipData(
-                          tooltipBgColor: Colors.grey,
-                          getTooltipItem: (_a, _b, _c, _d) => null,
-                        ),
-                        touchCallback: (FlTouchEvent event, response) {
-                          if (response == null || response.spot == null) {
-                            setState(() {
-                              touchedGroupIndex = -1;
-                              showingBarGroups = List.of(rawBarGroups);
-                            });
-                            return;
-                          }
-
-                          touchedGroupIndex =
-                              response.spot!.touchedBarGroupIndex;
-
-                          setState(() {
-                            if (!event.isInterestedForInteractions) {
-                              touchedGroupIndex = -1;
-                              showingBarGroups = List.of(rawBarGroups);
-                              return;
-                            }
-                            showingBarGroups = List.of(rawBarGroups);
-                            if (touchedGroupIndex != -1) {
-                              var sum = 0.0;
-                              for (var rod
-                                  in showingBarGroups[touchedGroupIndex]
-                                      .barRods) {
-                                sum += rod.toY;
-                              }
-                              final avg = sum /
-                                  showingBarGroups[touchedGroupIndex]
-                                      .barRods
-                                      .length;
-
-                              showingBarGroups[touchedGroupIndex] =
-                                  showingBarGroups[touchedGroupIndex].copyWith(
-                                barRods: showingBarGroups[touchedGroupIndex]
-                                    .barRods
-                                    .map((rod) {
-                                  return rod.copyWith(toY: avg);
-                                }).toList(),
-                              );
-                            }
-                          });
-                        }),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: bottomTitles,
-                          reservedSize: 42,
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 28,
-                          interval: 1,
-                          getTitlesWidget: leftTitles,
-                        ),
-                      ),
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    barGroups: showingBarGroups,
-                    gridData: FlGridData(show: false),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 38,
-              ),
-              const Text(
-                "Your next month looks critical",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const Text(
-                "You will probably increase earning by Tsh 80,000 you need for your daily operations",
-                // maxLines: 10,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Forcasted Income",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text("March, 01 - 20, 2022"),
-                          ]),
-                      const Text(
-                        "Tsh 780,000",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
             ],
           ),
-        ),
+          const SizedBox(
+            height: 38,
+          ),
+          Expanded(
+            child: BarChart(
+              BarChartData(
+                maxY: 20,
+                barTouchData: BarTouchData(
+                    touchTooltipData: BarTouchTooltipData(
+                      tooltipBgColor: Colors.grey,
+                      getTooltipItem: (_a, _b, _c, _d) => null,
+                    ),
+                    touchCallback: (FlTouchEvent event, response) {
+                      if (response == null || response.spot == null) {
+                        setState(() {
+                          touchedGroupIndex = -1;
+                          showingBarGroups = List.of(rawBarGroups);
+                        });
+                        return;
+                      }
+
+                      touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+
+                      setState(() {
+                        if (!event.isInterestedForInteractions) {
+                          touchedGroupIndex = -1;
+                          showingBarGroups = List.of(rawBarGroups);
+                          return;
+                        }
+                        showingBarGroups = List.of(rawBarGroups);
+                        if (touchedGroupIndex != -1) {
+                          var sum = 0.0;
+                          for (var rod
+                              in showingBarGroups[touchedGroupIndex].barRods) {
+                            sum += rod.toY;
+                          }
+                          final avg = sum /
+                              showingBarGroups[touchedGroupIndex]
+                                  .barRods
+                                  .length;
+
+                          showingBarGroups[touchedGroupIndex] =
+                              showingBarGroups[touchedGroupIndex].copyWith(
+                            barRods: showingBarGroups[touchedGroupIndex]
+                                .barRods
+                                .map((rod) {
+                              return rod.copyWith(toY: avg);
+                            }).toList(),
+                          );
+                        }
+                      });
+                    }),
+                titlesData: FlTitlesData(
+                  show: true,
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: bottomTitles,
+                      reservedSize: 42,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 28,
+                      interval: 1,
+                      getTitlesWidget: leftTitles,
+                    ),
+                  ),
+                ),
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                barGroups: showingBarGroups,
+                gridData: FlGridData(show: false),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -833,53 +831,194 @@ class BarChartSample2State extends State<BarChartSample2> {
       ),
     ]);
   }
+}
 
-  // Widget makeTransactionsIcon() {
-  //   const width = 4.5;
-  //   const space = 3.5;
-  //   return Row(
-  //     mainAxisSize: MainAxisSize.min,
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     children: <Widget>[
-  //       Container(
-  //         width: width,
-  //         height: 10,
-  //         color: Colors.white.withOpacity(0.4),
-  //       ),
-  //       const SizedBox(
-  //         width: space,
-  //       ),
-  //       Container(
-  //         width: width,
-  //         height: 28,
-  //         color: Colors.white.withOpacity(0.8),
-  //       ),
-  //       const SizedBox(
-  //         width: space,
-  //       ),
-  //       Container(
-  //         width: width,
-  //         height: 42,
-  //         color: Colors.white.withOpacity(1),
-  //       ),
-  //       const SizedBox(
-  //         width: space,
-  //       ),
-  //       Container(
-  //         width: width,
-  //         height: 28,
-  //         color: Colors.white.withOpacity(0.8),
-  //       ),
-  //       const SizedBox(
-  //         width: space,
-  //       ),
-  //       Container(
-  //         width: width,
-  //         height: 10,
-  //         color: Colors.white.withOpacity(0.4),
-  //       ),
-  //     ],
-  //   );
-  // }
+class PieChartSample2 extends StatefulWidget {
+  const PieChartSample2({Key? key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => PieChart2State();
+}
+
+class PieChart2State extends State {
+  int touchedIndex = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1.3,
+      child: Row(
+        children: <Widget>[
+          const SizedBox(
+            height: 18,
+          ),
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: PieChart(
+                PieChartData(
+                    pieTouchData: PieTouchData(
+                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      setState(() {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse == null ||
+                            pieTouchResponse.touchedSection == null) {
+                          touchedIndex = -1;
+                          return;
+                        }
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!.touchedSectionIndex;
+                      });
+                    }),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    sectionsSpace: 0,
+                    centerSpaceRadius: 40,
+                    sections: showingSections()),
+              ),
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const <Widget>[
+              Indicator(
+                color: Color(0xff0293ee),
+                text: 'First',
+                isSquare: true,
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Color(0xfff8b250),
+                text: 'Second',
+                isSquare: true,
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Color(0xff845bef),
+                text: 'Third',
+                isSquare: true,
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Color(0xff13d38e),
+                text: 'Fourth',
+                isSquare: true,
+              ),
+              SizedBox(
+                height: 18,
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 28,
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<PieChartSectionData> showingSections() {
+    return List.generate(4, (i) {
+      final isTouched = i == touchedIndex;
+      final fontSize = isTouched ? 25.0 : 16.0;
+      final radius = isTouched ? 60.0 : 50.0;
+      switch (i) {
+        case 0:
+          return PieChartSectionData(
+            color: const Color(0xff0293ee),
+            value: 40,
+            title: '40%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+          );
+        case 1:
+          return PieChartSectionData(
+            color: const Color(0xfff8b250),
+            value: 30,
+            title: '30%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+          );
+        case 2:
+          return PieChartSectionData(
+            color: const Color(0xff845bef),
+            value: 15,
+            title: '15%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+          );
+        case 3:
+          return PieChartSectionData(
+            color: const Color(0xff13d38e),
+            value: 15,
+            title: '15%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+          );
+        default:
+          throw Error();
+      }
+    });
+  }
+}
+
+class Indicator extends StatelessWidget {
+  final Color color;
+  final String text;
+  final bool isSquare;
+  final double size;
+  final Color textColor;
+
+  const Indicator({
+    Key? key,
+    required this.color,
+    required this.text,
+    required this.isSquare,
+    this.size = 12,
+    this.textColor = const Color(0xff505050),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
+            color: color,
+          ),
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(
+          text,
+          style: TextStyle(fontSize: 12, color: textColor),
+        )
+      ],
+    );
+  }
 }
