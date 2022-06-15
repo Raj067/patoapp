@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/profile/myBusinessEdit.dart';
 
 class TopProfileIcon extends StatelessWidget {
   const TopProfileIcon({Key? key}) : super(key: key);
@@ -9,10 +10,9 @@ class TopProfileIcon extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Profile Page',
+          'My Business',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -23,8 +23,22 @@ class TopProfileIcon extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: const Text("Profile Page"),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const EditMyBusiness(),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: const Text(
+            "Edit Profile",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
