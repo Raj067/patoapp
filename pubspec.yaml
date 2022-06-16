@@ -34,8 +34,8 @@ dependencies:
   flutter_svg: 1.1.0
   flutter_launcher_icons: 0.9.3
   intl: ^0.17.0
+  flutter_native_splash: ^2.2.3+1
   # filter_list: 1.0.1
-  # flutter_native_splash: ^2.2.3+1
   # koukicons: 2.0.3
 
   # The following adds the Cupertino Icons font to your application.
@@ -90,7 +90,7 @@ flutter:
     - assets/svg/dataConfiguration.svg
     - assets/svg/calendar.svg
     - assets/svg/genericSortingDesc.svg
-    # - assets/
+    - assets/icon/patowave.png
     # - assets/
     # - assets/
     # - assets/
