@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
 
-class ProductsCart extends StatelessWidget {
+class ProductsCart extends StatefulWidget {
   final List<SingleProduct> products;
   const ProductsCart({Key? key, required this.products}) : super(key: key);
 
+  @override
+  State<ProductsCart> createState() => _ProductsCartState();
+}
+
+class _ProductsCartState extends State<ProductsCart> {
+  int totalAmount = 0;
+  int balanceDue = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +41,34 @@ class ProductsCart extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Column(
-          children: [
-            Expanded(
+      body: Column(
+        children: [
+          const Divider(height: 0),
+          Table(
+            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: Text("Receipt No 1"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: Text(
+                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                    ),
+                  ),
+                ),
+              ]),
+            ],
+          ),
+          const Divider(height: 0),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ListView(
                 children: [
                   Container(height: 10),
@@ -66,30 +97,30 @@ class ProductsCart extends StatelessWidget {
                   Container(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Total Amount",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Tsh: ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "Tsh: $totalAmount",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   Container(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Balance due",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: patoPrimaryColor),
                       ),
                       Text(
-                        "Tsh: ",
-                        style: TextStyle(
+                        "Tsh: $balanceDue",
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: patoPrimaryColor),
                       ),
@@ -113,123 +144,103 @@ class ProductsCart extends StatelessWidget {
                 ],
               ),
             ),
-          ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          child: const Text(
+            "Save Transaction",
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () {},
         ),
       ),
     );
   }
 
   _discount() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Discount",
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
-            Container(width: 5),
-            // Expanded(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       TextField(
-            //         // cursorHeight: 1,
-            //         decoration: InputDecoration(
-            //           // contentPadding: EdgeInsetsDirectional.all(0),
-            //           border: InputBorder.none,
-            //           fillColor: patoBackgroundColor,
-            //           filled: true,
-            //           hintText: '0',
-            //           prefixIcon: Container(
-            //             color: const Color.fromARGB(255, 255, 200, 200),
-            //             child: const Icon(
-            //               Icons.percent,
-            //               color: patoRed,
-            //             ),
-            //           ),
-            //           // enabledBorder: InputBorder.none,
-            //         ),
-            //       ),
-            //       Container(
-            //         height: 10,
-            //       ),
-            //       TextField(
-            //         // cursorHeight: 1,
-            //         decoration: InputDecoration(
-            //           // contentPadding: EdgeInsetsDirectional.all(0),
-            //           border: InputBorder.none,
-            //           fillColor: patoBackgroundColor,
-            //           filled: true,
-            //           hintText: '0',
-            //           prefixIcon: Container(
-            //             color: Colors.grey,
-            //             child: const Text("Tsh",
-            //                 style: TextStyle(
-            //                     color: Colors.black,
-            //                     fontSize: 16,
-            //                     fontWeight: FontWeight.bold)),
-            //           ),
-            //           // enabledBorder: InputBorder.none,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // )
-            Expanded(
-              child: SizedBox(
-                height: 35,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    prefixIcon: Container(
-                      color: const Color.fromARGB(255, 255, 200, 200),
-                      child: const Icon(
-                        Icons.percent,
-                        color: patoRed,
+    return Column(
+      children: [
+        Container(height: 15),
+        const Divider(height: 0),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(14, 5, 15, 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Discount",
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+              Container(width: 5),
+              Expanded(
+                child: Container(
+                  height: 35,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      prefixIcon: Container(
+                        color: const Color.fromARGB(255, 255, 200, 200),
+                        child: const Icon(
+                          Icons.percent,
+                          color: patoRed,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Container(width: 10),
-            Expanded(
-              child: SizedBox(
-                height: 35,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    prefixIcon: Container(
-                      color: Colors.grey,
-                      child: const Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text("Tsh",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)),
+              Container(width: 10),
+              Expanded(
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      prefixIcon: Container(
+                        color: Colors.grey,
+                        child: const Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text("Tsh",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        const Divider(height: 0),
+        Container(height: 15),
+      ],
     );
   }
 
   Widget _allSelectedProducts(BuildContext context) {
     List<Widget> data = [];
-    for (var element in products) {
+    int price = 0;
+    for (var element in widget.products) {
       if (element.addedToCart > 0) {
+        price += element.getTotalPrice();
         data.add(_signleSelectedProduct(context, element));
       }
     }
+    setState(() {
+      totalAmount = price;
+    });
     return Column(children: data);
   }
 
