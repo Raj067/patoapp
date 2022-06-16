@@ -323,7 +323,12 @@ class _BusinessPageState extends State<BusinessPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            data.deleteTransaction();
+                          });
+                          Navigator.pop(context);
+                        },
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(patoRed)),

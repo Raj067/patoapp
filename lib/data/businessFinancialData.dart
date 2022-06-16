@@ -15,6 +15,9 @@ class BusinessFinancial {
     this.isIncome = true,
     this.id = '1',
   });
+  deleteTransaction() {
+    // print("hello raj -> deleted");
+  }
 }
 
 allBusinessFinancialData() {

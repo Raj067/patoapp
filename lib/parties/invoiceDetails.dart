@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
+import 'package:patoapp/parties/previewInvoice.dart';
 import 'package:patoapp/subpages/singleCustomer.dart';
 
 class InvoiceDetails extends StatelessWidget {
@@ -26,7 +27,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => SingleCustomerPage(
+              builder: (BuildContext context) => PreviewInvoice(
                 customer: customer,
               ),
               fullscreenDialog: true,
