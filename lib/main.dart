@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: patowaveTheme(),
       // themeMode: ThemeMode.dark,
-      // darkTheme: patoDarkTheme(),
+      // darkTheme: ThemeData.dark(),
     );
   }
 }

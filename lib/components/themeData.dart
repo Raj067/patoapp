@@ -61,7 +61,7 @@ const ColorScheme _patoColorScheme = ColorScheme(
 );
 
 const Color patoPrimaryColor = Color.fromARGB(255, 51, 121, 111);
-const Color patoLightGreen = Color.fromARGB(255, 151, 186, 180);
+const Color patoLightGreen = Color.fromARGB(255, 209, 231, 221);
 const Color patoBackgroundColor = Color.fromARGB(255, 240, 240, 240);
 const Color patoBlack = Color.fromARGB(255, 0, 0, 0);
 const Color patoWhite = Color.fromARGB(255, 254, 255, 255);
@@ -70,6 +70,6 @@ const Color patoGrey = Color.fromARGB(255, 75, 74, 74);
 const Color patoGreen = Colors.green;
 const Color patoBlue = Colors.blue;
 const Color patoWarning = Colors.yellow;
-
+const Color patoLightGrey = Color.fromARGB(255, 211, 211, 211);
 // DARK MODE
 

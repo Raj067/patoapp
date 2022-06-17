@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Note: only post changes to the backend where necessary, otherwise not sending them,
 class SingleProduct {
   String productName;
   String thumbnail;
@@ -55,6 +56,28 @@ class SingleProduct {
       return true;
     }
     return false;
+  }
+
+  bool compareToCart(int val) {
+    if (val >= (quantity - addedToCart)) {
+      return true;
+    }
+    return false;
+  }
+
+  int availableQuantity() {
+    return quantity - addedToCart;
+  }
+
+  // bool isMaxAvailableQuantity() {
+  //   if ((quantity - addedToCart) >= quantity) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  void makeSales() {
+    // make sales and changes the sales actions to the backend
   }
 }
 

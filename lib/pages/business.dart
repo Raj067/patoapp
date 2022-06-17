@@ -27,7 +27,7 @@ class _BusinessPageState extends State<BusinessPage> {
             // SecondRowBusinessData(),
             Card(
               child: Container(
-                color: Colors.grey,
+                color: patoLightGrey,
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(

@@ -80,12 +80,7 @@ class OverviewDialog extends StatelessWidget {
               height: 12,
             ),
             Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-                border: Border.all(color: Colors.black),
-              ),
+              color: patoLightGreen,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(

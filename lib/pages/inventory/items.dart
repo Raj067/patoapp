@@ -116,10 +116,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             child: SizedBox(
               height: 50,
               child: Card(
-                // ignore: unnecessary_const
                 child: TextField(
                   selectionHeightStyle: BoxHeightStyle.strut,
-                  // ignore: unnecessary_const
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Search item',
@@ -340,8 +338,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                               ],
                             )
                           : const CircleAvatar(
-                              backgroundColor: patoLightGreen,
-                              foregroundColor: patoBlack,
+                              backgroundColor: patoPrimaryColor,
+                              foregroundColor: patoWhite,
                               child: Icon(Icons.add_shopping_cart_rounded),
                             ),
                     ],
@@ -358,7 +356,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   Future<void> _addDataToCartManual(
       BuildContext context, SingleProduct product) async {
     TextEditingController controller = TextEditingController(text: "1");
-
+    bool isavailableToCart = true;
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -377,11 +375,6 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Image.network(product.thumbnail,
-                      //     width: 50, height: 50, fit: BoxFit.fill),
-                      // Container(
-                      //   width: 10,
-                      // ),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -435,31 +428,35 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Qty:"),
+                  // const Text("Qty:"),
                   Expanded(
                     child: SizedBox(
-                      height: 50,
-                      child: Card(
-                        // ignore: unnecessary_const
-                        child: TextField(
-                          // ignore: unnecessary_const
-                          textAlign: TextAlign.start,
-                          controller: controller,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsetsDirectional.all(10),
-                            border: InputBorder.none,
-                            // hintText: 'Quantity',
-                            prefixIcon: Icon(
-                              Icons.add,
-                              size: 16,
-                            ),
-                            enabledBorder: InputBorder.none,
-                            // helperText: "Quantity",
+                      // height: 50,
+                      child: TextFormField(
+                        controller: controller,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsetsDirectional.all(10),
+                          border: const OutlineInputBorder(),
+                          helperText:
+                              "*Maximum quantity is ${product.availableQuantity()}",
+                          helperStyle: TextStyle(
+                              color: product
+                                      .compareToCart(int.parse(controller.text))
+                                  ? patoRed
+                                  : patoGrey),
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+                            child: Text("Qty:"),
                           ),
+                          suffixIcon: const Icon(
+                            Icons.add_shopping_cart_rounded,
+                            size: 16,
+                          ),
+                          // helperText: "Quantity",
                         ),
                       ),
                     ),
@@ -476,11 +473,14 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  // int? val = int.tryParse(controller.text);
-                  product.addNewProductToCart(20);
-                  _onCartChange(product);
+                  var val = int.parse(controller.text);
+                  if (!product.compareToCart(val)) {
+                    product.addNewProductToCart(val);
+                    product.isAddedToCartAutomatic = true;
+                    _onCartChange(product);
+                    Navigator.pop(context);
+                  }
                 });
-                Navigator.pop(context);
               },
               child: const Text(
                 "Add",
@@ -492,145 +492,6 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
       },
     );
   }
-
-  Future<void> productAdjustment(
-      BuildContext context, SingleProduct product) async {
-    TextEditingController controller = TextEditingController(text: "1");
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          scrollable: true,
-          contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-          backgroundColor: patoBackgroundColor,
-          title: const Text('Adjust Item'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Image.network(product.thumbnail,
-                      //     width: 50, height: 50, fit: BoxFit.fill),
-                      // Container(
-                      //   width: 10,
-                      // ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.productName,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Tsh ${product.productPrice}',
-                                      style: const TextStyle(
-                                          fontSize: 16, color: patoGrey),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Qty: ${product.quantity}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontStyle: FontStyle.italic,
-                                        color: product.isOutStock
-                                            ? patoWarning
-                                            : product.quantity == 0
-                                                ? patoRed
-                                                : patoGrey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Qty:"),
-                  Expanded(
-                    child: SizedBox(
-                      height: 50,
-                      child: Card(
-                        // ignore: unnecessary_const
-                        child: TextField(
-                          // ignore: unnecessary_const
-                          textAlign: TextAlign.start,
-                          controller: controller,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsetsDirectional.all(10),
-                            border: InputBorder.none,
-                            // hintText: 'Quantity',
-                            prefixIcon: Icon(
-                              Icons.add,
-                              size: 16,
-                            ),
-                            enabledBorder: InputBorder.none,
-                            // helperText: "Quantity",
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  product.adjustProductQuantity(10);
-                });
-                Navigator.pop(context);
-              },
-              child: const Text(
-                "Add",
-                style: TextStyle(color: patoWhite),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  // _onItemSearch(name, query) {
-  //   return name!.toLowerCase().contains(query.toLowerCase());
-  // }
 
   // customData = customData.where((i) => _onItemSearch(i.productName, pName) == true).toList();
   _onCartChange(SingleProduct pName) {
