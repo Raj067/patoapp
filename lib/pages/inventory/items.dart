@@ -289,13 +289,17 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                 InkWell(
                                   onTap: () {
                                     setState(() {
-                                      product.addNewProductToCart(-1);
-                                      _onCartChange(product);
+                                      if (!product.isZeroWarning()) {
+                                        product.addNewProductToCart(-1);
+                                        _onCartChange(product);
+                                      }
                                     });
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.do_disturb_on_outlined,
-                                    color: patoPrimaryColor,
+                                    color: product.isZeroWarning()
+                                        ? patoRed
+                                        : patoPrimaryColor,
                                   ),
                                 ),
                                 Container(width: 8),
@@ -308,13 +312,17 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                 InkWell(
                                   onTap: () {
                                     setState(() {
-                                      product.addNewProductToCart(1);
-                                      _onCartChange(product);
+                                      if (!product.isMaxProductWarning()) {
+                                        product.addNewProductToCart(1);
+                                        _onCartChange(product);
+                                      }
                                     });
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.add_circle_outline_sharp,
-                                    color: patoPrimaryColor,
+                                    color: product.isMaxProductWarning()
+                                        ? patoRed
+                                        : patoPrimaryColor,
                                   ),
                                 ),
                               ],
@@ -629,5 +637,18 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
     allAddedProductPrice = price;
     customData = newData;
     allAddedProduct = val;
+  }
+
+  _onResetAllData() {
+    List<SingleProduct> newData = [];
+    for (var element in customData) {
+      element.addedToCart = 0;
+      newData.add(element);
+    }
+    setState(() {
+      customData = newData;
+      allAddedProduct = 0;
+      allAddedProductPrice = 0;
+    });
   }
 }

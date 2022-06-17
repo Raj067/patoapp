@@ -42,6 +42,20 @@ class SingleProduct {
   int getTotalPrice() {
     return productPrice * addedToCart;
   }
+
+  bool isZeroWarning() {
+    if (addedToCart <= 0) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isMaxProductWarning() {
+    if (addedToCart >= quantity) {
+      return true;
+    }
+    return false;
+  }
 }
 
 List<SingleProduct> allProductDetails() {

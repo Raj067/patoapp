@@ -132,7 +132,7 @@ class _BusinessPageState extends State<BusinessPage> {
                     height: 60,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
+                        topLeft: Radius.circular(5),
                       ),
                       border: Border(
                         top: BorderSide(width: 1, color: patoGreen),
@@ -150,8 +150,10 @@ class _BusinessPageState extends State<BusinessPage> {
                           ),
                           Text(
                             "Tsh ${isWeek ? businessGeneral.salesWeek : businessGeneral.salesMonth}",
-                            style:
-                                const TextStyle(color: patoGreen, fontSize: 16),
+                            style: const TextStyle(
+                                color: patoGreen,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
                           )
                         ]),
                   ),
@@ -161,7 +163,7 @@ class _BusinessPageState extends State<BusinessPage> {
                     height: 80,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
+                        topRight: Radius.circular(5),
                       ),
                       border: Border(
                         top: BorderSide(width: 1, color: patoRed),
@@ -179,8 +181,11 @@ class _BusinessPageState extends State<BusinessPage> {
                           ),
                           Text(
                             "Tsh ${isWeek ? businessGeneral.expensesWeek : businessGeneral.expensesMonth}",
-                            style:
-                                const TextStyle(color: patoRed, fontSize: 16),
+                            style: const TextStyle(
+                              color: patoRed,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           )
                         ]),
                   ),

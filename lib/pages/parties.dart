@@ -56,47 +56,67 @@ class FirstRowPartiesData extends StatelessWidget {
               height: 60,
               child: Row(children: [
                 Expanded(
-                    child: Container(
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(10)),
-                    border: Border(
+                  child: Container(
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                      ),
+                      border: Border(
                         top: BorderSide(width: 1, color: patoGreen),
                         left: BorderSide(width: 1, color: patoGreen),
                         right: BorderSide(width: 1, color: patoGreen),
-                        bottom: BorderSide(width: 1, color: patoGreen)),
+                        bottom: BorderSide(width: 1, color: patoGreen),
+                      ),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text(
+                            "Tsh 12,000",
+                            style: TextStyle(
+                                color: patoGreen,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "My total debt",
+                            style: TextStyle(color: patoGrey, fontSize: 14),
+                          ),
+                        ]),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text("Tsh 12,000",
-                            style: TextStyle(color: patoGreen, fontSize: 18)),
-                        Text("My total debt",
-                            style: TextStyle(color: patoGrey, fontSize: 14)),
-                      ]),
-                )),
+                ),
                 Expanded(
-                    child: Container(
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topRight: Radius.circular(10)),
-                    border: Border(
+                  child: Container(
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(5),
+                      ),
+                      border: Border(
                         top: BorderSide(width: 1, color: patoRed),
                         left: BorderSide(width: 1, color: patoRed),
                         right: BorderSide(width: 1, color: patoRed),
-                        bottom: BorderSide(width: 1, color: patoRed)),
+                        bottom: BorderSide(width: 1, color: patoRed),
+                      ),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Text(
+                            "Tsh 12,000",
+                            style: TextStyle(
+                                color: patoRed,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Total customer debt",
+                            style: TextStyle(color: patoGrey, fontSize: 14),
+                          ),
+                        ]),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text("Tsh 12,000",
-                            style: TextStyle(color: patoRed, fontSize: 18)),
-                        Text("Total customer debt",
-                            style: TextStyle(color: patoGrey, fontSize: 14)),
-                      ]),
-                )),
+                ),
               ]),
             ),
             InkWell(
@@ -205,7 +225,8 @@ class DateActionButton extends StatelessWidget {
       height: 50,
       child: Card(
         child: IconButton(
-          icon: SvgPicture.asset("assets/svg/calendar.svg", width: 25, height: 25),
+          icon: SvgPicture.asset("assets/svg/calendar.svg",
+              width: 25, height: 25),
           onPressed: () {},
         ),
       ),
