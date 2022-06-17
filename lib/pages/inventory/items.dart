@@ -45,50 +45,61 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           _itemSearchBar(context),
           _itemAllDataFiltered(),
           allAddedProduct != 0
-              ? Card(
-                  color: patoPrimaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) => ProductsCart(
-                            products: customData,
-                          ),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total: $allAddedProduct',
-                            style: const TextStyle(
-                              color: Colors.white,
+              ? Dismissible(
+                  key: const Key('removeData'),
+                  confirmDismiss: (direction) async {
+                    if (direction == DismissDirection.startToEnd) {
+                      _onResetAllData();
+                    } else {
+                      _onResetAllData();
+                    }
+                    return true;
+                  },
+                  child: Card(
+                    color: patoPrimaryColor,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => ProductsCart(
+                              products: customData,
                             ),
+                            fullscreenDialog: true,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "Tsh. $allAddedProductPrice",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Container(
-                                width: 10,
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total: $allAddedProduct',
+                              style: const TextStyle(
                                 color: Colors.white,
-                                size: 14,
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Tsh. $allAddedProductPrice",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Container(
+                                  width: 10,
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -169,7 +180,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           if (direction == DismissDirection.startToEnd) {
             _addDataToCartManual(context, product);
           } else {
-            productAdjustment(context, product);
+            _onResetSingleData(product);
+            // productAdjustment(context, product);
           }
           // if (direction == DismissDirection.startToEnd) {
           //   setState(() {
@@ -199,7 +211,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             child: Padding(
               padding: EdgeInsets.only(right: 16),
               child: Icon(
-                Icons.edit,
+                Icons.clear,
                 color: patoWhite,
               ),
             ),
@@ -643,6 +655,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
     List<SingleProduct> newData = [];
     for (var element in customData) {
       element.addedToCart = 0;
+      element.isAddedToCartAutomatic = false;
       newData.add(element);
     }
     setState(() {
@@ -650,5 +663,22 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
       allAddedProduct = 0;
       allAddedProductPrice = 0;
     });
+  }
+
+  _onResetSingleData(SingleProduct product) {
+    product.addedToCart = 0;
+    product.isAddedToCartAutomatic = false;
+    List<SingleProduct> newData = [];
+    int val = 0;
+    int price = 0;
+    for (var element in customData) {
+      val += element.addedToCart;
+      price += element.getTotalPrice();
+      newData.add(element);
+    }
+    allAddedProductPrice = price;
+    customData = newData;
+    allAddedProduct = val;
+    setState(() {});
   }
 }
