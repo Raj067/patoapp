@@ -5,6 +5,39 @@ import 'package:patoapp/data/businessFinancialData.dart';
 import 'package:patoapp/reports/profitLoss.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
 
+// import 'package:accordion/accordion.dart';
+// import 'package:accordion/controllers.dart';
+// Accordion(
+//               maxOpenSections: 2,
+//               headerBackgroundColor: patoLightGreen,
+
+//               children: [
+//                 AccordionSection(
+//                   isOpen: true,
+//                   header: Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Text("hello"),
+//                         Text("hello"),
+//                         Text("hello"),
+//                       ]),
+//                   content: Text('This is the introduction right here ...'),
+//                 ),
+//                 AccordionSection(
+//                   isOpen: true,
+//                   header: Text('About Us'),
+//                   content: Icon(Icons.airline_seat_flat,
+//                       size: 120, color: Colors.blue[200]),
+//                 ),
+//                 AccordionSection(
+//                   isOpen: true,
+//                   header: Text('Company Info'),
+//                   content:
+//                       Icon(Icons.airplay, size: 70, color: Colors.green[200]),
+//                 ),
+//               ],
+//             ),
+
 class BusinessPage extends StatefulWidget {
   const BusinessPage({Key? key}) : super(key: key);
 
