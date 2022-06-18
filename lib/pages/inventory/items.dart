@@ -356,7 +356,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   Future<void> _addDataToCartManual(
       BuildContext context, SingleProduct product) async {
     TextEditingController controller = TextEditingController(text: "1");
-    bool isavailableToCart = true;
+
     await showDialog(
       context: context,
       builder: (BuildContext context) {

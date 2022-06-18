@@ -166,7 +166,7 @@ class SecondRowPartiesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
+      children: [
         Expanded(
           flex: 4,
           child: SizedBox(
@@ -176,63 +176,146 @@ class SecondRowPartiesData extends StatelessWidget {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   enabledBorder: InputBorder.none,
+                  suffixIcon: InkWell(
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      child: MyStatefulWidget(restorationId: "hello"),
+                    ),
+                    onTap: () {},
+                  ),
                 ),
               ),
             ),
           ),
         ),
-        AddPartiesButton(),
-        DateActionButton(),
+        SizedBox(
+          height: 50,
+          child: Card(
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const AddCustomerDialog(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        // DateActionButton(),
         // FilterIconButton(),
       ],
     );
   }
 }
 
-class AddPartiesButton extends StatelessWidget {
-  const AddPartiesButton({Key? key}) : super(key: key);
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key, this.restorationId}) : super(key: key);
+
+  final String? restorationId;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      child: Card(
-        child: IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const AddCustomerDialog(),
-                fullscreenDialog: true,
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+/// RestorationProperty objects can be used because of RestorationMixin.
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  DateTime _date = DateTime(2020, 11, 17);
+
+  void _selectDate() async {
+    final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2017, 1),
+      lastDate: DateTime(2022, 7),
+      helpText: 'Select a date',
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            // data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: patoPrimaryColor, // <-- SEE HERE
+              onPrimary: patoWhite, // <-- SEE HERE
+              onSurface: patoBlack, // <-- SEE HERE
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: patoPrimaryColor, // button text color
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+    if (newDate != null) {
+      setState(() {
+        _date = newDate;
+      });
+    }
   }
-}
-
-class DateActionButton extends StatelessWidget {
-  const DateActionButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: Card(
-        child: IconButton(
-          icon: SvgPicture.asset("assets/svg/calendar.svg",
-              width: 25, height: 25),
-          onPressed: () {},
-        ),
+    return InkWell(
+      child: SvgPicture.asset(
+        "assets/svg/calendar.svg",
       ),
+      onTap: () {
+        _selectDate();
+      },
     );
   }
 }
+
+// class AddPartiesButton extends StatelessWidget {
+//   const AddPartiesButton({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 50,
+//       child: Card(
+//         child: IconButton(
+//           icon: const Icon(Icons.add),
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute<void>(
+//                 builder: (BuildContext context) => const AddCustomerDialog(),
+//                 fullscreenDialog: true,
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class DateActionButton extends StatelessWidget {
+//   const DateActionButton({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 50,
+//       child: Card(
+//         child: IconButton(
+//           icon: SvgPicture.asset("assets/svg/calendar.svg",
+//               width: 25, height: 25),
+//           onPressed: () {},
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // class FilterIconButton extends StatelessWidget {
 //   const FilterIconButton({Key? key}) : super(key: key);

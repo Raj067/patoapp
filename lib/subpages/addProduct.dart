@@ -168,7 +168,10 @@ class _AddProductPageState extends State<AddProductPage> {
                     height: 45,
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.question_mark_outlined),
+                        suffixIcon: Tooltip(
+                          message: "hello",
+                          child: Icon(Icons.question_mark_outlined),
+                        ),
                         label: Text("Quantity"),
                         border: OutlineInputBorder(),
                       ),

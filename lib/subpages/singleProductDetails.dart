@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
-import 'package:patoapp/pages/products/deleteProduct.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
-import '../pages/products/adjustProduct.dart';
-
-class SingleProductDetails extends StatelessWidget {
-  SingleProductDetails({super.key, required this.product});
+class SingleProductDetails extends StatefulWidget {
+  const SingleProductDetails({super.key, required this.product});
   final SingleProduct product;
+
+  @override
+  State<SingleProductDetails> createState() => _SingleProductDetailsState();
+}
+
+class _SingleProductDetailsState extends State<SingleProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +36,7 @@ class SingleProductDetails extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              productDelete(context, product);
+              _productDelete(context, widget.product);
             },
             icon: const Icon(
               Icons.delete,
@@ -41,52 +46,96 @@ class SingleProductDetails extends StatelessWidget {
           Container(width: 10),
         ],
       ),
-      body: ListView(children: [
-        Column(children: [
-          SizedBox(
-            // height: 200,
-            // child: Image.network(
-            //   product.thumbnail,
-            //   fit: BoxFit.fitWidth,
-            // ),
-            child: Image.asset("assets/img.jpg", fit: BoxFit.fitWidth),
-          )
-        ]),
-        ListTile(
-          title: Text(
-            product.productName,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+      body: ListView(
+        children: [
+          Column(children: [
+            SizedBox(
+              // height: 200,
+              // child: Image.network(
+              //   product.thumbnail,
+              //   fit: BoxFit.fitWidth,
+              // ),
+              child: Image.asset("assets/img.jpg", fit: BoxFit.fitWidth),
+            )
+          ]),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.product.productName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+
+                // const Text('Transactions'),
+              ],
+            ),
           ),
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text("Selling Price"),
-          trailing: Text(product.sellingPrice),
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text("Purchases Price"),
-          trailing: Text(product.purchasesPrice),
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text("Total Items sold"),
-          trailing: Text("${product.totalItemsSold}"),
-        ),
-        const Divider(),
-        ListTile(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Supplier Contacts:"),
-              Text("Name: ${product.supplierName}"),
-              Text("Phone: ${product.supplierContact}"),
-            ],
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Selling Price'),
+                Text(widget.product.sellingPrice),
+              ],
+            ),
           ),
-          trailing: const Icon(Icons.phone),
-        ),
-      ]),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Purchases Price'),
+                Text(widget.product.purchasesPrice),
+              ],
+            ),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Total Items sold'),
+                Text("${widget.product.totalItemsSold}"),
+              ],
+            ),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Supplier Contacts:"),
+                    Container(
+                      height: 5,
+                    ),
+                    Text("Name: ${widget.product.supplierName}"),
+                    Text("Phone: ${widget.product.supplierContact}"),
+                  ],
+                ),
+                InkWell(
+                  radius: 10,
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    // _makePhoneCall(widget.product.supplierContact);
+                  },
+                  child: const Icon(Icons.phone, color: patoGreen),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
       persistentFooterButtons: [
         OutlinedButton(
           onPressed: () {},
@@ -94,7 +143,7 @@ class SingleProductDetails extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            productAdjustment(context, product);
+            _productAdjustment(context, widget.product);
           },
           child: const Text(
             "Adjust Item",
@@ -102,6 +151,111 @@ class SingleProductDetails extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  // Future<void> _makePhoneCall(String phoneNumber) async {
+  //   final Uri launchUri = Uri(
+  //     scheme: 'tel',
+  //     path: '0679190720',
+  //   );
+  //   await launchUrl(launchUri);
+  // }
+
+  Future<void> _productDelete(
+      BuildContext context, SingleProduct product) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: patoBackgroundColor,
+            // title: const Text('Adjust Item'),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Are you sure you want to delete this item?",
+                    textAlign: TextAlign.center),
+                Container(height: 10),
+                const Text(
+                  "Warning",
+                  style: TextStyle(color: patoRed),
+                ),
+                Container(height: 10),
+                const Text("All of this informations will be lost.",
+                    textAlign: TextAlign.center),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(color: patoWhite),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _productAdjustment(
+      BuildContext context, SingleProduct product) async {
+    TextEditingController controller = TextEditingController(text: "1");
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+          backgroundColor: patoBackgroundColor,
+          title: const Text('Adjust Item'),
+          content: TextFormField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsetsDirectional.all(10),
+              border: OutlineInputBorder(),
+              prefixIcon: Padding(
+                padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+                child: Text("Qty:"),
+              ),
+              suffixIcon: Icon(
+                Icons.add_business,
+                size: 18,
+              ),
+              // helperText: "Quantity",
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  product.adjustProductQuantity(int.parse(controller.text));
+                });
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Add",
+                style: TextStyle(color: patoWhite),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
