@@ -35,48 +35,73 @@ class MorePage extends StatelessWidget {
                 height: 10,
               ),
               Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const OverviewDialog(),
-                        fullscreenDialog: true,
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const OverviewDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/viewDetails.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Overview'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/viewDetails.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Overview'),
-                      ],
                     ),
-                  ),
-                ),
-              ),
-              Card(
-                child: InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/template.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Tutorials'),
-                      ],
+                    const Divider(
+                      height: 0,
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/template.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Tutorials'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const Align(
@@ -91,57 +116,82 @@ class MorePage extends StatelessWidget {
                 ),
               ),
               Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const GeneralSettingsDialog(),
-                        fullscreenDialog: true,
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/settings.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const GeneralSettingsDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/settings.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('General Settings'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        const Text('General Settings'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const ReminderDialog(),
-                        fullscreenDialog: true,
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/ringing2.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Reminder Automation'),
-                      ],
                     ),
-                  ),
+                    const Divider(
+                      height: 0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const ReminderDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/ringing2.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Reminder Automation'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const Align(
@@ -156,102 +206,149 @@ class MorePage extends StatelessWidget {
                 ),
               ),
               Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const TermsConditionsDialog(),
-                        fullscreenDialog: true,
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const TermsConditionsDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/rules.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Terms & Conditions'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/rules.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Terms & Conditions'),
-                      ],
                     ),
-                  ),
-                ),
-              ),
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const PrivacyPolicyDialog(),
-                        fullscreenDialog: true,
+                    const Divider(
+                      height: 0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const PrivacyPolicyDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/privacy.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Privacy Policy'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/privacy.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Privacy Policy'),
-                      ],
                     ),
-                  ),
-                ),
-              ),
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const FeedbackDialog(),
-                        fullscreenDialog: true,
+                    const Divider(
+                      height: 0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const FeedbackDialog(),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/feedback.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Feedback'),
+                                  Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/feedback.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Feedback'),
-                      ],
                     ),
-                  ),
-                ),
-              ),
-              Card(
-                child: InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/favourite2.svg",
-                            width: 25, height: 25),
-                        Container(
-                          width: 10,
-                        ),
-                        const Text('Rate Patowave'),
-                      ],
+                    const Divider(
+                      height: 0,
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/svg/favourite2.svg",
+                                width: 25, height: 25),
+                            Container(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Rate Patowave'),
+                                  // Icon(Icons.arrow_forward_ios,
+                                  //     color: Colors.black38, size: 14),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

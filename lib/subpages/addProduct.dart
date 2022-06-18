@@ -1,5 +1,7 @@
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({Key? key}) : super(key: key);
@@ -9,6 +11,34 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  final List<String> genderItems = [
+    'Male',
+    'Female',
+  ];
+  final List<String> primaryUnits = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  final List<String> secondaryUnits = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? selectedPrimaryUnit;
+  String? selectedSecondaryUnit;
+
+  String? selectedValue;
   bool _isSupplierActivated = false;
   int _value = 1;
   @override
@@ -29,6 +59,12 @@ class _AddProductPageState extends State<AddProductPage> {
             color: patoWhite,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_a_photo),
+            onPressed: () {},
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -112,9 +148,18 @@ class _AddProductPageState extends State<AddProductPage> {
             SizedBox(
               height: 45,
               child: TextFormField(
-                decoration: const InputDecoration(
-                  label: Text("Item Name"),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  label: const Text("Item Name"),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: ElevatedButton(
+                    onPressed: () {
+                      _setUnit(context);
+                    },
+                    child: const Text(
+                      "Set Unit",
+                      style: TextStyle(color: patoWhite),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -256,6 +301,117 @@ class _AddProductPageState extends State<AddProductPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _setUnit(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: patoBackgroundColor,
+          title: const Text('Add Item Unit'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 45,
+                child: DropdownButtonFormField2(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  isExpanded: true,
+                  hint: const Text(
+                    'Primary Unit',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.black45,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  items: genderItems
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
+                ),
+              ),
+              Container(height: 10),
+              CustomDropdownButton2(
+                hint: 'Select Item',
+                dropdownItems: secondaryUnits,
+                value: selectedSecondaryUnit,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSecondaryUnit = value;
+                  });
+                },
+              ),
+              SizedBox(
+                height: 45,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    label: Text("Primary Unit"),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              Container(height: 10),
+              SizedBox(
+                height: 45,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    label: Text("Secondary Unit"),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              Container(height: 10),
+              const Text("Conversion Rate"),
+              Container(height: 10),
+              const Center(
+                child: Text(
+                  "1 BOX = 12 CANS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text(
+                "Save",
+                style: TextStyle(color: patoWhite),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
