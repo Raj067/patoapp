@@ -235,24 +235,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       firstDate: DateTime(2017, 1),
       lastDate: DateTime(2022, 7),
       helpText: 'Select a date',
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            // data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: patoPrimaryColor, // <-- SEE HERE
-              onPrimary: patoWhite, // <-- SEE HERE
-              onSurface: patoBlack, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: patoPrimaryColor, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
     );
     if (newDate != null) {
       setState(() {

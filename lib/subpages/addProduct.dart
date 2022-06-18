@@ -157,7 +157,6 @@ class _AddProductPageState extends State<AddProductPage> {
                     },
                     child: const Text(
                       "Set Unit",
-                      style: TextStyle(color: patoWhite),
                     ),
                   ),
                 ),
@@ -294,7 +293,6 @@ class _AddProductPageState extends State<AddProductPage> {
                 onPressed: () {},
                 child: const Text(
                   "Add Product",
-                  style: TextStyle(color: patoWhite),
                 ),
               ),
             ),
@@ -309,7 +307,7 @@ class _AddProductPageState extends State<AddProductPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: patoBackgroundColor,
+          // backgroundColor: patoBackgroundColor,
           title: const Text('Add Item Unit'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,7 +404,6 @@ class _AddProductPageState extends State<AddProductPage> {
               onPressed: () {},
               child: const Text(
                 "Save",
-                style: TextStyle(color: patoWhite),
               ),
             ),
           ],
@@ -470,7 +467,6 @@ class _AddProductPageState extends State<AddProductPage> {
                 onPressed: () {},
                 child: const Text(
                   "Add Service",
-                  style: TextStyle(color: patoWhite),
                 ),
               ),
             ),

@@ -168,7 +168,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: patoBackgroundColor,
+            // backgroundColor: patoBackgroundColor,
             // title: const Text('Adjust Item'),
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,7 +214,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         return AlertDialog(
           scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-          backgroundColor: patoBackgroundColor,
+          // backgroundColor: patoBackgroundColor,
           title: const Text('Adjust Item'),
           content: TextFormField(
             controller: controller,

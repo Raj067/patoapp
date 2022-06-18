@@ -270,8 +270,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                             children: [
                               Text(
                                 'Tsh ${product.productPrice}',
-                                style: const TextStyle(
-                                    fontSize: 12, color: patoGrey),
+                                style: const TextStyle(fontSize: 12),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -363,7 +362,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
         return AlertDialog(
           scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-          backgroundColor: patoBackgroundColor,
+          // backgroundColor: patoBackgroundColor,
           title: const Text('Add to cart'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
