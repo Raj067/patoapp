@@ -217,7 +217,7 @@ Widget _expenses() => Card(
                 Text("TZS 390,000"),
               ],
             ),
-            PieChartSample2(),
+            const PieChartSample2(),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //   children: const [
@@ -646,7 +646,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                 barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipBgColor: Colors.grey,
-                      getTooltipItem: (_a, _b, _c, _d) => null,
+                      getTooltipItem: (a, b, c, d) => null,
                     ),
                     touchCallback: (FlTouchEvent event, response) {
                       if (response == null || response.spot == null) {

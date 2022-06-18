@@ -24,7 +24,7 @@ class TopNotificationIcon extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: const Text("Notifications Page"),
+        child: Text("Notifications Page"),
       ),
     );
   }

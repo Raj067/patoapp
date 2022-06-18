@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/parties/previewInvoice.dart';
-import 'package:patoapp/subpages/singleCustomer.dart';
+// import 'package:patoapp/subpages/singleCustomer.dart';
 
 class InvoiceDetails extends StatelessWidget {
   const InvoiceDetails({Key? key}) : super(key: key);

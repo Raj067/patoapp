@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
 
+// ignore: must_be_immutable
 class PreviewInvoice extends StatefulWidget {
   SingleCustomer customer;
   PreviewInvoice({Key? key, required this.customer}) : super(key: key);
@@ -11,7 +12,7 @@ class PreviewInvoice extends StatefulWidget {
 }
 
 class _PreviewInvoiceState extends State<PreviewInvoice> {
-  List _myColors = [Colors.green, Colors.red, Colors.blue];
+  // final List _myColors = [Colors.green, Colors.red, Colors.blue];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +42,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           ),
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Text("Single Invoice"),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -67,7 +68,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
       ),
-      persistentFooterButtons: [],
     );
   }
 }
