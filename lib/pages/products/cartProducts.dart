@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/components/themeData.dart';
+import 'package:flutter/material.dart';
 import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 

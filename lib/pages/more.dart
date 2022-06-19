@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-// import 'package:patoapp/components/darkTheme.dart';
 import 'package:patoapp/subpages/feedback.dart';
 import 'package:patoapp/subpages/generalSettings.dart';
 import 'package:patoapp/subpages/greetings.dart';
@@ -14,9 +13,6 @@ import 'package:patoapp/subpages/termsConditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../components/topBar.dart';
-// import 'package:koukicons/settings.dart';
-
-// SvgPicture.asset("svg/alarmoff.svg", width: 25, height: 25),
 
 class MorePage extends StatelessWidget {
   const MorePage({Key? key}) : super(key: key);

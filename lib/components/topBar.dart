@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/subpages/topNotificationIcon.dart';
 import 'package:patoapp/subpages/topProfileIcon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
