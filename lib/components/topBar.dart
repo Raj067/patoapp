@@ -5,6 +5,10 @@ import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/subpages/topNotificationIcon.dart';
 import 'package:patoapp/subpages/topProfileIcon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/themes/darkTheme.dart';
+import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/providers.dart';
+import 'package:provider/provider.dart';
 
 PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
@@ -46,10 +50,10 @@ class ProfileIcon extends StatelessWidget {
     return ActionChip(
       // backgroundColor: const Color.fromARGB(255, 151, 186, 180),
       avatar: const CircleAvatar(
-        backgroundColor: patoWhite,
-        foregroundColor: patoBlack,
-        // child: Icon(Icons.add_shopping_cart_rounded),
-      ),
+          // backgroundColor: patoWhite,
+          // foregroundColor: patoBlack,
+          // child: Icon(Icons.add_shopping_cart_rounded),
+          ),
       label: const Text('Mama Shop'),
       onPressed: () {
         Navigator.push(
@@ -130,7 +134,7 @@ class _MyDropdownButtonPartiesState extends State<MyDropdownButtonParties> {
       padding: const EdgeInsets.all(2),
       height: 24,
       decoration: BoxDecoration(
-        color: patoLightGreen,
+        // color: patoLightGreen,
         borderRadius: BorderRadius.circular(5),
       ),
       child: DropdownButton<String>(
@@ -220,6 +224,7 @@ class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
   bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
+    final object = Provider.of<ThemeNotifier>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -233,11 +238,20 @@ class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
               ),
               const Spacer(),
               Switch(
-                  activeColor: patoLightGreen,
                   value: isDarkMode,
                   onChanged: (value) {
                     setState(() {
-                      isDarkMode ? isDarkMode = false : isDarkMode = true;
+                      object.setTheme(patowaveLightTheme());
+                      object.setTheme(patowaveDarkTheme());
+                      isDarkMode
+                          ? {
+                              isDarkMode = false,
+                              object.setTheme(patowaveLightTheme())
+                            }
+                          : {
+                              isDarkMode = true,
+                              object.setTheme(patowaveDarkTheme())
+                            };
                     });
                   })
             ],

@@ -10,6 +10,10 @@ ThemeData patowaveDarkTheme() {
   );
 }
 
+// SwitchThemeData _SwitchThemeData = const SwitchThemeData(
+//   thumbColor?: Colors.yellow,
+// );
+
 const DialogTheme _dialogTheme = DialogTheme(
     // backgroundColor: Colors.black87,
     // shape: ShapeBorder(),
