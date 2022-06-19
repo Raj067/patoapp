@@ -222,19 +222,7 @@ class DarkModeSettingsIcon extends StatefulWidget {
 }
 
 class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
-  bool isDarkMode = false;
-  getMode() async {
-    var prefs = await SharedPreferences.getInstance();
-    isDarkMode = prefs.getBool('darkMode') ?? true;
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    super.setState(fn);
-    getMode();
-  }
-
+  bool isDarkMode = true;
   @override
   Widget build(BuildContext context) {
     final object = Provider.of<ThemeNotifier>(context);
@@ -251,7 +239,9 @@ class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
               ),
               const Spacer(),
               Switch(
-                  value: isDarkMode,
+                  activeTrackColor: patowaveGreen400,
+                  activeColor: patowavePrimary,
+                  value: object.getTheme() == patowaveDarkTheme(),
                   onChanged: (value) {
                     setState(() {
                       isDarkMode

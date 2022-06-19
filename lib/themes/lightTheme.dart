@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData patowaveLightTheme() {
   final ThemeData base = ThemeData.light();
@@ -14,8 +15,16 @@ ThemeData patowaveLightTheme() {
     chipTheme: _chipTheme,
     floatingActionButtonTheme: _floatingActionButtonTheme,
     dialogTheme: _dialogTheme,
+    appBarTheme: _appBarTheme,
   );
 }
+
+AppBarTheme _appBarTheme = AppBarTheme(
+  systemOverlayStyle: SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.blue, // Navigation bar
+    statusBarColor: Colors.pink, // Status bar
+  ),
+);
 
 const DialogTheme _dialogTheme = DialogTheme(
   backgroundColor: patowaveBackground,
@@ -81,19 +90,6 @@ const ColorScheme _patoColorScheme = ColorScheme(
   tertiary: patowaveGreen50,
 );
 
-// const Color patoPrimaryColor = Color.fromARGB(255, 51, 121, 111);
-// const Color patoLightGreen = Color.fromARGB(255, 209, 231, 221);
-// const Color patoBackgroundColor = Color.fromARGB(255, 240, 240, 240);
-// const Color patoBlack = Color.fromARGB(255, 0, 0, 0);
-// const Color patoWhite = Color.fromARGB(255, 254, 255, 255);
-// const Color patoRed = Color(0xFFC5032B);
-// const Color patoGrey = Color.fromARGB(255, 75, 74, 74);
-// const Color patoGreen = Colors.green;
-// const Color patoBlue = Colors.blue;
-// const Color patoWarning = Colors.yellow;
-// const Color patoLightGrey = Color.fromARGB(255, 211, 211, 211);
-
-// // DARK MODE
 const Color patowaveGreen50 = Color(0xFFC2F2F1);
 const Color patowaveGreen100 = Color(0xFFB8DFDC);
 const Color patowaveGreen200 = Color(0xFF8BCDC6);
@@ -113,6 +109,3 @@ const Color patowaveBackground = Color.fromARGB(255, 240, 240, 240);
 const Color patowaveWarning = Colors.orange;
 
 const defaultLetterSpacing = 0.03;
-
-// For dark
-ColorScheme forButton = _patoColorScheme;
