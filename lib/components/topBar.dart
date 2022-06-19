@@ -9,6 +9,7 @@ import 'package:patoapp/themes/darkTheme.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
@@ -241,16 +242,14 @@ class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
                   value: isDarkMode,
                   onChanged: (value) {
                     setState(() {
-                      object.setTheme(patowaveLightTheme());
-                      object.setTheme(patowaveDarkTheme());
                       isDarkMode
                           ? {
                               isDarkMode = false,
-                              object.setTheme(patowaveLightTheme())
+                              _onThemeChanged(isDarkMode, object)
                             }
                           : {
                               isDarkMode = true,
-                              object.setTheme(patowaveDarkTheme())
+                              _onThemeChanged(isDarkMode, object)
                             };
                     });
                   })
@@ -259,5 +258,13 @@ class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
         ),
       ],
     );
+  }
+
+  void _onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
+    (value)
+        ? themeNotifier.setTheme(patowaveDarkTheme())
+        : themeNotifier.setTheme(patowaveLightTheme());
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setBool('darkMode', value);
   }
 }

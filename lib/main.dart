@@ -1,20 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/darkTheme.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider<ThemeNotifier>(
-      create: (_) {
-        return ThemeNotifier(patowaveLightTheme());
-      },
-      child: const MyApp(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]).then((_) {
+    SharedPreferences.getInstance().then((prefs) {
+      var darkModeOn = prefs.getBool('darkMode') ?? true;
+      runApp(
+        ChangeNotifierProvider<ThemeNotifier>(
+          create: (_) => ThemeNotifier(
+              darkModeOn ? patowaveDarkTheme() : patowaveLightTheme()),
+          child: const MyApp(),
+        ),
+      );
+    });
+  });
 }
+// void main() {
+//   SharedPreferences.getInstance().then((prefs) {
+//     var darkModeOn = prefs.getBool('darkMode') ?? true;
+//     runApp(
+//       ChangeNotifierProvider<ThemeNotifier>(
+//         create: (_) => ThemeNotifier(
+//             darkModeOn ? patowaveDarkTheme() : patowaveLightTheme()),
+//         child: const MyApp(),
+//       ),
+//     );
+//   });
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
