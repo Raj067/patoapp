@@ -15,16 +15,8 @@ ThemeData patowaveLightTheme() {
     chipTheme: _chipTheme,
     floatingActionButtonTheme: _floatingActionButtonTheme,
     dialogTheme: _dialogTheme,
-    appBarTheme: _appBarTheme,
   );
 }
-
-AppBarTheme _appBarTheme = AppBarTheme(
-  systemOverlayStyle: SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.blue, // Navigation bar
-    statusBarColor: Colors.pink, // Status bar
-  ),
-);
 
 const DialogTheme _dialogTheme = DialogTheme(
   backgroundColor: patowaveBackground,
@@ -107,5 +99,6 @@ const Color patowaveBlack = Colors.black;
 const Color patowaveBackground = Color.fromARGB(255, 240, 240, 240);
 
 const Color patowaveWarning = Colors.orange;
-
+const Color patowaveGreen = Colors.green;
+const Color patowaveBlue = Colors.blue;
 const defaultLetterSpacing = 0.03;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class EditMyBusiness extends StatefulWidget {
   const EditMyBusiness({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
@@ -45,7 +46,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
             ),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Radio(
-                activeColor: patoPrimaryColor,
+                activeColor: patowavePrimary,
                 value: 1,
                 groupValue: _value,
                 onChanged: (val) {
@@ -55,7 +56,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 },
               ),
               Radio(
-                activeColor: patoPrimaryColor,
+                activeColor: patowavePrimary,
                 value: 2,
                 groupValue: _value,
                 onChanged: (val) {

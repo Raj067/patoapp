@@ -64,10 +64,10 @@ class FirstRowPartiesData extends StatelessWidget {
                         topLeft: Radius.circular(5),
                       ),
                       border: Border(
-                        top: BorderSide(width: 1, color: patoGreen),
-                        left: BorderSide(width: 1, color: patoGreen),
-                        right: BorderSide(width: 1, color: patoGreen),
-                        bottom: BorderSide(width: 1, color: patoGreen),
+                        top: BorderSide(width: 1, color: patowaveGreen),
+                        left: BorderSide(width: 1, color: patowaveGreen),
+                        right: BorderSide(width: 1, color: patowaveGreen),
+                        bottom: BorderSide(width: 1, color: patowaveGreen),
                       ),
                     ),
                     child: Column(
@@ -76,7 +76,7 @@ class FirstRowPartiesData extends StatelessWidget {
                           Text(
                             "Tsh 12,000",
                             style: TextStyle(
-                                color: patoGreen,
+                                color: patowaveGreen,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -139,16 +139,16 @@ class FirstRowPartiesData extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.file_copy, color: patoBlue),
+                          const Icon(Icons.file_copy, color: patowaveBlue),
                           Container(width: 10),
                           const Text(
                             "Debt Reports",
-                            style: TextStyle(color: patoBlue),
+                            style: TextStyle(color: patowaveBlue),
                           ),
                         ],
                       ),
                       const Icon(Icons.arrow_forward_ios,
-                          color: patoBlue, size: 14),
+                          color: patowaveBlue, size: 14),
                     ],
                   ),
                 ),
@@ -335,7 +335,7 @@ Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: patowaveGreen400,
-          foregroundColor: patoWhite,
+          foregroundColor: patowaveWhite,
           child: Text(
               "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
         ),
@@ -359,7 +359,8 @@ Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
             Text(
               customer.amount,
               style: TextStyle(
-                  color: customer.isToReceive ? patoGreen : patowaveErrorRed),
+                  color:
+                      customer.isToReceive ? patowaveGreen : patowaveErrorRed),
             ),
             Text(
               customer.isToReceive ? "Receive" : "Give",

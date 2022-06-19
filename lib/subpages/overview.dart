@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:patoapp/reports/purchasesReports.dart';
+import 'package:patoapp/reports/salesReports.dart';
+import 'package:patoapp/subpages/reports.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class OverviewDialog extends StatelessWidget {
@@ -20,7 +23,7 @@ class OverviewDialog extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
@@ -30,7 +33,16 @@ class OverviewDialog extends StatelessWidget {
           children: [
             Card(
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const MainReportsPage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: Row(
@@ -44,7 +56,7 @@ class OverviewDialog extends StatelessWidget {
                 ),
               ),
             ),
-            _firstRow(),
+            _firstRow(context),
             _barChartOverview(),
             _expenses(),
             _invoices(),
@@ -81,7 +93,12 @@ class OverviewDialog extends StatelessWidget {
               height: 12,
             ),
             Container(
-              color: patoLightGreen,
+              decoration: const BoxDecoration(
+                color: patowaveGreen500,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(
@@ -117,7 +134,7 @@ class OverviewDialog extends StatelessWidget {
     );
   }
 
-  _firstRow() {
+  _firstRow(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -127,11 +144,19 @@ class OverviewDialog extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(
-                    left: BorderSide(color: patoGreen, width: 5),
+                    left: BorderSide(color: patowaveGreen, width: 5),
                   ),
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const SalesReports(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -168,7 +193,16 @@ class OverviewDialog extends StatelessWidget {
                   ),
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const PurchasesReports(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -535,7 +569,7 @@ class BarChartSample2 extends StatefulWidget {
 }
 
 class BarChartSample2State extends State<BarChartSample2> {
-  final Color leftBarColor = patoPrimaryColor;
+  final Color leftBarColor = patowavePrimary;
   final Color rightBarColor = patowaveGreen100;
   final double width = 7;
 

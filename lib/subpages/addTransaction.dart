@@ -28,7 +28,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
@@ -47,7 +47,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoGreen,
+                        activeColor: patowaveGreen,
                         value: 1,
                         groupValue: _value,
                         onChanged: (val) {
@@ -153,7 +153,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             Container(height: 10),
             Card(
-              color: patoPrimaryColor,
+              color: patowavePrimary,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -196,12 +196,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 Text(
                   "Balance due",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patoPrimaryColor),
+                      fontWeight: FontWeight.bold, color: patowavePrimary),
                 ),
                 Text(
                   "Tsh: balanceDue",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patoPrimaryColor),
+                      fontWeight: FontWeight.bold, color: patowavePrimary),
                 ),
               ],
             ),
@@ -226,7 +226,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 onPressed: () {},
                 child: const Text(
                   "Add Transaction",
-                  style: TextStyle(color: patoWhite),
+                  style: TextStyle(color: patowaveWhite),
                 ),
               ),
             ),
@@ -277,7 +277,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             Container(height: 10),
             const Text("Other Informations:"),
             Card(
-              color: patoPrimaryColor,
+              color: patowavePrimary,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -342,7 +342,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       Checkbox(
                         value: true,
                         onChanged: (val) {},
-                        activeColor: patoPrimaryColor,
+                        activeColor: patowavePrimary,
                       ),
                       const Text(
                         "Paid Amount",
@@ -370,12 +370,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: const [
                 Text(
                   "Balance due",
-                  style: TextStyle(fontWeight: FontWeight.bold, color: patowaveErrorRed),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: patowaveErrorRed),
                 ),
                 Text(
                   "Tsh: balanceDue",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patoPrimaryColor),
+                      fontWeight: FontWeight.bold, color: patowavePrimary),
                 ),
               ],
             ),
@@ -400,7 +401,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 onPressed: () {},
                 child: const Text(
                   "Add Transaction",
-                  style: TextStyle(color: patoWhite),
+                  style: TextStyle(color: patowaveWhite),
                 ),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class _AddProductPageState extends State<AddProductPage> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
         actions: [
@@ -82,7 +83,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoPrimaryColor,
+                        activeColor: patowavePrimary,
                         value: 1,
                         groupValue: _value,
                         onChanged: (val) {
@@ -109,7 +110,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoPrimaryColor,
+                        activeColor: patowavePrimary,
                         value: 2,
                         groupValue: _value,
                         onChanged: (val) {
@@ -248,7 +249,7 @@ class _AddProductPageState extends State<AddProductPage> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               const Text("Supplier Contact"),
               Switch(
-                  activeColor: patoPrimaryColor,
+                  activeColor: patowavePrimary,
                   value: _isSupplierActivated,
                   onChanged: (val) {
                     setState(() {

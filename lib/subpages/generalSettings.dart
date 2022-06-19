@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class GeneralSettingsDialog extends StatelessWidget {
   const GeneralSettingsDialog({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class GeneralSettingsDialog extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

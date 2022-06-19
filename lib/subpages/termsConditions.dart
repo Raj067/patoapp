@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:patoapp/themes/lightTheme.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

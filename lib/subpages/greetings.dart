@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class MainGreetingsCards extends StatelessWidget {
   const MainGreetingsCards({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class MainGreetingsCards extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

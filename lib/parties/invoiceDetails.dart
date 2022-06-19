@@ -23,82 +23,119 @@ class InvoiceDetails extends StatelessWidget {
 
 Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
     Card(
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => PreviewInvoice(
-                customer: customer,
-              ),
-              fullscreenDialog: true,
-            ),
-          );
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          const Radius.circular(10),
+        ),
+      ),
+      child: Dismissible(
+        key: Key("${customer.id}"),
+        confirmDismiss: (direction) async {
+          // if (direction == DismissDirection.startToEnd) {
+          //   _addDataToCartManual(context, product);
+          // } else {
+          //   _onResetSingleData(product);
+          // }
+          return false;
         },
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
+        background: Container(
+          color: patowaveGreen400,
+          child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Icon(
+                Icons.notification_add,
+                color: patowaveWhite,
+              ),
+            ),
+          ),
+        ),
+        secondaryBackground: Container(
+          color: patowaveGreen,
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Icon(
+                Icons.wallet,
+                color: patowaveWhite,
+              ),
+            ),
+          ),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    PreviewInvoice(customer: customer),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("INV0001"),
-                      Text("01/01/2020"),
-                    ],
-                  ),
-                  Text(
-                    "${customer.firstName} ${customer.lastName}",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("12-12-2020"),
+                    const Text(
+                      "Invoice #78",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    Container(
+                      height: 4,
+                    ),
+                    Text(
+                      "${customer.firstName} ${customer.lastName}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              Container(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Column(
-                    children: const [
-                      Icon(
-                        Icons.wallet,
-                        color: patoLightGreen,
+                  Container(
+                    height: 25,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: customer.isToReceive
+                          ? patowaveGreen
+                          : patowaveErrorRed,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
                       ),
-                      Text("Update payment"),
-                    ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        customer.isToReceive ? "Outstanding" : "Overdue",
+                        style: const TextStyle(color: patowaveWhite),
+                      ),
+                    ),
                   ),
-                  Column(
-                    children: const [
-                      Icon(
-                        Icons.notifications,
-                        color: patoLightGreen,
-                      ),
-                      Text("Remind"),
-                    ],
+                  Container(
+                    height: 20,
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        customer.amount,
-                        style: TextStyle(
-                          color: customer.isToReceive ? patoGreen : patowaveErrorRed,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                    child: Text(
+                      customer.amount,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: customer.isToReceive
+                            ? patowaveGreen
+                            : patowaveErrorRed,
                       ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: Text(
-                          customer.isToReceive ? "Outstanding" : "Overdue",
-                          style: TextStyle(
-                              color: customer.isToReceive ? patoGreen : patowaveErrorRed,
-                              fontSize: 10),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),

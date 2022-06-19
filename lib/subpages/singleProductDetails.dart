@@ -24,7 +24,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
         actions: [
@@ -32,7 +32,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
             onPressed: () {},
             icon: const Icon(
               Icons.edit,
-              color: patoWhite,
+              color: patowaveWhite,
             ),
           ),
           IconButton(
@@ -130,7 +130,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                   onTap: () {
                     // _makePhoneCall(widget.product.supplierContact);
                   },
-                  child: const Icon(Icons.phone, color: patoGreen),
+                  child: const Icon(Icons.phone, color: patowaveGreen),
                 ),
               ],
             ),
@@ -148,7 +148,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
           },
           child: const Text(
             "Adjust Item",
-            style: TextStyle(color: patoWhite),
+            style: TextStyle(color: patowaveWhite),
           ),
         ),
       ],
@@ -197,7 +197,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                 onPressed: () {},
                 child: const Text(
                   "Delete",
-                  style: TextStyle(color: patoWhite),
+                  style: TextStyle(color: patowaveWhite),
                 ),
               ),
             ],
@@ -251,7 +251,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
               },
               child: const Text(
                 "Add",
-                style: TextStyle(color: patoWhite),
+                style: TextStyle(color: patowaveWhite),
               ),
             ),
           ],

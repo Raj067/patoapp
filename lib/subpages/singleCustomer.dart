@@ -14,7 +14,7 @@ class SingleCustomerPage extends StatelessWidget {
         title: Row(children: [
           CircleAvatar(
             backgroundColor: patowaveGreen400,
-            foregroundColor: patoWhite,
+            foregroundColor: patowaveWhite,
             child: Text(
                 "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
           ),
@@ -26,14 +26,14 @@ class SingleCustomerPage extends StatelessWidget {
               Text(
                 "${customer.firstName} ${customer.lastName}",
                 style: const TextStyle(
-                  color: patoWhite,
+                  color: patowaveWhite,
                   fontSize: 16,
                 ),
               ),
               Text(
                 customer.phoneNumber,
                 style: const TextStyle(
-                  color: patoWhite,
+                  color: patowaveWhite,
                   fontSize: 14,
                 ),
               ),
@@ -47,7 +47,7 @@ class SingleCustomerPage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
         actions: [
@@ -55,7 +55,7 @@ class SingleCustomerPage extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(
               Icons.edit,
-              color: patoWhite,
+              color: patowaveWhite,
             ),
           ),
           Container(width: 10),
@@ -108,7 +108,7 @@ class SingleCustomerPage extends StatelessWidget {
                         children: [
                           const Text('Reminder Automation'),
                           Switch(
-                            activeColor: patoPrimaryColor,
+                            activeColor: patowavePrimary,
                             value: true,
                             onChanged: (value) {},
                           ),
@@ -123,7 +123,7 @@ class SingleCustomerPage extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    color: patoLightGreen,
+                    color: patowaveGreen400,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -177,7 +177,7 @@ class SingleCustomerPage extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(Icons.keyboard_arrow_down,
-                                color: patoGreen),
+                                color: patowaveGreen),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
@@ -195,7 +195,7 @@ class SingleCustomerPage extends StatelessWidget {
                         ),
                         const Text(
                           "8,900",
-                          style: TextStyle(color: patoGreen),
+                          style: TextStyle(color: patowaveGreen),
                         ),
                         const Text("-"),
                       ],
@@ -213,14 +213,14 @@ class SingleCustomerPage extends StatelessWidget {
             onPressed: () {},
             child: const Text(
               "Payment Out",
-              // style: TextStyle(color: patoWhite),
+              // style: TextStyle(color: patowaveWhite),
             ),
           ),
           ElevatedButton(
             onPressed: () {},
             child: const Text(
               "Payment In",
-              style: TextStyle(color: patoWhite),
+              style: TextStyle(color: patowaveWhite),
             ),
           ),
         ]),
@@ -237,12 +237,13 @@ Widget _firstRowData(SingleCustomer customer) => Card(
             Row(
               children: [
                 Container(
-                  color: customer.isToReceive ? patoGreen : patowaveErrorRed,
+                  color:
+                      customer.isToReceive ? patowaveGreen : patowaveErrorRed,
                   child: Icon(
                     customer.isToReceive
                         ? Icons.arrow_downward
                         : Icons.arrow_upward,
-                    color: patoWhite,
+                    color: patowaveWhite,
                   ),
                 ),
                 Container(width: 10),
@@ -264,7 +265,7 @@ Widget _firstRowData(SingleCustomer customer) => Card(
                         customer.amount,
                         style: TextStyle(
                             color: customer.isToReceive
-                                ? patoGreen
+                                ? patowaveGreen
                                 : patowaveErrorRed),
                       )
                     ],

@@ -21,7 +21,7 @@ class MainInvoicePage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
@@ -40,7 +40,7 @@ class MainInvoicePage extends StatelessWidget {
             onPressed: () {},
             child: const Text(
               "Create New Invoice",
-              style: TextStyle(color: patoWhite),
+              style: TextStyle(color: patowaveWhite),
             ),
           ),
         ),
@@ -65,7 +65,7 @@ Widget _invoiceHeader() => Row(
                   ),
                   const Text(
                     "1",
-                    style: TextStyle(fontSize: 20, color: patoBlue),
+                    style: TextStyle(fontSize: 20, color: patowaveGreen),
                   ),
                 ],
               ),

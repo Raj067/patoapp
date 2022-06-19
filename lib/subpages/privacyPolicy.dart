@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class PrivacyPolicyDialog extends StatelessWidget {
   const PrivacyPolicyDialog({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class PrivacyPolicyDialog extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

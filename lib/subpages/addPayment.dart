@@ -26,7 +26,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
@@ -45,7 +45,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoGreen,
+                        activeColor: patowaveGreen,
                         value: 1,
                         groupValue: _value,
                         onChanged: (val) {

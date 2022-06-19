@@ -29,7 +29,7 @@ class _ProductsCartState extends State<ProductsCart> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
         actions: [
@@ -37,7 +37,7 @@ class _ProductsCartState extends State<ProductsCart> {
             onPressed: () {},
             icon: const Icon(
               Icons.cancel,
-              color: patoWhite,
+              color: patowaveWhite,
             ),
           ),
         ],
@@ -117,13 +117,13 @@ class _ProductsCartState extends State<ProductsCart> {
                         "Balance due",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: patoPrimaryColor),
+                            color: patowavePrimary),
                       ),
                       Text(
                         "Tsh: $balanceDue",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: patoPrimaryColor),
+                            color: patowavePrimary),
                       ),
                     ],
                   ),

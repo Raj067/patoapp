@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class ExpensesReports extends StatelessWidget {
   const ExpensesReports({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class ExpensesReports extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

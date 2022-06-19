@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 // ignore: must_be_immutable
 class PreviewInvoice extends StatefulWidget {
@@ -27,7 +28,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
         actions: [
@@ -37,7 +38,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             },
             icon: const Icon(
               Icons.settings,
-              color: patoWhite,
+              color: patowaveWhite,
             ),
           ),
         ],
@@ -46,7 +47,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         child: Text("Single Invoice"),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: patoPrimaryColor,
+        backgroundColor: patowavePrimary,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.print),

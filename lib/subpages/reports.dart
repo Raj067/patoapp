@@ -11,6 +11,7 @@ import 'package:patoapp/reports/inventorySummary.dart';
 import 'package:patoapp/reports/profitLoss.dart';
 import 'package:patoapp/reports/purchasesReports.dart';
 import 'package:patoapp/reports/salesReports.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class MainReportsPage extends StatelessWidget {
   const MainReportsPage({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class MainReportsPage extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),

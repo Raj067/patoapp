@@ -57,7 +57,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                     return true;
                   },
                   child: Card(
-                    color: patoPrimaryColor,
+                    color: patowavePrimary,
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -191,14 +191,14 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           return false;
         },
         background: Container(
-          color: patoPrimaryColor,
+          color: patowavePrimary,
           child: const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: EdgeInsets.only(left: 16),
               child: Icon(
                 Icons.add_shopping_cart_rounded,
-                color: patoWhite,
+                color: patowaveWhite,
               ),
             ),
           ),
@@ -211,7 +211,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               padding: EdgeInsets.only(right: 16),
               child: Icon(
                 Icons.clear,
-                color: patoWhite,
+                color: patowaveWhite,
               ),
             ),
           ),
@@ -309,7 +309,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                     Icons.do_disturb_on_outlined,
                                     color: product.isZeroWarning()
                                         ? patowaveErrorRed
-                                        : patoPrimaryColor,
+                                        : patowavePrimary,
                                   ),
                                 ),
                                 Container(width: 8),
@@ -332,14 +332,14 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                     Icons.add_circle_outline_sharp,
                                     color: product.isMaxProductWarning()
                                         ? patowaveErrorRed
-                                        : patoPrimaryColor,
+                                        : patowavePrimary,
                                   ),
                                 ),
                               ],
                             )
                           : const CircleAvatar(
-                              backgroundColor: patoPrimaryColor,
-                              foregroundColor: patoWhite,
+                              backgroundColor: patowavePrimary,
+                              foregroundColor: patowaveWhite,
                               child: Icon(Icons.add_shopping_cart_rounded),
                             ),
                     ],
@@ -483,7 +483,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               },
               child: const Text(
                 "Add",
-                style: TextStyle(color: patoWhite),
+                style: TextStyle(color: patowaveWhite),
               ),
             )
           ],

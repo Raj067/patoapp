@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/profile/myBusinessEdit.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class TopProfileIcon extends StatelessWidget {
   const TopProfileIcon({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class TopProfileIcon extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: patoWhite,
+            color: patowaveWhite,
           ),
         ),
       ),
