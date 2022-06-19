@@ -536,7 +536,7 @@ class BarChartSample2 extends StatefulWidget {
 
 class BarChartSample2State extends State<BarChartSample2> {
   final Color leftBarColor = patoPrimaryColor;
-  final Color rightBarColor = const Color(0xffff5182);
+  final Color rightBarColor = patowaveGreen100;
   final double width = 7;
 
   late List<BarChartGroupData> rawBarGroups;

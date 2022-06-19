@@ -223,6 +223,18 @@ class DarkModeSettingsIcon extends StatefulWidget {
 
 class _DarkModeSettingsIconState extends State<DarkModeSettingsIcon> {
   bool isDarkMode = false;
+  getMode() async {
+    var prefs = await SharedPreferences.getInstance();
+    isDarkMode = prefs.getBool('darkMode') ?? true;
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    getMode();
+  }
+
   @override
   Widget build(BuildContext context) {
     final object = Provider.of<ThemeNotifier>(context);
