@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class SingleCustomerPage extends StatelessWidget {
   const SingleCustomerPage({super.key, required this.customer});
@@ -12,7 +13,7 @@ class SingleCustomerPage extends StatelessWidget {
       appBar: AppBar(
         title: Row(children: [
           CircleAvatar(
-            backgroundColor: patoGreen,
+            backgroundColor: patowaveGreen400,
             foregroundColor: patoWhite,
             child: Text(
                 "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
@@ -142,7 +143,8 @@ class SingleCustomerPage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.keyboard_arrow_up, color: patoRed),
+                            const Icon(Icons.keyboard_arrow_up,
+                                color: patowaveErrorRed),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
@@ -161,7 +163,7 @@ class SingleCustomerPage extends StatelessWidget {
                         const Text("-"),
                         const Text(
                           "12,000",
-                          style: TextStyle(color: patoRed),
+                          style: TextStyle(color: patowaveErrorRed),
                         ),
                       ],
                     ),
@@ -235,7 +237,7 @@ Widget _firstRowData(SingleCustomer customer) => Card(
             Row(
               children: [
                 Container(
-                  color: customer.isToReceive ? patoGreen : patoRed,
+                  color: customer.isToReceive ? patoGreen : patowaveErrorRed,
                   child: Icon(
                     customer.isToReceive
                         ? Icons.arrow_downward
@@ -261,7 +263,9 @@ Widget _firstRowData(SingleCustomer customer) => Card(
                       Text(
                         customer.amount,
                         style: TextStyle(
-                            color: customer.isToReceive ? patoGreen : patoRed),
+                            color: customer.isToReceive
+                                ? patoGreen
+                                : patowaveErrorRed),
                       )
                     ],
                   ),

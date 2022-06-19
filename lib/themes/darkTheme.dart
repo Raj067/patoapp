@@ -7,6 +7,10 @@ ThemeData patowaveDarkTheme() {
     floatingActionButtonTheme: _floatingActionButtonTheme,
     tabBarTheme: _tabBarTheme,
     dialogTheme: _dialogTheme,
+    buttonTheme: ButtonThemeData(
+      colorScheme: forButton,
+      textTheme: ButtonTextTheme.normal,
+    ),
   );
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class ProductsCart extends StatefulWidget {
   final List<SingleProduct> products;
@@ -189,7 +190,7 @@ class _ProductsCartState extends State<ProductsCart> {
                         color: const Color.fromARGB(255, 255, 200, 200),
                         child: const Icon(
                           Icons.percent,
-                          color: patoRed,
+                          color: patowaveErrorRed,
                         ),
                       ),
                     ),

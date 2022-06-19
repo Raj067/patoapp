@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/parties/invoiceDetails.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class MainInvoicePage extends StatelessWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
@@ -85,7 +86,7 @@ Widget _invoiceHeader() => Row(
                   ),
                   const Text(
                     "1",
-                    style: TextStyle(fontSize: 20, color: patoRed),
+                    style: TextStyle(fontSize: 20, color: patowaveErrorRed),
                   ),
                 ],
               ),
@@ -106,7 +107,7 @@ Widget _invoiceHeader() => Row(
                   ),
                   const Text(
                     "1",
-                    style: TextStyle(fontSize: 20, color: patoWarning),
+                    style: TextStyle(fontSize: 20, color: patowaveWarning),
                   ),
                 ],
               ),

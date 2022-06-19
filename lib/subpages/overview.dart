@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class OverviewDialog extends StatelessWidget {
   const OverviewDialog({Key? key}) : super(key: key);
@@ -163,7 +164,7 @@ class OverviewDialog extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(
-                    left: BorderSide(color: patoRed, width: 5),
+                    left: BorderSide(color: patowaveErrorRed, width: 5),
                   ),
                 ),
                 child: InkWell(

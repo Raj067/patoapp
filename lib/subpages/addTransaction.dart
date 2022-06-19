@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class AddTransactionDialog extends StatefulWidget {
   const AddTransactionDialog({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoRed,
+                        activeColor: patowaveErrorRed,
                         value: 2,
                         groupValue: _value,
                         onChanged: (val) {
@@ -369,7 +370,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: const [
                 Text(
                   "Balance due",
-                  style: TextStyle(fontWeight: FontWeight.bold, color: patoRed),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: patowaveErrorRed),
                 ),
                 Text(
                   "Tsh: balanceDue",
@@ -438,7 +439,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                         color: const Color.fromARGB(255, 255, 200, 200),
                         child: const Icon(
                           Icons.percent,
-                          color: patoRed,
+                          color: patowaveErrorRed,
                         ),
                       ),
                     ),

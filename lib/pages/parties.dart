@@ -7,6 +7,7 @@ import 'package:patoapp/subpages/addCustomer.dart';
 import 'package:patoapp/subpages/addPayment.dart';
 import 'package:patoapp/subpages/singleCustomer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class PartiesPage extends StatelessWidget {
   const PartiesPage({Key? key}) : super(key: key);
@@ -81,7 +82,7 @@ class FirstRowPartiesData extends StatelessWidget {
                           ),
                           Text(
                             "My total debt",
-                            style: TextStyle(color: patoGrey, fontSize: 14),
+                            style: TextStyle(fontSize: 14),
                           ),
                         ]),
                   ),
@@ -94,10 +95,10 @@ class FirstRowPartiesData extends StatelessWidget {
                         topRight: Radius.circular(5),
                       ),
                       border: Border(
-                        top: BorderSide(width: 1, color: patoRed),
-                        left: BorderSide(width: 1, color: patoRed),
-                        right: BorderSide(width: 1, color: patoRed),
-                        bottom: BorderSide(width: 1, color: patoRed),
+                        top: BorderSide(width: 1, color: patowaveErrorRed),
+                        left: BorderSide(width: 1, color: patowaveErrorRed),
+                        right: BorderSide(width: 1, color: patowaveErrorRed),
+                        bottom: BorderSide(width: 1, color: patowaveErrorRed),
                       ),
                     ),
                     child: Column(
@@ -106,13 +107,13 @@ class FirstRowPartiesData extends StatelessWidget {
                           Text(
                             "Tsh 12,000",
                             style: TextStyle(
-                                color: patoRed,
+                                color: patowaveErrorRed,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
                             "Total customer debt",
-                            style: TextStyle(color: patoGrey, fontSize: 14),
+                            style: TextStyle(fontSize: 14),
                           ),
                         ]),
                   ),
@@ -333,7 +334,7 @@ Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
     Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: patoGreen,
+          backgroundColor: patowaveGreen400,
           foregroundColor: patoWhite,
           child: Text(
               "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
@@ -357,8 +358,8 @@ Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
             ),
             Text(
               customer.amount,
-              style:
-                  TextStyle(color: customer.isToReceive ? patoGreen : patoRed),
+              style: TextStyle(
+                  color: customer.isToReceive ? patoGreen : patowaveErrorRed),
             ),
             Text(
               customer.isToReceive ? "Receive" : "Give",

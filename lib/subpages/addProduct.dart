@@ -2,6 +2,7 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({Key? key}) : super(key: key);
@@ -211,13 +212,13 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: SizedBox(
                     height: 45,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        suffixIcon: Tooltip(
-                          message: "hello",
-                          child: Icon(Icons.question_mark_outlined),
-                        ),
-                        label: Text("Quantity"),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: const FaIcon(
+                                FontAwesomeIcons.solidCircleQuestion),
+                            onPressed: () {}),
+                        label: const Text("Quantity"),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -227,10 +228,16 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: SizedBox(
                     height: 45,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.question_mark_outlined),
-                        label: Text("Stock Level"),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: const FaIcon(
+                                FontAwesomeIcons.solidCircleQuestion),
+                            onPressed: () {}),
+                        label: const Text(
+                          "Stock Level",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),

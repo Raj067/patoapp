@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class SingleProductDetails extends StatefulWidget {
@@ -40,7 +41,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
             },
             icon: const Icon(
               Icons.delete,
-              color: patoRed,
+              color: patowaveErrorRed,
             ),
           ),
           Container(width: 10),
@@ -180,7 +181,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                 Container(height: 10),
                 const Text(
                   "Warning",
-                  style: TextStyle(color: patoRed),
+                  style: TextStyle(color: patowaveErrorRed),
                 ),
                 Container(height: 10),
                 const Text("All of this informations will be lost.",

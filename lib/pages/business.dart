@@ -4,6 +4,7 @@ import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/data/businessFinancialData.dart';
 import 'package:patoapp/reports/profitLoss.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 // import 'package:accordion/accordion.dart';
 // import 'package:accordion/controllers.dart';
@@ -179,7 +180,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           const Text(
                             "Sales",
-                            style: TextStyle(color: patoGrey, fontSize: 18),
+                            style: TextStyle(fontSize: 18),
                           ),
                           Text(
                             "Tsh ${isWeek ? businessGeneral.salesWeek : businessGeneral.salesMonth}",
@@ -199,10 +200,10 @@ class _BusinessPageState extends State<BusinessPage> {
                         topRight: Radius.circular(5),
                       ),
                       border: Border(
-                        top: BorderSide(width: 1, color: patoRed),
-                        left: BorderSide(width: 1, color: patoRed),
-                        right: BorderSide(width: 1, color: patoRed),
-                        bottom: BorderSide(width: 1, color: patoRed),
+                        top: BorderSide(width: 1, color: patowaveErrorRed),
+                        left: BorderSide(width: 1, color: patowaveErrorRed),
+                        right: BorderSide(width: 1, color: patowaveErrorRed),
+                        bottom: BorderSide(width: 1, color: patowaveErrorRed),
                       ),
                     ),
                     child: Column(
@@ -210,12 +211,12 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           const Text(
                             "Expenses",
-                            style: TextStyle(color: patoGrey, fontSize: 18),
+                            style: TextStyle(fontSize: 18),
                           ),
                           Text(
                             "Tsh ${isWeek ? businessGeneral.expensesWeek : businessGeneral.expensesMonth}",
                             style: const TextStyle(
-                              color: patoRed,
+                              color: patowaveErrorRed,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -232,10 +233,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Profit",
-                      style: TextStyle(color: patoGrey),
-                    ),
+                    const Text("Profit"),
                     Text(
                       "Tshs ${isWeek ? businessGeneral.profitWeek : businessGeneral.profitMonth}",
                       style: const TextStyle(color: patoGreen),
@@ -326,7 +324,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         "Tsh. ${data.price}",
                         style: TextStyle(
                           fontSize: 16,
-                          color: data.isIncome ? patoGreen : patoRed,
+                          color: data.isIncome ? patoGreen : patowaveErrorRed,
                         ),
                       ),
                     ],
@@ -369,7 +367,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         },
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(patoRed)),
+                                MaterialStateProperty.all(patowaveErrorRed)),
                         child: const Text(
                           "Delete",
                           style: TextStyle(color: patoWhite),
@@ -399,7 +397,8 @@ class _BusinessPageState extends State<BusinessPage> {
               children: [
                 data.isIncome
                     ? const Icon(Icons.keyboard_arrow_down, color: patoGreen)
-                    : const Icon(Icons.keyboard_arrow_up, color: patoRed),
+                    : const Icon(Icons.keyboard_arrow_up,
+                        color: patowaveErrorRed),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -427,7 +426,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 ? const Text("-")
                 : Text(
                     "${data.price}",
-                    style: const TextStyle(color: patoRed),
+                    style: const TextStyle(color: patowaveErrorRed),
                   ),
           ],
         ),
@@ -454,7 +453,7 @@ class _BusinessPageState extends State<BusinessPage> {
               Text(
                 expenses,
                 style: const TextStyle(
-                    color: patoRed, fontWeight: FontWeight.bold),
+                    color: patowaveErrorRed, fontWeight: FontWeight.bold),
               ),
             ],
           ),

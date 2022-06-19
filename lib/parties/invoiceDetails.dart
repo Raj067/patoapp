@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/parties/previewInvoice.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 // import 'package:patoapp/subpages/singleCustomer.dart';
 
 class InvoiceDetails extends StatelessWidget {
@@ -85,7 +86,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                       Text(
                         customer.amount,
                         style: TextStyle(
-                          color: customer.isToReceive ? patoGreen : patoRed,
+                          color: customer.isToReceive ? patoGreen : patowaveErrorRed,
                         ),
                       ),
                       OutlinedButton(
@@ -93,7 +94,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                         child: Text(
                           customer.isToReceive ? "Outstanding" : "Overdue",
                           style: TextStyle(
-                              color: customer.isToReceive ? patoGreen : patoRed,
+                              color: customer.isToReceive ? patoGreen : patowaveErrorRed,
                               fontSize: 10),
                         ),
                       ),

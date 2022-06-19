@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class AddPaymentDialog extends StatefulWidget {
   const AddPaymentDialog({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   child: Row(
                     children: [
                       Radio(
-                        activeColor: patoRed,
+                        activeColor: patowaveErrorRed,
                         value: 2,
                         groupValue: _value,
                         onChanged: (val) {

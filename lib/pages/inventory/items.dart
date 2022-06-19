@@ -7,6 +7,7 @@ import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/pages/products/cartProducts.dart';
 import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 // import '../products/adjustProduct.dart';
 // import 'package:http/http.dart' as http;
@@ -203,7 +204,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           ),
         ),
         secondaryBackground: Container(
-          color: patoRed,
+          color: patowaveErrorRed,
           child: const Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -281,10 +282,10 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   fontSize: 12,
                                   fontStyle: FontStyle.italic,
                                   color: product.isOutStock
-                                      ? patoWarning
+                                      ? patowaveWarning
                                       : product.quantity == 0
-                                          ? patoRed
-                                          : patoGrey,
+                                          ? patowaveErrorRed
+                                          : patowavePrimary,
                                 ),
                               ),
                             ],
@@ -307,7 +308,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   child: Icon(
                                     Icons.do_disturb_on_outlined,
                                     color: product.isZeroWarning()
-                                        ? patoRed
+                                        ? patowaveErrorRed
                                         : patoPrimaryColor,
                                   ),
                                 ),
@@ -330,7 +331,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   child: Icon(
                                     Icons.add_circle_outline_sharp,
                                     color: product.isMaxProductWarning()
-                                        ? patoRed
+                                        ? patowaveErrorRed
                                         : patoPrimaryColor,
                                   ),
                                 ),
@@ -394,8 +395,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   children: [
                                     Text(
                                       'Tsh ${product.productPrice}',
-                                      style: const TextStyle(
-                                          fontSize: 16, color: patoGrey),
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                     const SizedBox(
                                       width: 10,
@@ -406,10 +406,10 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                         fontSize: 14,
                                         fontStyle: FontStyle.italic,
                                         color: product.isOutStock
-                                            ? patoWarning
+                                            ? patowaveWarning
                                             : product.quantity == 0
-                                                ? patoRed
-                                                : patoGrey,
+                                                ? patowaveErrorRed
+                                                : patowavePrimary,
                                       ),
                                     ),
                                   ],
@@ -445,8 +445,8 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                           helperStyle: TextStyle(
                               color: product
                                       .compareToCart(int.parse(controller.text))
-                                  ? patoRed
-                                  : patoGrey),
+                                  ? patowaveErrorRed
+                                  : patowavePrimary),
                           prefixIcon: const Padding(
                             padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
                             child: Text("Qty:"),
