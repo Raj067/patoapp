@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/themes/lightTheme.dart';
@@ -116,7 +117,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Center(
-                      child: Text("Invoice No 1"),
+                      child: Text(
+                        "Invoice No 1",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                   Padding(
@@ -124,6 +129,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     child: Center(
                       child: Text(
                         "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
                       ),
                     ),
                   ),
@@ -133,20 +140,26 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             const Divider(height: 0),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Amount"),
+                  label: Text(
+                    "Amount",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Party Name"),
+                  label: Text(
+                    "Party Name",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -157,13 +170,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               child: InkWell(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text(
                         'Add Items to sale',
                         style: TextStyle(
+                          fontStyle: FontStyle.italic,
                           color: Colors.white,
                         ),
                       ),
@@ -181,11 +195,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: const [
                 Text(
                   "Total Amount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Tsh: totalAmount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "Tsh: 1000.00",
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -196,12 +212,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 Text(
                   "Balance due",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patowavePrimary),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: patowavePrimary),
                 ),
                 Text(
-                  "Tsh: balanceDue",
+                  "Tsh: 1000.00",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patowavePrimary),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: patowavePrimary),
                 ),
               ],
             ),
@@ -214,7 +234,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 minLines: 1,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                  label: Text("Descriptions"),
+                  label: Text(
+                    "Descriptions",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -249,7 +272,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Center(
-                      child: Text("Bill No 1"),
+                      child: Text(
+                        "Bill No 1",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                   Padding(
@@ -257,6 +284,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     child: Center(
                       child: Text(
                         "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
                       ),
                     ),
                   ),
@@ -266,28 +295,35 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             const Divider(height: 0),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Amount"),
+                  label: Text(
+                    "Amount",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
-            const Text("Other Informations:"),
+            const Text(
+              "Other Informations:",
+              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+            ),
             Card(
               color: patowavePrimary,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text(
                         'Add Items to Purchases',
                         style: TextStyle(
+                          fontStyle: FontStyle.italic,
                           color: Colors.white,
                         ),
                       ),
@@ -300,20 +336,26 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Expenses Category"),
+                  label: Text(
+                    "Expenses Category",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Add Contact"),
+                  label: Text(
+                    "Add Contact",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -324,11 +366,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: const [
                 Text(
                   "Total Amount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Tsh: totalAmount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "Tsh: 1000.00",
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -346,17 +390,23 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       ),
                       const Text(
                         "Paid Amount",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
                   child: SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        label: Text("Tsh"),
+                        label: Text(
+                          "Tsh",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -371,12 +421,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 Text(
                   "Balance due",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patowaveErrorRed),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: patowaveErrorRed),
                 ),
                 Text(
-                  "Tsh: balanceDue",
+                  "Tsh: 1000.00",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: patowavePrimary),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: patowavePrimary),
                 ),
               ],
             ),
@@ -389,7 +443,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 minLines: 1,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                  label: Text("Descriptions"),
+                  label: Text(
+                    "Descriptions",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -426,21 +483,39 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
               Container(width: 5),
+              Container(
+                width: 30,
+                height: 35,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(52, 255, 70, 57),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.percent,
+                    color: patowaveErrorRed,
+                    size: 16,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Container(
                   height: 35,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: "0",
+                      contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Container(
-                        color: const Color.fromARGB(255, 255, 200, 200),
-                        child: const Icon(
-                          Icons.percent,
-                          color: patowaveErrorRed,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
                       ),
                     ),
@@ -448,23 +523,41 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Container(width: 10),
+              Container(
+                width: 30,
+                height: 35,
+                decoration: const BoxDecoration(
+                  color: Colors.black26,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Tsh:",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               Expanded(
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: "0.00",
+                      contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Container(
-                        color: Colors.grey,
-                        child: const Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text("Tsh",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
                       ),
                     ),

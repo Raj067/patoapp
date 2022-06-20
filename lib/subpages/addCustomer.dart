@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
@@ -24,35 +25,87 @@ class AddCustomerDialog extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
             Container(height: 10),
+            Card(
+              color: patowavePrimary,
+              child: InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.contact_page, size: 24),
+                          Container(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Import Customer',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'From Contacts',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios,
+                          color: Colors.white, size: 14),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Customer Name"),
+                  label: Text(
+                    "Customer Name",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Phone Number"),
+                  label: Text(
+                    "Phone Number",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Email Address"),
+                  label: Text(
+                    "Email Address",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -62,15 +115,19 @@ class AddCustomerDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.question_mark_outlined),
-                        label: Text(
-                          "Open Balance",
-                          style: TextStyle(fontSize: 13),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: const FaIcon(
+                                FontAwesomeIcons.solidCircleQuestion),
+                            onPressed: () {}),
+                        label: const Text(
+                          "Opening Balance",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -78,11 +135,20 @@ class AddCustomerDialog extends StatelessWidget {
                 Container(width: 10),
                 Expanded(
                   child: SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text("date"),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: const FaIcon(
+                              FontAwesomeIcons.calendarCheck,
+                            ),
+                            onPressed: () {}),
+                        label: const Text(
+                          "1-1-2022",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -96,8 +162,8 @@ class AddCustomerDialog extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: ElevatedButton(
           child: const Text(
-            "Add Customer",
-            style: TextStyle(color: Colors.white),
+            "Save",
+            style: TextStyle(fontSize: 16),
           ),
           onPressed: () {},
         ),

@@ -66,26 +66,24 @@ class SingleCustomerPage extends StatelessWidget {
           children: [
             _firstRowData(customer),
             Card(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Send payment reminder",
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            icon: const Icon(Icons.print), onPressed: () {}),
-                        IconButton(
-                            icon: const Icon(Icons.whatsapp), onPressed: () {}),
-                        IconButton(
-                            icon: const Icon(Icons.chat), onPressed: () {}),
-                      ],
-                    ),
-                  ],
+              color: patowavePrimary,
+              child: InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        'Send Payment Reminder',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios,
+                          color: Colors.white, size: 14),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -293,7 +291,7 @@ Widget _firstRowData(SingleCustomer customer) => Card(
                         ],
                       ),
                       const Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38),
+                          color: Colors.black38, size: 14),
                     ],
                   ),
                 ),

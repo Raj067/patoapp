@@ -148,10 +148,13 @@ class _AddProductPageState extends State<AddProductPage> {
             // _formField1(),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: InputDecoration(
-                  label: const Text("Item Name"),
+                  label: const Text(
+                    "Item Name",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: const OutlineInputBorder(),
                   suffixIcon: ElevatedButton(
                     onPressed: () {
@@ -166,42 +169,57 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Item Code"),
+                  label: Text(
+                    "Item Code",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Purchases Price"),
+                  label: Text(
+                    "Purchases Price",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
-            const Text("Pricing & Other Details"),
+            const Text(
+              "Pricing & Other Details",
+              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+            ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Sales Price (can)"),
+                  label: Text(
+                    "Sales Price (can)",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Sales Price (box)"),
+                  label: Text(
+                    "Sales Price (box)",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -211,14 +229,18 @@ class _AddProductPageState extends State<AddProductPage> {
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             icon: const FaIcon(
                                 FontAwesomeIcons.solidCircleQuestion),
                             onPressed: () {}),
-                        label: const Text("Quantity"),
+                        label: const Text(
+                          "Quantity",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -227,7 +249,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(width: 10),
                 Expanded(
                   child: SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -236,7 +258,8 @@ class _AddProductPageState extends State<AddProductPage> {
                             onPressed: () {}),
                         label: const Text(
                           "Stock Level",
-                          style: TextStyle(fontSize: 13),
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
                         ),
                         border: const OutlineInputBorder(),
                       ),
@@ -247,7 +270,10 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             Container(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              const Text("Supplier Contact"),
+              const Text(
+                "Supplier Contact",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
               Switch(
                   activeColor: patowavePrimary,
                   value: _isSupplierActivated,
@@ -263,30 +289,42 @@ class _AddProductPageState extends State<AddProductPage> {
                     children: [
                       Container(height: 10),
                       SizedBox(
-                        height: 45,
+                        height: 40,
                         child: TextFormField(
                           decoration: const InputDecoration(
-                            label: Text("Name"),
+                            label: Text(
+                              "Name",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 14),
+                            ),
                             border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       Container(height: 10),
                       SizedBox(
-                        height: 45,
+                        height: 40,
                         child: TextFormField(
                           decoration: const InputDecoration(
-                            label: Text("Phone Number"),
+                            label: Text(
+                              "Phone Number",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 14),
+                            ),
                             border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       Container(height: 10),
                       SizedBox(
-                        height: 45,
+                        height: 40,
                         child: TextFormField(
                           decoration: const InputDecoration(
-                            label: Text("Email"),
+                            label: Text(
+                              "Email",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 14),
+                            ),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -323,7 +361,7 @@ class _AddProductPageState extends State<AddProductPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 45,
+                height: 40,
                 child: DropdownButtonFormField2(
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -374,7 +412,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               SizedBox(
-                height: 45,
+                height: 40,
                 child: TextFormField(
                   decoration: const InputDecoration(
                     label: Text("Primary Unit"),
@@ -384,7 +422,7 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               Container(height: 10),
               SizedBox(
-                height: 45,
+                height: 40,
                 child: TextFormField(
                   decoration: const InputDecoration(
                     label: Text("Secondary Unit"),
@@ -429,40 +467,52 @@ class _AddProductPageState extends State<AddProductPage> {
             // _formField1(),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Service Name"),
+                  label: Text(
+                    "Service Name",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Service Charge"),
+                  label: Text(
+                    "Service Charge",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Service Unit"),
+                  label: Text(
+                    "Service Unit",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Description"),
+                  label: Text(
+                    "Description",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),

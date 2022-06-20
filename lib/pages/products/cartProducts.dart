@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/productList.dart';
@@ -175,21 +176,39 @@ class _ProductsCartState extends State<ProductsCart> {
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
               Container(width: 5),
+              Container(
+                width: 30,
+                height: 35,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(52, 255, 70, 57),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.percent,
+                    color: patowaveErrorRed,
+                    size: 16,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Container(
                   height: 35,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: "0",
+                      contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Container(
-                        color: const Color.fromARGB(255, 255, 200, 200),
-                        child: const Icon(
-                          Icons.percent,
-                          color: patowaveErrorRed,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
                       ),
                     ),
@@ -197,23 +216,41 @@ class _ProductsCartState extends State<ProductsCart> {
                 ),
               ),
               Container(width: 10),
+              Container(
+                width: 30,
+                height: 35,
+                decoration: const BoxDecoration(
+                  color: Colors.black26,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Tsh:",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               Expanded(
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: "0.00",
+                      contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: Container(
-                        color: Colors.grey,
-                        child: const Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text("Tsh",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
                       ),
                     ),
