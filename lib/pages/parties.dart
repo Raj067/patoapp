@@ -16,12 +16,13 @@ class PartiesPage extends StatelessWidget {
     return Scaffold(
       appBar: mainPartiesTopBar(context),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: ListView(
-          children: const [
-            FirstRowPartiesData(),
-            SecondRowPartiesData(),
-            CustomerDetails(),
+          children: [
+            Container(height: 5),
+            const FirstRowPartiesData(),
+            const SecondRowPartiesData(),
+            const CustomerDetails(),
           ],
         ),
       ),

@@ -54,9 +54,10 @@ class _BusinessPageState extends State<BusinessPage> {
     return Scaffold(
       appBar: mainTopBar(_businessButtomTopBar(), context),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: ListView(
           children: [
+            Container(height:5),
             _firstRowBusinessData(context),
             // SecondRowBusinessData(),
             Card(

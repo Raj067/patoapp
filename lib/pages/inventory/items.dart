@@ -7,7 +7,6 @@ import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
-
 class ItemsHomePage extends StatefulWidget {
   const ItemsHomePage({
     Key? key,
@@ -21,6 +20,9 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
   List<SingleProduct> customData = [];
   int allAddedProduct = 0;
   int allAddedProductPrice = 0;
+  bool isProductFound = true;
+  int itemsMatchedInSearch = 0;
+  TextEditingController searchController = TextEditingController();
 
   fetchData() async {
     customData = allProductDetails();
@@ -38,8 +40,46 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _itemSearchBar(context),
+          searchController.text != ''
+              ? isProductFound
+                  ? Row(
+                      children: [
+                        Text(
+                          " * $itemsMatchedInSearch",
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          " Items match your search ",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          searchController.text,
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        const Text(
+                          " * No item match your search ",
+                          style:
+                              TextStyle(fontSize: 12, color: patowaveErrorRed),
+                        ),
+                        Text(
+                          searchController.text,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: patowaveErrorRed,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+              : Container(),
           _itemAllDataFiltered(),
           allAddedProduct != 0
               ? Dismissible(
@@ -109,18 +149,22 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 
   Widget _itemSearchBar(BuildContext context) => Row(
         children: [
-          const Expanded(
+          Expanded(
             child: SizedBox(
               height: 50,
               child: Card(
                 child: TextField(
+                  controller: searchController,
                   selectionHeightStyle: BoxHeightStyle.strut,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Search item',
                     prefixIcon: Icon(Icons.search),
                     enabledBorder: InputBorder.none,
                   ),
+                  onChanged: (val) {
+                    _onSearchChange(val);
+                  },
                 ),
               ),
             ),
@@ -144,6 +188,28 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           ),
         ],
       );
+
+  bool _stringLinearSearch({required String child, required String parent}) =>
+      parent.toLowerCase().contains(child.toLowerCase());
+  _onSearchChange(String val) {
+    List<SingleProduct> newFilteredeData = [];
+    List<SingleProduct> newUnFilteredeData = [];
+    for (var element in customData) {
+      if (_stringLinearSearch(child: val, parent: element.productName)) {
+        newFilteredeData.add(element);
+      } else {
+        newUnFilteredeData.add(element);
+      }
+    }
+    customData = [...newFilteredeData, ...newUnFilteredeData];
+    itemsMatchedInSearch = newFilteredeData.length;
+    if (newFilteredeData.isNotEmpty) {
+      isProductFound = true;
+    } else {
+      isProductFound = false;
+    }
+    setState(() {});
+  }
 
   Widget _itemAllDataFiltered() {
     List<Widget> data = [];
@@ -488,22 +554,25 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
     );
   }
 
-  // customData = customData.where((i) => _onItemSearch(i.productName, pName) == true).toList();
   _onCartChange(SingleProduct pName) {
-    List<SingleProduct> newData = [
-      pName,
-    ];
+    List<SingleProduct> newAddedData = [];
+    List<SingleProduct> newUnAddedData = [];
     int val = 0;
     int price = 0;
     for (var element in customData) {
       val += element.addedToCart;
       price += element.getTotalPrice();
       if (element != pName) {
-        newData.add(element);
+        // newData.add(element);
+        if (element.isAddedToCartAutomatic) {
+          newAddedData.add(element);
+        } else {
+          newUnAddedData.add(element);
+        }
       }
     }
     allAddedProductPrice = price;
-    customData = newData;
+    customData = [pName, ...newAddedData, ...newUnAddedData];
     allAddedProduct = val;
   }
 
