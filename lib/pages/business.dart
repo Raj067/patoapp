@@ -57,25 +57,9 @@ class _BusinessPageState extends State<BusinessPage> {
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: ListView(
           children: [
-            Container(height:5),
+            Container(height: 5),
             _firstRowBusinessData(context),
             // SecondRowBusinessData(),
-            Card(
-              child: Container(
-                color: patoLightGrey,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Date"),
-                      Text("Income (Tsh)"),
-                      Text("Expenses (Tsh)"),
-                    ],
-                  ),
-                ),
-              ),
-            ),
             _allFinancialData(context),
           ],
         ),
@@ -227,7 +211,15 @@ class _BusinessPageState extends State<BusinessPage> {
                 ),
               ]),
             ),
-            SizedBox(
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 0.5, color: patowaveGreen),
+                  left: BorderSide(width: 1, color: patowaveGreen),
+                  right: BorderSide(width: 1, color: patowaveGreen),
+                  bottom: BorderSide(width: 1, color: patowaveGreen),
+                ),
+              ),
               height: 40,
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -441,7 +433,7 @@ class _BusinessPageState extends State<BusinessPage> {
       List<BusinessFinancial> data, var income, var expenses, String date) {
     List<Widget> myData = [
       Container(
-        color: patowaveGreen200,
+        color: patowaveLightGreen,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -467,11 +459,26 @@ class _BusinessPageState extends State<BusinessPage> {
       myData.add(_singleFinancialData(context, element, date));
       myData.add(const Divider(height: 0));
     }
-    return Card(child: Column(children: myData));
+    return Column(children: myData);
   }
 
   _allFinancialData(BuildContext context) {
-    List<Widget> data = [];
+    List<Widget> data = [
+      Container(
+        color: Colors.black45,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text("Date"),
+              Text("Income (Tsh)"),
+              Text("Expenses (Tsh)"),
+            ],
+          ),
+        ),
+      ),
+    ];
     for (var element in allBusinessFinancialData()) {
       data.add(
         _singleColumnFinancialData(
@@ -479,8 +486,10 @@ class _BusinessPageState extends State<BusinessPage> {
       );
     }
 
-    return Column(
-      children: data,
+    return Card(
+      child: Column(
+        children: data,
+      ),
     );
   }
 }

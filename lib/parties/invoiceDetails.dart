@@ -25,7 +25,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
     Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          const Radius.circular(10),
+          Radius.circular(10),
         ),
       ),
       child: Dismissible(

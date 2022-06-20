@@ -93,6 +93,8 @@ const Color patowavePrimary = Color(0xFF33796F);
 const Color patowaveGreen800 = Color(0xFF2F695F);
 const Color patowaveGreen900 = Color(0xFF274C44);
 
+const Color patowaveLightGreen = Color.fromARGB(55, 73, 166, 157);
+
 const Color patowaveErrorRed = Color(0xFFC5032B);
 const Color patowaveWhite = Colors.white;
 const Color patowaveBlack = Colors.black;
@@ -102,3 +104,5 @@ const Color patowaveWarning = Colors.orange;
 const Color patowaveGreen = Colors.green;
 const Color patowaveBlue = Colors.blue;
 const defaultLetterSpacing = 0.03;
+
+// Color.fromARGB(55, 73, 166, 157),

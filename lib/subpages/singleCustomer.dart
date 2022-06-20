@@ -1,6 +1,5 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
@@ -97,7 +96,6 @@ class SingleCustomerPage extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.notifications,
-                      color: Colors.black38,
                     ),
                     Container(
                       width: 10,
@@ -123,7 +121,7 @@ class SingleCustomerPage extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    color: patowaveGreen400,
+                    color: patowaveLightGreen,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -276,7 +274,9 @@ Widget _firstRowData(SingleCustomer customer) => Card(
             const Divider(),
             Row(
               children: [
-                const Icon(Icons.date_range, color: Colors.black38),
+                const Icon(
+                  Icons.date_range,
+                ),
                 Container(width: 10),
                 Expanded(
                   child: Row(
@@ -285,9 +285,9 @@ Widget _firstRowData(SingleCustomer customer) => Card(
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text("Weka Tarehe ya malipo"),
+                          Text("Set payment date"),
                           Text(
-                            "Tarehe ya kamilisho",
+                            "Due date",
                             style: TextStyle(fontSize: 12),
                           ),
                         ],
