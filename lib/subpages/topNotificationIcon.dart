@@ -13,7 +13,6 @@ class TopNotificationIcon extends StatelessWidget {
           'Notifications',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);

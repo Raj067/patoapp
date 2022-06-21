@@ -52,7 +52,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
           ),
         ),
         secondaryBackground: Container(
-          color: patowaveGreen,
+          color: patowaveGreen.withAlpha(150),
           child: const Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -108,7 +108,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                     decoration: BoxDecoration(
                       color: customer.isToReceive
                           ? patowaveGreen
-                          : patowaveErrorRed,
+                          : patowaveErrorRed.withAlpha(150),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),

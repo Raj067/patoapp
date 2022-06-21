@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/parties/invoiceDetails.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
@@ -14,7 +13,6 @@ class MainInvoicePage extends StatelessWidget {
           'Invoices',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -26,9 +24,10 @@ class MainInvoicePage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
+            Container(height: 10),
             _invoiceHeader(),
             const InvoiceDetails(),
           ],

@@ -36,9 +36,10 @@ class MainReportsPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
+            Container(height: 10),
             Card(
               child: InkWell(
                 onTap: () {
