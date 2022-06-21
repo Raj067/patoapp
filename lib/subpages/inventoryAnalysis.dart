@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/data/topSellingProducts.dart';
+import 'package:patoapp/themes/lightTheme.dart';
+
+class InventoryAnalysis extends StatelessWidget {
+  const InventoryAnalysis({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Inventory Analysis',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: ListView(
+          children: [
+            Container(height: 10),
+            _singleCardData(InventoryAnalysisData.instock, "Instock",
+                InventoryAnalysisData.inventoryTurnover, "Inventory Turnover"),
+            _singleCardData(InventoryAnalysisData.stockin, "Stock-In",
+                InventoryAnalysisData.stockout, "Stock-out"),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Top Selling Items'),
+                    SvgPicture.asset("assets/svg/genericSortingDesc.svg",
+                        width: 25, height: 25),
+                  ],
+                ),
+              ),
+            ),
+            _allTopSellingProduct(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _allTopSellingProduct(BuildContext context) {
+    List<Widget> data = [];
+    for (var element in topSellingItemsDetails()) {
+      data.add(_singleTopSellingProduct(context, element));
+    }
+
+    return Column(
+      children: data,
+    );
+  }
+
+  _singleCardData(
+      String nameData, String figure, String nameData1, String figure1) {
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    nameData,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Text(figure),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    nameData1,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Text(figure1),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _singleTopSellingProduct(BuildContext context, SingleTopProduct product) =>
+      Card(
+        child: InkWell(
+          // onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Image.network(product.thumbnail,
+                //     width: 50, height: 50, fit: BoxFit.fill),
+                Image.asset("assets/img.jpg",
+                    width: 50, height: 50, fit: BoxFit.fill),
+                Container(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              product.productName,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text("${product.totalItemsSold} products"),
+                          ]),
+                      Container(
+                        height: 10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Qyt: ${product.quantity}",
+                              style:
+                                  const TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                            Text("${product.margin} margin"),
+                          ]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+}

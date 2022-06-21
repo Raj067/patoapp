@@ -1,4 +1,19 @@
-import 'package:flutter/material.dart';
+class InventAnalysisData {
+  String instock;
+  String inventoryTurnover;
+  String stockin;
+  String stockout;
+
+  InventAnalysisData({
+    required this.instock,
+    required this.inventoryTurnover,
+    required this.stockin,
+    required this.stockout,
+  });
+}
+
+InventAnalysisData InventoryAnalysisData = InventAnalysisData(
+    instock: "2,000", stockout: "821", stockin: "751", inventoryTurnover: "9");
 
 class SingleTopProduct {
   String productName;
