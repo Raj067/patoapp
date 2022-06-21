@@ -158,6 +158,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               child: Card(
                 child: TextField(
                   controller: searchController,
+                  cursorColor: patowavePrimary,
                   selectionHeightStyle: BoxHeightStyle.strut,
                   decoration: const InputDecoration(
                     border: InputBorder.none,

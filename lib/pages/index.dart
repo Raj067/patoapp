@@ -4,6 +4,7 @@ import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/inventoryPage.dart';
 import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
+import 'package:patoapp/themes/lightTheme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        // selectedItemColor: Colors.amber[800],
+        selectedItemColor: patowavePrimary,
         onTap: _onItemTapped,
         // unselectedItemColor: Colors.green,
         showUnselectedLabels: true,

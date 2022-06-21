@@ -11,8 +11,15 @@ ThemeData patowaveDarkTheme() {
     outlinedButtonTheme: _outlinedButtonTheme,
     textButtonTheme: _textButtonThemeData,
     elevatedButtonTheme: _elevatedButtonThemeData,
+    inputDecorationTheme: _inputDecorationTheme,
   );
 }
+
+InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
+  iconColor: patowavePrimary,
+  focusColor: patowavePrimary,
+  hoverColor: patowavePrimary,
+);
 
 ElevatedButtonThemeData _elevatedButtonThemeData = ElevatedButtonThemeData(
   style: ButtonStyle(
