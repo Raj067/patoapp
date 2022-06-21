@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 // import 'package:url_launcher/url_launcher.dart';

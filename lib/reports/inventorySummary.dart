@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class InventorySummary extends StatelessWidget {

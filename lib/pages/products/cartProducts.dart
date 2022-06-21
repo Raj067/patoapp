@@ -79,34 +79,34 @@ class _ProductsCartState extends State<ProductsCart> {
               child: ListView(
                 children: [
                   Container(height: 10),
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Amount",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  Container(height: 10),
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Party Name",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  Container(height: 10),
+                  // SizedBox(
+                  //   height: 40,
+                  //   child: TextFormField(
+                  //     decoration: const InputDecoration(
+                  //       label: Text(
+                  //         "Amount",
+                  //         style: TextStyle(
+                  //             fontStyle: FontStyle.italic, fontSize: 14),
+                  //       ),
+                  //       border: OutlineInputBorder(),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(height: 10),
+                  // SizedBox(
+                  //   height: 40,
+                  //   child: TextFormField(
+                  //     decoration: const InputDecoration(
+                  //       label: Text(
+                  //         "Party Name",
+                  //         style: TextStyle(
+                  //             fontStyle: FontStyle.italic, fontSize: 14),
+                  //       ),
+                  //       border: OutlineInputBorder(),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(height: 10),
                   _allSelectedProducts(context),
                   _discount(),
                   Container(height: 10),
@@ -128,26 +128,26 @@ class _ProductsCartState extends State<ProductsCart> {
                     ],
                   ),
                   Container(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Balance due",
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            color: patowavePrimary),
-                      ),
-                      Text(
-                        "Tsh: $balanceDue",
-                        style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            color: patowavePrimary),
-                      ),
-                    ],
-                  ),
-                  Container(height: 10),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     const Text(
+                  //       "Balance due",
+                  //       style: TextStyle(
+                  //           fontStyle: FontStyle.italic,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: patowavePrimary),
+                  //     ),
+                  //     Text(
+                  //       "Tsh: $balanceDue",
+                  //       style: const TextStyle(
+                  //           fontStyle: FontStyle.italic,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: patowavePrimary),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Container(height: 10),
                   SizedBox(
                     // height: 180,
                     child: TextFormField(

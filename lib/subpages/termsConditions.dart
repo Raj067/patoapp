@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:patoapp/themes/lightTheme.dart';
