@@ -138,6 +138,12 @@ class _BusinessPageState extends State<BusinessPage> {
 
   _firstRowBusinessData(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: SizedBox(
         height: 140,
         child: Column(
@@ -149,17 +155,17 @@ class _BusinessPageState extends State<BusinessPage> {
                 Expanded(
                   child: Container(
                     height: 60,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                      ),
-                      border: Border(
-                        top: BorderSide(width: 1, color: patowaveGreen),
-                        left: BorderSide(width: 1, color: patowaveGreen),
-                        right: BorderSide(width: 1, color: patowaveGreen),
-                        bottom: BorderSide(width: 1, color: patowaveGreen),
-                      ),
-                    ),
+                    // decoration: const BoxDecoration(
+                    //   borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(5),
+                    //   ),
+                    //   border: Border(
+                    //     top: BorderSide(width: 1, color: patowaveGreen),
+                    //     left: BorderSide(width: 1, color: patowaveGreen),
+                    //     right: BorderSide(width: 1, color: patowaveGreen),
+                    //     bottom: BorderSide(width: 1, color: patowaveGreen),
+                    //   ),
+                    // ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -180,15 +186,16 @@ class _BusinessPageState extends State<BusinessPage> {
                 Expanded(
                   child: Container(
                     height: 80,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                      ),
+                    decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.only(
+                      //   topRight: Radius.circular(5),
+                      // ),
                       border: Border(
-                        top: BorderSide(width: 1, color: patowaveErrorRed),
-                        left: BorderSide(width: 1, color: patowaveErrorRed),
-                        right: BorderSide(width: 1, color: patowaveErrorRed),
-                        bottom: BorderSide(width: 1, color: patowaveErrorRed),
+                        // top: BorderSide(width: 1, color: patowaveErrorRed),
+                        left: BorderSide(
+                            width: 1, color: Colors.black.withAlpha(50)),
+                        // right: BorderSide(width: 1, color: patowaveErrorRed),
+                        // bottom: BorderSide(width: 1, color: patowaveErrorRed),
                       ),
                     ),
                     child: Column(
@@ -211,15 +218,16 @@ class _BusinessPageState extends State<BusinessPage> {
                 ),
               ]),
             ),
+            const Divider(height: 0),
             Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(width: 0.5, color: patowaveGreen),
-                  left: BorderSide(width: 1, color: patowaveGreen),
-                  right: BorderSide(width: 1, color: patowaveGreen),
-                  bottom: BorderSide(width: 1, color: patowaveGreen),
-                ),
-              ),
+              // decoration: const BoxDecoration(
+              //   border: Border(
+              //     top: BorderSide(width: 0.5, color: patowaveGreen),
+              //     left: BorderSide(width: 1, color: patowaveGreen),
+              //     right: BorderSide(width: 1, color: patowaveGreen),
+              //     bottom: BorderSide(width: 1, color: patowaveGreen),
+              //   ),
+              // ),
               height: 40,
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -465,7 +473,13 @@ class _BusinessPageState extends State<BusinessPage> {
   _allFinancialData(BuildContext context) {
     List<Widget> data = [
       Container(
-        color: Colors.black45,
+        decoration: const BoxDecoration(
+          color: Colors.black45,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -487,6 +501,12 @@ class _BusinessPageState extends State<BusinessPage> {
     }
 
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Column(
         children: data,
       ),

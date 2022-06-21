@@ -48,6 +48,12 @@ class FirstRowPartiesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: SizedBox(
         height: 100,
         child: Column(
@@ -59,20 +65,19 @@ class FirstRowPartiesData extends StatelessWidget {
                 Expanded(
                   child: Container(
                     height: 60,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                      ),
+                    decoration: BoxDecoration(
                       border: Border(
-                        top: BorderSide(width: 1, color: patowaveGreen),
-                        left: BorderSide(width: 1, color: patowaveGreen),
-                        right: BorderSide(width: 1, color: patowaveGreen),
-                        bottom: BorderSide(width: 1, color: patowaveGreen),
+                        right: BorderSide(
+                            width: 1, color: Colors.black.withAlpha(50)),
                       ),
                     ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
+                          Text(
+                            "My total debt",
+                            style: TextStyle(fontSize: 14),
+                          ),
                           Text(
                             "Tsh 12,000",
                             style: TextStyle(
@@ -80,30 +85,30 @@ class FirstRowPartiesData extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            "My total debt",
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ]),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     height: 80,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                      ),
-                      border: Border(
-                        top: BorderSide(width: 1, color: patowaveErrorRed),
-                        left: BorderSide(width: 1, color: patowaveErrorRed),
-                        right: BorderSide(width: 1, color: patowaveErrorRed),
-                        bottom: BorderSide(width: 1, color: patowaveErrorRed),
-                      ),
-                    ),
+                    // decoration: const BoxDecoration(
+                    //   borderRadius: BorderRadius.only(
+                    //     topRight: Radius.circular(5),
+                    //   ),
+                    //   border: Border(
+                    //     top: BorderSide(width: 1, color: patowaveErrorRed),
+                    //     left: BorderSide(width: 1, color: patowaveErrorRed),
+                    //     right: BorderSide(width: 1, color: patowaveErrorRed),
+                    //     bottom: BorderSide(width: 1, color: patowaveErrorRed),
+                    //   ),
+                    // ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
+                          Text(
+                            "Total customer debt",
+                            style: TextStyle(fontSize: 14),
+                          ),
                           Text(
                             "Tsh 12,000",
                             style: TextStyle(
@@ -111,14 +116,13 @@ class FirstRowPartiesData extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            "Total customer debt",
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ]),
                   ),
                 ),
               ]),
+            ),
+            const Divider(
+              height: 0,
             ),
             InkWell(
               onTap: () {
@@ -332,6 +336,12 @@ class CustomerDetails extends StatelessWidget {
 
 Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
     Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: patowaveGreen400,

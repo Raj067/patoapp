@@ -25,9 +25,10 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
     Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(15),
         ),
       ),
+      elevation: 0,
       child: Dismissible(
         key: Key("${customer.id}"),
         confirmDismiss: (direction) async {
@@ -110,9 +111,9 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                           ? patowaveGreen
                           : patowaveErrorRed.withAlpha(150),
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15),
                       ),
                     ),
                     child: Center(

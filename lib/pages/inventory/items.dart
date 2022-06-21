@@ -239,6 +239,12 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
 
   Widget _singleProductTile(BuildContext context, SingleProduct product) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Dismissible(
         key: Key(product.id),
         confirmDismiss: (direction) async {

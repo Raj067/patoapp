@@ -98,7 +98,7 @@ const Color patowaveLightGreen = Color.fromARGB(55, 73, 166, 157);
 const Color patowaveErrorRed = Color(0xFFC5032B);
 const Color patowaveWhite = Colors.white;
 const Color patowaveBlack = Colors.black;
-const Color patowaveBackground = Color.fromARGB(255, 240, 240, 240);
+const Color patowaveBackground = Color.fromARGB(255, 230, 230, 230);
 
 const Color patowaveWarning = Colors.orange;
 const Color patowaveGreen = Colors.green;
