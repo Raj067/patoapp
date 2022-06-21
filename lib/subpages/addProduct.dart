@@ -28,14 +28,14 @@ class _AddProductPageState extends State<AddProductPage> {
     'Item8',
   ];
   final List<String> secondaryUnits = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
+    'Item a',
+    'Item b',
+    'Item c',
+    'Item d',
+    'Item e',
+    'Item f',
+    'Item g',
+    'Item h',
   ];
   String? selectedPrimaryUnit;
   String? selectedSecondaryUnit;
@@ -353,6 +353,7 @@ class _AddProductPageState extends State<AddProductPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          scrollable: true,
           // backgroundColor: patoBackgroundColor,
           title: const Text('Add Item Unit'),
           content: Column(
@@ -363,6 +364,9 @@ class _AddProductPageState extends State<AddProductPage> {
               SizedBox(
                 height: 40,
                 child: DropdownButtonFormField2(
+                  selectedItemHighlightColor: patowavePrimary,
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
@@ -376,12 +380,11 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                   icon: const Icon(
                     Icons.arrow_drop_down,
-                    color: Colors.black45,
                   ),
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  items: genderItems
+                  items: primaryUnits
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -401,33 +404,46 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               ),
               Container(height: 10),
-              CustomDropdownButton2(
-                hint: 'Select Item',
-                dropdownItems: secondaryUnits,
-                value: selectedSecondaryUnit,
-                onChanged: (value) {
-                  setState(() {
-                    selectedSecondaryUnit = value;
-                  });
-                },
-              ),
               SizedBox(
                 height: 40,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Primary Unit"),
-                    border: OutlineInputBorder(),
+                child: DropdownButtonFormField2(
+                  selectedItemHighlightColor: patowavePrimary,
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
-                ),
-              ),
-              Container(height: 10),
-              SizedBox(
-                height: 40,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Secondary Unit"),
-                    border: OutlineInputBorder(),
+                  isExpanded: true,
+                  hint: const Text(
+                    'Secondary Unit',
+                    style: TextStyle(fontSize: 14),
                   ),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  items: secondaryUnits
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
                 ),
               ),
               Container(height: 10),

@@ -7,6 +7,8 @@ ThemeData patowaveDarkTheme() {
     floatingActionButtonTheme: _floatingActionButtonTheme,
     tabBarTheme: _tabBarTheme,
     dialogTheme: _dialogTheme,
+    // outlinedButtonThemeData: _outlinedButtonThemeData,
+    outlinedButtonTheme: _outlinedButtonTheme,
   );
 }
 
@@ -19,6 +21,9 @@ const FloatingActionButtonThemeData _floatingActionButtonTheme =
     FloatingActionButtonThemeData(
   backgroundColor: patowavePrimary,
   foregroundColor: patowaveWhite,
+);
+OutlinedButtonThemeData _outlinedButtonTheme = const OutlinedButtonThemeData(
+  style: ButtonStyle(),
 );
 
 const TabBarTheme _tabBarTheme = TabBarTheme(

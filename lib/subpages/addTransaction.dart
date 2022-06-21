@@ -98,6 +98,34 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ],
           ),
           const Divider(height: 0),
+          Table(
+            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      _value == 1 ? "Invoice No 1" : "Bill No 1",
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                  ),
+                ),
+              ]),
+            ],
+          ),
+          const Divider(height: 0),
           _value == 1 ? _addSales() : _addExpenses(),
         ],
       ),
@@ -110,34 +138,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
-            Table(
-              border: TableBorder.all(width: 1.0, color: Colors.grey),
-              children: [
-                TableRow(children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Invoice No 1",
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic, fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                        style: const TextStyle(
-                            fontStyle: FontStyle.italic, fontSize: 14),
-                      ),
-                    ),
-                  ),
-                ]),
-              ],
-            ),
-            const Divider(height: 0),
             Container(height: 10),
             SizedBox(
               height: 40,
@@ -265,34 +265,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
-            Table(
-              border: TableBorder.all(width: 1.0, color: Colors.grey),
-              children: [
-                TableRow(children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Bill No 1",
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic, fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                        style: const TextStyle(
-                            fontStyle: FontStyle.italic, fontSize: 14),
-                      ),
-                    ),
-                  ),
-                ]),
-              ],
-            ),
-            const Divider(height: 0),
             Container(height: 10),
             SizedBox(
               height: 40,

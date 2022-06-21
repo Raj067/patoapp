@@ -71,7 +71,10 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                               TextStyle(fontSize: 12, color: patowaveErrorRed),
                         ),
                         Text(
-                          searchController.text,
+                          searchController.text.length < 15
+                              ? searchController.text
+                              : searchController.text
+                                  .replaceRange(15, null, "..."),
                           style: const TextStyle(
                               fontSize: 12,
                               color: patowaveErrorRed,

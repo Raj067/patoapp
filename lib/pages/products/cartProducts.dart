@@ -32,15 +32,15 @@ class _ProductsCartState extends State<ProductsCart> {
             color: patowaveWhite,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.cancel,
-              color: patowaveWhite,
-            ),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(
+        //       Icons.cancel,
+        //       color: patowaveWhite,
+        //     ),
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
@@ -52,7 +52,11 @@ class _ProductsCartState extends State<ProductsCart> {
                 const Padding(
                   padding: EdgeInsets.all(10),
                   child: Center(
-                    child: Text("Receipt No 1"),
+                    child: Text(
+                      "Receipt No 1",
+                      style:
+                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
                   ),
                 ),
                 Padding(
@@ -60,6 +64,8 @@ class _ProductsCartState extends State<ProductsCart> {
                   child: Center(
                     child: Text(
                       "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic, fontSize: 14),
                     ),
                   ),
                 ),
@@ -74,20 +80,28 @@ class _ProductsCartState extends State<ProductsCart> {
                 children: [
                   Container(height: 10),
                   SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        label: Text("Amount"),
+                        label: Text(
+                          "Amount",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
                         border: OutlineInputBorder(),
                       ),
                     ),
                   ),
                   Container(height: 10),
                   SizedBox(
-                    height: 45,
+                    height: 40,
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        label: Text("Party Name"),
+                        label: Text(
+                          "Party Name",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -101,11 +115,15 @@ class _ProductsCartState extends State<ProductsCart> {
                     children: [
                       const Text(
                         "Total Amount",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Tsh: $totalAmount",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -116,12 +134,14 @@ class _ProductsCartState extends State<ProductsCart> {
                       const Text(
                         "Balance due",
                         style: TextStyle(
+                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
                             color: patowavePrimary),
                       ),
                       Text(
                         "Tsh: $balanceDue",
                         style: const TextStyle(
+                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
                             color: patowavePrimary),
                       ),
@@ -136,7 +156,11 @@ class _ProductsCartState extends State<ProductsCart> {
                       minLines: 1,
                       maxLines: 3,
                       decoration: const InputDecoration(
-                        label: Text("Descriptions"),
+                        label: Text(
+                          "Descriptions",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
                         border: OutlineInputBorder(),
                       ),
                     ),

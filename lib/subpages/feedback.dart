@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/themeData.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class FeedbackDialog extends StatelessWidget {
@@ -13,7 +12,6 @@ class FeedbackDialog extends StatelessWidget {
           'Feedback',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -24,8 +22,33 @@ class FeedbackDialog extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Feedback"),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: ListView(
+          children: [
+            Container(height: 10),
+            SizedBox(
+              height: 800,
+              child: TextFormField(
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                minLines: 1,
+                maxLines: 6,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Descriptions",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Container(height: 10),
+            const Center(
+              child: Text("Feedback"),
+            ),
+          ],
+        ),
       ),
     );
   }
