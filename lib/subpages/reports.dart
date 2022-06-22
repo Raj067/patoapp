@@ -40,6 +40,12 @@ class MainReportsPage extends StatelessWidget {
           children: [
             Container(height: 10),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -65,6 +71,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -89,6 +101,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -114,6 +132,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -138,6 +162,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -162,6 +192,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -187,6 +223,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -211,6 +253,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -236,6 +284,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -261,6 +315,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -286,6 +346,12 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(

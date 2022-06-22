@@ -219,7 +219,7 @@ class _ProductsCartState extends State<ProductsCart> {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 35,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
@@ -307,6 +307,12 @@ class _ProductsCartState extends State<ProductsCart> {
 
   _signleSelectedProduct(BuildContext context, SingleProduct product) {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(

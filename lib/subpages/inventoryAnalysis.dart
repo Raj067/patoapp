@@ -33,6 +33,12 @@ class InventoryAnalysis extends StatelessWidget {
             _singleCardData(InventoryAnalysisData.stockin, "Stock-In",
                 InventoryAnalysisData.stockout, "Stock-out"),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(
@@ -71,6 +77,12 @@ class InventoryAnalysis extends StatelessWidget {
           child: SizedBox(
             height: 100,
             child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -92,6 +104,12 @@ class InventoryAnalysis extends StatelessWidget {
           child: SizedBox(
             height: 100,
             child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,6 +133,12 @@ class InventoryAnalysis extends StatelessWidget {
 
   _singleTopSellingProduct(BuildContext context, SingleTopProduct product) =>
       Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        elevation: 0,
         child: InkWell(
           // onTap: () {},
           child: Padding(
@@ -122,10 +146,19 @@ class InventoryAnalysis extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Image.network(product.thumbnail,
-                //     width: 50, height: 50, fit: BoxFit.fill),
-                Image.asset("assets/img.jpg",
-                    width: 50, height: 50, fit: BoxFit.fill),
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    // color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(15),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/img.jpg"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                ),
                 Container(
                   width: 10,
                 ),

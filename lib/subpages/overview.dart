@@ -32,6 +32,12 @@ class OverviewDialog extends StatelessWidget {
           children: [
             Container(height: 10),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -72,6 +78,12 @@ class OverviewDialog extends StatelessWidget {
 
   _barChartOverview() {
     return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(

@@ -20,9 +20,9 @@ class PartiesPage extends StatelessWidget {
         child: ListView(
           children: [
             Container(height: 5),
-            const FirstRowPartiesData(),
-            const SecondRowPartiesData(),
-            const CustomerDetails(),
+            _headerSection(context),
+            _searchBox(context),
+            _customerDetails(context),
           ],
         ),
       ),
@@ -40,13 +40,128 @@ class PartiesPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class FirstRowPartiesData extends StatelessWidget {
-  const FirstRowPartiesData({Key? key}) : super(key: key);
+  _customerDetails(BuildContext context) {
+    List<Widget> data = [];
+    for (var element in allCustomerDetails()) {
+      data.add(_singleCustomerDetails(context, element));
+    }
 
-  @override
-  Widget build(BuildContext context) {
+    return Column(
+      children: data,
+    );
+  }
+
+  Widget _singleCustomerDetails(
+          BuildContext context, SingleCustomer customer) =>
+      Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        elevation: 0,
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundColor: patowaveGreen400,
+            foregroundColor: patowaveWhite,
+            child: Text(
+                "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => SingleCustomerPage(
+                  customer: customer,
+                ),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          title: Text("${customer.firstName} ${customer.lastName}"),
+          trailing: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                customer.amount,
+                style: TextStyle(
+                    color: customer.isToReceive
+                        ? patowaveGreen
+                        : patowaveErrorRed),
+              ),
+              Text(
+                customer.isToReceive ? "Receive" : "Give",
+                style: const TextStyle(fontSize: 10),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  _searchBox(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: SizedBox(
+            height: 50,
+            child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search',
+                  prefixIcon: const Icon(Icons.search),
+                  enabledBorder: InputBorder.none,
+                  suffixIcon: InkWell(
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      child: MyStatefulWidget(restorationId: "hello"),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 50,
+          child: Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const AddCustomerDialog(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _headerSection(BuildContext context) {
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -89,19 +204,8 @@ class FirstRowPartiesData extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 80,
-                    // decoration: const BoxDecoration(
-                    //   borderRadius: BorderRadius.only(
-                    //     topRight: Radius.circular(5),
-                    //   ),
-                    //   border: Border(
-                    //     top: BorderSide(width: 1, color: patowaveErrorRed),
-                    //     left: BorderSide(width: 1, color: patowaveErrorRed),
-                    //     right: BorderSide(width: 1, color: patowaveErrorRed),
-                    //     bottom: BorderSide(width: 1, color: patowaveErrorRed),
-                    //   ),
-                    // ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
@@ -165,61 +269,6 @@ class FirstRowPartiesData extends StatelessWidget {
   }
 }
 
-class SecondRowPartiesData extends StatelessWidget {
-  const SecondRowPartiesData({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 4,
-          child: SizedBox(
-            height: 50,
-            child: Card(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search',
-                  prefixIcon: const Icon(Icons.search),
-                  enabledBorder: InputBorder.none,
-                  suffixIcon: InkWell(
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                      child: MyStatefulWidget(restorationId: "hello"),
-                    ),
-                    onTap: () {},
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 50,
-          child: Card(
-            child: IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) =>
-                        const AddCustomerDialog(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        // DateActionButton(),
-        // FilterIconButton(),
-      ],
-    );
-  }
-}
-
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key, this.restorationId}) : super(key: key);
 
@@ -260,123 +309,3 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
-
-// class AddPartiesButton extends StatelessWidget {
-//   const AddPartiesButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 50,
-//       child: Card(
-//         child: IconButton(
-//           icon: const Icon(Icons.add),
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute<void>(
-//                 builder: (BuildContext context) => const AddCustomerDialog(),
-//                 fullscreenDialog: true,
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class DateActionButton extends StatelessWidget {
-//   const DateActionButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 50,
-//       child: Card(
-//         child: IconButton(
-//           icon: SvgPicture.asset("assets/svg/calendar.svg",
-//               width: 25, height: 25),
-//           onPressed: () {},
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class FilterIconButton extends StatelessWidget {
-//   const FilterIconButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: IconButton(
-//         icon: const Icon(Icons.filter),
-//         onPressed: () {},
-//       ),
-//     );
-//   }
-// }
-
-class CustomerDetails extends StatelessWidget {
-  const CustomerDetails({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> data = [];
-    for (var element in allCustomerDetails()) {
-      data.add(_singleCustomerDetails(context, element));
-    }
-
-    return Column(
-      children: data,
-    );
-  }
-}
-
-Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) =>
-    Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: patowaveGreen400,
-          foregroundColor: patowaveWhite,
-          child: Text(
-              "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => SingleCustomerPage(
-                customer: customer,
-              ),
-              fullscreenDialog: true,
-            ),
-          );
-        },
-        title: Text("${customer.firstName} ${customer.lastName}"),
-        trailing: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              customer.amount,
-              style: TextStyle(
-                  color:
-                      customer.isToReceive ? patowaveGreen : patowaveErrorRed),
-            ),
-            Text(
-              customer.isToReceive ? "Receive" : "Give",
-              style: const TextStyle(fontSize: 10),
-            ),
-          ],
-        ),
-      ),
-    );

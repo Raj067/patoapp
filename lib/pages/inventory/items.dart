@@ -96,6 +96,12 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                     return true;
                   },
                   child: Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    elevation: 0,
                     color: patowavePrimary,
                     child: InkWell(
                       onTap: () {
@@ -156,6 +162,12 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
             child: SizedBox(
               height: 50,
               child: Card(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                elevation: 0,
                 child: TextField(
                   controller: searchController,
                   cursorColor: patowavePrimary,
@@ -176,6 +188,12 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
           SizedBox(
             height: 50,
             child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
@@ -319,8 +337,19 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
               children: [
                 // Image.network(product.thumbnail,
                 //     width: 50, height: 50, fit: BoxFit.fill),
-                Image.asset("assets/img.jpg",
-                    width: 50, height: 50, fit: BoxFit.fill),
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    // color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(15),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/img.jpg"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                ),
                 Container(
                   width: 10,
                 ),
@@ -379,6 +408,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   },
                                   child: Icon(
                                     Icons.do_disturb_on_outlined,
+                                    size: 30,
                                     color: product.isZeroWarning()
                                         ? patowaveErrorRed
                                         : patowavePrimary,
@@ -402,6 +432,7 @@ class _ItemsHomePageState extends State<ItemsHomePage> {
                                   },
                                   child: Icon(
                                     Icons.add_circle_outline_sharp,
+                                    size: 30,
                                     color: product.isMaxProductWarning()
                                         ? patowaveErrorRed
                                         : patowavePrimary,
