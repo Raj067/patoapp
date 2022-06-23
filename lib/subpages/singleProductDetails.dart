@@ -168,6 +168,12 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
             // backgroundColor: patoBackgroundColor,
             // title: const Text('Adjust Item'),
             content: Column(
@@ -212,6 +218,12 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          elevation: 0,
           scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
           // backgroundColor: patoBackgroundColor,

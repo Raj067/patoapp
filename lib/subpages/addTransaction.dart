@@ -213,14 +213,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.bold,
-                      color: patowavePrimary),
+                      color: patowaveErrorRed),
                 ),
                 Text(
                   "Tsh: 1000.00",
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.bold,
-                      color: patowavePrimary),
+                      color: patowaveErrorRed),
                 ),
               ],
             ),
@@ -353,13 +353,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: [
                 Expanded(
                   child: Row(
-                    children: [
-                      Checkbox(
-                        value: true,
-                        onChanged: (val) {},
-                        activeColor: patowavePrimary,
-                      ),
-                      const Text(
+                    children: const [
+                      Text(
                         "Paid Amount",
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
@@ -401,7 +396,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.bold,
-                      color: patowavePrimary),
+                      color: patowaveErrorRed),
                 ),
               ],
             ),

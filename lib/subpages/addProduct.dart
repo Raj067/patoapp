@@ -146,14 +146,18 @@ class _AddProductPageState extends State<AddProductPage> {
             // _formField1(),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: InputDecoration(
                   label: const Text(
                     "Item Name",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: const OutlineInputBorder(),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                   suffixIcon: ElevatedButton(
                     onPressed: () {
                       _setUnit(context);
@@ -167,27 +171,35 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Item Code",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Purchases Price",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -198,27 +210,35 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Sales Price (can)",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Sales Price (box)",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -227,7 +247,7 @@ class _AddProductPageState extends State<AddProductPage> {
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 40,
+                    height: 45,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -247,7 +267,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 Container(width: 10),
                 Expanded(
                   child: SizedBox(
-                    height: 40,
+                    height: 45,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -287,7 +307,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     children: [
                       Container(height: 10),
                       SizedBox(
-                        height: 40,
+                        height: 45,
                         child: TextFormField(
                           decoration: const InputDecoration(
                             label: Text(
@@ -295,13 +315,17 @@ class _AddProductPageState extends State<AddProductPage> {
                               style: TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       Container(height: 10),
                       SizedBox(
-                        height: 40,
+                        height: 45,
                         child: TextFormField(
                           decoration: const InputDecoration(
                             label: Text(
@@ -309,13 +333,17 @@ class _AddProductPageState extends State<AddProductPage> {
                               style: TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       Container(height: 10),
                       SizedBox(
-                        height: 40,
+                        height: 45,
                         child: TextFormField(
                           decoration: const InputDecoration(
                             label: Text(
@@ -323,7 +351,11 @@ class _AddProductPageState extends State<AddProductPage> {
                               style: TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -360,7 +392,7 @@ class _AddProductPageState extends State<AddProductPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 40,
+                height: 45,
                 child: DropdownButtonFormField2(
                   selectedItemHighlightColor: patowavePrimary,
                   scrollbarAlwaysShow: true,
@@ -403,7 +435,7 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               Container(height: 10),
               SizedBox(
-                height: 40,
+                height: 45,
                 child: DropdownButtonFormField2(
                   selectedItemHighlightColor: patowavePrimary,
                   scrollbarAlwaysShow: true,
@@ -481,53 +513,69 @@ class _AddProductPageState extends State<AddProductPage> {
             // _formField1(),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Service Name",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Service Charge",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Service Unit",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Description",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),

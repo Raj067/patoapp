@@ -490,6 +490,12 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          elevation: 0,
           scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
           // backgroundColor: patoBackgroundColor,
@@ -499,6 +505,12 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Card(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                elevation: 0,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Row(

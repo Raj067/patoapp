@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/generalSettings/application.dart';
+import 'package:patoapp/generalSettings/transaction.dart';
+import 'package:patoapp/generalSettings/userManagement.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class GeneralSettingsDialog extends StatelessWidget {
@@ -36,7 +39,16 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const ApplicationSettings(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
@@ -62,7 +74,16 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const TransactionSettings(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
@@ -86,7 +107,15 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const UserManagement(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(

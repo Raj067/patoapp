@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/business/transactionReceipt.dart';
 import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/data/businessFinancialData.dart';
 import 'package:patoapp/reports/profitLoss.dart';
@@ -254,6 +255,15 @@ class _BusinessPageState extends State<BusinessPage> {
   Widget _singleFinancialData(
       BuildContext context, BusinessFinancial data, String date) {
     return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => const TransactionReceipt(),
+            fullscreenDialog: true,
+          ),
+        );
+      },
       onLongPress: () {
         showModalBottomSheet(
           context: context,

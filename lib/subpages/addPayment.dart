@@ -162,8 +162,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Checkbox(value: false, onChanged: (val) {}),
-                Container(width: 5),
                 const Text(
                   "Received",
                   style: TextStyle(
@@ -258,8 +256,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Checkbox(value: false, onChanged: (val) {}),
-                Container(width: 5),
                 const Text(
                   "Paid",
                   style: TextStyle(
