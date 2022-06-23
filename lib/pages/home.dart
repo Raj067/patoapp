@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/subpages/addPayment.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
@@ -30,23 +31,21 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cashflow',
-          style: TextStyle(color: Colors.white),
-        ),
-        // bottom:_bottom(context),
+        title: const ProfileIcon(),
+        actions: const [NotificationIcon(), SizedBox(width: 20)],
+        elevation: 0,
       ),
       body: ListView(
         children: [
-          // _location(),
           _weatherHeader(),
           _headerDesign(context),
           Container(height: 10),
           _currencyExchange(),
           _calendarSection(),
-          const Center(
-            child: Text("Cashflow"),
-          ),
+          _upcomingSchedule(),
+          // const Center(
+          //   child: Text("Cashflow"),
+          // ),
         ],
       ),
     );
@@ -84,9 +83,100 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     );
   }
 
+  _upcomingSchedule() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Card(
+        elevation: 0,
+        // color: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Column(children: [
+          const Padding(
+            padding: EdgeInsets.all(15),
+            child: Text(
+              "Upcoming Schedule",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          _singleShedule(),
+          _singleShedule(),
+          _singleShedule(),
+        ]),
+      ),
+    );
+  }
+
+  _singleShedule() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 2.5, 10, 2.5),
+      child: Card(
+          color: patowavePrimary.withAlpha(50),
+          elevation: 0,
+          // color: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Text(
+                      "time 1",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      "time 2",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Founders Meeting",
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "subtitle 1",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      "subtitle 2",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: const [
+                    Text(
+                      "View",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+
   _currencyExchange() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         elevation: 0,
         // color: Colors.white,
@@ -158,7 +248,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
   _calendarSection() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         color: patowavePrimary.withAlpha(50),
         elevation: 0,
@@ -302,36 +392,46 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
   // PreferredSizeWidget _bottom(BuildContext context) => PreferredSize(
   _location() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      child: Row(
-        children: [
-          const Icon(Icons.location_city),
-          Container(width: 10),
-          const Text("Dar es salaam")
-        ],
-      ),
+    return Row(
+      children: [
+        const Icon(Icons.location_city, color: patowaveWhite),
+        Container(width: 10),
+        const Text(
+          "Dar es salaam",
+          style: TextStyle(color: patowaveWhite),
+        )
+      ],
     );
   }
 
   _weatherHeader() {
     return Container(
-      color: patowavePrimary,
+      color: Theme.of(context).primaryColor,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-        child:
+        child: Column(
+          children: [
+            _location(),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(children: [
-            const Text("Today 27C"),
-            Container(width: 10),
-            const Icon(Icons.web_asset_sharp),
-          ]),
-          Row(children: [
-            const Text("Tomorrow 27C"),
-            Container(width: 10),
-            const Icon(Icons.web_asset_sharp),
-          ]),
-        ]),
+              Row(children: [
+                const Text(
+                  "Today 27C",
+                  style: TextStyle(color: patowaveWhite),
+                ),
+                Container(width: 10),
+                const Icon(Icons.web_asset_sharp, color: patowaveWhite),
+              ]),
+              Row(children: [
+                const Text(
+                  "Tomorrow 27C",
+                  style: TextStyle(color: patowaveWhite),
+                ),
+                Container(width: 10),
+                const Icon(Icons.web_asset_sharp, color: patowaveWhite),
+              ]),
+            ]),
+          ],
+        ),
       ),
     );
   }
@@ -356,7 +456,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
       left: 0,
       right: 0,
       child: Container(
-        color: patowavePrimary,
+        color: Theme.of(context).primaryColor,
         height: 45,
         // width: 100,
       ),

@@ -66,6 +66,12 @@ class SingleCustomerPage extends StatelessWidget {
           children: [
             _firstRowData(customer),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               color: patowavePrimary,
               child: InkWell(
                 onTap: () {},
@@ -88,6 +94,12 @@ class SingleCustomerPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Row(
@@ -116,10 +128,19 @@ class SingleCustomerPage extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Column(
                 children: [
                   Container(
-                    color: patowaveLightGreen,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: patowavePrimary.withAlpha(50),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -226,6 +247,12 @@ class SingleCustomerPage extends StatelessWidget {
 }
 
 Widget _firstRowData(SingleCustomer customer) => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -233,8 +260,11 @@ Widget _firstRowData(SingleCustomer customer) => Card(
             Row(
               children: [
                 Container(
-                  color:
-                      customer.isToReceive ? patowaveGreen : patowaveErrorRed,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color:
+                        customer.isToReceive ? patowaveGreen : patowaveErrorRed,
+                  ),
                   child: Icon(
                     customer.isToReceive
                         ? Icons.arrow_downward

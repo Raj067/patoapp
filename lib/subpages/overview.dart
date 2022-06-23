@@ -105,10 +105,10 @@ class OverviewDialog extends StatelessWidget {
               height: 12,
             ),
             Container(
-              decoration: const BoxDecoration(
-                color: patowaveLightGreen,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+              decoration: BoxDecoration(
+                color: patowavePrimary.withAlpha(50),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
                 ),
               ),
               child: Padding(
@@ -153,6 +153,13 @@ class OverviewDialog extends StatelessWidget {
           child: SizedBox(
             height: 100,
             child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(
@@ -198,6 +205,13 @@ class OverviewDialog extends StatelessWidget {
           child: SizedBox(
             height: 100,
             child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: Container(
                 decoration: const BoxDecoration(
                   border: Border(
@@ -246,6 +260,12 @@ class OverviewDialog extends StatelessWidget {
 }
 
 Widget _expenses() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -293,6 +313,12 @@ Widget _expenses() => Card(
     );
 
 Widget _invoices() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -339,6 +365,12 @@ Widget _invoices() => Card(
     );
 
 Widget _payable() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -378,6 +410,12 @@ Widget _payable() => Card(
     );
 
 Widget _receivable() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -417,6 +455,12 @@ Widget _receivable() => Card(
     );
 
 Widget _profitLoss() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -471,6 +515,12 @@ Widget _profitLoss() => Card(
     );
 
 Widget _balanceSheet() => Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(

@@ -29,6 +29,12 @@ class GeneralSettingsDialog extends StatelessWidget {
         child: ListView(
           children: [
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -49,6 +55,12 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -67,6 +79,12 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -85,6 +103,12 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -103,6 +127,12 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -121,6 +151,12 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               child: InkWell(
                 onTap: () {},
                 child: Padding(

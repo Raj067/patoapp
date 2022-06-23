@@ -119,7 +119,7 @@ class _BusinessPageState extends State<BusinessPage> {
               height: 60,
               child: Row(children: [
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 60,
                     // decoration: const BoxDecoration(
                     //   borderRadius: BorderRadius.only(
@@ -185,7 +185,7 @@ class _BusinessPageState extends State<BusinessPage> {
               ]),
             ),
             const Divider(height: 0),
-            Container(
+            SizedBox(
               // decoration: const BoxDecoration(
               //   border: Border(
               //     top: BorderSide(width: 0.5, color: patowaveGreen),
@@ -398,7 +398,7 @@ class _BusinessPageState extends State<BusinessPage> {
       List<BusinessFinancial> data, var income, var expenses, String date) {
     List<Widget> myData = [
       Container(
-        color: patowaveLightGreen,
+        color: patowavePrimary.withAlpha(50),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -430,9 +430,9 @@ class _BusinessPageState extends State<BusinessPage> {
   _allFinancialData(BuildContext context) {
     List<Widget> data = [
       Container(
-        decoration: const BoxDecoration(
-          color: Colors.black45,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Colors.black.withAlpha(50),
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
           ),
@@ -443,8 +443,8 @@ class _BusinessPageState extends State<BusinessPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text("Date"),
-              Text("Income (Tsh)"),
-              Text("Expenses (Tsh)"),
+              Text("Income "),
+              Text("Expenses "),
             ],
           ),
         ),

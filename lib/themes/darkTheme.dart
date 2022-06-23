@@ -4,6 +4,7 @@ import 'package:patoapp/themes/lightTheme.dart';
 ThemeData patowaveDarkTheme() {
   final ThemeData base = ThemeData.dark();
   return base.copyWith(
+    primaryColor: patowavePrimary.withAlpha(50),
     floatingActionButtonTheme: _floatingActionButtonTheme,
     tabBarTheme: _tabBarTheme,
     dialogTheme: _dialogTheme,

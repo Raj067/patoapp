@@ -79,44 +79,6 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const OverviewDialog(),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/svg/viewDetails.svg",
-                                width: 25, height: 25),
-                            Container(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Overview'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Divider(
-                      height: 0,
-                    ),
-                    InkWell(
                       onTap: () {},
                       child: Padding(
                         padding: const EdgeInsets.all(10),

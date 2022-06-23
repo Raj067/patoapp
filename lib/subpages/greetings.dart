@@ -8,27 +8,63 @@ class MainGreetingsCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
+          title: const Text(
+            'Greeting Cards',
+            style: TextStyle(color: Colors.white),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: patowaveWhite,
+            ),
+          ),
           bottom: const TabBar(
+            isScrollable: true,
             tabs: <Widget>[
               Tab(
-                text: "Items",
+                text: "Thank You",
               ),
               Tab(
-                text: "Analysis",
+                text: "Offers",
+              ),
+              Tab(
+                text: "Good Morning",
               ),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
-            Text("item 1"),
-            Text("item 2"),
+            _thankYou(),
+            _offers(),
+            _goodMorning(),
           ],
         ),
       ),
+    );
+  }
+
+  _thankYou() {
+    return const Center(
+      child: Text("Thank You"),
+    );
+  }
+
+  _offers() {
+    return const Center(
+      child: Text("Offers"),
+    );
+  }
+
+  _goodMorning() {
+    return const Center(
+      child: Text("Good Morning"),
     );
   }
 }

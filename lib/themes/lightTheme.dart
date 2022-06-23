@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 ThemeData patowaveLightTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
+    primaryColor: patowavePrimary,
     colorScheme: _patoColorScheme,
     scaffoldBackgroundColor: patowaveBackground,
     cardColor: patowaveWhite,
