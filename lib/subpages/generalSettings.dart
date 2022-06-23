@@ -39,6 +39,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -74,6 +75,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -107,6 +109,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -139,6 +142,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -163,6 +167,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -187,6 +192,7 @@ class GeneralSettingsDialog extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(10),

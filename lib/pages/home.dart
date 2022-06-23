@@ -332,6 +332,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           ),
           color: patowavePrimary.withAlpha(50),
           child: InkWell(
+            borderRadius: BorderRadius.circular(15),
             onTap: () {},
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -368,6 +369,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           ),
           // color: patowavePrimary.withAlpha(50),
           child: InkWell(
+            borderRadius: BorderRadius.circular(15),
             onTap: () {},
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -492,6 +494,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   ),
                   color: patowavePrimary.withAlpha(50),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(15),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -530,6 +533,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   ),
                   color: patowavePrimary.withAlpha(50),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(15),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -569,6 +573,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   ),
                   color: patowavePrimary.withAlpha(50),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(15),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -608,6 +613,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   ),
                   color: patowavePrimary.withAlpha(50),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(15),
                     onTap: () {
                       Navigator.push(
                         context,

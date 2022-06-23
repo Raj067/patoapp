@@ -41,6 +41,7 @@ class MorePage extends StatelessWidget {
                 child: Column(
                   children: [
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -79,6 +80,7 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {},
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -128,6 +130,7 @@ class MorePage extends StatelessWidget {
                 child: Column(
                   children: [
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -166,6 +169,7 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -224,6 +228,7 @@ class MorePage extends StatelessWidget {
                 child: Column(
                   children: [
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -262,6 +267,7 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -300,6 +306,7 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -338,6 +345,7 @@ class MorePage extends StatelessWidget {
                       height: 0,
                     ),
                     InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {},
                       child: Padding(
                         padding: const EdgeInsets.all(10),

@@ -39,7 +39,10 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
           return false;
         },
         background: Container(
-          color: patowaveGreen400,
+          decoration: BoxDecoration(
+            color: patowavePrimary.withAlpha(100),
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -52,7 +55,10 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
           ),
         ),
         secondaryBackground: Container(
-          color: patowaveGreen.withAlpha(150),
+          decoration: BoxDecoration(
+            color: patowaveGreen.withAlpha(150),
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: const Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -65,6 +71,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
           ),
         ),
         child: InkWell(
+          borderRadius: BorderRadius.circular(15),
           onTap: () {
             Navigator.push(
               context,

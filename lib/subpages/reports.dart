@@ -47,6 +47,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -78,6 +79,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -108,6 +110,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -139,6 +142,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -169,6 +173,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -199,6 +204,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -230,6 +236,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -260,6 +267,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -291,6 +299,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -322,6 +331,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -353,6 +363,7 @@ class MainReportsPage extends StatelessWidget {
               ),
               elevation: 0,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,

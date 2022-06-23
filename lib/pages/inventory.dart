@@ -307,7 +307,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           return false;
         },
         background: Container(
-          color: patowavePrimary,
+          decoration: BoxDecoration(
+            color: patowavePrimary,
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: const Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -320,7 +323,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           ),
         ),
         secondaryBackground: Container(
-          color: patowaveErrorRed,
+          decoration: BoxDecoration(
+            color: patowaveErrorRed,
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: const Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -333,6 +339,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           ),
         ),
         child: InkWell(
+          borderRadius: BorderRadius.circular(15),
           onTap: () {
             // _addDataToCartAutomatic(context, product);
             setState(() {
