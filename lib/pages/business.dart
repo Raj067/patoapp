@@ -336,26 +336,40 @@ class _BusinessPageState extends State<BusinessPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            data.deleteTransaction();
-                          });
-                          Navigator.pop(context);
-                        },
-                        style: ButtonStyle(
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              data.deleteTransaction();
+                            });
+                            Navigator.pop(context);
+                          },
+                          style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(patowaveErrorRed)),
-                        child: const Text(
-                          "Delete",
-                          style: TextStyle(color: patowaveWhite),
+                                MaterialStateProperty.all(patowaveErrorRed),
+                            // shape: MaterialStateProperty.all(),
+                          ),
+                          child: const Text(
+                            "Delete",
+                            style:
+                                TextStyle(color: patowaveWhite, fontSize: 16),
+                          ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Edit",
-                          style: TextStyle(color: patowaveWhite),
+                      Container(width: 10),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(patowavePrimary),
+                            // shape: MaterialStateProperty.all(),
+                          ),
+                          child: const Text(
+                            "Edit",
+                            style:
+                                TextStyle(color: patowaveWhite, fontSize: 16),
+                          ),
                         ),
                       ),
                     ],

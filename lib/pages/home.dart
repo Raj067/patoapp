@@ -6,6 +6,7 @@ import 'package:patoapp/subpages/addPayment.dart';
 import 'package:patoapp/subpages/addTransaction.dart';
 import 'package:patoapp/subpages/overview.dart';
 import 'package:patoapp/themes/lightTheme.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -396,7 +397,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _location() {
     return Row(
       children: [
-        const Icon(Icons.location_city, color: patowaveWhite),
+        const FaIcon(FontAwesomeIcons.locationDot,
+            color: patowaveWhite, size: 16),
         Container(width: 10),
         const Text(
           "Dar es salaam",
@@ -414,6 +416,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
         child: Column(
           children: [
             _location(),
+            Container(height: 5),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Row(children: [
                 const Text(
@@ -421,15 +424,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   style: TextStyle(color: patowaveWhite),
                 ),
                 Container(width: 10),
-                const Icon(Icons.web_asset_sharp, color: patowaveWhite),
+                const FaIcon(FontAwesomeIcons.cloud,
+                    color: patowaveWhite, size: 16),
               ]),
               Row(children: [
                 const Text(
-                  "Tomorrow 27C",
+                  "Tomorrow 25C",
                   style: TextStyle(color: patowaveWhite),
                 ),
                 Container(width: 10),
-                const Icon(Icons.web_asset_sharp, color: patowaveWhite),
+                const FaIcon(FontAwesomeIcons.cloudRain,
+                    color: patowaveWhite, size: 16),
               ]),
             ]),
           ],
