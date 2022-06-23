@@ -161,7 +161,11 @@ class _ProductsCartState extends State<ProductsCart> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -231,8 +235,8 @@ class _ProductsCartState extends State<ProductsCart> {
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                       ),
                     ),
@@ -273,8 +277,8 @@ class _ProductsCartState extends State<ProductsCart> {
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                       ),
                     ),
@@ -296,7 +300,7 @@ class _ProductsCartState extends State<ProductsCart> {
     for (var element in widget.products) {
       if (element.addedToCart > 0) {
         price += element.getTotalPrice();
-        data.add(_signleSelectedProduct(context, element));
+        data.add(_singleSelectedProduct(context, element));
       }
     }
     setState(() {
@@ -305,7 +309,7 @@ class _ProductsCartState extends State<ProductsCart> {
     return Column(children: data);
   }
 
-  _signleSelectedProduct(BuildContext context, SingleProduct product) {
+  _singleSelectedProduct(BuildContext context, SingleProduct product) {
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

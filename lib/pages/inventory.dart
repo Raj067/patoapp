@@ -7,16 +7,42 @@ import 'package:patoapp/subpages/addProduct.dart';
 import 'package:patoapp/subpages/singleProductDetails.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
-class ItemsHomePage extends StatefulWidget {
-  const ItemsHomePage({
+class InventoryPage extends StatelessWidget {
+  const InventoryPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Inventory',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: const InventoryHomePage(),
+    );
+  }
+}
+
+class InventoryHomePage extends StatefulWidget {
+  const InventoryHomePage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ItemsHomePage> createState() => _ItemsHomePageState();
+  State<InventoryHomePage> createState() => _InventoryHomePageState();
 }
 
-class _ItemsHomePageState extends State<ItemsHomePage> {
+class _InventoryHomePageState extends State<InventoryHomePage> {
   List<SingleProduct> customData = [];
   int allAddedProduct = 0;
   int allAddedProductPrice = 0;

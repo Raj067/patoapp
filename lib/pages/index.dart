@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
-import 'package:patoapp/pages/inventoryPage.dart';
 import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/lightTheme.dart';
@@ -18,8 +17,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    InventoryPage(),
-    // MainEntryHomePage(),
+    // InventoryPage(),
+    MainEntryHomePage(),
     BusinessPage(),
     PartiesPage(),
     MorePage(),
