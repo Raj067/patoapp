@@ -5,6 +5,7 @@ import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/lightTheme.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,21 +42,29 @@ class _HomePageState extends State<HomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.article_outlined),
+            icon: _selectedIndex == 0
+                ? const FaIcon(FontAwesomeIcons.house)
+                : const FaIcon(FontAwesomeIcons.house),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: _selectedIndex == 1
+                ? const FaIcon(FontAwesomeIcons.book)
+                : const FaIcon(FontAwesomeIcons.book),
             label: 'Business',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment_ind_outlined),
+            icon: _selectedIndex == 2
+                ? const FaIcon(FontAwesomeIcons.user)
+                : const FaIcon(FontAwesomeIcons.user),
             label: 'Contacts',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
+            icon: _selectedIndex == 3
+                ? const FaIcon(FontAwesomeIcons.grip)
+                : const FaIcon(FontAwesomeIcons.gripLines),
             label: 'More',
           ),
         ],

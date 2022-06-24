@@ -16,17 +16,28 @@ class MainEntryHomePage extends StatefulWidget {
 }
 
 class _MainEntryHomePageState extends State<MainEntryHomePage> {
-  String? selectedValue;
-  final List<String> primaryUnits = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
+  String baseCurrency = "USD";
+  final List<String> currencyList = [
+    'USD',
+    'TZS',
+    'EURO',
+    'GBP',
   ];
+  double usd = 1.0;
+  double tzs = 2300.0;
+  double euro = 0.920;
+  double gbp = 34.90;
+  _getRate({required double currency}) {
+    double fcurrency = 0;
+    baseCurrency == 'USD'
+        ? fcurrency = currency / usd
+        : baseCurrency == 'EURO'
+            ? fcurrency = currency / euro
+            : baseCurrency == 'GBP'
+                ? fcurrency = currency / gbp
+                : fcurrency = currency / tzs;
+    return "$fcurrency";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +63,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     );
   }
 
-  _singleCurrency() {
+  _singleCurrency({required String currency, required String fcurrency}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -72,16 +83,36 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
+          children: [
             Text(
-              "GBP",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              currency,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text("GBP")
+            Text(fcurrency)
           ],
         )
       ],
     );
+  }
+
+  _tzs() {
+    return _singleCurrency(
+        currency: "TZS", fcurrency: "TZS ${_getRate(currency: tzs)}");
+  }
+
+  _usd() {
+    return _singleCurrency(
+        currency: "USD", fcurrency: "Dollar ${_getRate(currency: usd)}");
+  }
+
+  _gbp() {
+    return _singleCurrency(
+        currency: "GBP", fcurrency: "GBP ${_getRate(currency: gbp)}");
+  }
+
+  _euro() {
+    return _singleCurrency(
+        currency: "EURO", fcurrency: "EURO ${_getRate(currency: euro)}");
   }
 
   _upcomingSchedule() {
@@ -194,6 +225,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 height: 40,
                 child: DropdownButtonFormField2(
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  value: baseCurrency,
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
                   decoration: InputDecoration(
@@ -203,17 +235,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     ),
                   ),
                   isExpanded: true,
-                  hint: const Text(
-                    'Primary Unit',
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  // hint: const Text(
+                  //   'Primary Unit',
+                  //   style: TextStyle(fontSize: 14),
+                  // ),
                   icon: const Icon(
                     Icons.arrow_drop_down,
                   ),
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: primaryUnits
+                  items: currencyList
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -226,21 +258,62 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       .toList(),
                   onChanged: (value) {
                     //Do something when changing the item if you want.
+                    setState(() {
+                      baseCurrency = value.toString();
+                    });
                   },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
+                  // onSaved: (value) {
+                  //   setState(() {
+                  //     baseCurrency = value.toString();
+                  //   });
+                  // },
                 ),
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.all(10), child: _singleCurrency()),
-            const Divider(height: 0),
-            Padding(
-                padding: const EdgeInsets.all(10), child: _singleCurrency()),
-            const Divider(height: 0),
-            Padding(
-                padding: const EdgeInsets.all(10), child: _singleCurrency()),
+            baseCurrency != "TZS"
+                ? Column(
+                    children: [
+                      const Divider(height: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: _tzs(),
+                      ),
+                    ],
+                  )
+                : Container(),
+            baseCurrency != "EURO"
+                ? Column(
+                    children: [
+                      const Divider(height: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: _euro(),
+                      ),
+                    ],
+                  )
+                : Container(),
+            baseCurrency != "GBP"
+                ? Column(
+                    children: [
+                      const Divider(height: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: _gbp(),
+                      ),
+                    ],
+                  )
+                : Container(),
+            baseCurrency != "USD"
+                ? Column(
+                    children: [
+                      const Divider(height: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: _usd(),
+                      ),
+                    ],
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -412,11 +485,11 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Container(
       color: Theme.of(context).primaryColor,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
         child: Column(
           children: [
             _location(),
-            Container(height: 5),
+            Container(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Row(children: [
                 const Text(
@@ -514,7 +587,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Icons.home),
+                        FaIcon(FontAwesomeIcons.house),
                         SizedBox(height: 10),
                         Text(
                           "Transaction",
@@ -553,7 +626,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Icons.home),
+                        FaIcon(FontAwesomeIcons.house),
                         SizedBox(height: 10),
                         Text(
                           "Payments",
@@ -593,7 +666,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Icons.home),
+                        FaIcon(FontAwesomeIcons.house),
                         SizedBox(height: 10),
                         Text(
                           "Inventory",
@@ -633,7 +706,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Icons.home),
+                        FaIcon(FontAwesomeIcons.house),
                         SizedBox(height: 10),
                         Text(
                           "Overview",
