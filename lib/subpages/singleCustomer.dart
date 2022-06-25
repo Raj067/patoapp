@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/customerList.dart';
+import 'package:patoapp/subpages/addPaymentCustomer.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class SingleCustomerPage extends StatelessWidget {
@@ -242,10 +243,18 @@ class SingleCustomerPage extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => AddPaymentCustomerDialog(
+                        customer: customer, isPaymentIn: false),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
               child: const Text(
                 "Payment Out",
-                // style: TextStyle(fontSize: 14),
               ),
             ),
           ),
@@ -264,10 +273,18 @@ class SingleCustomerPage extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => AddPaymentCustomerDialog(
+                        customer: customer, isPaymentIn: false),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
               child: const Text(
                 "Payment In",
-                style: TextStyle(color: patowaveWhite),
               ),
             ),
           ),

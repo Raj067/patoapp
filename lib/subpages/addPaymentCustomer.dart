@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
-class AddPaymentDialog extends StatefulWidget {
-  const AddPaymentDialog({Key? key}) : super(key: key);
+class AddPaymentCustomerDialog extends StatefulWidget {
+  final SingleCustomer customer;
+  final bool isPaymentIn;
+  const AddPaymentCustomerDialog(
+      {Key? key, required this.customer, required this.isPaymentIn})
+      : super(key: key);
 
   @override
-  State<AddPaymentDialog> createState() => _AddPaymentDialogState();
+  State<AddPaymentCustomerDialog> createState() =>
+      _AddPaymentCustomerDialogState();
 }
 
-class _AddPaymentDialogState extends State<AddPaymentDialog> {
+class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   int _value = 1;
   @override
   Widget build(BuildContext context) {
@@ -123,7 +129,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             ],
           ),
           const Divider(height: 0),
-          _value == 1 ? _paymentIn() : _paymentOut(),
+          _value == 1
+              ? _paymentIn(widget.customer)
+              : _paymentOut(widget.customer),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -157,7 +165,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     );
   }
 
-  _paymentIn() {
+  _paymentIn(SingleCustomer customer) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -167,14 +175,29 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             SizedBox(
               height: 45,
               child: TextFormField(
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Party Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                readOnly: true,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: patowaveBlack.withAlpha(30),
+                  hintStyle: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
                   ),
+                  hintText: "${customer.firstName} ${customer.lastName}",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: patowaveBlack.withAlpha(30),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: patowaveBlack.withAlpha(30),
                     ),
                   ),
                 ),
@@ -259,7 +282,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     );
   }
 
-  _paymentOut() {
+  _paymentOut(SingleCustomer customer) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -269,14 +292,29 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             SizedBox(
               height: 45,
               child: TextFormField(
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Party Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                readOnly: true,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: patowaveBlack.withAlpha(30),
+                  hintStyle: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
                   ),
+                  hintText: "${customer.firstName} ${customer.lastName}",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: patowaveBlack.withAlpha(30),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: patowaveBlack.withAlpha(30),
                     ),
                   ),
                 ),
