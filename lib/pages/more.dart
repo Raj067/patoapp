@@ -6,7 +6,6 @@ import 'package:patoapp/subpages/generalSettings.dart';
 import 'package:patoapp/subpages/greetings.dart';
 import 'package:patoapp/subpages/inventoryAnalysis.dart';
 import 'package:patoapp/subpages/invoices.dart';
-import 'package:patoapp/subpages/overview.dart';
 import 'package:patoapp/subpages/privacyPolicy.dart';
 import 'package:patoapp/subpages/reminders.dart';
 import 'package:patoapp/subpages/reports.dart';

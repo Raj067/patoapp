@@ -98,11 +98,14 @@ flutter:
     - assets/svg/calendar.svg
     - assets/svg/genericSortingDesc.svg
     - assets/icon/patowave.png
+    - assets/flags/dollar.png
+    - assets/flags/euro.png
+    - assets/flags/gbp.png
+    - assets/flags/tzs.png
     # - assets/
     # - assets/
     # - assets/
     # - assets/
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

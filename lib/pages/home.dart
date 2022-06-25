@@ -63,7 +63,10 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     );
   }
 
-  _singleCurrency({required String currency, required String fcurrency}) {
+  _singleCurrency(
+      {required String currency,
+      required String fcurrency,
+      required String img}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -73,8 +76,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           decoration: BoxDecoration(
             // color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(50),
-            image: const DecorationImage(
-              image: AssetImage("assets/img.jpg"),
+            image: DecorationImage(
+              image: AssetImage(img),
               fit: BoxFit.fill,
             ),
           ),
@@ -97,22 +100,34 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
   _tzs() {
     return _singleCurrency(
-        currency: "TZS", fcurrency: "TZS ${_getRate(currency: tzs)}");
+      currency: "TZS",
+      fcurrency: "TZS ${_getRate(currency: tzs)}",
+      img: "assets/flags/tzs.png",
+    );
   }
 
   _usd() {
     return _singleCurrency(
-        currency: "USD", fcurrency: "Dollar ${_getRate(currency: usd)}");
+      currency: "USD",
+      fcurrency: "Dollar ${_getRate(currency: usd)}",
+      img: "assets/flags/dollar.png",
+    );
   }
 
   _gbp() {
     return _singleCurrency(
-        currency: "GBP", fcurrency: "GBP ${_getRate(currency: gbp)}");
+      currency: "GBP",
+      fcurrency: "GBP ${_getRate(currency: gbp)}",
+      img: "assets/flags/gbp.png",
+    );
   }
 
   _euro() {
     return _singleCurrency(
-        currency: "EURO", fcurrency: "EURO ${_getRate(currency: euro)}");
+      currency: "EURO",
+      fcurrency: "EURO ${_getRate(currency: euro)}",
+      img: "assets/flags/euro.png",
+    );
   }
 
   _upcomingSchedule() {
@@ -339,17 +354,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    size: 14,
+                  FaIcon(
+                    FontAwesomeIcons.angleLeft,
+                    size: 18,
                   ),
                   Text(
                     "January",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 14,
+                  FaIcon(
+                    FontAwesomeIcons.angleRight,
+                    size: 18,
                   ),
                 ],
               ),
@@ -626,7 +641,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.house),
+                        FaIcon(FontAwesomeIcons.idBadge),
                         SizedBox(height: 10),
                         Text(
                           "Payments",
@@ -666,7 +681,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.house),
+                        FaIcon(FontAwesomeIcons.boxArchive),
                         SizedBox(height: 10),
                         Text(
                           "Inventory",
@@ -706,7 +721,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.house),
+                        FaIcon(FontAwesomeIcons.chartSimple),
                         SizedBox(height: 10),
                         Text(
                           "Overview",
