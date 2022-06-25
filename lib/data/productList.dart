@@ -2,8 +2,8 @@
 class SingleProduct {
   String productName;
   String thumbnail;
+  int stockLevel = 0;
   int quantity;
-  bool isOutStock;
   int sellingPrice;
   int purchasesPrice;
   String supplierName;
@@ -19,8 +19,8 @@ class SingleProduct {
     required this.purchasesPrice,
     required this.id,
     required this.quantity,
+    this.stockLevel = 0,
     this.thumbnail = "",
-    this.isOutStock = true,
     this.totalItemsSold = 90,
     this.supplierName = "Rajabu",
     this.supplierContact = "+255679190720",
@@ -64,6 +64,13 @@ class SingleProduct {
     return quantity - addedToCart;
   }
 
+  bool isStockLevelReached() {
+    if (quantity <= stockLevel) {
+      return true;
+    }
+    return false;
+  }
+
   void makeSales() {
     // make sales and changes the sales actions to the backend
   }
@@ -72,22 +79,58 @@ class SingleProduct {
 List<SingleProduct> allProductDetails() {
   return [
     SingleProduct(
-      purchasesPrice: 1200,
-      sellingPrice: 4090,
-      productName: "Product 6",
+      purchasesPrice: 1500,
+      sellingPrice: 2500,
+      productName: "Colgate",
       // thumbnail: "",
-      quantity: 55,
-      isOutStock: false,
-      id: '6',
+      quantity: 20,
+      stockLevel: 20,
+      id: '1',
     ),
     SingleProduct(
-      purchasesPrice: 1900,
-      sellingPrice: 4090,
-      productName: "Product 7",
+      purchasesPrice: 450,
+      sellingPrice: 700,
+      productName: "Jamaa",
       // thumbnail: "",
-      quantity: 86,
-      isOutStock: true,
-      id: '7',
+      quantity: 20,
+
+      id: '2',
+    ),
+    SingleProduct(
+      purchasesPrice: 1800,
+      sellingPrice: 3000,
+      productName: "Nido",
+      // thumbnail: "",
+      quantity: 20,
+
+      id: '3',
+    ),
+    SingleProduct(
+      purchasesPrice: 950,
+      sellingPrice: 1200,
+      productName: "Sembe",
+      // thumbnail: "",
+      quantity: 20,
+
+      id: '4',
+    ),
+    SingleProduct(
+      purchasesPrice: 2000,
+      sellingPrice: 2500,
+      productName: "Omo",
+      // thumbnail: "",
+      quantity: 20,
+
+      id: '5',
+    ),
+    SingleProduct(
+      purchasesPrice: 750,
+      sellingPrice: 1000,
+      productName: "Doffi",
+      // thumbnail: "",
+      quantity: 20,
+
+      id: '6',
     ),
   ];
 }

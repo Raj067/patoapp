@@ -28,10 +28,10 @@ class InventoryAnalysis extends StatelessWidget {
         child: ListView(
           children: [
             Container(height: 10),
-            _singleCardData(InventoryAnalysisData.instock, "Instock",
-                InventoryAnalysisData.inventoryTurnover, "Inventory Turnover"),
-            _singleCardData(InventoryAnalysisData.stockin, "Stock-In",
-                InventoryAnalysisData.stockout, "Stock-out"),
+            _singleCardData(inventoryAnalysisData.instock, "Instock",
+                inventoryAnalysisData.inventoryTurnover, "Inventory Turnover"),
+            _singleCardData(inventoryAnalysisData.stockin, "Stock-In",
+                inventoryAnalysisData.stockout, "Stock-out"),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(

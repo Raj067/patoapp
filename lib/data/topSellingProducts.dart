@@ -12,7 +12,7 @@ class InventAnalysisData {
   });
 }
 
-InventAnalysisData InventoryAnalysisData = InventAnalysisData(
+InventAnalysisData inventoryAnalysisData = InventAnalysisData(
     instock: "2,000", stockout: "821", stockin: "751", inventoryTurnover: "9");
 
 class SingleTopProduct {

@@ -424,7 +424,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontStyle: FontStyle.italic,
-                                  color: product.isOutStock
+                                  color: product.isStockLevelReached()
                                       ? patowaveWarning
                                       : product.quantity == 0
                                           ? patowaveErrorRed
@@ -562,7 +562,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontStyle: FontStyle.italic,
-                                        color: product.isOutStock
+                                        color: product.isStockLevelReached()
                                             ? patowaveWarning
                                             : product.quantity == 0
                                                 ? patowaveErrorRed
