@@ -183,7 +183,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                     fontStyle: FontStyle.italic,
                     fontSize: 14,
                   ),
-                  hintText: "${customer.firstName} ${customer.lastName}",
+                  hintText: customer.fullName,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),
@@ -300,7 +300,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                     fontStyle: FontStyle.italic,
                     fontSize: 14,
                   ),
-                  hintText: "${customer.firstName} ${customer.lastName}",
+                  hintText: customer.fullName,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),

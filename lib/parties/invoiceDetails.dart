@@ -100,7 +100,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                       height: 4,
                     ),
                     Text(
-                      "${customer.firstName} ${customer.lastName}",
+                      customer.fullName,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],

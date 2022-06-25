@@ -65,8 +65,7 @@ class PartiesPage extends StatelessWidget {
           leading: CircleAvatar(
             backgroundColor: patowaveGreen400,
             foregroundColor: patowaveWhite,
-            child: Text(
-                "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
+            child: Text(customer.fullName.toUpperCase()[0]),
           ),
           onTap: () {
             Navigator.push(
@@ -79,7 +78,7 @@ class PartiesPage extends StatelessWidget {
               ),
             );
           },
-          title: Text("${customer.firstName} ${customer.lastName}"),
+          title: Text(customer.fullName),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             // crossAxisAlignment: CrossAxisAlignment.start,

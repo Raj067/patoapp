@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/customerList.dart';
+import 'package:patoapp/parties/editCustomer.dart';
 import 'package:patoapp/subpages/addPaymentCustomer.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
@@ -15,8 +16,7 @@ class SingleCustomerPage extends StatelessWidget {
           CircleAvatar(
             backgroundColor: patowaveGreen400,
             foregroundColor: patowaveWhite,
-            child: Text(
-                "${customer.firstName.toUpperCase()[0]}${customer.lastName.toUpperCase()[0]}"),
+            child: Text(customer.fullName.toUpperCase()[0]),
           ),
           Container(width: 10),
           Column(
@@ -24,7 +24,7 @@ class SingleCustomerPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${customer.firstName} ${customer.lastName}",
+                customer.fullName,
                 style: const TextStyle(
                   color: patowaveWhite,
                   fontSize: 16,
@@ -52,7 +52,16 @@ class SingleCustomerPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      EditCustomer(customer: customer),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
             icon: const Icon(
               Icons.edit,
               color: patowaveWhite,
