@@ -58,13 +58,15 @@ class _BusinessPageState extends State<BusinessPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    // color: patowaveWhite,
-                    margin: const EdgeInsets.all(12.0),
-                    padding: const EdgeInsets.all(2),
-                    height: 24,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 12, 5),
+                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                    height: 28,
                     decoration: BoxDecoration(
-                      // color: patoLightGreen,
-                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: patowaveGreen400,
+                      ),
+                      color: Theme.of(context).chipTheme.backgroundColor,
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: DropdownButton<String>(
                       value: dropdownValue,
@@ -74,7 +76,6 @@ class _BusinessPageState extends State<BusinessPage> {
                       ),
                       icon: const Icon(
                         Icons.arrow_drop_down_rounded,
-                        size: 15,
                       ),
                       onChanged: (String? newValue) {
                         setState(() {
