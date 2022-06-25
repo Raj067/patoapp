@@ -34,7 +34,7 @@ class EditCustomer extends StatelessWidget {
             SizedBox(
               height: 45,
               child: TextFormField(
-                initialValue: "Rajabu",
+                initialValue: customer.fullName,
                 decoration: const InputDecoration(
                   label: Text(
                     "Customer Name",

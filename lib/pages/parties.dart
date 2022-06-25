@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/reports/debtReports.dart';
-import 'package:patoapp/subpages/addCustomer.dart';
-import 'package:patoapp/subpages/addPayment.dart';
-import 'package:patoapp/subpages/singleCustomer.dart';
+import 'package:patoapp/parties/addCustomer.dart';
+import 'package:patoapp/parties/addPayment.dart';
+import 'package:patoapp/parties/singleCustomer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 

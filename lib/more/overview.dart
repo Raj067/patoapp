@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:patoapp/reports/purchasesReports.dart';
 import 'package:patoapp/reports/salesReports.dart';
-import 'package:patoapp/subpages/reports.dart';
+import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class OverviewDialog extends StatelessWidget {

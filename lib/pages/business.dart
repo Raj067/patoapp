@@ -3,7 +3,7 @@ import 'package:patoapp/business/transactionReceipt.dart';
 import 'package:patoapp/components/topBar.dart';
 import 'package:patoapp/data/businessFinancialData.dart';
 import 'package:patoapp/reports/profitLoss.dart';
-import 'package:patoapp/subpages/addTransaction.dart';
+import 'package:patoapp/business/addTransaction.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class BusinessPage extends StatefulWidget {

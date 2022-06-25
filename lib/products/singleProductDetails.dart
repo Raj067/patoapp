@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/data/productList.dart';
+import 'package:patoapp/products/editProduct.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
@@ -28,7 +29,15 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const EditProduct(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
             icon: const Icon(
               Icons.edit,
               color: patowaveWhite,

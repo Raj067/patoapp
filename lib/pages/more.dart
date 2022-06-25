@@ -1,15 +1,15 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:patoapp/subpages/feedback.dart';
-import 'package:patoapp/subpages/generalSettings.dart';
-import 'package:patoapp/subpages/greetings.dart';
-import 'package:patoapp/subpages/inventoryAnalysis.dart';
-import 'package:patoapp/subpages/invoices.dart';
-import 'package:patoapp/subpages/privacyPolicy.dart';
-import 'package:patoapp/subpages/reminders.dart';
-import 'package:patoapp/subpages/reports.dart';
-import 'package:patoapp/subpages/termsConditions.dart';
+import 'package:patoapp/more/feedback.dart';
+import 'package:patoapp/more/generalSettings.dart';
+import 'package:patoapp/more/greetings.dart';
+import 'package:patoapp/more/inventoryAnalysis.dart';
+import 'package:patoapp/more/invoices.dart';
+import 'package:patoapp/more/privacyPolicy.dart';
+import 'package:patoapp/more/reminders.dart';
+import 'package:patoapp/more/reports.dart';
+import 'package:patoapp/more/termsConditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../components/topBar.dart';

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/customerList.dart';
 import 'package:patoapp/parties/editCustomer.dart';
-import 'package:patoapp/subpages/addPaymentCustomer.dart';
+import 'package:patoapp/parties/addPaymentCustomer.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class SingleCustomerPage extends StatelessWidget {
