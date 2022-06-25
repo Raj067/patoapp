@@ -79,7 +79,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Selling Price'),
-                Text(widget.product.sellingPrice),
+                Text("${widget.product.sellingPrice}"),
               ],
             ),
           ),
@@ -90,7 +90,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Purchases Price'),
-                Text(widget.product.purchasesPrice),
+                Text("${widget.product.purchasesPrice}"),
               ],
             ),
           ),

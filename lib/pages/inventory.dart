@@ -368,21 +368,30 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Image.network(product.thumbnail,
-                //     width: 50, height: 50, fit: BoxFit.fill),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    // color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(15),
-                    image: const DecorationImage(
-                      image: AssetImage("assets/img.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
-                ),
+                product.thumbnail == ""
+                    ? Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                      )
+                    : Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          // color: Theme.of(context).scaffoldBackgroundColor,
+
+                          borderRadius: BorderRadius.circular(15),
+                          image: const DecorationImage(
+                            image: AssetImage("assets/img.jpg"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                      ),
                 Container(
                   width: 10,
                 ),
@@ -404,7 +413,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           Row(
                             children: [
                               Text(
-                                'Tsh ${product.productPrice}',
+                                'Tsh ${product.sellingPrice}',
                                 style: const TextStyle(fontSize: 12),
                               ),
                               const SizedBox(
@@ -542,7 +551,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Tsh ${product.productPrice}',
+                                      'Tsh ${product.sellingPrice}',
                                       style: const TextStyle(fontSize: 12),
                                     ),
                                     const SizedBox(
