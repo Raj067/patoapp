@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/data/productList.dart';
 import 'package:patoapp/themes/lightTheme.dart';
 
 class EditProduct extends StatefulWidget {
-  const EditProduct({Key? key}) : super(key: key);
+  final SingleProduct product;
+  const EditProduct({Key? key, required this.product}) : super(key: key);
 
   @override
   State<EditProduct> createState() => _EditProductState();
@@ -91,7 +93,7 @@ class _EditProductState extends State<EditProduct> {
                 ),
                 onPressed: () {},
                 child: const Text(
-                  "Add Item",
+                  "Edit Item",
                 ),
               ),
             ),
@@ -112,6 +114,7 @@ class _EditProductState extends State<EditProduct> {
             SizedBox(
               height: 45,
               child: TextFormField(
+                initialValue: widget.product.productName,
                 decoration: InputDecoration(
                   label: const Text(
                     "Item Name",
@@ -163,6 +166,7 @@ class _EditProductState extends State<EditProduct> {
             SizedBox(
               height: 45,
               child: TextFormField(
+                initialValue: "${widget.product.purchasesPrice}",
                 decoration: const InputDecoration(
                   label: Text(
                     "Purchases Price",
@@ -185,6 +189,7 @@ class _EditProductState extends State<EditProduct> {
             SizedBox(
               height: 45,
               child: TextFormField(
+                initialValue: "${widget.product.sellingPrice}",
                 decoration: const InputDecoration(
                   label: Text(
                     "Sales Price (can)",

@@ -33,7 +33,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const EditProduct(),
+                  builder: (BuildContext context) => EditProduct(product: widget.product),
                   fullscreenDialog: true,
                 ),
               );
