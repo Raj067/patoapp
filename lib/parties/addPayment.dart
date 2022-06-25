@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/themes/lightTheme.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AddPaymentDialog extends StatefulWidget {
   const AddPaymentDialog({Key? key}) : super(key: key);
@@ -32,67 +33,80 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 1;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveGreen,
-                        value: 1,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 1;
-                          });
-                        },
+          Container(
+            color: Colors.grey.withAlpha(50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    color: _value == 1
+                        ? patowaveGreen.withAlpha(100)
+                        : Colors.grey.withAlpha(50),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _value = 1;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Radio(
+                            activeColor: patowaveGreen,
+                            value: 1,
+                            groupValue: _value,
+                            onChanged: (val) {
+                              setState(() {
+                                _value = 1;
+                              });
+                            },
+                          ),
+                          Container(
+                            width: 5,
+                          ),
+                          const Text("Payment in"),
+                        ],
                       ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Payment in"),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 2;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveErrorRed,
-                        value: 2,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 2;
-                          });
-                        },
+                Expanded(
+                  child: Container(
+                    color: _value == 2
+                        ? patowaveErrorRed.withAlpha(100)
+                        : Colors.grey.withAlpha(50),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _value = 2;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Radio(
+                            activeColor: patowaveErrorRed,
+                            value: 2,
+                            groupValue: _value,
+                            onChanged: (val) {
+                              setState(() {
+                                _value = 2;
+                              });
+                            },
+                          ),
+                          Container(
+                            width: 5,
+                          ),
+                          const Text("Payment out"),
+                          Container(
+                            width: 10,
+                          ),
+                        ],
                       ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Payment out"),
-                      Container(
-                        width: 10,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
           const Divider(height: 0),
           Table(

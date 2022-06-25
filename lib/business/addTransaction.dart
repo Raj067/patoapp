@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -474,7 +476,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 35,
                   child: TextFormField(
                     keyboardType: TextInputType.number,

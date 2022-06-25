@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore: file_names
 
 import 'package:flutter/material.dart';
 import 'package:patoapp/profile/topNotificationIcon.dart';
@@ -14,7 +14,7 @@ PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
     AppBar(
       title: const ProfileIcon(),
-      actions: [const NotificationIcon(), const SizedBox(width: 20)],
+      actions: const [NotificationIcon(), SizedBox(width: 20)],
       bottom: button,
     );
 
@@ -93,8 +93,8 @@ PreferredSizeWidget _partiesButtomTopBar() => PreferredSize(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                const MyDropdownButtonParties(),
+              children: const <Widget>[
+                MyDropdownButtonParties(),
               ],
             ),
           ),
