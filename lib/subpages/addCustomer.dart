@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/themes/lightTheme.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AddCustomerDialog extends StatelessWidget {
   const AddCustomerDialog({Key? key}) : super(key: key);
@@ -29,6 +30,12 @@ class AddCustomerDialog extends StatelessWidget {
           children: [
             Container(height: 10),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               color: patowavePrimary,
               child: InkWell(
                 onTap: () {},
@@ -39,7 +46,10 @@ class AddCustomerDialog extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.contact_page, size: 24),
+                          const FaIcon(
+                            FontAwesomeIcons.addressBook,
+                            color: patowaveWhite,
+                          ),
                           Container(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +57,7 @@ class AddCustomerDialog extends StatelessWidget {
                               Text(
                                 'Import Customer',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: patowaveWhite,
                                     fontStyle: FontStyle.italic,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
@@ -72,40 +82,52 @@ class AddCustomerDialog extends StatelessWidget {
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Customer Name",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Phone Number",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Email Address",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -114,7 +136,7 @@ class AddCustomerDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: SizedBox(
-                    height: 40,
+                    height: 45,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -126,7 +148,11 @@ class AddCustomerDialog extends StatelessWidget {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: const OutlineInputBorder(),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -134,7 +160,7 @@ class AddCustomerDialog extends StatelessWidget {
                 Container(width: 10),
                 Expanded(
                   child: SizedBox(
-                    height: 40,
+                    height: 45,
                     child: TextFormField(
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -147,10 +173,38 @@ class AddCustomerDialog extends StatelessWidget {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: const OutlineInputBorder(),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                ),
+              ],
+            ),
+            Container(height: 10),
+            Row(
+              children: [
+                ToggleSwitch(
+                  minWidth: MediaQuery.of(context).size.width - 50,
+                  minHeight: 45,
+                  cornerRadius: 20.0,
+                  activeBgColors: const [
+                    [patowavePrimary],
+                    [patowavePrimary]
+                  ],
+                  activeFgColor: patowaveWhite,
+                  inactiveBgColor: Colors.grey.withAlpha(100),
+                  inactiveFgColor: patowaveBlack,
+                  initialLabelIndex: 1,
+                  totalSwitches: 2,
+                  labels: const ['To receive', 'To be paid'],
+                  radiusStyle: true,
+                  // onToggle: (index) {
+                  //   print('switched to: $index');
+                  // },
                 ),
               ],
             ),
