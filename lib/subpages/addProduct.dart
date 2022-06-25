@@ -134,6 +134,34 @@ class _AddProductPageState extends State<AddProductPage> {
           _value == 1 ? _addProduct() : _addService(),
         ],
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Add Item",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -159,6 +187,15 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                   ),
                   suffixIcon: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       _setUnit(context);
                     },
@@ -259,7 +296,11 @@ class _AddProductPageState extends State<AddProductPage> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: const OutlineInputBorder(),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -279,7 +320,11 @@ class _AddProductPageState extends State<AddProductPage> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: const OutlineInputBorder(),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -363,15 +408,6 @@ class _AddProductPageState extends State<AddProductPage> {
                     ],
                   )
                 : Container(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Add Product",
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -400,7 +436,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   isExpanded: true,
@@ -412,7 +448,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     Icons.arrow_drop_down,
                   ),
                   dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   items: primaryUnits
                       .map((item) => DropdownMenuItem<String>(
@@ -443,7 +479,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   isExpanded: true,
@@ -455,7 +491,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     Icons.arrow_drop_down,
                   ),
                   dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   items: secondaryUnits
                       .map((item) => DropdownMenuItem<String>(
@@ -576,17 +612,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       Radius.circular(15),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Container(height: 10),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Add Service",
                 ),
               ),
             ),

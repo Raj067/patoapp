@@ -128,6 +128,34 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           _value == 1 ? _addSales() : _addExpenses(),
         ],
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Add Transaction",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -238,17 +266,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Container(height: 10),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Add Transaction",
-                  style: TextStyle(color: patowaveWhite),
                 ),
               ),
             ),
@@ -414,17 +431,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Container(height: 10),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Add Transaction",
-                  style: TextStyle(color: patowaveWhite),
                 ),
               ),
             ),

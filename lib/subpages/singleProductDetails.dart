@@ -137,20 +137,69 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         ],
       ),
       persistentFooterButtons: [
-        OutlinedButton(
-          onPressed: () {},
-          child: const Text("Share"),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            _productAdjustment(context, widget.product);
-          },
-          child: const Text(
-            "Adjust Item",
-            style: TextStyle(color: patowaveWhite),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Expanded(
+            child: OutlinedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  const Size(45, 45),
+                ),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                "Share",
+                // style: TextStyle(fontSize: 14),
+              ),
+            ),
           ),
-        ),
+          Container(width: 10),
+          Expanded(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  const Size(45, 45),
+                ),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                _productAdjustment(context, widget.product);
+              },
+              child: const Text(
+                "Adjust Item",
+                style: TextStyle(color: patowaveWhite),
+              ),
+            ),
+          ),
+        ]),
       ],
+      // persistentFooterButtons: [
+      //   OutlinedButton(
+      //     onPressed: () {},
+      //     child: const Text("Share"),
+      //   ),
+      //   ElevatedButton(
+      //     onPressed: () {
+      //       _productAdjustment(context, widget.product);
+      //     },
+      //     child: const Text(
+      //       "Adjust Item",
+      //       style: TextStyle(color: patowaveWhite),
+      //     ),
+      //   ),
+      // ],
     );
   }
 
@@ -168,45 +217,79 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            elevation: 0,
-            // backgroundColor: patoBackgroundColor,
-            // title: const Text('Adjust Item'),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text("Are you sure you want to delete this item?",
-                    textAlign: TextAlign.center),
-                Container(height: 10),
-                const Text(
-                  "Warning",
-                  style: TextStyle(color: patowaveErrorRed),
-                ),
-                Container(height: 10),
-                const Text("All of this informations will be lost.",
-                    textAlign: TextAlign.center),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Cancel"),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Delete",
-                  style: TextStyle(color: patowaveWhite),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
               ),
-            ],
-          );
+              elevation: 0,
+              // backgroundColor: patoBackgroundColor,
+              // title: const Text('Adjust Item'),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Are you sure you want to delete this item?",
+                      textAlign: TextAlign.center),
+                  Container(height: 10),
+                  const Text(
+                    "Warning",
+                    style: TextStyle(color: patowaveErrorRed),
+                  ),
+                  Container(height: 10),
+                  const Text("All of this informations will be lost.",
+                      textAlign: TextAlign.center),
+                ],
+              ),
+              actions: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                            const Size(45, 45),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Cancel"),
+                      ),
+                    ),
+                    Container(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                            const Size(45, 45),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.all(patowaveErrorRed),
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          "Delete",
+                          style: TextStyle(color: patowaveWhite),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ]);
         });
   }
 
@@ -249,22 +332,53 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  product.adjustProductQuantity(int.parse(controller.text));
-                });
-                Navigator.pop(context);
-              },
-              child: const Text(
-                "Add",
-                style: TextStyle(color: patowaveWhite),
+            Row(children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: const Text("Cancel"),
+                ),
               ),
-            ),
+              Container(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      product.adjustProductQuantity(int.parse(controller.text));
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Add",
+                    style: TextStyle(color: patowaveWhite),
+                  ),
+                ),
+              ),
+            ])
           ],
         );
       },

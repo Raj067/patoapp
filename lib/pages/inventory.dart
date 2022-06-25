@@ -587,7 +587,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   // const Text("Qty:"),
                   Expanded(
                     child: SizedBox(
-                      // height: 50,
+                      // height: 45,
                       child: TextFormField(
                         controller: controller,
                         keyboardType: TextInputType.number,
@@ -596,7 +596,11 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                         ],
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsetsDirectional.all(10),
-                          border: const OutlineInputBorder(),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
                           helperText:
                               "*Maximum quantity is ${product.availableQuantity()}",
                           helperStyle: TextStyle(
@@ -622,27 +626,58 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  var val = int.parse(controller.text);
-                  if (!product.compareToCart(val)) {
-                    product.addNewProductToCart(val);
-                    product.isAddedToCartAutomatic = true;
-                    _onCartChange(product);
-                    Navigator.pop(context);
-                  }
-                });
-              },
-              child: const Text(
-                "Add",
-                style: TextStyle(color: patowaveWhite),
+            Row(children: [
+              Expanded(
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Cancel"),
+                ),
               ),
-            )
+              Container(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      var val = int.parse(controller.text);
+                      if (!product.compareToCart(val)) {
+                        product.addNewProductToCart(val);
+                        product.isAddedToCartAutomatic = true;
+                        _onCartChange(product);
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
+                  child: const Text(
+                    "Add",
+                    style: TextStyle(color: patowaveWhite),
+                  ),
+                ),
+              )
+            ])
           ],
         );
       },
