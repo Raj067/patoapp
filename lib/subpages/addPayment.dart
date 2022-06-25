@@ -127,13 +127,31 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          child: const Text(
-            "Add Payment",
-            style: TextStyle(color: Colors.white),
-          ),
-          onPressed: () {},
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Add Payment",
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

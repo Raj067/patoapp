@@ -124,7 +124,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   child: Card(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(15),
+                        Radius.circular(30),
                       ),
                     ),
                     elevation: 0,
@@ -142,7 +142,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

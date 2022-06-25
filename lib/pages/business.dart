@@ -345,15 +345,21 @@ class _BusinessPageState extends State<BusinessPage> {
                             Navigator.pop(context);
                           },
                           style: ButtonStyle(
+                            // MaterialStateProperty<Color?>? backgroundColor,
                             backgroundColor:
                                 MaterialStateProperty.all(patowaveErrorRed),
-                            // shape: MaterialStateProperty.all(),
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(45, 45),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
+                            ),
                           ),
-                          child: const Text(
-                            "Delete",
-                            style:
-                                TextStyle(color: patowaveWhite, fontSize: 16),
-                          ),
+                          child: const Text("Delete"),
                         ),
                       ),
                       Container(width: 10),
@@ -361,14 +367,20 @@ class _BusinessPageState extends State<BusinessPage> {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(patowavePrimary),
-                            // shape: MaterialStateProperty.all(),
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(45, 45),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
+                            ),
                           ),
                           child: const Text(
                             "Edit",
-                            style:
-                                TextStyle(color: patowaveWhite, fontSize: 16),
+                            style: TextStyle(color: patowaveWhite),
                           ),
                         ),
                       ),
@@ -383,29 +395,37 @@ class _BusinessPageState extends State<BusinessPage> {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data.name,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  data.description,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.name,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    data.description,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
             ),
             data.isIncome
-                ? Text(
-                    "${data.price}",
-                    style: const TextStyle(color: patowaveGreen),
+                ? Expanded(
+                    child: Text(
+                      "${data.price}",
+                      style: const TextStyle(color: patowaveGreen),
+                    ),
                   )
-                : const Text("-"),
+                : const Expanded(
+                    child: Center(
+                      child: Text("-"),
+                    ),
+                  ),
             data.isIncome
                 ? const Text("-")
                 : Text(

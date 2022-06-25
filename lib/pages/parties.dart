@@ -81,10 +81,12 @@ class PartiesPage extends StatelessWidget {
           },
           title: Text("${customer.firstName} ${customer.lastName}"),
           trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               Text(
                 customer.amount,
                 style: TextStyle(

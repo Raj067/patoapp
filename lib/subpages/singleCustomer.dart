@@ -226,18 +226,49 @@ class SingleCustomerPage extends StatelessWidget {
       ),
       persistentFooterButtons: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          OutlinedButton(
-            onPressed: () {},
-            child: const Text(
-              "Payment Out",
-              // style: TextStyle(color: patowaveWhite),
+          Expanded(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                // MaterialStateProperty<Color?>? backgroundColor,
+                backgroundColor: MaterialStateProperty.all(patowaveErrorRed),
+                minimumSize: MaterialStateProperty.all(
+                  const Size(45, 45),
+                ),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                "Payment Out",
+                // style: TextStyle(fontSize: 14),
+              ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text(
-              "Payment In",
-              style: TextStyle(color: patowaveWhite),
+          Container(width: 10),
+          Expanded(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  const Size(45, 45),
+                ),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                "Payment In",
+                style: TextStyle(color: patowaveWhite),
+              ),
             ),
           ),
         ]),

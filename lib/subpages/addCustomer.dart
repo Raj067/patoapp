@@ -158,13 +158,32 @@ class AddCustomerDialog extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          child: const Text(
-            "Save",
-            style: TextStyle(fontSize: 16),
-          ),
-          onPressed: () {},
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Save",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
