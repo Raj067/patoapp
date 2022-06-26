@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:patoapp/more/feedback.dart';
-import 'package:patoapp/more/generalSettings.dart';
+import 'package:patoapp/more/general_settings.dart';
 import 'package:patoapp/more/greetings.dart';
-import 'package:patoapp/more/inventoryAnalysis.dart';
+import 'package:patoapp/more/inventory_analysis.dart';
 import 'package:patoapp/more/invoices.dart';
-import 'package:patoapp/more/privacyPolicy.dart';
+import 'package:patoapp/more/privacy_policy.dart';
 import 'package:patoapp/more/reminders.dart';
 import 'package:patoapp/more/reports.dart';
-import 'package:patoapp/more/termsConditions.dart';
+import 'package:patoapp/more/terms_conditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../components/topBar.dart';
+import '../components/top_bar.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({Key? key}) : super(key: key);

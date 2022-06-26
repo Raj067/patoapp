@@ -1,11 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/topBar.dart';
+import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/inventory.dart';
-import 'package:patoapp/parties/addPayment.dart';
-import 'package:patoapp/business/addTransaction.dart';
+import 'package:patoapp/parties/add_payment.dart';
+import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/more/overview.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainEntryHomePage extends StatefulWidget {

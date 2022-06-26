@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class ReminderDialog extends StatelessWidget {
-  const ReminderDialog({Key? key}) : super(key: key);
+class ProfitLossReports extends StatelessWidget {
+  const ProfitLossReports({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Reminder',
+          'Profit and Loss',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -23,7 +23,7 @@ class ReminderDialog extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: Text("Reminders"),
+        child: Text("Profit and Loss"),
       ),
     );
   }

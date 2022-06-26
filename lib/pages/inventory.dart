@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patoapp/data/productList.dart';
-import 'package:patoapp/products/addProduct.dart';
-import 'package:patoapp/products/cartProducts.dart';
-import 'package:patoapp/products/singleProductDetails.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/data/product_list.dart';
+import 'package:patoapp/products/add_product.dart';
+import 'package:patoapp/products/cart_products.dart';
+import 'package:patoapp/products/single_product_details.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({Key? key}) : super(key: key);

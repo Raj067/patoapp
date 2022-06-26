@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/parties/invoiceDetails.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/parties/invoice_details.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class MainInvoicePage extends StatelessWidget {
   const MainInvoicePage({Key? key}) : super(key: key);

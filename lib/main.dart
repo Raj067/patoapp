@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/pages/index.dart';
-import 'package:patoapp/themes/darkTheme.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/dark_theme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

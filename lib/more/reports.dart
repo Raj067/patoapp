@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/reports/allTransactions.dart';
-import 'package:patoapp/reports/balanceSheet.dart';
+import 'package:patoapp/reports/all_transactions.dart';
+import 'package:patoapp/reports/balance_sheet.dart';
 import 'package:patoapp/reports/cashflow.dart';
-import 'package:patoapp/reports/dayBook.dart';
-import 'package:patoapp/reports/debtReports.dart';
-import 'package:patoapp/reports/expensesReports.dart';
-import 'package:patoapp/reports/inventoryReports.dart';
-import 'package:patoapp/reports/inventorySummary.dart';
-import 'package:patoapp/reports/profitLoss.dart';
-import 'package:patoapp/reports/purchasesReports.dart';
-import 'package:patoapp/reports/salesReports.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/reports/day_book.dart';
+import 'package:patoapp/reports/debt_reports.dart';
+import 'package:patoapp/reports/expenses_reports.dart';
+import 'package:patoapp/reports/inventory_reports.dart';
+import 'package:patoapp/reports/inventory_summary.dart';
+import 'package:patoapp/reports/profit_loss.dart';
+import 'package:patoapp/reports/purchases_reports.dart';
+import 'package:patoapp/reports/sales_reports.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class MainReportsPage extends StatelessWidget {
   const MainReportsPage({Key? key}) : super(key: key);

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/topBar.dart';
-import 'package:patoapp/data/customerList.dart';
-import 'package:patoapp/reports/debtReports.dart';
-import 'package:patoapp/parties/addCustomer.dart';
-import 'package:patoapp/parties/addPayment.dart';
-import 'package:patoapp/parties/singleCustomer.dart';
+import 'package:patoapp/components/top_bar.dart';
+import 'package:patoapp/data/customer_list.dart';
+import 'package:patoapp/reports/debt_reports.dart';
+import 'package:patoapp/parties/add_customer.dart';
+import 'package:patoapp/parties/add_payment.dart';
+import 'package:patoapp/parties/single_customer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class PartiesPage extends StatelessWidget {
   const PartiesPage({Key? key}) : super(key: key);

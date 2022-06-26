@@ -4,7 +4,7 @@ import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {

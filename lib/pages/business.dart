@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/business/transactionReceipt.dart';
-import 'package:patoapp/components/topBar.dart';
-import 'package:patoapp/data/businessFinancialData.dart';
-import 'package:patoapp/reports/profitLoss.dart';
-import 'package:patoapp/business/addTransaction.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/business/transaction_receipt.dart';
+import 'package:patoapp/components/top_bar.dart';
+import 'package:patoapp/data/business_financial_data.dart';
+import 'package:patoapp/reports/profit_loss.dart';
+import 'package:patoapp/business/add_transaction.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({Key? key}) : super(key: key);

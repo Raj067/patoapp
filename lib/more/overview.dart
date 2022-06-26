@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:patoapp/reports/purchasesReports.dart';
-import 'package:patoapp/reports/salesReports.dart';
+import 'package:patoapp/reports/purchases_reports.dart';
+import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/more/reports.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class OverviewDialog extends StatelessWidget {
   const OverviewDialog({Key? key}) : super(key: key);

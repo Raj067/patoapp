@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/themes/lightTheme.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class TransactionSettings extends StatelessWidget {
   const TransactionSettings({Key? key}) : super(key: key);
