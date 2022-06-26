@@ -144,6 +144,7 @@ class PartiesPage extends StatelessWidget {
             ),
             elevation: 0,
             child: IconButton(
+              splashRadius: 15,
               icon: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(

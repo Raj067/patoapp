@@ -38,6 +38,7 @@ class AddCustomerDialog extends StatelessWidget {
               elevation: 0,
               color: patowavePrimary,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),

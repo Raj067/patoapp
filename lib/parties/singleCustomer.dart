@@ -84,6 +84,7 @@ class SingleCustomerPage extends StatelessWidget {
               elevation: 0,
               color: patowavePrimary,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
