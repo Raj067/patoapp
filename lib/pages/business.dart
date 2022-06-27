@@ -516,46 +516,46 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 }
 
-class SecondRowBusinessData extends StatelessWidget {
-  const SecondRowBusinessData({Key? key}) : super(key: key);
+// class SecondRowBusinessData extends StatelessWidget {
+//   const SecondRowBusinessData({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: const [
-        Expanded(
-          flex: 4,
-          child: Card(
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                enabledBorder: InputBorder.none,
-              ),
-            ),
-          ),
-        ),
-        DateActionButton(),
-        FilterIconButton(),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: const [
+//         Expanded(
+//           flex: 4,
+//           child: Card(
+//             child: TextField(
+//               decoration: InputDecoration(
+//                 border: OutlineInputBorder(),
+//                 hintText: 'Search',
+//                 prefixIcon: Icon(Icons.search),
+//                 enabledBorder: InputBorder.none,
+//               ),
+//             ),
+//           ),
+//         ),
+//         DateActionButton(),
+//         FilterIconButton(),
+//       ],
+//     );
+//   }
+// }
 
-class DateActionButton extends StatelessWidget {
-  const DateActionButton({Key? key}) : super(key: key);
+// class DateActionButton extends StatelessWidget {
+//   const DateActionButton({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: IconButton(
-        icon: const Icon(Icons.date_range),
-        onPressed: () {},
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       child: IconButton(
+//         icon: const Icon(Icons.date_range),
+//         onPressed: () {},
+//       ),
+//     );
+//   }
+// }
 
 class FilterIconButton extends StatelessWidget {
   const FilterIconButton({Key? key}) : super(key: key);

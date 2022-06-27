@@ -399,6 +399,11 @@ class FirstRowData extends StatelessWidget {
                 ),
               ),
               child: ListTile(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -437,6 +442,11 @@ class FirstRowData extends StatelessWidget {
               ),
               elevation: 0,
               child: ListTile(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -475,6 +485,11 @@ class FirstRowData extends StatelessWidget {
               ),
               elevation: 0,
               child: ListTile(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,

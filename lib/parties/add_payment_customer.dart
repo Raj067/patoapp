@@ -18,6 +18,13 @@ class AddPaymentCustomerDialog extends StatefulWidget {
 
 class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   int _value = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _value = widget.isPaymentIn ? 1 : 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

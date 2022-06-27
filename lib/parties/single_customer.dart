@@ -288,7 +288,7 @@ class SingleCustomerPage extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
-                        customer: customer, isPaymentIn: false),
+                        customer: customer, isPaymentIn: true),
                     fullscreenDialog: true,
                   ),
                 );

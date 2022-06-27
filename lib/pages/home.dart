@@ -36,7 +36,11 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             : baseCurrency == 'GBP'
                 ? fcurrency = currency / gbp
                 : fcurrency = currency / tzs;
-    return "$fcurrency";
+    var reqVal = "";
+    "$fcurrency".length < 8
+        ? reqVal = "$fcurrency"
+        : reqVal = "$fcurrency".replaceRange(8, null, "");
+    return reqVal;
   }
 
   @override

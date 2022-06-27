@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/data/customer_list.dart';
+import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/parties/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:patoapp/subpages/singleCustomer.dart';
@@ -31,11 +32,18 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
       child: Dismissible(
         key: Key("${customer.id}"),
         confirmDismiss: (direction) async {
-          // if (direction == DismissDirection.startToEnd) {
-          //   _addDataToCartManual(context, product);
-          // } else {
-          //   _onResetSingleData(product);
-          // }
+          if (direction == DismissDirection.startToEnd) {
+            // _addDataToCartManual(context, product);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => AddPaymentCustomerDialog(
+                    customer: customer, isPaymentIn: false),
+                fullscreenDialog: true,
+              ),
+            );
+          }
           return false;
         },
         background: Container(
