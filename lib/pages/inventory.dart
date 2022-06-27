@@ -508,7 +508,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(15),
+              Radius.circular(30),
             ),
           ),
           elevation: 0,

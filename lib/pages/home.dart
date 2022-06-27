@@ -616,7 +616,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
-                          child: FaIcon(FontAwesomeIcons.house),
+                          child: FaIcon(FontAwesomeIcons.newspaper),
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -660,7 +660,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
-                          child: FaIcon(FontAwesomeIcons.idBadge),
+                          child: FaIcon(
+                            FontAwesomeIcons.moneyBills,
+                          ),
                         ),
                         SizedBox(height: 5),
                         Text(

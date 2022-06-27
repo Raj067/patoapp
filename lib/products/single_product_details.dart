@@ -229,7 +229,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
           return AlertDialog(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+                  Radius.circular(30),
                 ),
               ),
               elevation: 0,
@@ -313,7 +313,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(15),
+              Radius.circular(30),
             ),
           ),
           elevation: 0,
@@ -329,7 +329,11 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
             ],
             decoration: const InputDecoration(
               contentPadding: EdgeInsetsDirectional.all(10),
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
               prefixIcon: Padding(
                 padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
                 child: Text("Qty:"),
