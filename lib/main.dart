@@ -6,7 +6,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-  
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,

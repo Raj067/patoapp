@@ -343,7 +343,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
-        color: patowavePrimary.withAlpha(50),
+        color: Theme.of(context).primaryColor,
         elevation: 0,
         // color: Colors.white,
         shape: const RoundedRectangleBorder(
@@ -361,14 +361,19 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   FaIcon(
                     FontAwesomeIcons.angleLeft,
                     size: 18,
+                    color: patowaveWhite,
                   ),
                   Text(
                     "January",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: patowaveWhite,
+                    ),
                   ),
                   FaIcon(
                     FontAwesomeIcons.angleRight,
                     size: 18,
+                    color: patowaveWhite,
                   ),
                 ],
               ),
@@ -422,6 +427,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             borderRadius: BorderRadius.all(
               Radius.circular(15),
             ),
+            side: BorderSide(color: patowaveWhite, width: 0.7),
           ),
           color: patowavePrimary.withAlpha(50),
           child: InkWell(
@@ -433,12 +439,12 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               children: const [
                 Text(
                   "Mon",
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12, color: patowaveWhite),
                 ),
                 SizedBox(height: 10),
                 Text(
                   "13",
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14, color: patowaveWhite),
                 ),
               ],
             ),
@@ -581,7 +587,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           children: [
             Expanded(
               child: SizedBox(
-                height: 75,
+                height: 80,
                 child: Card(
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
@@ -606,8 +612,13 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.house),
-                        SizedBox(height: 10),
+                        // FaIcon(FontAwesomeIcons.house),
+                        CircleAvatar(
+                          backgroundColor: patowavePrimary,
+                          foregroundColor: patowaveWhite,
+                          child: FaIcon(FontAwesomeIcons.house),
+                        ),
+                        SizedBox(height: 5),
                         Text(
                           "Transaction",
                           style: TextStyle(fontSize: 10),
@@ -620,7 +631,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             ),
             Expanded(
               child: SizedBox(
-                height: 75,
+                height: 80,
                 child: Card(
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
@@ -645,8 +656,13 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.idBadge),
-                        SizedBox(height: 10),
+                        // FaIcon(FontAwesomeIcons.idBadge),
+                        CircleAvatar(
+                          backgroundColor: patowavePrimary,
+                          foregroundColor: patowaveWhite,
+                          child: FaIcon(FontAwesomeIcons.idBadge),
+                        ),
+                        SizedBox(height: 5),
                         Text(
                           "Payments",
                           style: TextStyle(fontSize: 10),
@@ -660,7 +676,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
             Expanded(
               child: SizedBox(
-                height: 75,
+                height: 80,
                 child: Card(
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
@@ -685,8 +701,13 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.boxArchive),
-                        SizedBox(height: 10),
+                        // FaIcon(FontAwesomeIcons.boxArchive),
+                        CircleAvatar(
+                          backgroundColor: patowavePrimary,
+                          foregroundColor: patowaveWhite,
+                          child: FaIcon(FontAwesomeIcons.boxArchive),
+                        ),
+                        SizedBox(height: 5),
                         Text(
                           "Inventory",
                           style: TextStyle(fontSize: 10),
@@ -700,7 +721,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
             Expanded(
               child: SizedBox(
-                height: 75,
+                height: 80,
                 child: Card(
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
@@ -725,8 +746,13 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        FaIcon(FontAwesomeIcons.chartSimple),
-                        SizedBox(height: 10),
+                        // FaIcon(FontAwesomeIcons.chartSimple),
+                        CircleAvatar(
+                          backgroundColor: patowavePrimary,
+                          foregroundColor: patowaveWhite,
+                          child: FaIcon(FontAwesomeIcons.chartSimple),
+                        ),
+                        SizedBox(height: 5),
                         Text(
                           "Overview",
                           style: TextStyle(fontSize: 10),
