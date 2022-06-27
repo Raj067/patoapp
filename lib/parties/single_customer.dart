@@ -1,13 +1,24 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class SingleCustomerPage extends StatelessWidget {
-  const SingleCustomerPage({super.key, required this.customer});
+class SingleCustomerPage extends StatefulWidget {
+  final String? restorationId;
   final SingleCustomer customer;
+  const SingleCustomerPage(
+      {super.key, required this.customer, this.restorationId});
+
+  @override
+  State<SingleCustomerPage> createState() => _SingleCustomerPageState();
+}
+
+class _SingleCustomerPageState extends State<SingleCustomerPage> {
+  DateTime _selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +27,7 @@ class SingleCustomerPage extends StatelessWidget {
           CircleAvatar(
             backgroundColor: patowaveGreen400,
             foregroundColor: patowaveWhite,
-            child: Text(customer.fullName.toUpperCase()[0]),
+            child: Text(widget.customer.fullName.toUpperCase()[0]),
           ),
           Container(width: 10),
           Column(
@@ -24,14 +35,14 @@ class SingleCustomerPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                customer.fullName,
+                widget.customer.fullName,
                 style: const TextStyle(
                   color: patowaveWhite,
                   fontSize: 16,
                 ),
               ),
               Text(
-                customer.phoneNumber,
+                widget.customer.phoneNumber,
                 style: const TextStyle(
                   color: patowaveWhite,
                   fontSize: 14,
@@ -57,7 +68,7 @@ class SingleCustomerPage extends StatelessWidget {
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) =>
-                      EditCustomer(customer: customer),
+                      EditCustomer(customer: widget.customer),
                   fullscreenDialog: true,
                 ),
               );
@@ -74,7 +85,7 @@ class SingleCustomerPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: [
-            _firstRowData(customer),
+            _firstRowData(widget.customer),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -115,8 +126,10 @@ class SingleCustomerPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.notifications,
+                    SvgPicture.asset(
+                      "assets/svg/ringing2.svg",
+                      width: 28,
+                      height: 28,
                     ),
                     Container(
                       width: 10,
@@ -258,7 +271,7 @@ class SingleCustomerPage extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
-                        customer: customer, isPaymentIn: false),
+                        customer: widget.customer, isPaymentIn: false),
                     fullscreenDialog: true,
                   ),
                 );
@@ -288,7 +301,7 @@ class SingleCustomerPage extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
-                        customer: customer, isPaymentIn: true),
+                        customer: widget.customer, isPaymentIn: true),
                     fullscreenDialog: true,
                   ),
                 );
@@ -302,90 +315,163 @@ class SingleCustomerPage extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget _firstRowData(SingleCustomer customer) => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+  _firstRowData(SingleCustomer customer) => Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+        elevation: 0,
         child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color:
-                        customer.isToReceive ? patowaveGreen : patowaveErrorRed,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: customer.isToReceive
+                          ? patowaveGreen
+                          : patowaveErrorRed,
+                    ),
+                    child: Icon(
+                      customer.isToReceive
+                          ? Icons.arrow_downward
+                          : Icons.arrow_upward,
+                      color: patowaveWhite,
+                    ),
                   ),
-                  child: Icon(
-                    customer.isToReceive
-                        ? Icons.arrow_downward
-                        : Icons.arrow_upward,
-                    color: patowaveWhite,
+                  Container(width: 10),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Debt Balance"),
+                            Text(
+                              "To ${customer.isToReceive ? "receive" : "give"}",
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          customer.amount,
+                          style: TextStyle(
+                              color: customer.isToReceive
+                                  ? patowaveGreen
+                                  : patowaveErrorRed),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Debt Balance"),
-                          Text(
-                            "To ${customer.isToReceive ? "receive" : "give"}",
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        customer.amount,
-                        style: TextStyle(
-                            color: customer.isToReceive
-                                ? patowaveGreen
-                                : patowaveErrorRed),
-                      )
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Divider(),
-            Row(
-              children: [
-                const Icon(
-                  Icons.date_range,
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Set payment date"),
-                          Text(
-                            "Due date",
-                            style: TextStyle(fontSize: 12),
+            const Divider(height: 0),
+            InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                _selectDueDate();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/svg/calendar.svg",
+                      width: 28,
+                      height: 28,
+                    ),
+                    Container(width: 10),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text("Set payment date"),
+                              Text(
+                                "Due date",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.black38,
+                            size: 14,
                           ),
                         ],
                       ),
-                      const Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
-      ),
+      );
+
+  void _selectDueDate() async {
+    final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020, 1, 1),
+      lastDate: DateTime(2025, 1, 1),
+      helpText: 'Select due date',
     );
+    if (newDate != null) {
+      setState(() {
+        _selectedDate = newDate;
+      });
+    }
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key, this.restorationId}) : super(key: key);
+
+  final String? restorationId;
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+/// RestorationProperty objects can be used because of RestorationMixin.
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  DateTime _date = DateTime(2020, 11, 17);
+
+  void _selectDate() async {
+    final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2017, 1),
+      lastDate: DateTime(2022, 7),
+      helpText: 'Select a date',
+    );
+    if (newDate != null) {
+      setState(() {
+        _date = newDate;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: SvgPicture.asset(
+        "assets/svg/calendar.svg",
+      ),
+      onTap: () {
+        _selectDate();
+      },
+    );
+  }
+}

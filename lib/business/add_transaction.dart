@@ -169,34 +169,49 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           children: [
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Amount",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Party Name",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               color: patowavePrimary,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -267,7 +282,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     "Descriptions",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -285,14 +304,18 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           children: [
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Amount",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -302,8 +325,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
             ),
             Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
               color: patowavePrimary,
               child: InkWell(
+                borderRadius: BorderRadius.circular(15),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -326,27 +356,35 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Expenses Category",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
             Container(height: 10),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 decoration: const InputDecoration(
                   label: Text(
                     "Add Contact",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -384,7 +422,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
                 Expanded(
                   child: SizedBox(
-                    height: 40,
+                    height: 45,
                     child: TextFormField(
                       decoration: const InputDecoration(
                         label: Text(
@@ -392,7 +430,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -432,7 +474,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     "Descriptions",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -463,8 +509,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(52, 255, 70, 57),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
                   ),
                 ),
                 child: const Center(
@@ -488,8 +534,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                       ),
                     ),
@@ -503,8 +549,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 decoration: const BoxDecoration(
                   color: Colors.black26,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
                   ),
                 ),
                 child: const Center(
@@ -530,8 +576,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                       ),
                     ),
