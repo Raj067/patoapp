@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -590,6 +588,29 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         const Divider(height: 0),
         Container(height: 15),
       ],
+    );
+  }
+
+  _addItemToSales(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Daybook',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: const Center(
+        child: Text("Daybook"),
+      ),
     );
   }
 }
