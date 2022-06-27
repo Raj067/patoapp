@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:patoapp/profile/top_notification_icon.dart';
-import 'package:patoapp/reports/top_profile_icon.dart';
+import 'package:patoapp/profile/top_profile_icon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -24,10 +24,6 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      // icon: const Icon(
-      //   Icons.notifications,
-      //   color: patoWhite,
-      // ),
       icon: SvgPicture.asset("assets/svg/alarmoff.svg", width: 25, height: 25),
       onPressed: () {
         Navigator.push(
@@ -68,151 +64,13 @@ class ProfileIcon extends StatelessWidget {
   }
 }
 
-// PreferredSizeWidget _inventoryButtonTopBar() => const TabBar(
-//       tabs: <Widget>[
-//         Tab(
-//           text: "Items",
-//         ),
-//         Tab(
-//           text: "Analysis",
-//         ),
-//       ],
-//     );
-
 PreferredSizeWidget _moreButtomTopBar() => const PreferredSize(
       preferredSize: Size.fromHeight(48.0),
       child: DarkModeSettingsIcon(),
     );
 
-// PreferredSizeWidget _partiesButtomTopBar() => PreferredSize(
-//       preferredSize: const Size.fromHeight(48.0),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.end,
-//         children: <Widget>[
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 10),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.end,
-//               children: const <Widget>[
-//                 MyDropdownButtonParties(),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-
-// PreferredSizeWidget mainInventoryTopBar(BuildContext context) =>
-//     mainTopBar(_inventoryButtonTopBar(), context);
-
 PreferredSizeWidget mainMoreTopBar(BuildContext context) =>
     mainTopBar(_moreButtomTopBar(), context);
-
-// PreferredSizeWidget mainPartiesTopBar(BuildContext context) =>
-//     mainTopBar(_partiesButtomTopBar(), context);
-
-// PreferredSizeWidget mainBusinessTopBar(BuildContext context) =>
-//     mainTopBar(_businessButtomTopBar(), context);
-
-// DROPDOWNS
-// class MyDropdownButtonParties extends StatefulWidget {
-//   const MyDropdownButtonParties({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyDropdownButtonParties> createState() =>
-//       _MyDropdownButtonPartiesState();
-// }
-
-// class _MyDropdownButtonPartiesState extends State<MyDropdownButtonParties> {
-//   String dropdownValue = 'Last Week';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.fromLTRB(0, 0, 12, 5),
-//       padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-//       height: 28,
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: patowaveGreen400,
-//         ),
-//         color: Theme.of(context).chipTheme.backgroundColor,
-//         borderRadius: BorderRadius.circular(15),
-//       ),
-//       child: DropdownButton<String>(
-//         value: dropdownValue,
-//         alignment: AlignmentDirectional.topStart,
-//         underline: Container(
-//           height: 0,
-//         ),
-//         icon: const Icon(
-//           Icons.arrow_drop_down_rounded,
-//         ),
-//         onChanged: (String? newValue) {
-//           setState(() {
-//             dropdownValue = newValue!;
-//           });
-//         },
-//         items: <String>['Last Week', 'Last Month']
-//             .map<DropdownMenuItem<String>>((String value) {
-//           return DropdownMenuItem<String>(
-//             value: value,
-//             child: Text(value, style: const TextStyle(fontSize: 15)),
-//           );
-//         }).toList(),
-//       ),
-//     );
-//   }
-// }
-
-// class MyDropdownButtonBusiness extends StatefulWidget {
-//   const MyDropdownButtonBusiness({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyDropdownButtonBusiness> createState() =>
-//       _MyDropdownButtonBusinessState();
-// }
-
-// class _MyDropdownButtonBusinessState extends State<MyDropdownButtonBusiness> {
-//   String dropdownValue = 'Last Month';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       // color: patoWhite,
-//       margin: const EdgeInsets.all(12.0),
-//       padding: const EdgeInsets.all(2),
-//       height: 24,
-//       decoration: BoxDecoration(
-//         color: patoLightGreen,
-//         borderRadius: BorderRadius.circular(5),
-//       ),
-//       child: DropdownButton<String>(
-//         value: dropdownValue,
-//         alignment: AlignmentDirectional.topStart,
-//         underline: Container(
-//           height: 0,
-//         ),
-//         icon: const Icon(
-//           Icons.arrow_drop_down_rounded,
-//           size: 15,
-//         ),
-//         onChanged: (String? newValue) {
-//           setState(() {
-//             dropdownValue = newValue!;
-//           });
-//         },
-//         items: <String>['Last Month', 'Last Week']
-//             .map<DropdownMenuItem<String>>((String value) {
-//           return DropdownMenuItem<String>(
-//             value: value,
-//             child: Text(value, style: const TextStyle(fontSize: 15)),
-//           );
-//         }).toList(),
-//       ),
-//     );
-//   }
-// }
 
 class DarkModeSettingsIcon extends StatefulWidget {
   const DarkModeSettingsIcon({Key? key}) : super(key: key);
