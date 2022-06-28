@@ -1,146 +1,228 @@
-// class FinancialData {
-//   String id = "1";
-//   int totalSales = 0;
-//   int totalExpenses = 0;
-//   List<Map> data = [{}];
-//   DateTime date = DateTime.now();
-//   FinancialData({
-//     required String id,
-//     required int totalSales,
-//     required int totalExpenses,
-//     required List<Map> data,
-//     required DateTime date,
-//   });
-// }
+import 'package:patoapp/data/customer_list.dart';
 
-// allFinancialData() {
-//   return [
-//     FinancialData(
-//       id: "1",
-//       totalSales: 10400,
-//       totalExpenses: 2300,
-//       data: [
-//         {
-//           "name": "Cash Sale",
-//           "description": "4 colgate",
-//           "price": "6000",
-//         },
-//       ],
-//       date: DateTime.now(),
-//     )
-//   ];
-// }
-
-class BusinessFinancial {
-  String time;
-  int price;
-  String description;
-  String name;
-  bool isIncome;
+class FinancialData {
   String id;
-  // DateTime date;
+  DateTime date;
+  bool isCashSale = true;
+  bool isExpenses = false;
+  bool isPaymentIn = false;
+  bool isPaymentOut = false;
+  bool isInvoice = false;
+  bool isPurchases = false;
+  String name = "";
+  String description = "";
+  List details = [0, ""];
 
-  BusinessFinancial({
-    required this.time,
-    this.price = 0,
-    this.description = "-",
-    this.name = "-",
-    this.isIncome = true,
-    this.id = '1',
+  FinancialData({
+    required this.date,
+    required this.id,
+    required this.details,
+    required this.isCashSale,
+    this.isExpenses = false,
+    this.isPaymentIn = false,
+    this.isPaymentOut = false,
+    this.isInvoice = false,
+    this.isPurchases = false,
+    this.name = "",
+    this.description = "",
   });
-  deleteTransaction() {
-    // print("hello raj -> deleted");
+
+  String getDescriptionName() {
+    if (name != "") {
+      return name;
+    } else {
+      if (isCashSale) {
+        return "Cash Sales";
+      }
+      if (isPaymentIn) {
+        return "Payment In";
+      }
+      if (isExpenses) {
+        return "Expenses";
+      }
+      if (isPaymentOut) {
+        return "Payment Out";
+      }
+      if (isPurchases) {
+        return "Purchases";
+      }
+      if (isInvoice) {
+        return "Invoice";
+      }
+    }
+    return "-";
+  }
+
+  String getDescriptionDetails() {
+    if (description != "") {
+      return description;
+    } else {
+      if (isCashSale) {
+        return "Cash Sales";
+      }
+      if (isPaymentIn) {
+        return "Payment In";
+      }
+      if (isExpenses) {
+        return "Expenses";
+      }
+      if (isPaymentOut) {
+        return "Payment Out";
+      }
+      if (isPurchases) {
+        return "Purchases";
+      }
+      if (isInvoice) {
+        return "Invoice";
+      }
+    }
+    return "-";
+  }
+
+  getTotalPrice() {
+    return details[0];
+  }
+
+  bool isIncome() {
+    if (isCashSale) {
+      return true;
+    }
+    if (isPaymentIn) {
+      return true;
+    }
+    if (isExpenses) {
+      return false;
+    }
+    if (isPaymentOut) {
+      return false;
+    }
+    if (isInvoice) {
+      return false;
+    }
+    if (isPurchases) {
+      return false;
+    }
+    return true;
+  }
+
+  getTimeString() {
+    return "${date.day}/${date.month}/${date.year}";
+  }
+
+  deleteTransaction() {}
+}
+
+class FinancialHeaderData {
+  DateTime date;
+  double income;
+  double expenses;
+  FinancialHeaderData({
+    required this.date,
+    required this.income,
+    required this.expenses,
+  });
+  getTimeString() {
+    return "${date.day}/${date.month}/${date.year}";
   }
 }
 
-allBusinessFinancialData() {
+List<FinancialHeaderData> allFinancialHeaderData() {
   return [
-    [
-      "01/01/2020",
-      "Tsh. 8900",
-      "Tsh. 7890",
-      [
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Rajabu Mrisho",
-          description: "Sale",
-          isIncome: true,
-          id: '1',
-        ),
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 1",
-          description: "Description",
-          isIncome: false,
-          id: '1',
-        ),
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 2",
-          description: "Description",
-          isIncome: true,
-          id: '1',
-        ),
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 3",
-          description: "Description",
-          isIncome: true,
-          id: '1',
-        ),
-      ]
-    ],
-    [
-      "02/01/2020",
-      "Tsh. 8900",
-      "Tsh. 7890",
-      [
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 4",
-          description: "Description",
-          isIncome: false,
-          id: '1',
-        ),
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 5",
-          description: "Description",
-          isIncome: true,
-          id: '1',
-        ),
-      ]
-    ],
-    [
-      "02/01/2020",
-      "Tsh. 8900",
-      "Tsh. 7890",
-      [
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 6",
-          description: "Description",
-          isIncome: false,
-          id: '1',
-        ),
-        BusinessFinancial(
-          time: "11:89 PM",
-          price: 67000,
-          name: "Name 7",
-          description: "Description",
-          isIncome: false,
-          id: '1',
-        ),
-      ]
-    ],
+    FinancialHeaderData(
+      date: DateTime(2022, 06, 24),
+      income: 20200,
+      expenses: 2300,
+    ),
+    FinancialHeaderData(
+      date: DateTime(2022, 06, 23),
+      income: 10300,
+      expenses: 3200,
+    ),
+    FinancialHeaderData(
+      date: DateTime(2022, 06, 22),
+      income: 33300,
+      expenses: 9800,
+    ),
+    FinancialHeaderData(
+      date: DateTime(2022, 06, 21),
+      income: 18500,
+      expenses: 1800,
+    ),
+    FinancialHeaderData(
+      date: DateTime(2022, 06, 20),
+      income: 10400,
+      expenses: 2300,
+    ),
   ];
+}
+
+List<FinancialData> allFinancialData() {
+  return [
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      id: "1",
+      isCashSale: true,
+      details: [100, 28],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      id: "2",
+      isCashSale: true,
+      details: [1, 2],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      name: "Anitha",
+      id: "3",
+      isCashSale: true,
+      details: [2400, 28],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      name: "Rashidi",
+      id: "4",
+      isCashSale: false,
+      isInvoice: true,
+      details: [6400, SingleCustomer(amount: "6400", fullName: "Rashidi")],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      id: "5",
+      isCashSale: true,
+      details: [100, 28],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      id: "6",
+      isCashSale: true,
+      details: [1, 2],
+    ),
+    FinancialData(
+      date: DateTime(2022, 06, 20),
+      id: "7",
+      isCashSale: true,
+      details: [100, 28],
+    ),
+  ];
+}
+
+List<Map> allBusinessFinancialData() {
+  List<Map> finaldata = [];
+  for (var element in allFinancialHeaderData()) {
+    List data = [];
+    for (var dx in allFinancialData()) {
+      if (element.getTimeString() == dx.getTimeString()) {
+        data.add(dx);
+      }
+    }
+    if (data.isNotEmpty) {
+      finaldata.add({
+        "header": element,
+        "data": data,
+      });
+    }
+  }
+  return finaldata;
 }
 // Activity 20/06/2022
 // Cash Sale = 4 colgate = sh 6000

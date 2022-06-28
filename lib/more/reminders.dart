@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class ReminderDialog extends StatelessWidget {
   const ReminderDialog({Key? key}) : super(key: key);

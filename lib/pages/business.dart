@@ -123,17 +123,6 @@ class _BusinessPageState extends State<BusinessPage> {
                 Expanded(
                   child: SizedBox(
                     height: 60,
-                    // decoration: const BoxDecoration(
-                    //   borderRadius: BorderRadius.only(
-                    //     topLeft: Radius.circular(5),
-                    //   ),
-                    //   border: Border(
-                    //     top: BorderSide(width: 1, color: patowaveGreen),
-                    //     left: BorderSide(width: 1, color: patowaveGreen),
-                    //     right: BorderSide(width: 1, color: patowaveGreen),
-                    //     bottom: BorderSide(width: 1, color: patowaveGreen),
-                    //   ),
-                    // ),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -155,15 +144,11 @@ class _BusinessPageState extends State<BusinessPage> {
                   child: Container(
                     height: 80,
                     decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.only(
-                      //   topRight: Radius.circular(5),
-                      // ),
                       border: Border(
-                        // top: BorderSide(width: 1, color: patowaveErrorRed),
                         left: BorderSide(
-                            width: 1, color: Colors.black.withAlpha(50)),
-                        // right: BorderSide(width: 1, color: patowaveErrorRed),
-                        // bottom: BorderSide(width: 1, color: patowaveErrorRed),
+                          width: 1,
+                          color: Colors.black.withAlpha(50),
+                        ),
                       ),
                     ),
                     child: Column(
@@ -188,14 +173,6 @@ class _BusinessPageState extends State<BusinessPage> {
             ),
             const Divider(height: 0),
             SizedBox(
-              // decoration: const BoxDecoration(
-              //   border: Border(
-              //     top: BorderSide(width: 0.5, color: patowaveGreen),
-              //     left: BorderSide(width: 1, color: patowaveGreen),
-              //     right: BorderSide(width: 1, color: patowaveGreen),
-              //     bottom: BorderSide(width: 1, color: patowaveGreen),
-              //   ),
-              // ),
               height: 40,
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -253,8 +230,7 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  Widget _singleFinancialData(
-      BuildContext context, BusinessFinancial data, String date) {
+  Widget _singleFinancialData(BuildContext context, FinancialData data) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -288,22 +264,23 @@ class _BusinessPageState extends State<BusinessPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            data.name,
+                            data.getDescriptionName(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Container(height: 4),
                           Text(
-                            data.description,
+                            data.getDescriptionDetails(),
                             style: const TextStyle(fontSize: 12),
                           )
                         ],
                       ),
                       Text(
-                        "Tsh. ${data.price}",
+                        "Tsh. ${data.getTotalPrice()}",
                         style: TextStyle(
                           fontSize: 16,
-                          color:
-                              data.isIncome ? patowaveGreen : patowaveErrorRed,
+                          color: data.isIncome()
+                              ? patowaveGreen
+                              : patowaveErrorRed,
                         ),
                       ),
                     ],
@@ -322,14 +299,13 @@ class _BusinessPageState extends State<BusinessPage> {
                           ),
                           Container(height: 4),
                           Text(
-                            date,
+                            data.getTimeString(),
                             style: const TextStyle(fontSize: 12),
                           )
                         ],
                       ),
                       Text(
-                        data.time,
-                        style: const TextStyle(fontSize: 16),
+                        "Time: ${data.date.hour}:${data.date.minute}",
                       ),
                     ],
                   ),
@@ -404,21 +380,21 @@ class _BusinessPageState extends State<BusinessPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data.name,
+                    data.getDescriptionName(),
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    data.description,
+                    data.getDescriptionDetails(),
                     style: const TextStyle(fontSize: 14),
                   ),
                 ],
               ),
             ),
-            data.isIncome
+            data.isIncome()
                 ? Expanded(
                     child: Text(
-                      "${data.price}",
+                      "${data.getTotalPrice()}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   )
@@ -427,10 +403,10 @@ class _BusinessPageState extends State<BusinessPage> {
                       child: Text("-"),
                     ),
                   ),
-            data.isIncome
+            data.isIncome()
                 ? const Text("-")
                 : Text(
-                    "${data.price}",
+                    "${data.getTotalPrice()}",
                     style: const TextStyle(color: patowaveErrorRed),
                   ),
           ],
@@ -439,8 +415,13 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  Widget _singleColumnFinancialData(BuildContext context,
-      List<BusinessFinancial> data, var income, var expenses, String date) {
+  Widget _singleColumnFinancialData(
+    BuildContext context, {
+    required List data,
+    required double income,
+    required double expenses,
+    required String date,
+  }) {
     List<Widget> myData = [
       Container(
         color: patowavePrimary.withAlpha(50),
@@ -451,12 +432,12 @@ class _BusinessPageState extends State<BusinessPage> {
             children: [
               Text(date),
               Text(
-                income,
+                "$income",
                 style: const TextStyle(
                     color: patowaveGreen, fontWeight: FontWeight.bold),
               ),
               Text(
-                expenses,
+                "$expenses",
                 style: const TextStyle(
                     color: patowaveErrorRed, fontWeight: FontWeight.bold),
               ),
@@ -465,8 +446,8 @@ class _BusinessPageState extends State<BusinessPage> {
         ),
       ),
     ];
-    for (BusinessFinancial element in data) {
-      myData.add(_singleFinancialData(context, element, date));
+    for (FinancialData element in data) {
+      myData.add(_singleFinancialData(context, element));
       myData.add(const Divider(height: 0));
     }
     return Column(children: myData);
@@ -498,7 +479,12 @@ class _BusinessPageState extends State<BusinessPage> {
     for (var element in allBusinessFinancialData()) {
       data.add(
         _singleColumnFinancialData(
-            context, element[3], element[1], element[2], element[0]),
+          context,
+          data: element['data'],
+          date: element['header'].getTimeString(),
+          income: element['header'].income,
+          expenses: element['header'].expenses,
+        ),
       );
     }
 
