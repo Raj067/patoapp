@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 2
-                ? const FaIcon(FontAwesomeIcons.user)
+                ? const FaIcon(FontAwesomeIcons.solidUser)
                 : const FaIcon(FontAwesomeIcons.user),
             label: 'Contacts',
           ),

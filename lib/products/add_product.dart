@@ -11,32 +11,43 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
-  final List<String> genderItems = [
-    'Male',
-    'Female',
-  ];
   final List<String> primaryUnits = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
+    'BAGS (Bags)',
+    'BOTTLES (Btl)',
+    'BOX (Box)',
+    'BUNDLES (Bdl)',
+    'CANS (Can)',
+    'CARTONS (Ctn)',
+    'DOZENS (Dzn)',
+    'GRAMMES (gm)',
+    'KILOGRAMS (Kg)',
+    'LITRE (Ltr)',
+    'METERS (Mtr)',
+    'MILILITRE (Ml)',
+    'NUMBERS (Nos)',
+    'PACKS (Pac)',
+    'PAIRS (Prs)',
+    'PIECES (Pcs)',
   ];
   final List<String> secondaryUnits = [
-    'Item a',
-    'Item b',
-    'Item c',
-    'Item d',
-    'Item e',
-    'Item f',
-    'Item g',
-    'Item h',
+    'BOTTLES (Btl)',
+    'BOX (Box)',
+    'BUNDLES (Bdl)',
+    'CANS (Can)',
+    'CARTONS (Ctn)',
+    'DOZENS (Dzn)',
+    'GRAMMES (gm)',
+    'KILOGRAMS (Kg)',
+    'LITRE (Ltr)',
+    'METERS (Mtr)',
+    'MILILITRE (Ml)',
+    'NUMBERS (Nos)',
+    'PACKS (Pac)',
+    'PAIRS (Prs)',
+    'PIECES (Pcs)',
   ];
-  String? selectedPrimaryUnit;
-  String? selectedSecondaryUnit;
+  String selectedPrimaryUnit = 'CANS (Can)';
+  String selectedSecondaryUnit = 'BOX (Box)';
 
   String? selectedValue;
   bool _isSupplierActivated = false;
@@ -419,6 +430,12 @@ class _AddProductPageState extends State<AddProductPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+          elevation: 0,
           scrollable: true,
           // backgroundColor: patoBackgroundColor,
           title: const Text('Add Item Unit'),
@@ -430,20 +447,21 @@ class _AddProductPageState extends State<AddProductPage> {
               SizedBox(
                 height: 45,
                 child: DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary,
+                  value: selectedPrimaryUnit,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
                   decoration: InputDecoration(
+                    label: const Text(
+                      'Primary Unit',
+                      style: TextStyle(fontSize: 14),
+                    ),
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   isExpanded: true,
-                  hint: const Text(
-                    'Primary Unit',
-                    style: TextStyle(fontSize: 14),
-                  ),
                   icon: const Icon(
                     Icons.arrow_drop_down,
                   ),
@@ -473,20 +491,21 @@ class _AddProductPageState extends State<AddProductPage> {
               SizedBox(
                 height: 45,
                 child: DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary,
+                  value: selectedSecondaryUnit,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
                   decoration: InputDecoration(
+                    label: const Text(
+                      'Secondary Unit',
+                      style: TextStyle(fontSize: 14),
+                    ),
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   isExpanded: true,
-                  hint: const Text(
-                    'Secondary Unit',
-                    style: TextStyle(fontSize: 14),
-                  ),
                   icon: const Icon(
                     Icons.arrow_drop_down,
                   ),
@@ -515,25 +534,57 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 10),
               const Text("Conversion Rate"),
               Container(height: 10),
-              const Center(
+              Center(
                 child: Text(
-                  "1 BOX = 12 CANS",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "1 $selectedPrimaryUnit= 12 $selectedSecondaryUnit",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "Save",
+            Row(children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: const Text("Cancel"),
+                ),
               ),
-            ),
+              Container(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(
+                      const Size(45, 45),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: const Text("Save"),
+                ),
+              ),
+            ])
           ],
         );
       },

@@ -126,6 +126,10 @@ class TransactionReceipt extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.share),
+      ),
     );
   }
 }
