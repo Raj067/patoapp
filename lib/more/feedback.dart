@@ -32,14 +32,18 @@ class FeedbackDialog extends StatelessWidget {
               child: TextFormField(
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 6,
+                minLines: 6,
+                maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(
                     "Descriptions",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                 ),
               ),
             ),

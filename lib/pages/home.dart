@@ -139,7 +139,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         elevation: 0,
-        // color: Colors.white,
+        color: patowavePrimary.withAlpha(50),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(15),

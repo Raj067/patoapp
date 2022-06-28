@@ -22,8 +22,20 @@ class TopNotificationIcon extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Notifications Page"),
+      body: Center(
+        child: Card(
+          color: patowavePrimary.withAlpha(50),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          elevation: 0,
+          child: const Padding(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Text("Recently there is no notifications"),
+          ),
+        ),
       ),
     );
   }
