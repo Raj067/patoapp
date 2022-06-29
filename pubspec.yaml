@@ -89,6 +89,7 @@ flutter:
     - assets/svg/more2.svg
     - assets/svg/home1.svg
     - assets/svg/home2.svg
+    - assets/svg/line1.svg
     - assets/svg/ringing2.svg
     - assets/svg/rules.svg
     - assets/svg/privacy.svg

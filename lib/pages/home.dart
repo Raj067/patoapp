@@ -7,6 +7,7 @@ import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/more/overview.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -181,33 +182,48 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
+                  children: [
                     Text(
                       "time 1",
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withAlpha(100),
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      "assets/svg/line1.svg",
+                      width: 25,
+                      height: 25,
+                      color: Colors.black.withAlpha(100),
                     ),
                     Text(
                       "time 2",
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withAlpha(100),
+                      ),
                     ),
                   ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Founders Meeting",
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const Text(
                       "subtitle 1",
                       style: TextStyle(fontSize: 12),
                     ),
                     Text(
-                      "subtitle 2",
-                      style: TextStyle(fontSize: 12),
+                      "Created at 29-06-2022",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withAlpha(100),
+                      ),
                     ),
                   ],
                 ),
