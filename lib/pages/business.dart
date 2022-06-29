@@ -285,12 +285,12 @@ class _BusinessPageState extends State<BusinessPage> {
                       ),
                     ],
                   ),
-                  data.isCashSale
-                      ? Column(children: [
-                          const Divider(height: 0),
-                          _cashSalesButtomSheetData(data.details[1])
-                        ])
-                      : Container(),
+                  // data.isCashSale
+                  //     ? Column(children: [
+                  //         const Divider(height: 0),
+                  //         _cashSalesButtomSheetData(data.details[1])
+                  //       ])
+                  //     : Container(),
                   Container(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -507,17 +507,18 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  _cashSalesButtomSheetData(List<List> data) {
-    List<Widget> req = [];
-    for (var dx in data) {
-      req.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("${dx[0]} ${dx[1]}"),
-          Text("${dx[1]}"),
-        ],
-      ));
-    }
-    return Column(children: req);
-  }
+  // _cashSalesButtomSheetData(List<List> data) {
+  //   List<Widget> req = [];
+  //   for (var dx in data) {
+  //     req.add(Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         Text("${dx[0]} ${dx[1]}"),
+  //         Text("${dx[1]}"),
+  //       ],
+  //     ));
+  //   }
+  //   return Column(children: req);
+  // }
+
 }

@@ -15,6 +15,7 @@ class ProductsCart extends StatefulWidget {
 class _ProductsCartState extends State<ProductsCart> {
   int totalAmount = 0;
   int balanceDue = 0;
+  double discount = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,36 +80,26 @@ class _ProductsCartState extends State<ProductsCart> {
               child: ListView(
                 children: [
                   Container(height: 10),
-                  // SizedBox(
-                  //   height: 40,
-                  //   child: TextFormField(
-                  //     decoration: const InputDecoration(
-                  //       label: Text(
-                  //         "Amount",
-                  //         style: TextStyle(
-                  //             fontStyle: FontStyle.italic, fontSize: 14),
-                  //       ),
-                  //       border: OutlineInputBorder(),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(height: 10),
-                  // SizedBox(
-                  //   height: 40,
-                  //   child: TextFormField(
-                  //     decoration: const InputDecoration(
-                  //       label: Text(
-                  //         "Party Name",
-                  //         style: TextStyle(
-                  //             fontStyle: FontStyle.italic, fontSize: 14),
-                  //       ),
-                  //       border: OutlineInputBorder(),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(height: 10),
                   _allSelectedProducts(context),
                   _discount(),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Discount",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Tsh: $discount",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                   Container(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,48 +117,6 @@ class _ProductsCartState extends State<ProductsCart> {
                             fontWeight: FontWeight.bold),
                       ),
                     ],
-                  ),
-                  Container(height: 10),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     const Text(
-                  //       "Balance due",
-                  //       style: TextStyle(
-                  //           fontStyle: FontStyle.italic,
-                  //           fontWeight: FontWeight.bold,
-                  //           color: patowavePrimary),
-                  //     ),
-                  //     Text(
-                  //       "Tsh: $balanceDue",
-                  //       style: const TextStyle(
-                  //           fontStyle: FontStyle.italic,
-                  //           fontWeight: FontWeight.bold,
-                  //           color: patowavePrimary),
-                  //     ),
-                  //   ],
-                  // ),
-                  // Container(height: 10),
-                  SizedBox(
-                    // height: 180,
-                    child: TextFormField(
-                      keyboardType: TextInputType.multiline,
-                      textInputAction: TextInputAction.newline,
-                      minLines: 1,
-                      maxLines: 3,
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Descriptions",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                   Container(height: 10),
                 ],
@@ -208,6 +157,8 @@ class _ProductsCartState extends State<ProductsCart> {
   }
 
   _discount() {
+    TextEditingController disc1 = TextEditingController(text: "0");
+    TextEditingController disc2 = TextEditingController(text: "0");
     return Column(
       children: [
         Container(height: 15),
@@ -244,6 +195,12 @@ class _ProductsCartState extends State<ProductsCart> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
+                    controller: disc1,
+                    onChanged: (val) {
+                      // setState(() {
+                      //   discount = 90;
+                      // });
+                    },
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -286,6 +243,7 @@ class _ProductsCartState extends State<ProductsCart> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
+                    controller: disc2,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,

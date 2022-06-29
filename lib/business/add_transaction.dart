@@ -1,7 +1,8 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/business/add_item_to_purchases.dart';
+import 'package:patoapp/business/add_item_to_sales.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddTransactionDialog extends StatefulWidget {
@@ -13,25 +14,6 @@ class AddTransactionDialog extends StatefulWidget {
 
 class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
-  final List<String> items = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
-  ];
-
-  String? selectedValue;
-  final TextEditingController textEditingController = TextEditingController();
-
-  @override
-  void dispose() {
-    textEditingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +213,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
-                  _addItemToSales(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const AddItemsToSale(),
+                      fullscreenDialog: true,
+                    ),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -354,7 +342,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               color: patowavePrimary,
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const AddItemsToPurchases(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
@@ -610,204 +607,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         const Divider(height: 0),
         Container(height: 15),
       ],
-    );
-  }
-
-  Future<void> _addItemToSales(BuildContext context) async {
-    TextEditingController controller = TextEditingController(text: "1");
-
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
-            ),
-          ),
-          elevation: 0,
-          scrollable: true,
-          contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-          // backgroundColor: patoBackgroundColor,
-          title: const Text('Add item to sale'),
-          content: Column(
-            children: [
-              DropdownButton2(
-                value: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value as String;
-                  });
-                },
-                buttonHeight: 40,
-                buttonWidth: 200,
-                itemHeight: 40,
-                dropdownMaxHeight: 200,
-                searchController: textEditingController,
-                searchInnerWidget: TextFormField(
-                  controller: textEditingController,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 8,
-                    ),
-                    hintText: 'Search for an item...',
-                    hintStyle: const TextStyle(fontSize: 12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                items: items
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ),
-              DropdownButton2(
-                isExpanded: true,
-                hint: Text(
-                  'Select Item',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-                items: items
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                value: selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value as String;
-                  });
-                },
-                buttonHeight: 40,
-                buttonWidth: 200,
-                itemHeight: 40,
-                dropdownMaxHeight: 200,
-                searchController: textEditingController,
-                searchInnerWidget: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 4,
-                    right: 8,
-                    left: 8,
-                  ),
-                  child: TextFormField(
-                    controller: textEditingController,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
-                      ),
-                      hintText: 'Search for an item...',
-                      hintStyle: const TextStyle(fontSize: 12),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                ),
-                searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
-                },
-                //This to clear the search value when you close the menu
-                onMenuStateChange: (isOpen) {
-                  if (!isOpen) {
-                    textEditingController.clear();
-                  }
-                },
-              ),
-              TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsetsDirectional.all(10),
-                  border: OutlineInputBorder(),
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
-                    child: Text("Qty:"),
-                  ),
-                  suffixIcon: Icon(
-                    Icons.add_business,
-                    size: 18,
-                  ),
-                  // helperText: "Quantity",
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Row(children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(45, 45),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Text("Cancel"),
-                ),
-              ),
-              Container(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(45, 45),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    // setState(() {
-                    //   product.adjustProductQuantity(int.parse(controller.text));
-                    // });
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "Add",
-                    style: TextStyle(color: patowaveWhite),
-                  ),
-                ),
-              ),
-            ])
-          ],
-        );
-      },
     );
   }
 }
