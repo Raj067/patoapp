@@ -6,6 +6,7 @@ import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,10 +35,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('BottomNavigationBar Sample'),
-      //   actions: [Icon(Icons.notifications)],
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -45,26 +42,56 @@ class _HomePageState extends State<HomePage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: _selectedIndex == 0
-                ? const FaIcon(FontAwesomeIcons.house)
-                : const FaIcon(FontAwesomeIcons.house),
+                ? SvgPicture.asset(
+                    "assets/svg/home2.svg",
+                    width: 25,
+                    height: 25,
+                  )
+                : SvgPicture.asset(
+                    color: Theme.of(context).iconTheme.color,
+                    "assets/svg/home1.svg",
+                    width: 25,
+                    height: 25,
+                  ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 1
-                ? const FaIcon(FontAwesomeIcons.book)
-                : const FaIcon(FontAwesomeIcons.book),
+                ? SvgPicture.asset(
+                    "assets/svg/b2.svg",
+                    width: 25,
+                    height: 25,
+                  )
+                : SvgPicture.asset(
+                    color: Theme.of(context).iconTheme.color,
+                    "assets/svg/b1.svg",
+                    width: 25,
+                    height: 25,
+                  ),
             label: 'Business',
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 2
                 ? const FaIcon(FontAwesomeIcons.solidUser)
-                : const FaIcon(FontAwesomeIcons.user),
+                : FaIcon(
+                    FontAwesomeIcons.user,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
             label: 'Contacts',
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 3
-                ? const FaIcon(FontAwesomeIcons.grip)
-                : const FaIcon(FontAwesomeIcons.gripLines),
+                ? SvgPicture.asset(
+                    "assets/svg/more2.svg",
+                    width: 25,
+                    height: 25,
+                  )
+                : SvgPicture.asset(
+                    color: Theme.of(context).iconTheme.color,
+                    "assets/svg/more1.svg",
+                    width: 25,
+                    height: 25,
+                  ),
             label: 'More',
           ),
         ],

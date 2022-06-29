@@ -633,6 +633,45 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           content: Column(
             children: [
               DropdownButton2(
+                value: selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value as String;
+                  });
+                },
+                buttonHeight: 40,
+                buttonWidth: 200,
+                itemHeight: 40,
+                dropdownMaxHeight: 200,
+                searchController: textEditingController,
+                searchInnerWidget: TextFormField(
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    hintText: 'Search for an item...',
+                    hintStyle: const TextStyle(fontSize: 12),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                items: items
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+              DropdownButton2(
                 isExpanded: true,
                 hint: Text(
                   'Select Item',

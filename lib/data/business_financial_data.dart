@@ -11,7 +11,7 @@ class FinancialData {
   bool isPurchases = false;
   String name = "";
   String description = "";
-  List details = [0, ""];
+  List details = [0, 0];
 
   FinancialData({
     required this.date,
@@ -162,7 +162,13 @@ List<FinancialData> allFinancialData() {
       date: DateTime(2022, 06, 20),
       id: "1",
       isCashSale: true,
-      details: [6000, 28],
+      // [[qty, description, price],]
+      details: [
+        6000,
+        [
+          [12, "sample", 124],
+        ]
+      ],
     ),
     FinancialData(
       date: DateTime(2022, 06, 20),
@@ -206,7 +212,12 @@ List<FinancialData> allFinancialData() {
       date: DateTime(2022, 06, 21),
       id: "7",
       isCashSale: true,
-      details: [2100, 28],
+      details: [
+        2100,
+        [
+          [12, "sample", 124],
+        ]
+      ],
     ),
     FinancialData(
       date: DateTime(2022, 06, 21),

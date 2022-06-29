@@ -105,7 +105,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _tzs() {
     return _singleCurrency(
       currency: "TZS",
-      fcurrency: "TZS ${_getRate(currency: tzs)}",
+      fcurrency: "Tsh ${_getRate(currency: tzs)}",
       img: "assets/flags/tzs.png",
     );
   }
@@ -113,7 +113,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _usd() {
     return _singleCurrency(
       currency: "USD",
-      fcurrency: "Dollar ${_getRate(currency: usd)}",
+      fcurrency: "\$ ${_getRate(currency: usd)}",
       img: "assets/flags/dollar.png",
     );
   }
@@ -121,7 +121,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _gbp() {
     return _singleCurrency(
       currency: "GBP",
-      fcurrency: "GBP ${_getRate(currency: gbp)}",
+      fcurrency: "£ ${_getRate(currency: gbp)}",
       img: "assets/flags/gbp.png",
     );
   }
@@ -129,7 +129,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _euro() {
     return _singleCurrency(
       currency: "EURO",
-      fcurrency: "EURO ${_getRate(currency: euro)}",
+      fcurrency: "€ ${_getRate(currency: euro)}",
       img: "assets/flags/euro.png",
     );
   }
@@ -518,7 +518,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Row(children: [
                 const Text(
-                  "Today 27C",
+                  "Today 27°C",
                   style: TextStyle(color: patowaveWhite),
                 ),
                 Container(width: 10),
@@ -527,7 +527,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               ]),
               Row(children: [
                 const Text(
-                  "Tomorrow 25C",
+                  "Tomorrow 25°C",
                   style: TextStyle(color: patowaveWhite),
                 ),
                 Container(width: 10),
