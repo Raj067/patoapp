@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -28,10 +29,68 @@ class TopProfileIcon extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Image.asset("assets/images/card.png"),
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
+              child: Column(
+                children: [
+                  Image.asset("assets/images/card.png"),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            const Icon(Icons.download, size: 18),
+                            Container(width: 10),
+                            const Text("Download"),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            const Icon(Icons.share, size: 18),
+                            Container(width: 10),
+                            const Text("Share"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(height: 10),
+                ],
+              ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            //   child: Image.asset("assets/images/card.png"),
+            // ),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -209,7 +268,15 @@ class TopProfileIcon extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const LoginPage(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                }, 
                 child: const Text(
                   "Logout",
                   style: TextStyle(fontSize: 16),
