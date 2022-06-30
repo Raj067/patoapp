@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/img.jpg
     - assets/images/card.png
+    - assets/onboarding/welcome.svg
     - assets/svg/alarmoff.svg
     - assets/svg/viewDetails.svg
     - assets/svg/template.svg
