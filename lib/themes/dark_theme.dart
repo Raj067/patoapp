@@ -8,7 +8,6 @@ ThemeData patowaveDarkTheme() {
     floatingActionButtonTheme: _floatingActionButtonTheme,
     tabBarTheme: _tabBarTheme,
     dialogTheme: _dialogTheme,
-    // outlinedButtonThemeData: _outlinedButtonThemeData,
     outlinedButtonTheme: _outlinedButtonTheme,
     textButtonTheme: _textButtonThemeData,
     elevatedButtonTheme: _elevatedButtonThemeData,
@@ -48,13 +47,8 @@ TextButtonThemeData _textButtonThemeData = TextButtonThemeData(
 
 OutlinedButtonThemeData _outlinedButtonTheme = OutlinedButtonThemeData(
   style: ButtonStyle(
+    foregroundColor: MaterialStateProperty.all<Color>(patowavePrimary),
     shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-    side: MaterialStateProperty.resolveWith<BorderSide>(
-        (Set<MaterialState> states) {
-      final Color color =
-          states.contains(MaterialState.pressed) ? patowavePrimary : Colors.red;
-      return BorderSide(color: color, width: 2);
-    }),
   ),
 );
 

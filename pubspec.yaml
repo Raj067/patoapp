@@ -41,6 +41,7 @@ dependencies:
   font_awesome_flutter: 10.1.0
   toggle_switch: ^2.0.1
   http: 0.13.4
+  percent_indicator: 4.2.2
   # url_launcher: 6.1.3
   # accordion: 2.4.0
   # filter_list: 1.0.1
