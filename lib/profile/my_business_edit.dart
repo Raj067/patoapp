@@ -47,55 +47,50 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
         ),
       ),
       body: value == 1 ? _firstScreen() : _secondScreen(),
-      bottomNavigationBar: Container(
-        color: const Color.fromRGBO(255, 235, 59, 1),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              value == 2
-                  ? TextButton(
-                      child: const Text("Back"),
-                      onPressed: () {
-                        setState(() {
-                          value = 1;
-                        });
-                      },
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            value == 2
+                ? TextButton(
+                    child: const Text("Back"),
+                    onPressed: () {
+                      setState(() {
+                        value = 1;
+                      });
+                    },
+                  )
+                : const SizedBox(width: 65, height: 1),
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              value == 1
+                  ? const Icon(
+                      Icons.circle,
+                      size: 12,
                     )
-                  : const Text(""),
-              // Row(mainAxisSize: MainAxisSize.min, children: [
-              //   Radio(
-              //     activeColor: patowavePrimary,
-              //     value: 1,
-              //     groupValue: value,
-              //     onChanged: (val) {
-              //       setState(() {
-              //         value = 1;
-              //       });
-              //     },
-              //   ),
-              //   Radio(
-              //     activeColor: patowavePrimary,
-              //     value: 2,
-              //     groupValue: value,
-              //     onChanged: (val) {
-              //       setState(() {
-              //         value = 2;
-              //       });
-              //     },
-              //   ),
-              // ]),
-              TextButton(
-                child: Text(value == 1 ? "Next" : "Finish"),
-                onPressed: () {
-                  setState(() {
-                    value == 1 ? value = 2 : Navigator.pop(context);
-                  });
-                },
-              ),
-            ],
-          ),
+                  : const Icon(
+                      Icons.circle_outlined,
+                      size: 12,
+                    ),
+              value == 1
+                  ? const Icon(
+                      Icons.circle_outlined,
+                      size: 12,
+                    )
+                  : const Icon(
+                      Icons.circle,
+                      size: 12,
+                    ),
+            ]),
+            TextButton(
+              child: Text(value == 1 ? "Next" : "Finish"),
+              onPressed: () {
+                setState(() {
+                  value == 1 ? value = 2 : Navigator.pop(context);
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -103,9 +98,19 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
 
   _firstScreen() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: ListView(
         children: [
+          Container(height: 10),
+          Container(height: 10),
+          Container(height: 10),
+          const Center(
+            child: Text(
+              "Tap to add your business logo",
+              style: TextStyle(color: patowavePrimary),
+            ),
+          ),
+          Container(height: 20),
           SizedBox(
             height: 45,
             child: TextFormField(
@@ -240,7 +245,8 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 child: const Text("Remove"),
               ),
             ],
-          )
+          ),
+          Container(height: 10),
         ],
       ),
     );
