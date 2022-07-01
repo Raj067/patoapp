@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:patoapp/accounts/signup.dart';
+import 'package:patoapp/accounts/login.dart';
+import 'package:patoapp/accounts/set_account.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignupPage extends StatelessWidget {
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,9 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: SizedBox(
           // color: Color.fromARGB(255, 221, 144, 144),
-          height: MediaQuery.of(context).size.height > 600
+          height: MediaQuery.of(context).size.height > 500
               ? MediaQuery.of(context).size.height
-              : 600,
+              : 500,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -40,17 +41,8 @@ class LoginPage extends StatelessWidget {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Login To Patowave",
+                        "Sign Up",
                         style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Welcome back!",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
                       ),
                     ),
                     Container(height: 10),
@@ -89,28 +81,46 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Container(height: 10),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // print(MediaQuery.of(context).size.height);
-                        },
-                        child: const Text("Forgot Password?"),
+                    Container(height: 10),
+                    SizedBox(
+                      height: 45,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          label: Text(
+                            "Re enter Password",
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic, fontSize: 14),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
+                        ),
                       ),
-                    )
+                    ),
+                    // Container(height: 10),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (val) {},
+                        ),
+                        const Text(
+                          "By signing up, you agree to",
+                        ),
+                        // TextButton(
+                        //   onPressed: () {},
+                        //   child: const Text(
+                        //     "",
+                        //     textAlign: TextAlign.start,
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ],
                 ),
               ),
-              Positioned(
-                  left: 10,
-                  right: 10,
-                  bottom: 120,
-                  child: SvgPicture.asset(
-                    "assets/onboarding/welcome.svg",
-                    // width: 25,
-                    // height: 25,
-                  )),
               Positioned(
                 left: 10,
                 right: 10,
@@ -136,13 +146,13 @@ class LoginPage extends StatelessWidget {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const LoginPage(),
+                                  const SetAccountPage(),
                               fullscreenDialog: true,
                             ),
                           );
                         },
                         child: const Text(
-                          "Login",
+                          "Sign Up",
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -161,12 +171,12 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => const SignupPage(),
+                          builder: (BuildContext context) => const LoginPage(),
                           fullscreenDialog: true,
                         ),
                       );
                     },
-                    child: const Text("Don't have account?"),
+                    child: const Text("Already have an  account? Login"),
                   ),
                 ),
               ),
