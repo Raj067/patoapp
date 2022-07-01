@@ -176,8 +176,8 @@ class Purchase(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField()
     balance_due = models.IntegerField()
-    expenses_category = models.CharField(max_length=500)
-    description = models.CharField(max_length=500)
+
+    description = models.CharField(max_length=500, null=True, blank=True)
 
     purchased_items = models.ManyToManyField(
         Shop, blank=True, related_name='purchases_data_name', through=PurchasedItem)
@@ -218,8 +218,9 @@ class Payment(models.Model):
 
 class Expense(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
+    amount = models.IntegerField()
+    expenses_category = models.CharField(max_length=500)
+    description = models.CharField(max_length=500)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
