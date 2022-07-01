@@ -42,28 +42,20 @@ class ShopUser(models.Model):
         return f'{self.user} -> {self.shop}'
 
 
-class ProductUnit(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    primary_unit = models.CharField(max_length=100)
-    secondary_unit = models.CharField(max_length=100)
-    rate_unit = models.IntegerField()
-
-    # Registration
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class Product(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length=100, null=True, blank=True)
-    purchases_price = models.CharField(max_length=100)
-    selling_price = models.CharField(max_length=100)
-    quantity = models.CharField(max_length=100)
-    stock = models.CharField(max_length=100)
+    purchases_price = models.IntegerField()
+    selling_price_primary = models.IntegerField()
+    selling_price_secondary = models.IntegerField()
+    quantity = models.IntegerField()
+    stock_level = models.IntegerField()
+    primary_unit = models.CharField(max_length=100)
+    secondary_unit = models.CharField(max_length=100)
+    rate_unit = models.IntegerField()
 
     # other details
-    product_unit = models.ForeignKey(ProductUnit, on_delete=models.CASCADE)
     product_image = models.ImageField(
         upload_to='products/', blank=True, null=True)
 
@@ -76,6 +68,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return self.product_name
+
     def get_product_image(self):
         if not self.product_image:
             # return the default image
@@ -83,20 +78,33 @@ class Product(models.Model):
         return self.product_image.url
 
 
-class Customer(models.Model):
+class Service(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer_name = models.CharField(max_length=100, null=True, blank=True)
-    customer_number = models.CharField(max_length=100, null=True, blank=True)
-    customer_email = models.EmailField(null=True, blank=True)
-    opening_balance = models.CharField(max_length=100, null=True, blank=True)
-
-    # Either to receive or to be paid
-    to_receive = models.BooleanField(default=True)
+    service_name = models.CharField(max_length=100)
+    service_charge = models.IntegerField()
+    service_unit = models.CharField(max_length=100)
+    service_description = models.CharField(max_length=100)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.service_name
+
+
+class Customer(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=100)
+    customer_number = models.CharField(max_length=100, null=True, blank=True)
+    customer_email = models.EmailField(null=True, blank=True)
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.customer_name
 
 
 class Sale(models.Model):
@@ -135,9 +143,16 @@ class Payment(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
+    is_payment_in = models.BooleanField(default=True)
+    amount = models.IntegerField()
+    description = models.TextField(null=True, blank=True)
+
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.customer}"
 
 
 class Transaction(models.Model):
