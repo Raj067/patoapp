@@ -3,8 +3,17 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Shop)
-admin.site.register(ShopUser)
+
+class ShopAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'slogan', ]
+
+
+class ShopUserAdmin(admin.ModelAdmin):
+    list_display = ['user', 'shop', 'is_admin', ]
+
+
+admin.site.register(Shop, ShopAdmin)
+admin.site.register(ShopUser, ShopUserAdmin)
 admin.site.register(Product)
 admin.site.register(ProductUnit)
 admin.site.register(Customer)

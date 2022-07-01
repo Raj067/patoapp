@@ -8,15 +8,21 @@ User = settings.AUTH_USER_MODEL
 
 class Shop(models.Model):
     name = models.CharField(max_length=100)
-    slogan = models.TextField(null=True, blank=True)
+    slogan = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=15, null=True, blank=True)
-    email = models.EmailField(null=True)
+    email = models.EmailField(null=True, blank=True)
     logo = models.ImageField(upload_to='logo/', blank=True, null=True)
+    signature = models.ImageField(
+        upload_to='signature/', blank=True, null=True)
     address = models.CharField(max_length=100, null=True, blank=True)
+    media_link = models.CharField(max_length=100, null=True, blank=True)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
 
     def get_logo_url(self):
         if not self.logo:
@@ -30,7 +36,10 @@ class ShopUser(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     # One user can possess several shops or roles
     # hence all the roles possessed by user should be defined here
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return f'{self.user} -> {self.shop}'
 
 
 class ProductUnit(models.Model):
