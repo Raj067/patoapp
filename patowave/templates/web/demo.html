@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css" rel="stylesheet" />
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="mb-3"></div>
+
+    <section class="container">
+        <h4>Adding shop</h4>
+        <div class="mb-3">
+            <div class="form-outline">
+                <input type="text" id="shop-name-input" class="form-control" />
+                <label class="form-label" for="shop-name-input">Shop Name</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-outline">
+                <input type="text" id="slogan-name-input" class="form-control" />
+                <label class="form-label" for="slogan-name-input">Slogan Name</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-outline">
+                <input type="text" id="phone-number-input" class="form-control" />
+                <label class="form-label" for="phone-number-input">Phone Number</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="addShop()">Add Shop</button>
+        </div>
+        <script>
+            function addShop() {
+                var shopName = document.getElementById('shop-name-input').value
+                var sloganName = document.getElementById('slogan-name-input').value
+                var phoneName = document.getElementById('phone-number-input').value
+                if (!shopName) {
+                    return 0
+                }
+
+                axios.defaults.xsrfCookieName = 'csrftoken'
+                axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+
+                let data = new FormData()
+
+                data.append("shopName", shopName)
+                data.append("sloganName", sloganName)
+                data.append("phoneName", phoneName)
+                
+                axios.post(`/api/add-new-shop/`, data)
+                    .then(function (response) {
+                        // Toast for feedback
+                    })
+                    .catch(function (error) {
+                        // Toast for feedback - error
+                    });
+            }
+        </script>
+
+    </section>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+</body>
+
+</html>
