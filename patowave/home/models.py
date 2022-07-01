@@ -107,12 +107,51 @@ class Customer(models.Model):
         return self.customer_name
 
 
-class Sale(models.Model):
+class CashSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
 
+    cash_sale_data = models.ForeignKey("CashSale", on_delete=models.CASCADE)
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class InvoiceSoldItem(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+
+    invoice_data = models.ForeignKey("Invoice", on_delete=models.CASCADE)
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class CashSale(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    sold_items = models.ManyToManyField(
+        Shop, blank=True, related_name='sales_data_name', through=CashSoldItem)
+    amount = models.IntegerField()
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Invoice(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    balance_due = models.IntegerField()
+    discount = models.IntegerField(default=0)
+    description = models.CharField(max_length=500)
+
+    sold_items = models.ManyToManyField(
+        Shop, blank=True, related_name='invoice_data_name', through=InvoiceSoldItem)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -127,7 +166,7 @@ class Purchase(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class CustomerFeedback(models.Model):
+class Feedback(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.TextField()
@@ -136,6 +175,8 @@ class CustomerFeedback(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return f"{self.customer}"
 # ------------------------------------------
 
 

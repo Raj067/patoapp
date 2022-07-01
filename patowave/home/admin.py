@@ -30,14 +30,21 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = ['customer_name', 'shop', 'created_at', 'updated_at']
 
 
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['customer', 'shop', 'created_at', 'updated_at']
+
+
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(ShopUser, ShopUserAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Customer, CustomerAdmin)
-admin.site.register(Sale)
+admin.site.register(Invoice)
+admin.site.register(InvoiceSoldItem)
+admin.site.register(CashSoldItem)
+admin.site.register(CashSale)
 admin.site.register(Purchase)
-admin.site.register(CustomerFeedback)
+admin.site.register(Feedback,  FeedbackAdmin)
 admin.site.register(Transaction)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Expense)
