@@ -98,6 +98,7 @@ class Customer(models.Model):
     customer_name = models.CharField(max_length=100)
     customer_number = models.CharField(max_length=100, null=True, blank=True)
     customer_email = models.EmailField(null=True, blank=True)
+    customer_address = models.CharField(max_length=100, null=True, blank=True)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

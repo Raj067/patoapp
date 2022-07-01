@@ -5,7 +5,7 @@ from .models import *
 
 
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'slogan', ]
+    list_display = ['name', 'email', 'slogan', 'created_at']
 
 
 class ShopUserAdmin(admin.ModelAdmin):
