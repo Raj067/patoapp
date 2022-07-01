@@ -112,8 +112,22 @@ class CashSoldItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()
+    product_unit = models.CharField(max_length=100, null=True, blank=True)
 
     cash_sale_data = models.ForeignKey("CashSale", on_delete=models.CASCADE)
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class PurchasedItem(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    product_unit = models.CharField(max_length=100, null=True, blank=True)
+
+    cash_sale_data = models.ForeignKey("Purchase", on_delete=models.CASCADE)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -159,8 +173,14 @@ class Invoice(models.Model):
 
 class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    balance_due = models.IntegerField()
+    expenses_category = models.CharField(max_length=500)
+    description = models.CharField(max_length=500)
 
+    purchased_items = models.ManyToManyField(
+        Shop, blank=True, related_name='purchases_data_name', through=PurchasedItem)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -194,15 +214,6 @@ class Payment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.customer}"
-
-
-class Transaction(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
-    # Registration
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Expense(models.Model):

@@ -45,7 +45,6 @@ admin.site.register(CashSoldItem)
 admin.site.register(CashSale)
 admin.site.register(Purchase)
 admin.site.register(Feedback,  FeedbackAdmin)
-admin.site.register(Transaction)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Expense)
 
