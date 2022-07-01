@@ -11,7 +11,7 @@ def get_shop(request):
 
 
 def main_shop_details_der(request):
-    data = Shop.objects.all()
+    data = [dx for dx in Shop.objects.all() if dx.shop == get_shop(request)]
     serializer = MainShopDetailsSerializer(data, many=True)
     return Response(serializer.data)
 

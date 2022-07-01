@@ -99,6 +99,8 @@ class Customer(models.Model):
     customer_number = models.CharField(max_length=100, null=True, blank=True)
     customer_email = models.EmailField(null=True, blank=True)
     customer_address = models.CharField(max_length=100, null=True, blank=True)
+    customer_payment = models.ManyToManyField(
+        "Payment", blank=True, related_name='data_customer_payment')
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

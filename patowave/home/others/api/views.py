@@ -8,18 +8,25 @@ from .serializers import *
 
 
 def get_shop(request):
-    return [i.shop for i in ShopUser.objects.all() if i.user == request.user]
+    shop = [i.shop for i in ShopUser.objects.all() if i.user == request.user]
+    return shop
 
 
 def main_shop_details(request, *args, **kwargs):
     return main_shop_details_der(request)
 
 
-def pruducts_api(request):
-    data = Product.objects.all()
+def inventory_pruducts_api(request):
+    data = [dx for dx in Product.objects.all() if dx.shop in get_shop(request)]
     serializer = ProductSerializer(data, many=True)
-    print(serializer.data)
     return JsonResponse(serializer.data, safe=False)
+
+
+def parties_details_api(request):
+    data = [dx for dx in Customer.objects.all() if dx.shop in get_shop(request)]
+    serializer = CustomerSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
 # ................ SHOP APIs ...........................
 
 
