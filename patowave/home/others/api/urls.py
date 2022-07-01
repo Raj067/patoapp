@@ -4,6 +4,7 @@ from .views import *
 api_urls = [
     #     # Shop api
     path('api/main-shop-details/', main_shop_details, name='main_shop_details'),
+    path('api/products/', pruducts_api, name='main_shop_details'),
     #     path('api/edit-existing-shop/<int:shop_id>/',
     #          edit_existing_shop, name='edit_existing_shop'),
     #     path('api/delete-existing-shop/<int:shop_id>/',

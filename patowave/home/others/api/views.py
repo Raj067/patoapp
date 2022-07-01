@@ -4,12 +4,22 @@ from backend.funcs.decorators import *
 from backend.api.shop import *
 from backend.api.product import *
 from home.models import *
-from .serializers import MainShopDetailsSerializer
+from .serializers import *
+
+
+def get_shop(request):
+    return [i.shop for i in ShopUser.objects.all() if i.user == request.user]
 
 
 def main_shop_details(request, *args, **kwargs):
     return main_shop_details_der(request)
 
+
+def pruducts_api(request):
+    data = Product.objects.all()
+    serializer = ProductSerializer(data, many=True)
+    print(serializer.data)
+    return JsonResponse(serializer.data, safe=False)
 # ................ SHOP APIs ...........................
 
 
