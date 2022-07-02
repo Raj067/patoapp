@@ -1,19 +1,19 @@
 from django.http import JsonResponse
 from backend.api.customers import *
 from backend.funcs.decorators import *
-from backend.api.shop import *
-from backend.api.product import *
 from home.models import *
 from .serializers import *
 
 
-def get_shop(request):
+def get_shop(request) -> list:
     shop = [i.shop for i in ShopUser.objects.all() if i.user == request.user]
     return shop
 
 
-def main_shop_details(request, *args, **kwargs):
-    return main_shop_details_der(request)
+def shop_profile_details(request, *args, **kwargs):
+    data = get_shop(request)[0]if get_shop(request) else []
+    serializer = ShopProfileSerializer(data, many=False)
+    return JsonResponse(serializer.data, safe=False)
 
 
 def inventory_pruducts_api(request):

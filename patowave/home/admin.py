@@ -26,8 +26,21 @@ class PaymentAdmin(admin.ModelAdmin):
                     'is_payment_in', 'amount', 'created_at']
 
 
+class PaymentInline(admin.TabularInline):
+    model = Payment
+
+
+class InvoiceInline(admin.TabularInline):
+    model = Invoice
+
+
+class PurchaseInline(admin.TabularInline):
+    model = Purchase
+
+
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['customer_name', 'shop', 'created_at', 'updated_at']
+    inlines = [PaymentInline, InvoiceInline, PurchaseInline]
 
 
 class FeedbackAdmin(admin.ModelAdmin):

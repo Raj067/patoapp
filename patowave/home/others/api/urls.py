@@ -3,7 +3,8 @@ from .views import *
 
 api_urls = [
     #     # Shop api
-    path('api/main-shop-details/', main_shop_details, name='main_shop_details'),
+    path('api/shop-profile-details/',
+         shop_profile_details, name='shop_profile_details'),
     path('api/inventory-products/',
          inventory_pruducts_api, name='inventory_pruducts_api'),
     path('api/parties-details/',

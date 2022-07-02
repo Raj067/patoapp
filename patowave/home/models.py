@@ -213,7 +213,7 @@ class Payment(models.Model):
 
     is_payment_in = models.BooleanField(default=True)
     amount = models.IntegerField()
-    description = models.TextField(null=True, blank=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

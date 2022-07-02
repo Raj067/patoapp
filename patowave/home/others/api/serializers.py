@@ -2,8 +2,7 @@ from rest_framework import serializers
 from home.models import *
 
 
-class MainShopDetailsSerializer(serializers.ModelSerializer):
-
+class ShopProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
         fields = ('id', 'name', 'slogan',)
@@ -37,6 +36,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     customer_payment = PaymentSerializer(many=True, read_only=True)
     customer_invoice = PaymentSerializer(many=True, read_only=True)
     customer_purchase = PaymentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Customer
         fields = ('id', 'customer_name', 'customer_number',

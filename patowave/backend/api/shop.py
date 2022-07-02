@@ -3,17 +3,15 @@ from home.models import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from home.others.api.serializers import MainShopDetailsSerializer
-
 
 def get_shop(request):
     return [i.shop for i in ShopUser.objects.all() if i.user == request.user]
 
 
-def main_shop_details_der(request):
-    data = [dx for dx in Shop.objects.all() if dx.shop == get_shop(request)]
-    serializer = MainShopDetailsSerializer(data, many=True)
-    return Response(serializer.data)
+# def main_shop_details_der(request):
+#     data = [dx for dx in Shop.objects.all() if dx.shop == get_shop(request)]
+#     serializer = MainShopDetailsSerializer(data, many=True)
+#     return Response(serializer.data)
 
 # from home.others.api.serializers import *
 
