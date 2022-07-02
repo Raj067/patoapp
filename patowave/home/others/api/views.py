@@ -11,9 +11,17 @@ from rest_framework.permissions import IsAdminUser
 from accounts.models import CustomUser
 
 
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
+
+
+@api_view(['GET'],)
+@permission_classes([AllowAny],)
 def sample_api(request):
     print("request received")
-    return JsonResponse({"data":"hello"}, safe=False)
+    return JsonResponse({"data": "hello"}, safe=False)
+
+
 class UserRecordView(APIView):
     """
     API View to create or get a list of all the registered
