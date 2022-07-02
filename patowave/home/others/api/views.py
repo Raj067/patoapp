@@ -15,11 +15,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
 
-@api_view(['GET'],)
+@api_view()
 @permission_classes([AllowAny],)
 def sample_api(request):
-    print("request received")
-    return JsonResponse({"data": "hello"}, safe=False)
+    print("request received", request)
+    print(f'{request.user.is_authenticated}')
+    return Response({"data": "hello"})
 
 
 class UserRecordView(APIView):
@@ -63,10 +64,11 @@ def shop_profile_details(request, *args, **kwargs):
     return JsonResponse(serializer.data, safe=False)
 
 
+@api_view(['GET', 'POST'])
 def inventory_pruducts_api(request):
     data = [dx for dx in Product.objects.all() if dx.shop in get_shop(request)]
     serializer = ProductSerializer(data, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 def parties_details_api(request):

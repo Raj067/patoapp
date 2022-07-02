@@ -31,7 +31,7 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = [True if ENVIRONMENT.get('DEBUG').lower() == 'true' else False][0]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost:60774']
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
 
 # Application definition
@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
     # 'crispy_forms',
 
 ]
@@ -70,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # added
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -177,7 +180,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # DJANGO REST FRAMEWORk
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
@@ -185,10 +188,14 @@ REST_FRAMEWORK = {
     ],
 }
 
+# CORS_ORIGIN
+CORS_ORIGIN_ALLOW_ALL = True
+
+# SIMPLE_JWT
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
+    'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
 

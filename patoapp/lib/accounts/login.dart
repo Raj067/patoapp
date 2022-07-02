@@ -5,12 +5,17 @@ import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-  Future<http.Response> _login() async {
-    http.Response data = await http.get(
+  _login() async {
+    var data = await http.get(
       Uri.parse("http://127.0.0.1:8000/api/sample/"),
-      headers: {"Accept": "application/json"},
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization":
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2NzczNzkwLCJpYXQiOjE2NTY3NzM0OTAsImp0aSI6IjE3NTE5ZTYwY2NmZTQ2OTFiMzMwM2M2Y2ZmNDM1Nzk1IiwidXNlcl9pZCI6MX0.ReTXd0ebqEy5EdZIRzkbO1uOfBfpkcTElbveWFKI7O8",
+      },
     );
-    print(data);
+    print(data.body);
+    print(data.headers);
     return data;
   }
 
