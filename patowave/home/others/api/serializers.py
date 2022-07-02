@@ -1,5 +1,28 @@
 from rest_framework import serializers
 from home.models import *
+from rest_framework.validators import UniqueTogetherValidator
+from accounts.models import CustomUser
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(**validated_data)
+        return user
+
+    class Meta:
+        model = CustomUser
+        fields = (
+            'username',
+            'password',
+        )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=CustomUser.objects.all(),
+                fields=['username', ]
+            )
+        ]
 
 
 class ShopProfileSerializer(serializers.ModelSerializer):

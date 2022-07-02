@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
+  Future<http.Response> _login() async {
+    http.Response data = await http.get(
+      Uri.parse("http://127.0.0.1:8000/api/sample/"),
+      headers: {"Accept": "application/json"},
+    );
+    print(data);
+    return data;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,14 +141,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const LoginPage(),
-                              fullscreenDialog: true,
-                            ),
-                          );
+                          _login();
                         },
                         child: const Text(
                           "Login",
