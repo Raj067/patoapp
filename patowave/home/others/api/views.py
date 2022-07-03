@@ -15,12 +15,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
 
-@api_view()
-@permission_classes([AllowAny],)
+# @api_view()
+# @permission_classes([AllowAny],)
 def sample_api(request):
     print("request received", request)
     print(f'{request.user.is_authenticated}')
-    return Response({"data": "hello"})
+    return JsonResponse({"data": "hello"})
 
 
 class UserRecordView(APIView):

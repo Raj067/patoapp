@@ -7,13 +7,14 @@ class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   _login() async {
     var data = await http.get(
-      Uri.parse("http://127.0.0.1:8000/api/sample/"),
+      Uri.parse("http://29b2-196-249-98-242.ngrok.io/api/sample/"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization":
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2NzczNzkwLCJpYXQiOjE2NTY3NzM0OTAsImp0aSI6IjE3NTE5ZTYwY2NmZTQ2OTFiMzMwM2M2Y2ZmNDM1Nzk1IiwidXNlcl9pZCI6MX0.ReTXd0ebqEy5EdZIRzkbO1uOfBfpkcTElbveWFKI7O8",
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2ODMxMTgzLCJpYXQiOjE2NTY4MjgxODMsImp0aSI6Ijg1YTBlMTE3YjBiMjQ0NTc4ZDY5YTc1YWFjNTcyOWNmIiwidXNlcl9pZCI6MX0.kjPdRzKGeHjSJkLnjYmM3KSqsmE9s_w2-iBNvKwNGDU",
       },
     );
+    print("Hellow raj --------------------------------");
     print(data.body);
     print(data.headers);
     return data;

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -144,7 +145,9 @@ class _ProductsCartState extends State<ProductsCart> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  loadingInventoryData('api/inventory-products/');
+                },
                 child: const Text(
                   "Save Transaction",
                 ),
