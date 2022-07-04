@@ -1,6 +1,7 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/profile/top_notification_icon.dart';
 import 'package:patoapp/profile/top_profile_icon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,8 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
@@ -38,8 +41,31 @@ class NotificationIcon extends StatelessWidget {
   }
 }
 
-class ProfileIcon extends StatelessWidget {
+class ProfileIcon extends StatefulWidget {
   const ProfileIcon({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileIcon> createState() => _ProfileIconState();
+}
+
+class _ProfileIconState extends State<ProfileIcon> {
+  String name = "";
+  String logoUrl = "";
+
+  fetchData(String path) async {
+    var data = await http.get(
+      Uri.parse(baseUrl + path),
+      headers: authHeaders,
+    );
+    name = jsonDecode(data.body)['name'];
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData("api/shop-profile-details/");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +76,7 @@ class ProfileIcon extends StatelessWidget {
           // foregroundColor: patoBlack,
           // child: Icon(Icons.add_shopping_cart_rounded),
           ),
-      label: const Text('Mama Shop'),
+      label: Text(name),
       onPressed: () {
         Navigator.push(
           context,

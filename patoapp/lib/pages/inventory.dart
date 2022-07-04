@@ -69,7 +69,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
         stockLevel: dx['stock_level'],
         supplierName: dx['supplier_name'] ?? '',
         supplierContact: dx['supplier_number'] ?? '',
-        // supplierName: dx['stock_level'],
+        thumbnail: dx['product_image'] ?? '',
       ));
     }
     customData = finalData;
@@ -407,8 +407,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           // color: Theme.of(context).scaffoldBackgroundColor,
 
                           borderRadius: BorderRadius.circular(15),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/img.jpg"),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "$imageBaseUrl${product.thumbnail}"),
                             fit: BoxFit.fill,
                           ),
                         ),

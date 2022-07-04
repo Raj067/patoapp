@@ -58,10 +58,11 @@ def get_shop(request) -> list:
     return shop
 
 
+@api_view(['GET'])
 def shop_profile_details(request, *args, **kwargs):
     data = get_shop(request)[0]if get_shop(request) else []
     serializer = ShopProfileSerializer(data, many=False)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])

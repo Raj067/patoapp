@@ -27,7 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
 class ShopProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ('id', 'name', 'slogan',)
+        fields = (
+            'id', 'name', 'slogan',
+            'phone', 'email', 'logo',
+            'signature', 'address', 'media_link',
+        )
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -39,7 +43,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'selling_price_secondary', 'quantity', 'stock_level',
             'primary_unit', 'secondary_unit', 'rate_unit',
             'supplier_name', 'supplier_number', 'supplier_email',
-            'created_at',
+            'created_at', 'product_image',
         )
 
 
