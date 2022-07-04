@@ -76,61 +76,61 @@ class SingleProduct {
   }
 }
 
-List<SingleProduct> allProductDetails() {
-  return [
-    SingleProduct(
-      purchasesPrice: 1500,
-      sellingPrice: 2500,
-      productName: "Colgate",
-      // thumbnail: "",
-      quantity: 20,
-      stockLevel: 20,
-      id: '1',
-    ),
-    SingleProduct(
-      purchasesPrice: 450,
-      sellingPrice: 700,
-      productName: "Jamaa",
-      // thumbnail: "",
-      quantity: 20,
+// List<SingleProduct> allProductDetails() {
+//   return [
+//     SingleProduct(
+//       purchasesPrice: 1500,
+//       sellingPrice: 2500,
+//       productName: "Colgate",
+//       // thumbnail: "",
+//       quantity: 20,
+//       stockLevel: 20,
+//       id: '1',
+//     ),
+//     SingleProduct(
+//       purchasesPrice: 450,
+//       sellingPrice: 700,
+//       productName: "Jamaa",
+//       // thumbnail: "",
+//       quantity: 20,
 
-      id: '2',
-    ),
-    SingleProduct(
-      purchasesPrice: 1800,
-      sellingPrice: 3000,
-      productName: "Nido",
-      // thumbnail: "",
-      quantity: 20,
+//       id: '2',
+//     ),
+//     SingleProduct(
+//       purchasesPrice: 1800,
+//       sellingPrice: 3000,
+//       productName: "Nido",
+//       // thumbnail: "",
+//       quantity: 20,
 
-      id: '3',
-    ),
-    SingleProduct(
-      purchasesPrice: 950,
-      sellingPrice: 1200,
-      productName: "Sembe",
-      // thumbnail: "",
-      quantity: 20,
+//       id: '3',
+//     ),
+//     SingleProduct(
+//       purchasesPrice: 950,
+//       sellingPrice: 1200,
+//       productName: "Sembe",
+//       // thumbnail: "",
+//       quantity: 20,
 
-      id: '4',
-    ),
-    SingleProduct(
-      purchasesPrice: 2000,
-      sellingPrice: 2500,
-      productName: "Omo",
-      // thumbnail: "",
-      quantity: 20,
+//       id: '4',
+//     ),
+//     SingleProduct(
+//       purchasesPrice: 2000,
+//       sellingPrice: 2500,
+//       productName: "Omo",
+//       // thumbnail: "",
+//       quantity: 20,
 
-      id: '5',
-    ),
-    SingleProduct(
-      purchasesPrice: 750,
-      sellingPrice: 1000,
-      productName: "Doffi",
-      // thumbnail: "",
-      quantity: 20,
+//       id: '5',
+//     ),
+//     SingleProduct(
+//       purchasesPrice: 750,
+//       sellingPrice: 1000,
+//       productName: "Doffi",
+//       // thumbnail: "",
+//       quantity: 20,
 
-      id: '6',
-    ),
-  ];
-}
+//       id: '6',
+//     ),
+//   ];
+// }

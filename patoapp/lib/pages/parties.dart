@@ -37,7 +37,7 @@ class _PartiesPageState extends State<PartiesPage> {
       List<SingleCustomer> finalData = [];
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleCustomer(
-          financial_data: dx['financial_data'],
+          financialData: dx['financial_data'],
           fullName: dx['customer_name'],
           phoneNumber: dx['customer_number'] ?? "",
           amount: dx['effective_amount'],

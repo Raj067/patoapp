@@ -192,7 +192,7 @@ List<FinancialData> allFinancialData() {
       details: [
         6400,
         SingleCustomer(
-            amount: 6400, fullName: "Rashidi", id: 90, financial_data: [])
+            amount: 6400, fullName: "Rashidi", id: 90, financialData: [])
       ],
     ),
     FinancialData(

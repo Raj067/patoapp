@@ -320,7 +320,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
 
   _allFinancialData() {
     List<Widget> data = [];
-    for (var dx in widget.customer.financial_data) {
+    for (var dx in widget.customer.financialData) {
       data.add(_singleFinancialData(
         date: dx['date'],
         description: dx['description'],
