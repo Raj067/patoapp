@@ -1,78 +1,53 @@
+import 'dart:math';
+
 class SingleCustomer {
-  String fullName;
+  String fullName = "";
   String email;
-  String amount;
-  bool isToReceive;
-  int id;
+  int amount = 0;
+  int id = 0;
   String phoneNumber;
 
   SingleCustomer({
-    this.fullName = "",
+    required this.fullName,
     this.email = "",
-    this.amount = "",
-    this.isToReceive = true,
-    this.id = 0,
+    required this.amount,
+    required this.id,
     this.phoneNumber = "",
   });
+  isToReceive() {
+    if (amount >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getAmount() {
+    if (amount >= 0) {
+      return amount;
+    } else {
+      return -amount;
+    }
+  }
 }
 
-allCustomerDetails() {
-  return [
-    SingleCustomer(
-      fullName: "Rajabu",
-      email: "Mrisho",
-      amount: "Tsh 27,000",
-      isToReceive: false,
-      phoneNumber: "255679190720",
-      id: 1,
-    ),
-    SingleCustomer(
-      fullName: "Salehe",
-      email: "Mrisho",
-      amount: "Tsh 30,000",
-      isToReceive: true,
-      phoneNumber: "255679190721",
-      id: 2,
-    ),
-    SingleCustomer(
-      fullName: "Ally",
-      email: "Juma",
-      amount: "Tsh 27,000",
-      isToReceive: false,
-      phoneNumber: "255679190722",
-      id: 3,
-    ),
-    SingleCustomer(
-      fullName: "Mustapha",
-      email: "Abasi",
-      amount: "Tsh 2,00",
-      isToReceive: false,
-      phoneNumber: "255679190723",
-      id: 4,
-    ),
-    SingleCustomer(
-      fullName: "Jamali",
-      email: "Mrisho",
-      amount: "Tsh 10,000",
-      isToReceive: true,
-      phoneNumber: "255679190724",
-      id: 5,
-    ),
-    SingleCustomer(
-      fullName: "Ashura",
-      email: "Shabani",
-      amount: "Tsh 14,000",
-      isToReceive: false,
-      phoneNumber: "255679190725",
-      id: 6,
-    ),
-    SingleCustomer(
-      fullName: "Ally",
-      email: "Dabaga",
-      amount: "Tsh 32,000",
-      isToReceive: true,
-      phoneNumber: "255679190726",
-      id: 7,
-    ),
-  ];
-}
+// allCustomerDetails() {
+//   return [
+//     SingleCustomer(
+//       fullName: "Rajabu",
+//       email: "Mrisho",
+//       amount: 8977,
+//       isToReceive: false,
+//       phoneNumber: "255679190720",
+//       id: 1,
+//     ),
+//     SingleCustomer(
+//       fullName: "Salehe",
+//       email: "Mrisho",
+//       amount: 7800,
+//       isToReceive: true,
+//       phoneNumber: "255679190721",
+//       id: 2,
+//     ),
+//   ];
+// }

@@ -3,8 +3,8 @@ from .views import *
 from rest_framework.authtoken import views
 
 api_urls = [
-    path('api/sample/', sample_api, name='users'),
-    path('api/user/', UserRecordView.as_view(), name='users'),
+    #     path('api/sample/', sample_api, name='users'),
+    #     path('api/user/', UserRecordView.as_view(), name='users'),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     #     # Shop api
     path('api/shop-profile-details/',

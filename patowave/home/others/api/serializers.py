@@ -2,6 +2,7 @@ from rest_framework import serializers
 from home.models import *
 from rest_framework.validators import UniqueTogetherValidator
 from accounts.models import CustomUser
+from rest_framework.fields import SerializerMethodField
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -69,8 +70,27 @@ class CustomerSerializer(serializers.ModelSerializer):
     customer_payment = PaymentSerializer(many=True, read_only=True)
     customer_invoice = PaymentSerializer(many=True, read_only=True)
     customer_purchase = PaymentSerializer(many=True, read_only=True)
+    effective_amount = SerializerMethodField()
 
     class Meta:
         model = Customer
         fields = ('id', 'customer_name', 'customer_number',
-                  'customer_payment', 'customer_invoice', 'customer_purchase')
+                  'customer_payment', 'customer_invoice', 'customer_purchase', 'effective_amount',)
+
+    def get_effective_amount(mySerializer, myModel):
+        val = 0
+        # For all payments
+        for dx in myModel.customer_payment.all():
+            if dx.is_payment_in:
+                val += dx.amount
+            else:
+                val -= dx.amount
+
+        # For all purchases
+        for dx in myModel.customer_purchase.all():
+            val -= dx.amount
+
+        # For all Invoices
+        for dx in myModel.customer_payment.all():
+            val -= dx.amount
+        return val

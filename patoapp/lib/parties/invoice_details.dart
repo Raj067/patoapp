@@ -11,9 +11,9 @@ class InvoiceDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> data = [];
-    for (var element in allCustomerDetails()) {
-      data.add(_singleInvoiceDetails(context, element));
-    }
+    // for (var element in allCustomerDetails()) {
+    //   data.add(_singleInvoiceDetails(context, element));
+    // }
 
     return Column(
       children: data,
@@ -121,7 +121,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                     height: 25,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: customer.isToReceive
+                      color: customer.isToReceive()
                           ? patowaveGreen
                           : patowaveErrorRed.withAlpha(150),
                       borderRadius: const BorderRadius.only(
@@ -132,7 +132,7 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                     ),
                     child: Center(
                       child: Text(
-                        customer.isToReceive ? "Outstanding" : "Overdue",
+                        customer.isToReceive() ? "Outstanding" : "Overdue",
                         style: const TextStyle(color: patowaveWhite),
                       ),
                     ),
@@ -143,10 +143,10 @@ Widget _singleInvoiceDetails(BuildContext context, SingleCustomer customer) =>
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
                     child: Text(
-                      customer.amount,
+                      "${customer.amount}",
                       style: TextStyle(
                         fontSize: 16,
-                        color: customer.isToReceive
+                        color: customer.isToReceive()
                             ? patowaveGreen
                             : patowaveErrorRed,
                       ),

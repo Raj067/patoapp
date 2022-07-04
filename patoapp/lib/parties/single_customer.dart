@@ -332,12 +332,12 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: customer.isToReceive
+                      color: customer.isToReceive()
                           ? patowaveGreen
                           : patowaveErrorRed,
                     ),
                     child: Icon(
-                      customer.isToReceive
+                      customer.isToReceive()
                           ? Icons.arrow_downward
                           : Icons.arrow_upward,
                       color: patowaveWhite,
@@ -353,15 +353,15 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                           children: [
                             const Text("Debt Balance"),
                             Text(
-                              "To ${customer.isToReceive ? "receive" : "give"}",
+                              "To ${customer.isToReceive() ? "receive" : "give"}",
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
                         Text(
-                          customer.amount,
+                          "${customer.getAmount()}",
                           style: TextStyle(
-                              color: customer.isToReceive
+                              color: customer.isToReceive()
                                   ? patowaveGreen
                                   : patowaveErrorRed),
                         )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/data/general_customers.dart';
@@ -8,6 +9,8 @@ import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class PartiesPage extends StatefulWidget {
   const PartiesPage({Key? key}) : super(key: key);
@@ -25,15 +28,28 @@ class _PartiesPageState extends State<PartiesPage> {
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
-  fetchData() async {
-    customData = allCustomerDetails();
+  fetchData(String path) async {
+    var data = await http.get(
+      Uri.parse(baseUrl + path),
+      headers: authHeaders,
+    );
+    List<SingleCustomer> finalData = [];
+    for (var dx in jsonDecode(data.body)) {
+      finalData.add(SingleCustomer(
+        fullName: dx['customer_name'],
+        amount: dx['effective_amount'],
+        id: dx['id'],
+      ));
+    }
+    customData = finalData;
+    // customData = allCustomerDetails();
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchData("api/parties-details/");
   }
 
   @override
@@ -139,14 +155,14 @@ class _PartiesPageState extends State<PartiesPage> {
               //   height: 10,
               // ),
               Text(
-                customer.amount,
+                "${customer.getAmount()}",
                 style: TextStyle(
-                    color: customer.isToReceive
+                    color: customer.isToReceive()
                         ? patowaveGreen
                         : patowaveErrorRed),
               ),
               Text(
-                customer.isToReceive ? "Receive" : "Give",
+                customer.isToReceive() ? "Receive" : "Give",
                 style: const TextStyle(fontSize: 10),
               ),
             ],

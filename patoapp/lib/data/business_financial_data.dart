@@ -189,7 +189,7 @@ List<FinancialData> allFinancialData() {
       id: "4",
       isCashSale: false,
       isInvoice: true,
-      details: [6400, SingleCustomer(amount: "6400", fullName: "Rashidi")],
+      details: [6400, SingleCustomer(amount: 6400, fullName: "Rashidi",id:90)],
     ),
     FinancialData(
       date: DateTime(2022, 06, 20),

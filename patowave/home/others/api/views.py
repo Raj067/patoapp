@@ -17,40 +17,40 @@ from rest_framework.decorators import api_view, permission_classes
 
 # @api_view()
 # @permission_classes([AllowAny],)
-def sample_api(request):
-    print("request received", request)
-    print(f'{request.user.is_authenticated}')
-    return JsonResponse({"data": "hello"})
+# def sample_api(request):
+#     print("request received", request)
+#     print(f'{request.user.is_authenticated}')
+#     return JsonResponse({"data": "hello"})
 
 
-class UserRecordView(APIView):
-    """
-    API View to create or get a list of all the registered
-    users. GET request returns the registered users whereas
-    a POST request allows to create a new user.
-    """
-    permission_classes = [IsAdminUser]
+# class UserRecordView(APIView):
+#     """
+#     API View to create or get a list of all the registered
+#     users. GET request returns the registered users whereas
+#     a POST request allows to create a new user.
+#     """
+#     permission_classes = [IsAdminUser]
 
-    def get(self, format=None):
-        users = CustomUser.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+#     def get(self, format=None):
+#         users = CustomUser.objects.all()
+#         serializer = UserSerializer(users, many=True)
+#         return Response(serializer.data)
 
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=ValueError):
-            serializer.create(validated_data=request.data)
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        return Response(
-            {
-                "error": True,
-                "error_msg": serializer.error_messages,
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=ValueError):
+#             serializer.create(validated_data=request.data)
+#             return Response(
+#                 serializer.data,
+#                 status=status.HTTP_201_CREATED
+#             )
+#         return Response(
+#             {
+#                 "error": True,
+#                 "error_msg": serializer.error_messages,
+#             },
+#             status=status.HTTP_400_BAD_REQUEST
+#         )
 
 
 def get_shop(request) -> list:
@@ -72,10 +72,11 @@ def inventory_pruducts_api(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
 def parties_details_api(request):
     data = [dx for dx in Customer.objects.all() if dx.shop in get_shop(request)]
     serializer = CustomerSerializer(data, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 # ................ SHOP APIs ...........................
 
