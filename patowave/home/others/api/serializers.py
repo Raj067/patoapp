@@ -4,7 +4,6 @@ from rest_framework.validators import UniqueTogetherValidator
 from accounts.models import CustomUser
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
@@ -34,7 +33,14 @@ class ShopProfileSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'product_name', 'purchases_price',)
+        fields = (
+            'id', 'product_name', 'purchases_price',
+            'product_code', 'selling_price_primary',
+            'selling_price_secondary', 'quantity', 'stock_level',
+            'primary_unit', 'secondary_unit', 'rate_unit',
+            'supplier_name', 'supplier_number', 'supplier_email',
+            'created_at',
+        )
 
 
 class PaymentSerializer(serializers.ModelSerializer):

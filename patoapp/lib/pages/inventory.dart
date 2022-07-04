@@ -1,11 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({Key? key}) : super(key: key);
@@ -50,15 +53,34 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   int itemsMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
-  fetchData() async {
-    customData = allProductDetails();
+  fetchData(String path) async {
+    var data = await http.get(
+      Uri.parse(baseUrl + path),
+      headers: authHeaders,
+    );
+    List<SingleProduct> finalData = [];
+    for (var dx in jsonDecode(data.body)) {
+      finalData.add(SingleProduct(
+        id: "${dx['id']}",
+        productName: dx["product_name"],
+        quantity: dx['quantity'],
+        purchasesPrice: dx['purchases_price'],
+        sellingPrice: dx['selling_price_primary'],
+        stockLevel: dx['stock_level'],
+        supplierName: dx['supplier_name'] ?? '',
+        supplierContact: dx['supplier_number'] ?? '',
+        // supplierName: dx['stock_level'],
+      ));
+    }
+    customData = finalData;
+    // customData = allProductDetails();
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchData("api/inventory-products/");
   }
 
   @override
@@ -109,7 +131,17 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                       ],
                     )
               : Container(),
-          _itemAllDataFiltered(),
+          customData == []
+              ? Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  ),
+                )
+              : _itemAllDataFiltered(),
           allAddedProduct != 0
               ? Dismissible(
                   key: const Key('removeData'),
@@ -264,21 +296,11 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     for (var element in customData) {
       data.add(_singleProductTile(context, element));
     }
-    return customData == []
-        ? Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator(),
-              ],
-            ),
-          )
-        : Expanded(
-            child: ListView(
-              children: data,
-            ),
-          );
+    return Expanded(
+      child: ListView(
+        children: data,
+      ),
+    );
   }
 
   Widget _singleProductTile(BuildContext context, SingleProduct product) {

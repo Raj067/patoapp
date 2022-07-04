@@ -6,8 +6,8 @@ class SingleProduct {
   int quantity;
   int sellingPrice;
   int purchasesPrice;
-  String supplierName;
-  String supplierContact;
+  var supplierName = '';
+  var supplierContact = '';
   int totalItemsSold;
   int addedToCart = 0;
   bool isAddedToCartAutomatic = false;
@@ -22,8 +22,8 @@ class SingleProduct {
     this.stockLevel = 0,
     this.thumbnail = "",
     this.totalItemsSold = 90,
-    this.supplierName = "Rajabu",
-    this.supplierContact = "+255679190720",
+    this.supplierName = '',
+    this.supplierContact = '',
     this.addedToCart = 0,
     this.isAddedToCartAutomatic = false,
   });

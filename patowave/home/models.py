@@ -48,7 +48,8 @@ class Product(models.Model):
     product_code = models.CharField(max_length=100, null=True, blank=True)
     purchases_price = models.IntegerField()
     selling_price_primary = models.IntegerField()
-    selling_price_secondary = models.IntegerField()
+    selling_price_secondary = models.IntegerField(
+        default=0, null=True, blank=True)
     quantity = models.IntegerField()
     stock_level = models.IntegerField()
     primary_unit = models.CharField(max_length=100)

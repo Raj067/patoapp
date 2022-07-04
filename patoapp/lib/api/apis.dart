@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 Map d = {
   "access":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2ODQwODY1LCJpYXQiOjE2NTY4MjgxODMsImp0aSI6Ijk3MDRlOTc2MzNiNDRmNzU4YmI1NDk5MDY4Y2NlZGM3IiwidXNlcl9pZCI6MX0.4PFvO2D9AIDlVhmg2lwn1VLTlhC7Io6CaRfFvYuJAyE",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxMjM4NzU0LCJpYXQiOjE2NTY4Mzc4NjUsImp0aSI6ImMxZDNkOTc4MjMxNDRkYzE5ZGY3MzZjYzU2MDAyYTRiIiwidXNlcl9pZCI6MX0.zYVEki_oeBvDAFEUBdXQv-VeTKxuHzFzBkm-BShqwZY",
   "refresh":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NDYxMzg2NSwiaWF0IjoxNjU2ODM3ODY1LCJqdGkiOiI1MGEyOWI1Y2ZlYmM0ZThhYjY5ZGRlYzliNjg1Zjk4MSIsInVzZXJfaWQiOjF9.u-tvaFpWbcGqPbBObdc4NClVdX66CaDYwGosLiX8rOo"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NDY5NDc1NCwiaWF0IjoxNjU2OTE4NzU0LCJqdGkiOiJiNmExZTEzMTE2OTE0ZDBiOTdiNGIwM2YzODRiMGUyMiIsInVzZXJfaWQiOjF9.ybhW9rA_EVqOH7hawSuNazaFcONqqDP_Tgdbj4nuxK4"
 };
 const String baseUrl = "http://192.168.43.7:8000/";
 String accessToken = d['access'];
 const String refreshToken = "";
+
+Map<String, String> authHeaders = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  "Authorization": "Bearer $accessToken",
+};
 
 loadingInventoryData(String path) async {
   var data = await http.get(
@@ -18,6 +25,12 @@ loadingInventoryData(String path) async {
       "Authorization": "Bearer $accessToken",
     },
   );
-  print(data.body);
-  return data.body;
+  // // For error and and codes redirect to login page
+  // if (data.statusCode != 401) {
+  //   return jsonDecode(data.body);
+  // } else {}
+  // print(data);
+  // print(data.statusCode);
+
+  return jsonDecode(data.body);
 }
