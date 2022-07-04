@@ -3,6 +3,7 @@ from home.models import *
 from rest_framework.validators import UniqueTogetherValidator
 from accounts.models import CustomUser
 from rest_framework.fields import SerializerMethodField
+from calendar import month_name
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -67,15 +68,16 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    customer_payment = PaymentSerializer(many=True, read_only=True)
-    customer_invoice = PaymentSerializer(many=True, read_only=True)
-    customer_purchase = PaymentSerializer(many=True, read_only=True)
+    # customer_payment = PaymentSerializer(many=True, read_only=True)
+    # customer_invoice = PaymentSerializer(many=True, read_only=True)
+    # customer_purchase = PaymentSerializer(many=True, read_only=True)
     effective_amount = SerializerMethodField()
+    financial_data = SerializerMethodField()
 
     class Meta:
         model = Customer
         fields = ('id', 'customer_name', 'customer_number',
-                  'customer_payment', 'customer_invoice', 'customer_purchase', 'effective_amount',)
+                  'effective_amount', 'financial_data')
 
     def get_effective_amount(mySerializer, myModel):
         val = 0
@@ -91,6 +93,40 @@ class CustomerSerializer(serializers.ModelSerializer):
             val -= dx.amount
 
         # For all Invoices
-        for dx in myModel.customer_payment.all():
+        for dx in myModel.customer_invoice.all():
             val -= dx.amount
         return val
+
+    def get_financial_data(mySerializer, myModel):
+        data = []
+        # For all payments
+        for dx in myModel.customer_payment.all():
+            if dx.is_payment_in:
+                data.append({
+                    "name": "Payment in", "description": dx.description,
+                    "received": dx.amount, "paid": 0, "date": format_date(dx.created_at)
+                })
+            else:
+                data.append({
+                    "name": "Payment out", "description": dx.description,
+                    "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
+                })
+
+        # For all purchases
+        for dx in myModel.customer_purchase.all():
+            data.append({
+                "name": "name", "description": "description",
+                "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
+            })
+
+        # For all Invoices
+        for dx in myModel.customer_invoice.all():
+            data.append({
+                "name": "Invoice", "description": "description",
+                "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
+            })
+        return data
+
+
+def format_date(date):
+    return f"{date.day} {month_name[date.month]}, {date.year} "

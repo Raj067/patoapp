@@ -19,6 +19,7 @@ class SingleCustomerPage extends StatefulWidget {
 class _SingleCustomerPageState extends State<SingleCustomerPage> {
   DateTime _selectedDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,71 +178,72 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.keyboard_arrow_up,
-                                color: patowaveErrorRed),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "-",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                Text(
-                                  "01/01/2020",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Text("-"),
-                        const Text(
-                          "12,000",
-                          style: TextStyle(color: patowaveErrorRed),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.keyboard_arrow_down,
-                                color: patowaveGreen),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Opening Balance",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                Text(
-                                  "02/01/2020",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          "8,900",
-                          style: TextStyle(color: patowaveGreen),
-                        ),
-                        const Text("-"),
-                      ],
-                    ),
-                  ),
+                  _allFinancialData(),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           const Icon(Icons.keyboard_arrow_up,
+                  //               color: patowaveErrorRed),
+                  //           Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: const [
+                  //               Text(
+                  //                 "-",
+                  //                 style: TextStyle(fontSize: 12),
+                  //               ),
+                  //               Text(
+                  //                 "01/01/2020",
+                  //                 style: TextStyle(fontSize: 12),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       const Text("-"),
+                  //       const Text(
+                  //         "12,000",
+                  //         style: TextStyle(color: patowaveErrorRed),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const Divider(),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(10),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           const Icon(Icons.keyboard_arrow_down,
+                  //               color: patowaveGreen),
+                  //           Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: const [
+                  //               Text(
+                  //                 "Opening Balance",
+                  //                 style: TextStyle(fontSize: 12),
+                  //               ),
+                  //               Text(
+                  //                 "02/01/2020",
+                  //                 style: TextStyle(fontSize: 12),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       const Text(
+                  //         "8,900",
+                  //         style: TextStyle(color: patowaveGreen),
+                  //       ),
+                  //       const Text("-"),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             )
@@ -316,6 +318,69 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
     );
   }
 
+  _allFinancialData() {
+    List<Widget> data = [];
+    for (var dx in widget.customer.financial_data) {
+      data.add(_singleFinancialData(
+        date: dx['date'],
+        description: dx['description'],
+        received: dx['received'],
+        paid: dx['paid'],
+      ));
+      data.add(
+        const Divider(height: 0, indent: 10, endIndent: 10),
+      );
+    }
+    return Column(children: data);
+  }
+
+  _singleFinancialData({
+    required String description,
+    required String date,
+    required int received,
+    required int paid,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              received == 0
+                  ? const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: patowaveErrorRed,
+                    )
+                  : const Icon(
+                      Icons.keyboard_arrow_up,
+                      color: patowaveGreen,
+                    ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    description,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    date,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Text("${received == 0 ? '-' : received}"),
+          Text(
+            "${paid == 0 ? '-' : paid}",
+            style: const TextStyle(color: patowaveErrorRed),
+          ),
+        ],
+      ),
+    );
+  }
+
   _firstRowData(SingleCustomer customer) => Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -338,8 +403,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     ),
                     child: Icon(
                       customer.isToReceive()
-                          ? Icons.arrow_downward
-                          : Icons.arrow_upward,
+                          ? Icons.arrow_upward
+                          : Icons.arrow_downward,
                       color: patowaveWhite,
                     ),
                   ),

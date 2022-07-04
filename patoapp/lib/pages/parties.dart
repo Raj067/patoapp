@@ -33,15 +33,20 @@ class _PartiesPageState extends State<PartiesPage> {
       Uri.parse(baseUrl + path),
       headers: authHeaders,
     );
-    List<SingleCustomer> finalData = [];
-    for (var dx in jsonDecode(data.body)) {
-      finalData.add(SingleCustomer(
-        fullName: dx['customer_name'],
-        amount: dx['effective_amount'],
-        id: dx['id'],
-      ));
+    if (data.statusCode == 200) {
+      List<SingleCustomer> finalData = [];
+      for (var dx in jsonDecode(data.body)) {
+        finalData.add(SingleCustomer(
+          financial_data: dx['financial_data'],
+          fullName: dx['customer_name'],
+          phoneNumber: dx['customer_number'] ?? "",
+          amount: dx['effective_amount'],
+          id: dx['id'],
+        ));
+      }
+      customData = finalData;
     }
-    customData = finalData;
+
     // customData = allCustomerDetails();
     setState(() {});
   }

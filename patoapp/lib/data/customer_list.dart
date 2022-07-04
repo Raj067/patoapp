@@ -6,11 +6,13 @@ class SingleCustomer {
   int amount = 0;
   int id = 0;
   String phoneNumber;
+  List financial_data;
 
   SingleCustomer({
     required this.fullName,
     this.email = "",
     required this.amount,
+    required this.financial_data,
     required this.id,
     this.phoneNumber = "",
   });

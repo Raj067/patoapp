@@ -58,19 +58,22 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
       Uri.parse(baseUrl + path),
       headers: authHeaders,
     );
+
     List<SingleProduct> finalData = [];
-    for (var dx in jsonDecode(data.body)) {
-      finalData.add(SingleProduct(
-        id: "${dx['id']}",
-        productName: dx["product_name"],
-        quantity: dx['quantity'],
-        purchasesPrice: dx['purchases_price'],
-        sellingPrice: dx['selling_price_primary'],
-        stockLevel: dx['stock_level'],
-        supplierName: dx['supplier_name'] ?? '',
-        supplierContact: dx['supplier_number'] ?? '',
-        thumbnail: dx['product_image'] ?? '',
-      ));
+    if (data.statusCode == 200) {
+      for (var dx in jsonDecode(data.body)) {
+        finalData.add(SingleProduct(
+          id: "${dx['id']}",
+          productName: dx["product_name"],
+          quantity: dx['quantity'],
+          purchasesPrice: dx['purchases_price'],
+          sellingPrice: dx['selling_price_primary'],
+          stockLevel: dx['stock_level'],
+          supplierName: dx['supplier_name'] ?? '',
+          supplierContact: dx['supplier_number'] ?? '',
+          thumbnail: dx['product_image'] ?? '',
+        ));
+      }
     }
     customData = finalData;
     // customData = allProductDetails();
