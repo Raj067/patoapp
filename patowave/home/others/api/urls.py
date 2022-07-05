@@ -2,8 +2,10 @@ from django.urls import path, include
 from .views import *
 from rest_framework.authtoken import views
 
-# top_selling_items
+# top_selling_items greeting_cards
 api_urls = [
+    path('api/greeting-cards/', greeting_cards,
+         name='greeting_cards'),
     path('api/top-selling-items/', top_selling_items,
          name='top_selling_items'),
     path('api/general-parties-details/', general_parties_details,

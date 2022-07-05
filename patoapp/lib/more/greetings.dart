@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/greeting_cards/good_morning.dart';
+import 'package:patoapp/greeting_cards/offers.dart';
+import 'package:patoapp/greeting_cards/thank_you.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class MainGreetingsCards extends StatelessWidget {
@@ -39,32 +42,14 @@ class MainGreetingsCards extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: <Widget>[
-            _thankYou(),
-            _offers(),
-            _goodMorning(),
+            ThankYouCards(),
+            OfferCards(),
+            GoodMorningCards(),
           ],
         ),
       ),
-    );
-  }
-
-  _thankYou() {
-    return const Center(
-      child: Text("Thank You"),
-    );
-  }
-
-  _offers() {
-    return const Center(
-      child: Text("Offers"),
-    );
-  }
-
-  _goodMorning() {
-    return const Center(
-      child: Text("Good Morning"),
     );
   }
 }

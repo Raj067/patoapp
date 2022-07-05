@@ -58,6 +58,12 @@ def parties_details_api(request):
     serializer = CustomerSerializer(data, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def greeting_cards(request, *args, **kwargs):
+    data = GreetingCard.objects.all()
+    serializer = GreetingCardSerializer(data, many=True)
+    return Response(serializer.data)
 # ................ SHOP APIs ...........................
 
 
