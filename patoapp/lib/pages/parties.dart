@@ -22,6 +22,7 @@ class PartiesPage extends StatefulWidget {
 class _PartiesPageState extends State<PartiesPage> {
   String dropdownValue = 'Last Month';
   bool isWeek = true;
+  bool isAlreadyLoad = false;
 
   // For searching contacts
   List<SingleCustomer> customData = [];
@@ -45,6 +46,7 @@ class _PartiesPageState extends State<PartiesPage> {
         ));
       }
       customData = finalData;
+      isAlreadyLoad = true;
     }
 
     // customData = allCustomerDetails();
@@ -68,7 +70,14 @@ class _PartiesPageState extends State<PartiesPage> {
             Container(height: 5),
             _headerSection(context),
             _searchBox(context),
-            _customerDetails(context),
+            isAlreadyLoad
+                ? _customerDetails(context)
+                : const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
           ],
         ),
       ),

@@ -53,6 +53,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   int itemsMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
+  bool isAlreadyLoad = false;
   fetchData(String path) async {
     var data = await http.get(
       Uri.parse(baseUrl + path),
@@ -75,6 +76,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
         ));
       }
     }
+    isAlreadyLoad = true;
     customData = finalData;
     // customData = allProductDetails();
     setState(() {});
@@ -134,8 +136,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                       ],
                     )
               : Container(),
-          customData == []
-              ? Expanded(
+          isAlreadyLoad
+              ? _itemAllDataFiltered()
+              : Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,8 +146,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                       Center(child: CircularProgressIndicator()),
                     ],
                   ),
-                )
-              : _itemAllDataFiltered(),
+                ),
           allAddedProduct != 0
               ? Dismissible(
                   key: const Key('removeData'),

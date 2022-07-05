@@ -14,9 +14,6 @@ class LoginPage extends StatelessWidget {
             "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2ODMxMTgzLCJpYXQiOjE2NTY4MjgxODMsImp0aSI6Ijg1YTBlMTE3YjBiMjQ0NTc4ZDY5YTc1YWFjNTcyOWNmIiwidXNlcl9pZCI6MX0.kjPdRzKGeHjSJkLnjYmM3KSqsmE9s_w2-iBNvKwNGDU",
       },
     );
-    print("Hellow raj --------------------------------");
-    print(data.body);
-    print(data.headers);
     return data;
   }
 
