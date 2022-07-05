@@ -4,6 +4,9 @@ from rest_framework.validators import UniqueTogetherValidator
 from accounts.models import CustomUser
 from rest_framework.fields import SerializerMethodField
 from calendar import month_name
+# from .serializers.inventory_analysis import *
+from .serializers.inventory import *
+from .serializers.inventory_analysis import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,19 +36,6 @@ class ShopProfileSerializer(serializers.ModelSerializer):
             'id', 'name', 'slogan',
             'phone', 'email', 'logo',
             'signature', 'address', 'media_link',
-        )
-
-
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = (
-            'id', 'product_name', 'purchases_price',
-            'product_code', 'selling_price_primary',
-            'selling_price_secondary', 'quantity', 'stock_level',
-            'primary_unit', 'secondary_unit', 'rate_unit',
-            'supplier_name', 'supplier_number', 'supplier_email',
-            'created_at', 'product_image',
         )
 
 
@@ -130,3 +120,9 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 def format_date(date):
     return f"{date.day} {month_name[date.month]}, {date.year} "
+
+
+class TopSellingProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = ('id', 'amount', 'is_payment_in',)

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from backend.api.customers import *
 from backend.funcs.decorators import *
 from home.models import *
-from .serializers import *
+from .serializer import *
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
