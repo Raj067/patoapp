@@ -11,7 +11,7 @@ class SingleProduct {
   int totalItemsSold;
   int addedToCart = 0;
   bool isAddedToCartAutomatic = false;
-  String id;
+  int id;
 
   SingleProduct({
     required this.productName,

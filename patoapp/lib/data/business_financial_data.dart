@@ -1,7 +1,7 @@
 import 'package:patoapp/data/customer_list.dart';
 
 class FinancialData {
-  String id;
+  int id;
   DateTime date;
   bool isCashSale = true;
   bool isExpenses = false;
@@ -160,7 +160,7 @@ List<FinancialData> allFinancialData() {
   return [
     FinancialData(
       date: DateTime(2022, 06, 20),
-      id: "1",
+      id: 1,
       isCashSale: true,
       // [[qty, description, price],]
       details: [
@@ -172,21 +172,21 @@ List<FinancialData> allFinancialData() {
     ),
     FinancialData(
       date: DateTime(2022, 06, 20),
-      id: "2",
+      id: 2,
       isCashSale: true,
       details: [2000, 2],
     ),
     FinancialData(
       date: DateTime(2022, 06, 20),
       name: "Anitha",
-      id: "3",
+      id: 3,
       isCashSale: true,
       details: [2400, 28],
     ),
     FinancialData(
       date: DateTime(2022, 06, 20),
       name: "Rashidi",
-      id: "4",
+      id: 4,
       isCashSale: false,
       isInvoice: true,
       details: [
@@ -198,7 +198,7 @@ List<FinancialData> allFinancialData() {
     FinancialData(
       date: DateTime(2022, 06, 20),
       description: "Breakfast",
-      id: "5",
+      id: 5,
       isCashSale: false,
       isExpenses: true,
       details: [800, 2],
@@ -206,7 +206,7 @@ List<FinancialData> allFinancialData() {
     FinancialData(
       date: DateTime(2022, 06, 20),
       description: "Lunch",
-      id: "6",
+      id: 6,
       isCashSale: false,
       isExpenses: true,
       details: [1500, 28],
@@ -214,7 +214,7 @@ List<FinancialData> allFinancialData() {
     // 21 - 06 - 2022
     FinancialData(
       date: DateTime(2022, 06, 21),
-      id: "7",
+      id: 7,
       isCashSale: true,
       details: [
         2100,
@@ -225,20 +225,20 @@ List<FinancialData> allFinancialData() {
     ),
     FinancialData(
       date: DateTime(2022, 06, 21),
-      id: "8",
+      id: 8,
       isCashSale: true,
       details: [5000, 28],
     ),
     FinancialData(
       date: DateTime(2022, 06, 21),
-      id: "9",
+      id: 9,
       isCashSale: true,
       details: [9000, 28],
     ),
     FinancialData(
       date: DateTime(2022, 06, 21),
       description: "Rashidi",
-      id: "10",
+      id: 10,
       isCashSale: false,
       isPaymentIn: true,
       details: [1500, 28],
@@ -246,7 +246,7 @@ List<FinancialData> allFinancialData() {
     FinancialData(
       date: DateTime(2022, 06, 21),
       description: "Breakfast",
-      id: "11",
+      id: 11,
       isCashSale: false,
       isExpenses: true,
       details: [800, 28],
@@ -254,7 +254,7 @@ List<FinancialData> allFinancialData() {
     FinancialData(
       date: DateTime(2022, 06, 21),
       description: "Bus fair",
-      id: "12",
+      id: 12,
       isCashSale: false,
       isExpenses: true,
       details: [1000, 28],

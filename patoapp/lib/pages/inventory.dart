@@ -64,7 +64,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleProduct(
-          id: "${dx['id']}",
+          id: dx['id'],
           productName: dx["product_name"],
           quantity: dx['quantity'],
           purchasesPrice: dx['purchases_price'],
@@ -317,7 +317,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
       ),
       elevation: 0,
       child: Dismissible(
-        key: Key(product.id),
+        key: Key("${product.id}"),
         confirmDismiss: (direction) async {
           if (direction == DismissDirection.startToEnd) {
             _addDataToCartManual(context, product);
