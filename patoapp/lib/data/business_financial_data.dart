@@ -332,21 +332,19 @@ List<Map> allBusinessFinancialData() {
 // Closing Balances Inventory as at 24/06/2022
 
 class BusinessGeneral {
-  String salesWeek;
-  String expensesWeek;
-  String profitWeek;
-  String salesMonth;
-  String expensesMonth;
-  String profitMonth;
+  int salesWeek;
+  int expensesWeek;
+  int profitWeek;
+  int salesMonth;
+  int expensesMonth;
+  int profitMonth;
 
   BusinessGeneral({
-    this.salesWeek = "43,000",
-    this.expensesWeek = "12,000",
-    this.profitWeek = "54,000",
-    this.salesMonth = "9,000",
-    this.expensesMonth = "78,900",
-    this.profitMonth = '65000',
+    required this.salesWeek,
+    required this.expensesWeek,
+    required this.profitWeek,
+    required this.salesMonth,
+    required this.expensesMonth,
+    required this.profitMonth,
   });
 }
-
-BusinessGeneral businessGeneral = BusinessGeneral();

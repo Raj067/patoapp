@@ -2,9 +2,17 @@ from django.urls import path, include
 from .views import *
 from rest_framework.authtoken import views
 
+# top_selling_items
 api_urls = [
-    #     path('api/sample/', sample_api, name='users'),
-    #     path('api/user/', UserRecordView.as_view(), name='users'),
+    path('api/top-selling-items/', top_selling_items,
+         name='top_selling_items'),
+    path('api/general-parties-details/', general_parties_details,
+         name='general_parties_details'),
+    path('api/general-business-details/', general_business_details,
+         name='general_business_data'),
+    path('api/general-inventory-analysis/', general_inventory_analysis,
+         name='general_inventory_analysis'),
+    
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     #     # Shop api
     path('api/shop-profile-details/',
@@ -13,17 +21,5 @@ api_urls = [
          inventory_pruducts_api, name='inventory_pruducts_api'),
     path('api/parties-details/',
          parties_details_api, name='parties_details_api'),
-    #     path('api/edit-existing-shop/<int:shop_id>/', parties_details_api
-    #          edit_existing_shop, name='edit_existing_shop'),
-    #     path('api/delete-existing-shop/<int:shop_id>/',
-    #          delete_existing_shop, name='delete_existing_shop'),
-
-    #     # Product api
-    #     path('api/all-shop-products/', all_shop_products, name='all_shop_products'),
-    #     path('api/single-shop-product/<int:product_id>/', single_shop_product,
-    #          name='single_shop_product'),
-
-    #     # Custoomer api
-    #     path('api/all-shop-customers/', all_shop_customers, name='all_shop_customers')
 
 ]

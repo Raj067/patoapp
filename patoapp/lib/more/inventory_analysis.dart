@@ -1,10 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/top_selling_products.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class InventoryAnalysis extends StatelessWidget {
+class InventoryAnalysis extends StatefulWidget {
   const InventoryAnalysis({Key? key}) : super(key: key);
+
+  @override
+  State<InventoryAnalysis> createState() => _InventoryAnalysisState();
+}
+
+class _InventoryAnalysisState extends State<InventoryAnalysis> {
+  InventAnalysisData inventoryAnalysisData = InventAnalysisData(
+    instock: 0,
+    stockout: 0,
+    stockin: 0,
+    inventoryTurnover: 0,
+  );
+  List<SingleTopProduct> allTopItems = [];
+  bool isAlreadyLoad = false;
+
+  fetchData() async {
+    // Data for general analysis
+    var generalData = await http.get(
+      Uri.parse("${baseUrl}api/general-inventory-analysis/"),
+      headers: authHeaders,
+    );
+    if (generalData.statusCode == 200) {
+      inventoryAnalysisData = InventAnalysisData(
+        instock: jsonDecode(generalData.body)['instock'],
+        stockout: jsonDecode(generalData.body)['stock_out'],
+        stockin: jsonDecode(generalData.body)['stockin'],
+        inventoryTurnover: jsonDecode(generalData.body)['inventory_turnover'],
+      );
+    }
+    // Main top selling items data
+    // Data for general analysis
+    var data = await http.get(
+      Uri.parse("${baseUrl}api/top-selling-items/"),
+      headers: authHeaders,
+    );
+    if (data.statusCode == 200) {
+      List<SingleTopProduct> myAllTopItems = [];
+      // print(jsonDecode(data.body));
+      for (var element in jsonDecode(data.body)) {
+        myAllTopItems.add(SingleTopProduct(
+          productName: element['product_name'],
+          thumbnail: element['thumbnail'] ?? "",
+          isOutStock: element['is_out_stock'],
+          totalItemsSold: element['total_items_sold'],
+          margin: element['margin'],
+          unit: element['unit'],
+          quantity: element['quantity'],
+        ));
+      }
+      allTopItems = myAllTopItems;
+      isAlreadyLoad = true;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +92,18 @@ class InventoryAnalysis extends StatelessWidget {
         child: ListView(
           children: [
             Container(height: 10),
-            _singleCardData(inventoryAnalysisData.instock, "Instock",
-                inventoryAnalysisData.inventoryTurnover, "Inventory Turnover"),
-            _singleCardData(inventoryAnalysisData.stockin, "Stock-In",
-                inventoryAnalysisData.stockout, "Stock-out"),
+            _singleCardData(
+              inventoryAnalysisData.instock,
+              "Instock",
+              inventoryAnalysisData.inventoryTurnover,
+              "Inventory Turnover",
+            ),
+            _singleCardData(
+              inventoryAnalysisData.stockin,
+              "Stock-In",
+              inventoryAnalysisData.stockout,
+              "Stock-out",
+            ),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -51,7 +123,14 @@ class InventoryAnalysis extends StatelessWidget {
                 ),
               ),
             ),
-            _allTopSellingProduct(context),
+            isAlreadyLoad
+                ? _allTopSellingProduct(context)
+                : const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
           ],
         ),
       ),
@@ -60,7 +139,7 @@ class InventoryAnalysis extends StatelessWidget {
 
   _allTopSellingProduct(BuildContext context) {
     List<Widget> data = [];
-    for (var element in topSellingItemsDetails()) {
+    for (var element in allTopItems) {
       data.add(_singleTopSellingProduct(context, element));
     }
 
@@ -69,8 +148,7 @@ class InventoryAnalysis extends StatelessWidget {
     );
   }
 
-  _singleCardData(
-      String nameData, String figure, String nameData1, String figure1) {
+  _singleCardData(int nameData, String figure, int nameData1, String figure1) {
     return Row(
       children: [
         Expanded(
@@ -88,7 +166,7 @@ class InventoryAnalysis extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    nameData,
+                    "$nameData",
                     style: const TextStyle(fontSize: 20),
                   ),
                   Container(
@@ -115,7 +193,7 @@ class InventoryAnalysis extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    nameData1,
+                    "$nameData1",
                     style: const TextStyle(fontSize: 20),
                   ),
                   Container(
@@ -146,19 +224,31 @@ class InventoryAnalysis extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    // color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(15),
-                    image: const DecorationImage(
-                      image: AssetImage("assets/img.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
-                ),
+                product.thumbnail == ""
+                    ? Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                      )
+                    : Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          // color: Theme.of(context).scaffoldBackgroundColor,
+
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "$imageBaseUrl${product.thumbnail}"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                      ),
                 Container(
                   width: 10,
                 ),
@@ -173,7 +263,7 @@ class InventoryAnalysis extends StatelessWidget {
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text("${product.totalItemsSold} products"),
+                            Text("${product.totalItemsSold} ${product.unit}"),
                           ]),
                       Container(
                         height: 10,

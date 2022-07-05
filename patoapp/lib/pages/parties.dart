@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/customer_list.dart';
-import 'package:patoapp/data/general_customers.dart';
+import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/reports/debt_reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
@@ -20,6 +20,12 @@ class PartiesPage extends StatefulWidget {
 }
 
 class _PartiesPageState extends State<PartiesPage> {
+  CustomersGeneral customersGeneral = CustomersGeneral(
+    totalDebtMonth: 0,
+    totalDebtWeek: 0,
+    customersDebtMonth: 0,
+    customersDebtWeek: 0,
+  );
   String dropdownValue = 'Last Month';
   bool isWeek = true;
   bool isAlreadyLoad = false;
@@ -30,6 +36,23 @@ class _PartiesPageState extends State<PartiesPage> {
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
   fetchData(String path) async {
+    // Data for general analysis
+    var generalData = await http.get(
+      Uri.parse("${baseUrl}api/general-parties-details/"),
+      headers: authHeaders,
+    );
+    if (generalData.statusCode == 200) {
+      customersGeneral = CustomersGeneral(
+        totalDebtMonth: jsonDecode(generalData.body)['total_debt_month'],
+        totalDebtWeek: jsonDecode(generalData.body)['total_debt_week'],
+        customersDebtMonth:
+            jsonDecode(generalData.body)['total_customer_debt_month'],
+        customersDebtWeek:
+            jsonDecode(generalData.body)['total_customer_debt_week'],
+      );
+    }
+
+    // Financial data
     var data = await http.get(
       Uri.parse(baseUrl + path),
       headers: authHeaders,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({Key? key}) : super(key: key);
@@ -16,6 +19,39 @@ class BusinessPage extends StatefulWidget {
 class _BusinessPageState extends State<BusinessPage> {
   String dropdownValue = 'Last Month';
   bool isWeek = true;
+  BusinessGeneral businessGeneral = BusinessGeneral(
+    salesMonth: 0,
+    salesWeek: 0,
+    profitMonth: 0,
+    profitWeek: 0,
+    expensesMonth: 0,
+    expensesWeek: 0,
+  );
+  fetchData() async {
+    // Data for general analysis
+    var generalData = await http.get(
+      Uri.parse("${baseUrl}api/general-business-details/"),
+      headers: authHeaders,
+    );
+    if (generalData.statusCode == 200) {
+      businessGeneral = BusinessGeneral(
+        salesMonth: jsonDecode(generalData.body)['sales_month'],
+        salesWeek: jsonDecode(generalData.body)['sales_week'],
+        profitMonth: jsonDecode(generalData.body)['profit_month'],
+        profitWeek: jsonDecode(generalData.body)['profit_week'],
+        expensesMonth: jsonDecode(generalData.body)['expenses_month'],
+        expensesWeek: jsonDecode(generalData.body)['expenses_week'],
+      );
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

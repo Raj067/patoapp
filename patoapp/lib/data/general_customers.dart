@@ -1,15 +1,13 @@
-class CustomersGeneral {
-  String totalDebtWeek;
-  String customersDebtWeek;
-  String totalDebtMonth;
-  String customersDebtMonth;
+// class CustomersGeneral {
+//   int totalDebtWeek;
+//   int customersDebtWeek;
+//   int totalDebtMonth;
+//   int customersDebtMonth;
 
-  CustomersGeneral({
-    this.totalDebtWeek = "43,000",
-    this.customersDebtWeek = "12,000",
-    this.totalDebtMonth = "9,000",
-    this.customersDebtMonth = "78,900",
-  });
-}
-
-CustomersGeneral customersGeneral = CustomersGeneral();
+//   CustomersGeneral({
+//     required this.totalDebtWeek,
+//     required this.customersDebtWeek,
+//     required this.totalDebtMonth,
+//     required this.customersDebtMonth,
+//   });
+// }

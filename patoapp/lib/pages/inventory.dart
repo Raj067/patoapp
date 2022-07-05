@@ -138,13 +138,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
               : Container(),
           isAlreadyLoad
               ? _itemAllDataFiltered()
-              : Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Center(child: CircularProgressIndicator()),
-                    ],
+              : const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
           allAddedProduct != 0

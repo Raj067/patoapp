@@ -4,10 +4,17 @@ from home.models import Customer
 from home.others.api.functions.func import format_date
 
 
+def general_parties_data(request, shop):
+    # print(request.user.is_authenticated, shop)
+    # data should be return as int -- > rounded
+    data = {
+        "total_debt_week": 1000, "total_customer_debt_week": 8900,
+        "total_debt_month": 1000, "total_customer_debt_month": 8900,
+    }
+    return data
+
+
 class CustomerSerializer(serializers.ModelSerializer):
-    # customer_payment = PaymentSerializer(many=True, read_only=True)
-    # customer_invoice = PaymentSerializer(many=True, read_only=True)
-    # customer_purchase = PaymentSerializer(many=True, read_only=True)
     effective_amount = SerializerMethodField()
     financial_data = SerializerMethodField()
 

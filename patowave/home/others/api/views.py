@@ -1,9 +1,10 @@
 
 from home.models import *
+from .functions.func import get_shop
 from .serializer import *
 from rest_framework.response import Response
 
-# from django.http import JsonResponse
+from django.http import JsonResponse
 # from rest_framework.views import APIView
 # from rest_framework import status
 # from rest_framework.permissions import IsAdminUser
@@ -13,47 +14,28 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 
 
-# @api_view()
-# @permission_classes([AllowAny],)
-# def sample_api(request):
-#     print("request received", request)
-#     print(f'{request.user.is_authenticated}')
-#     return JsonResponse({"data": "hello"})
+@api_view(['GET'])
+def top_selling_items(request, *args, **kwargs):
+    data = top_selling_items_data(request, get_shop(request))
+    return Response(data)
 
 
-# class UserRecordView(APIView):
-#     """
-#     API View to create or get a list of all the registered
-#     users. GET request returns the registered users whereas
-#     a POST request allows to create a new user.
-#     """
-#     permission_classes = [IsAdminUser]
-
-#     def get(self, format=None):
-#         users = CustomUser.objects.all()
-#         serializer = UserSerializer(users, many=True)
-#         return Response(serializer.data)
-
-#     def post(self, request):
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid(raise_exception=ValueError):
-#             serializer.create(validated_data=request.data)
-#             return Response(
-#                 serializer.data,
-#                 status=status.HTTP_201_CREATED
-#             )
-#         return Response(
-#             {
-#                 "error": True,
-#                 "error_msg": serializer.error_messages,
-#             },
-#             status=status.HTTP_400_BAD_REQUEST
-#         )
+@api_view(['GET'])
+def general_inventory_analysis(request, *args, **kwargs):
+    data = general_inventory_analysis_data(request, get_shop(request))
+    return Response(data)
 
 
-def get_shop(request) -> list:
-    shop = [i.shop for i in ShopUser.objects.all() if i.user == request.user]
-    return shop
+@api_view(['GET'])
+def general_parties_details(request, *args, **kwargs):
+    data = general_parties_data(request, get_shop(request))
+    return Response(data)
+
+
+@api_view(['GET'])
+def general_business_details(request, *args, **kwargs):
+    data = general_business_data(request, get_shop(request))
+    return Response(data)
 
 
 @api_view(['GET'])
