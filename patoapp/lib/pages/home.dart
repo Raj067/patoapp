@@ -52,17 +52,23 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
         actions: const [NotificationIcon(), SizedBox(width: 20)],
         elevation: 0,
       ),
-      body: ListView(
+      body: Column(
         children: [
           _weatherHeader(),
           _headerDesign(context),
-          Container(height: 10),
-          _currencyExchange(),
-          _calendarSection(),
-          _upcomingSchedule(),
-          // const Center(
-          //   child: Text("Cashflow"),
-          // ),
+          Expanded(
+            child: ListView(
+              children: [
+                Container(height: 10),
+                _currencyExchange(),
+                _calendarSection(),
+                _upcomingSchedule(),
+                // const Center(
+                //   child: Text("Cashflow"),
+                // ),
+              ],
+            ),
+          ),
         ],
       ),
     );

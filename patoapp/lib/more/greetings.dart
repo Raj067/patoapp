@@ -214,6 +214,18 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
             children: [
               Image.network(
                 "$imageBaseUrl$cardImage",
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
               ),
               Container(height: 10),
               Row(
