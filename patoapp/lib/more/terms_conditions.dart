@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -13,18 +11,15 @@ class TermsConditionsDialog extends StatefulWidget {
 }
 
 class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
-  var data = "";
+  bool _isLoading = true;
+  PDFDocument document = PDFDocument();
   fetchData() async {
-    // Data for general analysis
-    var myData = await http.get(
-      Uri.parse("${baseUrl}static/patoapp/files/terms_condition.txt"),
+    // Load from URL
+    document = await PDFDocument.fromURL(
+      "${baseUrl}static/patoapp/files/terms_condition.pdf",
       headers: authHeaders,
     );
-    print(myData.body);
-    if (myData.statusCode == 200) {
-      print(myData.body);
-      data = myData.body;
-    }
+    _isLoading = false;
     setState(() {});
   }
 
@@ -53,15 +48,17 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
           ),
         ),
       ),
-      body: data != ""
-          ? SingleChildScrollView(
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: Text(data),
+                child: PDFViewer(
+                  document: document,
+                ),
               ),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
             ),
       // body: const Center(
       //   child: Text("Terms and Conditions"),

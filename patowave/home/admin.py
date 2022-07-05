@@ -60,6 +60,7 @@ admin.site.register(Purchase)
 admin.site.register(Feedback,  FeedbackAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Expense)
+admin.site.register(GreetingCard)
 
 
 admin.site.site_header = "Patowave Admin"

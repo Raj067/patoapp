@@ -4,7 +4,7 @@ from .functions.func import get_shop
 from .serializer import *
 from rest_framework.response import Response
 
-from django.http import JsonResponse
+from django.http import FileResponse, HttpResponse, JsonResponse
 # from rest_framework.views import APIView
 # from rest_framework import status
 # from rest_framework.permissions import IsAdminUser

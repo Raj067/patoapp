@@ -12,7 +12,7 @@ api_urls = [
          name='general_business_data'),
     path('api/general-inventory-analysis/', general_inventory_analysis,
          name='general_inventory_analysis'),
-    
+
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     #     # Shop api
     path('api/shop-profile-details/',

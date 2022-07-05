@@ -232,3 +232,22 @@ class Expense(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class GreetingCard(models.Model):
+    categories = [
+        ('thank-you', 'Thank You'),
+        ('offers', 'Offers'),
+        ('good-morning', 'Good Morning'),
+    ]
+    card_category = models.CharField(max_length=100, choices=categories)
+    default_text = models.CharField(max_length=500)
+    greeting_card = models.ImageField(
+        upload_to='greeting-cards/')
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"card {self.id}"
