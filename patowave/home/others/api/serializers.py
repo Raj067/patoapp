@@ -103,12 +103,12 @@ class CustomerSerializer(serializers.ModelSerializer):
         for dx in myModel.customer_payment.all():
             if dx.is_payment_in:
                 data.append({
-                    "name": "Payment in", "description": dx.description,
+                    "name": "Payment in", "description": dx.description if dx.description else "Payment in",
                     "received": dx.amount, "paid": 0, "date": format_date(dx.created_at)
                 })
             else:
                 data.append({
-                    "name": "Payment out", "description": dx.description,
+                    "name": "Payment out", "description": dx.description if dx.description else "Payment out",
                     "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
                 })
 
