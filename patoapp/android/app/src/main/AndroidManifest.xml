@@ -16,8 +16,7 @@
    <application
         android:label="patoapp"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon"
-        android:usesCleartext="true">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

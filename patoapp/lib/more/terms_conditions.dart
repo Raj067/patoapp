@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -12,13 +11,13 @@ class TermsConditionsDialog extends StatefulWidget {
 
 class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
   bool _isLoading = true;
-  PDFDocument document = PDFDocument();
+  String document = '';
   fetchData() async {
     // Load from URL
-    document = await PDFDocument.fromURL(
-      "${baseUrl}static/patoapp/files/terms_condition.pdf",
-      headers: authHeaders,
-    );
+    // document = await PDFDocument.fromURL(
+    //   "${baseUrl}static/patoapp/files/terms_condition.pdf",
+    //   headers: authHeaders,
+    // );
     _isLoading = false;
     setState(() {});
   }
@@ -55,9 +54,7 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: PDFViewer(
-                  document: document,
-                ),
+                child: Text(document),
               ),
             ),
       // body: const Center(

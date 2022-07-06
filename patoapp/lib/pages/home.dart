@@ -8,6 +8,7 @@ import 'package:patoapp/more/overview.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -401,6 +402,18 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               ),
               Container(
                 height: 15,
+              ),
+              DatePicker(
+                DateTime.now(),
+                initialSelectedDate: DateTime.now(),
+                selectionColor: Colors.black,
+                selectedTextColor: Colors.white,
+                onDateChange: (date) {
+                  // New date selected
+                  setState(() {
+                    // _selectedValue = date;
+                  });
+                },
               ),
               Row(
                 children: [
