@@ -38,7 +38,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
       body: Column(
         children: [
           Container(
-            color: Colors.grey.withAlpha(50),
+            color: Colors.grey.withAlpha(0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -46,7 +46,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   child: Container(
                     color: _value == 1
                         ? patowaveGreen.withAlpha(100)
-                        : Colors.grey.withAlpha(50),
+                        : Colors.grey.withAlpha(0),
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -78,7 +78,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   child: Container(
                     color: _value == 2
                         ? patowaveErrorRed.withAlpha(100)
-                        : Colors.grey.withAlpha(50),
+                        : Colors.grey.withAlpha(0),
                     child: InkWell(
                       onTap: () {
                         setState(() {

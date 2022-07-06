@@ -68,59 +68,69 @@ class _AddProductPageState extends State<AddProductPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 1;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowavePrimary,
-                        value: 1,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 1;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Product"),
-                    ],
+                child: Container(
+                  color: _value == 1
+                      ? patowavePrimary.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 1;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowavePrimary,
+                          value: 1,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 1;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Product"),
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 2;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowavePrimary,
-                        value: 2,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 2;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Service"),
-                      Container(
-                        width: 10,
-                      ),
-                    ],
+                child: Container(
+                  color: _value == 2
+                      ? patowavePrimary.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 2;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowavePrimary,
+                          value: 2,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 2;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Service"),
+                        Container(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

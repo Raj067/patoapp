@@ -40,59 +40,69 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 1;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveGreen,
-                        value: 1,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 1;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Sales"),
-                    ],
+                child: Container(
+                  color: _value == 1
+                      ? patowaveGreen.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 1;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowaveGreen,
+                          value: 1,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 1;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Sales"),
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 2;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveErrorRed,
-                        value: 2,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 2;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Expenses"),
-                      Container(
-                        width: 10,
-                      ),
-                    ],
+                child: Container(
+                  color: _value == 2
+                      ? patowaveErrorRed.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 2;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowaveErrorRed,
+                          value: 2,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 2;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Expenses"),
+                        Container(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
