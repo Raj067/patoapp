@@ -18,7 +18,10 @@ class AddPaymentCustomerDialog extends StatefulWidget {
 
 class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   int _value = 1;
-
+  String paidAmount = '0';
+  String receivedAmount = '0';
+  final paidAmountFormKey1 = GlobalKey<FormState>();
+  final receivedAmountformKey1 = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -160,7 +163,33 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (_value == 1) {
+                    // for payment in
+                    {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (receivedAmountformKey1.currentState!.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                    }
+                  } else {
+                    // for payment out
+                    {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (paidAmountFormKey1.currentState!.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                    }
+                  }
+                },
                 child: const Text(
                   "Add Payment",
                 ),
@@ -176,12 +205,42 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: receivedAmountformKey1,
+          child: ListView(
+            children: [
+              Container(height: 10),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() {
+                    receivedAmount = val;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter amount received';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Received Amount",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 10),
+              TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(
                   filled: true,
@@ -209,67 +268,30 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Received",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Container(width: 30),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Tsh",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
+              Container(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Total Amount",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Amount",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Container(height: 20),
-            SizedBox(
-              // height: 180,
-              child: TextFormField(
+                  Text(
+                    "Tsh: $receivedAmount",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Container(height: 20),
+              TextFormField(
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 3,
+                minLines: 2,
+                maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(
                     "Add Note (Descriptions)",
@@ -282,8 +304,8 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -293,12 +315,42 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: paidAmountFormKey1,
+          child: ListView(
+            children: [
+              Container(height: 10),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() {
+                    paidAmount = val;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter paid amount';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Paid Amount",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 10),
+              TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(
                   filled: true,
@@ -326,81 +378,48 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Paid",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Container(width: 30),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Tsh",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
+              Container(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Total Amount",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Tsh: $paidAmount",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Container(height: 20),
+              SizedBox(
+                // height: 180,
+                child: TextFormField(
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  minLines: 2,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    label: Text(
+                      "Add Note (Descriptions)",
+                      style:
+                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Amount",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Container(height: 20),
-            SizedBox(
-              // height: 180,
-              child: TextFormField(
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Note (Descriptions)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
