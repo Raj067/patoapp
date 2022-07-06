@@ -211,6 +211,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
             children: [
               Container(height: 10),
               TextFormField(
+                cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
                     receivedAmount = val;
@@ -288,6 +289,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
               ),
               Container(height: 20),
               TextFormField(
+                cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
                 minLines: 2,
@@ -321,6 +323,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
             children: [
               Container(height: 10),
               TextFormField(
+                cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
                     paidAmount = val;
@@ -397,23 +400,20 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 ],
               ),
               Container(height: 20),
-              SizedBox(
-                // height: 180,
-                child: TextFormField(
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  minLines: 2,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    label: Text(
-                      "Add Note (Descriptions)",
-                      style:
-                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                minLines: 2,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Add Note (Descriptions)",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
                   ),
                 ),

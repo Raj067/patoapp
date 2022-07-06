@@ -263,7 +263,7 @@ class _PartiesPageState extends State<PartiesPage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            const AddCustomerDialog(),
+                            AddCustomerDialog(),
                         fullscreenDialog: true,
                       ),
                     );

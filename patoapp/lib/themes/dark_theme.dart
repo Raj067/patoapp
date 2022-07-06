@@ -20,6 +20,7 @@ InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
   focusColor: patowavePrimary,
   hintStyle: TextStyle(color: patowavePrimary),
   labelStyle: TextStyle(color: Colors.grey),
+  floatingLabelStyle: TextStyle(color: patowavePrimary),
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(
       Radius.circular(15),
