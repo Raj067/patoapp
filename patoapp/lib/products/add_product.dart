@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -29,29 +30,13 @@ class _AddProductPageState extends State<AddProductPage> {
     'PAIRS (Prs)',
     'PIECES (Pcs)',
   ];
-  final List<String> secondaryUnits = [
-    'BOTTLES (Btl)',
-    'BOX (Box)',
-    'BUNDLES (Bdl)',
-    'CANS (Can)',
-    'CARTONS (Ctn)',
-    'DOZENS (Dzn)',
-    'GRAMMES (gm)',
-    'KILOGRAMS (Kg)',
-    'LITRE (Ltr)',
-    'METERS (Mtr)',
-    'MILILITRE (Ml)',
-    'NUMBERS (Nos)',
-    'PACKS (Pac)',
-    'PAIRS (Prs)',
-    'PIECES (Pcs)',
-  ];
-  String selectedPrimaryUnit = 'CANS (Can)';
-  String selectedSecondaryUnit = 'BOX (Box)';
+  String? selectedPrimaryUnit;
 
   String? selectedValue;
   bool _isSupplierActivated = false;
   int _value = 1;
+  final addProductFormKey = GlobalKey<FormState>();
+  final addServicesFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +149,31 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (_value == 1) {
+                    // for payment in
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (addProductFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  } else {
+                    // for payment out
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (addServicesFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  }
+                },
                 child: const Text(
                   "Add Item",
                 ),
@@ -180,47 +189,38 @@ class _AddProductPageState extends State<AddProductPage> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            // _formField1(),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  label: const Text(
-                    "Item Name",
+        child: Form(
+          key: addProductFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add Item name';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Item Name*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: const OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
                   ),
-                  suffixIcon: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      _setUnit(context);
-                    },
-                    child: const Text(
-                      "Set Unit",
-                    ),
-                  ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
                     "Item Code",
@@ -233,14 +233,74 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              DropdownButtonFormField2(
+                validator: (value) {
+                  if (value == null || value == "") {
+                    return 'Please select Unit';
+                  }
+                  return null;
+                },
+                value: selectedPrimaryUnit,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Select Unit*',
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: primaryUnits
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  selectedValue = value.toString();
+                },
+              ),
+              Container(height: 20),
+              const Text(
+                "Pricing & Other Details",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add Sales Price';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
-                    "Purchases Price",
+                    "Sales Price*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -250,19 +310,22 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            const Text(
-              "Pricing & Other Details",
-              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add Purchases Price';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
-                    "Sales Price (can)",
+                    "Purchases Price*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -272,31 +335,16 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Sales Price (box)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+              Container(height: 15),
+              Row(
+                children: [
+                  Expanded(
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             icon: const FaIcon(
@@ -315,12 +363,14 @@ class _AddProductPageState extends State<AddProductPage> {
                       ),
                     ),
                   ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+                  Container(width: 10),
+                  Expanded(
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             icon: const FaIcon(
@@ -339,32 +389,29 @@ class _AddProductPageState extends State<AddProductPage> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              const Text(
-                "Supplier Contact",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ],
               ),
-              Switch(
-                  activeColor: patowavePrimary,
-                  value: _isSupplierActivated,
-                  onChanged: (val) {
-                    setState(() {
-                      _isSupplierActivated = val;
-                    });
-                  })
-            ]),
-
-            _isSupplierActivated
-                ? Column(
-                    children: [
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+              Container(height: 15),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                const Text(
+                  "Supplier Contact",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                Switch(
+                    activeColor: patowavePrimary,
+                    value: _isSupplierActivated,
+                    onChanged: (val) {
+                      setState(() {
+                        _isSupplierActivated = val;
+                      });
+                    })
+              ]),
+              _isSupplierActivated
+                  ? Column(
+                      children: [
+                        Container(height: 15),
+                        TextFormField(
+                          cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
                               "Name",
@@ -378,11 +425,13 @@ class _AddProductPageState extends State<AddProductPage> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+                        Container(height: 15),
+                        TextFormField(
+                          cursorColor: patowavePrimary,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           decoration: const InputDecoration(
                             label: Text(
                               "Phone Number",
@@ -396,11 +445,9 @@ class _AddProductPageState extends State<AddProductPage> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+                        Container(height: 15),
+                        TextFormField(
+                          cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
                               "Email",
@@ -414,180 +461,14 @@ class _AddProductPageState extends State<AddProductPage> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10)
-                    ],
-                  )
-                : Container(height: 10),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _setUnit(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
-            ),
-          ),
-          elevation: 0,
-          scrollable: true,
-          // backgroundColor: patoBackgroundColor,
-          title: const Text('Add Item Unit'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 45,
-                child: DropdownButtonFormField2(
-                  value: selectedPrimaryUnit,
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Primary Unit',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: primaryUnits
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                ),
-              ),
-              Container(height: 10),
-              SizedBox(
-                height: 45,
-                child: DropdownButtonFormField2(
-                  value: selectedSecondaryUnit,
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Secondary Unit',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: secondaryUnits
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                ),
-              ),
-              Container(height: 10),
-              const Text("Conversion Rate"),
-              Container(height: 10),
-              Center(
-                child: Text(
-                  "1 $selectedPrimaryUnit= 12 $selectedSecondaryUnit",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
+                        Container(height: 10)
+                      ],
+                    )
+                  : Container(height: 15),
             ],
           ),
-          actions: [
-            Row(children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(45, 45),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Text("Cancel"),
-                ),
-              ),
-              Container(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(45, 45),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  child: const Text("Save"),
-                ),
-              ),
-            ])
-          ],
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -595,16 +476,23 @@ class _AddProductPageState extends State<AddProductPage> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            // _formField1(),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: addServicesFormKey,
+          child: ListView(
+            children: [
+              // _formField1(),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add service name';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Service Name",
+                    "Service Name*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -614,14 +502,18 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add service charge';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Service Charge",
+                    "Service Charge*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -631,14 +523,18 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please add service unit';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Service Unit",
+                    "Service Unit*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -648,11 +544,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
                     "Description",
@@ -665,8 +559,8 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

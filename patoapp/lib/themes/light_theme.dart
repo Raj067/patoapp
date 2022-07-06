@@ -16,8 +16,14 @@ ThemeData patowaveLightTheme() {
     chipTheme: _chipTheme,
     floatingActionButtonTheme: _floatingActionButtonTheme,
     dialogTheme: _dialogTheme,
+    inputDecorationTheme: _inputDecorationTheme,
   );
 }
+
+InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
+  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+  iconColor: Colors.grey,
+);
 
 const DialogTheme _dialogTheme = DialogTheme(
   backgroundColor: patowaveBackground,

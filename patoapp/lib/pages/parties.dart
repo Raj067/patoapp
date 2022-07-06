@@ -61,9 +61,11 @@ class _PartiesPageState extends State<PartiesPage> {
       List<SingleCustomer> finalData = [];
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleCustomer(
+          address: dx['customer_address'],
+          email: dx['customer_email'] ?? "",
           financialData: dx['financial_data'],
           fullName: dx['customer_name'],
-          phoneNumber: dx['customer_number'] ?? "",
+          phoneNumber: dx['customer_number'],
           amount: dx['effective_amount'],
           id: dx['id'],
         ));
@@ -262,8 +264,7 @@ class _PartiesPageState extends State<PartiesPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            AddCustomerDialog(),
+                        builder: (BuildContext context) => AddCustomerDialog(),
                         fullscreenDialog: true,
                       ),
                     );

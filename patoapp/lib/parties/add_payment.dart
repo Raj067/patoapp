@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -165,27 +166,25 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 onPressed: () {
                   if (_value == 1) {
                     // for payment in
-                    {
-                      // Validate returns true if the form is valid, or false otherwise.
-                      if (paymentInFormKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
-                      }
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (paymentInFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
                     }
                   } else {
                     // for payment out
-                    {
-                      // Validate returns true if the form is valid, or false otherwise.
-                      if (paymentOutFormKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
-                      }
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (paymentOutFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
                     }
                   }
                 },
@@ -201,6 +200,20 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   }
 
   _paymentIn() {
+    final List<String> items = [
+      'A_Item1',
+      'A_Item2',
+      'A_Item3',
+      'A_Item4',
+      'B_Item1',
+      'B_Item2',
+      'B_Item3',
+      'B_Item4',
+    ];
+
+    String? selectedValue;
+    final TextEditingController textEditingController = TextEditingController();
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -208,7 +221,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
           key: paymentInFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
@@ -239,22 +252,87 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Customer Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+              Container(height: 15),
+              DropdownButtonFormField2(
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select customer name';
+                    }
+                    return null;
+                  },
+                  value: selectedValue,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  decoration: InputDecoration(
+                    label: const Text(
+                      'Select customer',
+                      style:
+                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                ),
-              ),
-              Container(height: 10),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: items
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
+                  searchController: textEditingController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for Customer..',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return (item.value.toString().contains(searchValue));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingController.clear();
+                    }
+                  }),
+              Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -301,6 +379,19 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   }
 
   _paymentOut() {
+    final List<String> items = [
+      'A_Item1',
+      'A_Item2',
+      'A_Item3',
+      'A_Item4',
+      'B_Item1',
+      'B_Item2',
+      'B_Item3',
+      'B_Item4',
+    ];
+
+    String? selectedValue;
+    final TextEditingController textEditingController = TextEditingController();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -308,7 +399,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
           key: paymentOutFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
@@ -339,22 +430,87 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Customer Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+              Container(height: 15),
+              DropdownButtonFormField2(
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select customer name';
+                    }
+                    return null;
+                  },
+                  value: selectedValue,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  decoration: InputDecoration(
+                    label: const Text(
+                      'Select customer',
+                      style:
+                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                ),
-              ),
-              Container(height: 10),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: items
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
+                  searchController: textEditingController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for Customer..',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return (item.value.toString().contains(searchValue));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingController.clear();
+                    }
+                  }),
+              Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

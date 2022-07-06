@@ -550,26 +550,39 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           children: [
             _location(),
             Container(height: 10),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Row(children: [
-                const Text(
-                  "Today 27°C",
-                  style: TextStyle(color: patowaveWhite),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Today 27°C",
+                      style: TextStyle(color: patowaveWhite),
+                    ),
+                    Container(width: 10),
+                    const FaIcon(
+                      FontAwesomeIcons.cloud,
+                      color: patowaveWhite,
+                      size: 16,
+                    ),
+                  ],
                 ),
-                Container(width: 10),
-                const FaIcon(FontAwesomeIcons.cloud,
-                    color: patowaveWhite, size: 16),
-              ]),
-              Row(children: [
-                const Text(
-                  "Tomorrow 25°C",
-                  style: TextStyle(color: patowaveWhite),
+                Container(width: 20),
+                Row(
+                  children: [
+                    const Text(
+                      "Tomorrow 25°C",
+                      style: TextStyle(color: patowaveWhite),
+                    ),
+                    Container(width: 10),
+                    const FaIcon(
+                      FontAwesomeIcons.cloudRain,
+                      color: patowaveWhite,
+                      size: 16,
+                    ),
+                  ],
                 ),
-                Container(width: 10),
-                const FaIcon(FontAwesomeIcons.cloudRain,
-                    color: patowaveWhite, size: 16),
-              ]),
-            ]),
+              ],
+            ),
           ],
         ),
       ),

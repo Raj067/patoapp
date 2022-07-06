@@ -209,7 +209,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
           key: receivedAmountformKey1,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
@@ -240,7 +240,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(
@@ -269,7 +269,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -321,7 +321,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
           key: paidAmountFormKey1,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
@@ -352,7 +352,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(
@@ -381,7 +381,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -38,7 +38,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
           key: addCustomerFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               Card(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
@@ -91,7 +91,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -112,7 +112,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -137,7 +137,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -158,7 +158,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
@@ -173,7 +173,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -206,14 +206,14 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   Container(width: 10),
                   Expanded(
                     child: InputDatePickerFormField(
-                      firstDate: DateTime(2022, 1, 1),
+                      firstDate: DateTime(2000, 1, 1),
                       lastDate: DateTime(2025, 1, 1),
                       initialDate: DateTime.now(),
                     ),
                   )
                 ],
               ),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 children: [
                   ToggleSwitch(

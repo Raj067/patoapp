@@ -1,6 +1,7 @@
 class SingleCustomer {
   String fullName = "";
   String email;
+  String address;
   int amount = 0;
   int id = 0;
   String phoneNumber;
@@ -8,11 +9,12 @@ class SingleCustomer {
 
   SingleCustomer({
     required this.fullName,
+    required this.address,
     this.email = "",
     required this.amount,
     required this.financialData,
     required this.id,
-    this.phoneNumber = "",
+    required this.phoneNumber,
   });
   isToReceive() {
     if (amount >= 0) {

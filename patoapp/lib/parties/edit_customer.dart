@@ -4,8 +4,8 @@ import 'package:patoapp/themes/light_theme.dart';
 
 class EditCustomer extends StatelessWidget {
   final SingleCustomer customer;
-  const EditCustomer({Key? key, required this.customer}) : super(key: key);
-
+  EditCustomer({Key? key, required this.customer}) : super(key: key);
+  final editCustomerFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +26,12 @@ class EditCustomer extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: editCustomerFormKey,
+          child: ListView(
+            children: [
+              Container(height: 10),
+              TextFormField(
                 initialValue: customer.fullName,
                 decoration: const InputDecoration(
                   label: Text(
@@ -45,11 +45,8 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 10),
+              TextFormField(
                 initialValue: customer.phoneNumber,
                 decoration: const InputDecoration(
                   label: Text(
@@ -63,11 +60,23 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 10),
+              TextFormField(
+                initialValue: customer.address,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Address",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 10),
+              TextFormField(
                 initialValue: customer.email,
                 decoration: const InputDecoration(
                   label: Text(
@@ -81,9 +90,9 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-          ],
+              Container(height: 10),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -105,7 +114,16 @@ class EditCustomer extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // Validate returns true if the form is valid, or false otherwise.
+                  if (editCustomerFormKey.currentState!.validate()) {
+                    // If the form is valid, display a snackbar. In the real world,
+                    // you'd often call a server or save the information in a database.
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
+                  }
+                },
                 child: const Text(
                   "Save",
                   style: TextStyle(fontSize: 16),

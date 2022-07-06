@@ -97,9 +97,9 @@ class Service(models.Model):
 class Customer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer_name = models.CharField(max_length=100)
-    customer_number = models.CharField(max_length=100, null=True, blank=True)
+    customer_number = models.CharField(max_length=100)
     customer_email = models.EmailField(null=True, blank=True)
-    customer_address = models.CharField(max_length=100, null=True, blank=True)
+    customer_address = models.CharField(max_length=100)
     customer_payment = models.ManyToManyField(
         "Payment", blank=True, related_name='data_customer_payment')
     customer_invoice = models.ManyToManyField(

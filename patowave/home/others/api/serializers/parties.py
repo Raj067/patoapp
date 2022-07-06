@@ -20,8 +20,8 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ('id', 'customer_name', 'customer_number',
-                  'effective_amount', 'financial_data')
+        fields = ('id', 'customer_name', 'customer_number','customer_address',
+                  'customer_email','effective_amount', 'financial_data')
 
     def get_effective_amount(mySerializer, myModel):
         val = 0

@@ -16,7 +16,8 @@ ThemeData patowaveDarkTheme() {
 }
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
-  iconColor: patowavePrimary,
+  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+  iconColor: Colors.grey,
   focusColor: patowavePrimary,
   hintStyle: TextStyle(color: patowavePrimary),
   labelStyle: TextStyle(color: Colors.grey),
