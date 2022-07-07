@@ -8,8 +8,9 @@ Map d = {
   "refresh":
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NDY5NDc1NCwiaWF0IjoxNjU2OTE4NzU0LCJqdGkiOiJiNmExZTEzMTE2OTE0ZDBiOTdiNGIwM2YzODRiMGUyMiIsInVzZXJfaWQiOjF9.ybhW9rA_EVqOH7hawSuNazaFcONqqDP_Tgdbj4nuxK4"
 };
-const String baseUrl = "http://192.168.43.7:8000/";
-const String imageBaseUrl = "http://192.168.43.7:8000";
+String url = "http://localhost:3000";
+String baseUrl = "$url/";
+String imageBaseUrl = url;
 String accessToken = d['access'];
 const String refreshToken = "";
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -30,12 +31,19 @@ class EditCustomer extends StatelessWidget {
           key: editCustomerFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
+                cursorColor: patowavePrimary,
                 initialValue: customer.fullName,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Customer Name is required';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Customer Name",
+                    "Customer Name*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -45,12 +53,23 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
+                cursorColor: patowavePrimary,
                 initialValue: customer.phoneNumber,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Phone Number is required';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
-                    "Phone Number",
+                    "Phone Number*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -60,12 +79,19 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
+                cursorColor: patowavePrimary,
                 initialValue: customer.address,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Address is required';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Address",
+                    "Address*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -75,8 +101,9 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
               TextFormField(
+                cursorColor: patowavePrimary,
                 initialValue: customer.email,
                 decoration: const InputDecoration(
                   label: Text(
@@ -90,7 +117,7 @@ class EditCustomer extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(height: 10),
+              Container(height: 15),
             ],
           ),
         ),

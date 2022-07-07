@@ -48,7 +48,10 @@ class _ProductsCartState extends State<ProductsCart> {
         children: [
           const Divider(height: 0),
           Table(
-            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            border: TableBorder.all(
+              width: 1.0,
+              color: Colors.grey.withAlpha(100),
+            ),
             children: [
               TableRow(children: [
                 const Padding(
@@ -160,8 +163,6 @@ class _ProductsCartState extends State<ProductsCart> {
   }
 
   _discount() {
-    TextEditingController disc1 = TextEditingController(text: "0");
-    TextEditingController disc2 = TextEditingController(text: "0");
     return Column(
       children: [
         Container(height: 15),
@@ -173,7 +174,6 @@ class _ProductsCartState extends State<ProductsCart> {
             children: [
               const Text(
                 "Discount",
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
               Container(width: 5),
               Container(
@@ -182,8 +182,8 @@ class _ProductsCartState extends State<ProductsCart> {
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(52, 255, 70, 57),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
                   ),
                 ),
                 child: const Center(
@@ -198,12 +198,7 @@ class _ProductsCartState extends State<ProductsCart> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
-                    controller: disc1,
-                    onChanged: (val) {
-                      // setState(() {
-                      //   discount = 90;
-                      // });
-                    },
+                    cursorColor: patowavePrimary,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -217,6 +212,16 @@ class _ProductsCartState extends State<ProductsCart> {
                           bottomRight: Radius.circular(15),
                         ),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        borderSide: BorderSide(
+                          color: patowavePrimary,
+                          width: 2,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -228,8 +233,8 @@ class _ProductsCartState extends State<ProductsCart> {
                 decoration: const BoxDecoration(
                   color: Colors.black26,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
                   ),
                 ),
                 child: const Center(
@@ -246,7 +251,7 @@ class _ProductsCartState extends State<ProductsCart> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
-                    controller: disc2,
+                    cursorColor: patowavePrimary,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -258,6 +263,16 @@ class _ProductsCartState extends State<ProductsCart> {
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        borderSide: BorderSide(
+                          color: patowavePrimary,
+                          width: 2,
                         ),
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class SetAccountPage extends StatelessWidget {
   const SetAccountPage({Key? key}) : super(key: key);
@@ -36,81 +37,73 @@ class SetAccountPage extends StatelessWidget {
                     ),
                     Container(height: 15),
                     const Text(
-                      "Tt's the little details tha make big things happen",
+                      "It's the little details that make big things happen",
                     ),
                     Container(height: 15),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text(
-                            "Business Name",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic, fontSize: 14),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                    TextFormField(
+                      cursorColor: patowavePrimary,
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Business Name",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
                           ),
                         ),
                       ),
                     ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text(
-                            "Business Email",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic, fontSize: 14),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                    Container(height: 15),
+                    TextFormField(
+                      cursorColor: patowavePrimary,
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Business Email",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
                           ),
                         ),
                       ),
                     ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text(
-                            "Business Address",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic, fontSize: 14),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                    Container(height: 15),
+                    TextFormField(
+                      cursorColor: patowavePrimary,
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Business Address",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
                           ),
                         ),
                       ),
                     ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text(
-                            "Website/social media link",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic, fontSize: 14),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+                    Container(height: 15),
+                    TextFormField(
+                      cursorColor: patowavePrimary,
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Instagram Name",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
                           ),
                         ),
                       ),
                     ),
-                    Container(height: 10),
+                    Container(height: 15),
                   ],
                 ),
               ),

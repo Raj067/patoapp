@@ -8,10 +8,13 @@ class SingleProduct {
   int purchasesPrice;
   var supplierName = '';
   var supplierContact = '';
+  String supplierEmail = '';
+  int productCode = 0;
   int totalItemsSold;
   int addedToCart = 0;
   bool isAddedToCartAutomatic = false;
   int id;
+  // String productUnit = '';
 
   SingleProduct({
     required this.productName,
@@ -26,6 +29,8 @@ class SingleProduct {
     this.supplierContact = '',
     this.addedToCart = 0,
     this.isAddedToCartAutomatic = false,
+    this.supplierEmail = "",
+    this.productCode = 0,
   });
   addNewProductToCart(int num) {
     addedToCart += num;

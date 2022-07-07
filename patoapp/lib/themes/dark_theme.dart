@@ -13,9 +13,21 @@ ThemeData patowaveDarkTheme() {
     elevatedButtonTheme: _elevatedButtonThemeData,
     inputDecorationTheme: _inputDecorationTheme,
     appBarTheme: _appBarTheme,
+    checkboxTheme: _checkboxTheme,
   );
 }
 
+CheckboxThemeData _checkboxTheme = CheckboxThemeData(
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(5),
+    ),
+  ),
+  // MaterialStateProperty<Color?>? checkColor,
+  checkColor: MaterialStateProperty.all(patowaveWhite),
+  fillColor: MaterialStateProperty.all(patowavePrimary),
+  side: const BorderSide(width: 1, color: Colors.grey),
+);
 AppBarTheme _appBarTheme = const AppBarTheme(elevation: 0);
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(

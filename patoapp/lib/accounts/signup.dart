@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/accounts/set_account.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({Key? key}) : super(key: key);
@@ -59,6 +60,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       Container(height: 15),
                       TextFormField(
+                        cursorColor: patowavePrimary,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -78,6 +80,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       Container(height: 15),
                       TextFormField(
+                        cursorColor: patowavePrimary,
                         obscureText: true,
                         decoration: const InputDecoration(
                           label: Text(
@@ -94,6 +97,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       Container(height: 15),
                       TextFormField(
+                        cursorColor: patowavePrimary,
                         obscureText: true,
                         decoration: const InputDecoration(
                           label: Text(

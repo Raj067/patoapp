@@ -167,7 +167,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
             child: TextFormField(
               decoration: const InputDecoration(
                 label: Text(
-                  "Website/social media link",
+                  "Instagram Name",
                   style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                 ),
                 border: OutlineInputBorder(

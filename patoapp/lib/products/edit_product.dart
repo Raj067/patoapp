@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -42,6 +43,7 @@ class _EditProductState extends State<EditProduct> {
 
   String? selectedValue;
   bool _isSupplierActivated = false;
+  final editProductFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,48 +109,40 @@ class _EditProductState extends State<EditProduct> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            // _formField1(),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: editProductFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              TextFormField(
                 initialValue: widget.product.productName,
-                decoration: InputDecoration(
-                  label: const Text(
-                    "Item Name",
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Item name is required';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Item Name*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: const OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
                   ),
-                  suffixIcon: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      _setUnit(context);
-                    },
-                    child: const Text(
-                      "Set Unit",
-                    ),
-                  ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                initialValue: "${widget.product.productCode}",
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
                     "Item Code",
@@ -161,38 +155,75 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
-                initialValue: "${widget.product.purchasesPrice}",
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Purchases Price",
+              Container(height: 15),
+              DropdownButtonFormField2(
+                validator: (value) {
+                  if (value == null || value == "") {
+                    return 'Please select Unit';
+                  }
+                  return null;
+                },
+                value: selectedPrimaryUnit,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Select Unit*',
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: primaryUnits
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  selectedValue = value.toString();
+                },
               ),
-            ),
-            Container(height: 10),
-            const Text(
-              "Pricing & Other Details",
-              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 20),
+              const Text(
+                "Pricing & Other Details",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              Container(height: 15),
+              TextFormField(
                 initialValue: "${widget.product.sellingPrice}",
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Sales Price is required';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
-                    "Sales Price (can)",
+                    "Sales Price*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -202,14 +233,23 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                initialValue: "${widget.product.purchasesPrice}",
+                cursorColor: patowavePrimary,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Purchases Price is required';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
-                    "Sales Price (box)",
+                    "Purchases Price*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -219,19 +259,27 @@ class _EditProductState extends State<EditProduct> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+              Container(height: 15),
+              Row(
+                children: [
+                  Expanded(
                     child: TextFormField(
+                      initialValue: "${widget.product.quantity}",
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            icon: const FaIcon(
-                                FontAwesomeIcons.solidCircleQuestion),
-                            onPressed: () {}),
+                          icon: const FaIcon(
+                              FontAwesomeIcons.solidCircleQuestion),
+                          onPressed: () {
+                            _quantityToolTip(
+                              context,
+                            );
+                          },
+                        ),
                         label: const Text(
                           "Quantity",
                           style: TextStyle(
@@ -245,17 +293,23 @@ class _EditProductState extends State<EditProduct> {
                       ),
                     ),
                   ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+                  Container(width: 10),
+                  Expanded(
                     child: TextFormField(
+                      initialValue: "${widget.product.stockLevel}",
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            icon: const FaIcon(
-                                FontAwesomeIcons.solidCircleQuestion),
-                            onPressed: () {}),
+                          icon: const FaIcon(
+                              FontAwesomeIcons.solidCircleQuestion),
+                          onPressed: () {
+                            _stockLevelToolTip(context);
+                          },
+                        ),
                         label: const Text(
                           "Stock Level",
                           style: TextStyle(
@@ -269,32 +323,30 @@ class _EditProductState extends State<EditProduct> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              const Text(
-                "Supplier Contact",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ],
               ),
-              Switch(
-                  activeColor: patowavePrimary,
-                  value: _isSupplierActivated,
-                  onChanged: (val) {
-                    setState(() {
-                      _isSupplierActivated = val;
-                    });
-                  })
-            ]),
-
-            _isSupplierActivated
-                ? Column(
-                    children: [
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+              Container(height: 15),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                const Text(
+                  "Supplier Contact",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                Switch(
+                    activeColor: patowavePrimary,
+                    value: _isSupplierActivated,
+                    onChanged: (val) {
+                      setState(() {
+                        _isSupplierActivated = val;
+                      });
+                    })
+              ]),
+              _isSupplierActivated
+                  ? Column(
+                      children: [
+                        Container(height: 15),
+                        TextFormField(
+                          initialValue: widget.product.supplierName,
+                          cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
                               "Name",
@@ -308,11 +360,14 @@ class _EditProductState extends State<EditProduct> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+                        Container(height: 15),
+                        TextFormField(
+                          initialValue: widget.product.supplierContact,
+                          cursorColor: patowavePrimary,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           decoration: const InputDecoration(
                             label: Text(
                               "Phone Number",
@@ -326,11 +381,10 @@ class _EditProductState extends State<EditProduct> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
+                        Container(height: 15),
+                        TextFormField(
+                          initialValue: widget.product.supplierEmail,
+                          cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
                               "Email",
@@ -344,138 +398,52 @@ class _EditProductState extends State<EditProduct> {
                             ),
                           ),
                         ),
-                      ),
-                      Container(height: 10)
-                    ],
-                  )
-                : Container(height: 10),
-          ],
+                        Container(height: 10)
+                      ],
+                    )
+                  : Container(height: 15),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _setUnit(BuildContext context) async {
+  Future<void> _quantityToolTip(
+    BuildContext context,
+  ) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          scrollable: true,
-          // backgroundColor: patoBackgroundColor,
-          title: const Text('Add Item Unit'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 45,
-                child: DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary,
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  hint: const Text(
-                    'Primary Unit',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: primaryUnits
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                ),
-              ),
-              Container(height: 10),
-              SizedBox(
-                height: 45,
-                child: DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary,
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  hint: const Text(
-                    'Secondary Unit',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: secondaryUnits
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                  },
-                  onSaved: (value) {
-                    selectedValue = value.toString();
-                  },
-                ),
-              ),
-              Container(height: 10),
-              const Text("Conversion Rate"),
-              Container(height: 10),
-              const Center(
-                child: Text(
-                  "1 BOX = 12 CANS",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+        return const AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+          elevation: 0,
+          content: Text(
+              'Touch up dispatch to io.ec, event = MotionEvent { action=ACTION_UP, id[0]=0, x[0]=455.05197, y[0]=591.3076, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=3253190, downTime=3253161, deviceId=3, source=0x1002 }'),
+        );
+      },
+    );
+  }
+
+  Future<void> _stockLevelToolTip(
+    BuildContext context,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "Save",
-              ),
-            ),
-          ],
+          ),
+          elevation: 0,
+          content: Text(
+              'Touch up dispatch to io.ec, event = MotionEvent { action=ACTION_UP, id[0]=0, x[0]=455.05197, y[0]=591.3076, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=3253190, downTime=3253161, deviceId=3, source=0x1002 }'),
         );
       },
     );

@@ -181,7 +181,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total: $allAddedProduct',
+                              'Total Items: $allAddedProduct',
                               style: const TextStyle(
                                 color: Colors.white,
                               ),

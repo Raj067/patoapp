@@ -31,7 +31,9 @@ CheckboxThemeData _checkboxTheme = CheckboxThemeData(
     ),
   ),
   // MaterialStateProperty<Color?>? checkColor,
-  checkColor: MaterialStateProperty.all(patowavePrimary),
+  checkColor: MaterialStateProperty.all(patowaveWhite),
+  fillColor: MaterialStateProperty.all(patowavePrimary),
+  side: const BorderSide(width: 1, color: Colors.grey),
 );
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(

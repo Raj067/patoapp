@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
+import 'package:patoapp/themes/light_theme.dart';
 // import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
@@ -60,7 +61,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(height: 15),
-                      TextFormField(
+                      TextFormField(cursorColor: patowavePrimary,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
@@ -85,7 +86,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(height: 15),
-                      TextFormField(
+                      TextFormField(cursorColor: patowavePrimary,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';

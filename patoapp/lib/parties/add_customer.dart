@@ -141,7 +141,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Address is required';
-                 }
+                  }
                   return null;
                 },
                 cursorColor: patowavePrimary,
@@ -184,9 +184,12 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                       ],
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            icon: const FaIcon(
-                                FontAwesomeIcons.solidCircleQuestion),
-                            onPressed: () {}),
+                          icon: const FaIcon(
+                              FontAwesomeIcons.solidCircleQuestion),
+                          onPressed: () {
+                            _openingBalanceToolTip(context);
+                          },
+                        ),
                         label: const Text(
                           "Opening Balance",
                           style: TextStyle(
@@ -277,6 +280,26 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _openingBalanceToolTip(
+    BuildContext context,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+          elevation: 0,
+          content: Text(
+              'Touch up dispatch to io.ec, event = MotionEvent { action=ACTION_UP, id[0]=0, x[0]=455.05197, y[0]=591.3076, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=3253190, downTime=3253161, deviceId=3, source=0x1002 }'),
+        );
+      },
     );
   }
 }

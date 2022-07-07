@@ -83,9 +83,10 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
+            Container(height: 10),
             _firstRowData(widget.customer),
             Card(
               shape: const RoundedRectangleBorder(

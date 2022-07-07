@@ -118,8 +118,10 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             ),
           ),
           Table(
-            border:
-                TableBorder.all(width: 1.0, color: Colors.grey.withAlpha(100)),
+            border: TableBorder.all(
+              width: 1.0,
+              color: Colors.grey.withAlpha(100),
+            ),
             children: [
               TableRow(children: [
                 Padding(

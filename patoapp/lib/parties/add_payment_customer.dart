@@ -52,59 +52,69 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 1;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveGreen,
-                        value: 1,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 1;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Payment in"),
-                    ],
+                child: Container(
+                  color: _value == 1
+                      ? patowaveGreen.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 1;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowaveGreen,
+                          value: 1,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 1;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Payment in"),
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _value = 2;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Radio(
-                        activeColor: patowaveErrorRed,
-                        value: 2,
-                        groupValue: _value,
-                        onChanged: (val) {
-                          setState(() {
-                            _value = 2;
-                          });
-                        },
-                      ),
-                      Container(
-                        width: 5,
-                      ),
-                      const Text("Payment out"),
-                      Container(
-                        width: 10,
-                      ),
-                    ],
+                child: Container(
+                  color: _value == 2
+                      ? patowaveErrorRed.withAlpha(100)
+                      : Colors.grey.withAlpha(0),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _value = 2;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Radio(
+                          activeColor: patowaveErrorRed,
+                          value: 2,
+                          groupValue: _value,
+                          onChanged: (val) {
+                            setState(() {
+                              _value = 2;
+                            });
+                          },
+                        ),
+                        Container(
+                          width: 5,
+                        ),
+                        const Text("Payment out"),
+                        Container(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -221,7 +231,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Received Amount is required';
+                    return 'Amount Received is required';
                   }
                   return null;
                 },
@@ -333,7 +343,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Amount Paid is required';
+                    return 'Paid Amount is required';
                   }
                   return null;
                 },
