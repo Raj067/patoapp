@@ -341,7 +341,7 @@ class _ProductsCartState extends State<ProductsCart> {
                   style: TextStyle(fontSize: 10),
                 ),
                 Text(
-                  "${product.addedToCart} cans x Tsh ${product.sellingPrice} = Tsh ${product.getTotalPrice()}",
+                  "${product.addedToCart} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.getTotalPrice()}",
                   style: const TextStyle(fontSize: 10),
                 ),
               ],

@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/business/add_item_to_purchases.dart';
-import 'package:patoapp/business/add_item_to_sales.dart';
+import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:http/http.dart' as http;
 
 class AddTransactionDialog extends StatefulWidget {
   const AddTransactionDialog({Key? key}) : super(key: key);
@@ -17,6 +20,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
   final salesTransactionFormKey = GlobalKey<FormState>();
   final expensesTransactionFormKey = GlobalKey<FormState>();
+  final addItemToSalesFormKey = GlobalKey<FormState>();
+  final addItemToPurchasesFormKey = GlobalKey<FormState>();
+  List<SingleProduct> allProducts = [];
+  List<SingleProduct> addedItemsToSales = [];
+  List<SingleProduct> addedItemsToPurchases = [];
+  bool isLoading = false;
+  String selectedUnit = "Items";
 
   final List<String> customersList = [
     'Customer1',
@@ -29,19 +39,57 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     'Customer8',
   ];
 
-  final List<String> items = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
-  ];
+  String? selectedValue;
+  String? selectedProductValue;
   String? selectedCustmer;
   final TextEditingController customerController = TextEditingController();
-  List<Map> addedItemsToSales = [];
+  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController quantityController = TextEditingController();
+
+  // Fetching data
+  fetchData() async {
+    var data = await http.get(
+      Uri.parse("${baseUrl}api/inventory-products/"),
+      headers: authHeaders,
+    );
+
+    List<SingleProduct> finalData = [];
+    if (data.statusCode == 200) {
+      for (var dx in jsonDecode(data.body)) {
+        finalData.add(SingleProduct(
+          productUnit: dx["primary_unit"] ?? "Items",
+          id: dx['id'],
+          productName: dx["product_name"],
+          quantity: dx['quantity'],
+          purchasesPrice: dx['purchases_price'],
+          sellingPrice: dx['selling_price_primary'],
+          stockLevel: dx['stock_level'],
+          supplierName: dx['supplier_name'] ?? '',
+          supplierContact: dx['supplier_number'] ?? '',
+          thumbnail: dx['product_image'] ?? '',
+        ));
+      }
+    }
+    // isLoading = true;
+    allProducts = finalData;
+    // customData = allProductDetails();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    customerController.dispose();
+    quantityController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -334,15 +382,17 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     }
                   }),
               Container(height: 15),
+              addedItemsToSales.isNotEmpty
+                  ? _allAddedItemsToSales(context)
+                  : Container(),
               InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => AddItemsToSale(
-                        items: items,
-                      ),
+                      builder: (BuildContext context) =>
+                          _addItemsToSale(context),
                       fullscreenDialog: true,
                     ),
                   );
@@ -487,7 +537,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     context,
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) =>
-                          AddItemsToPurchases(items: items),
+                          _addItemsToPurchases(context),
                       fullscreenDialog: true,
                     ),
                   );
@@ -802,8 +852,499 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     );
   }
 
-  // void _addedItemsToSales(String raj) {
-  //   print("Hello rajabu $raj");
-  //   print(addedItemsToSales);
-  // }
+  _addItemsToSale(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Add Item to sale',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Form(
+          key: addItemToSalesFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              DropdownButtonFormField2(
+                  value: selectedValue,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select item';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text(
+                      'Select Item',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: allProducts
+                      .map((item) => DropdownMenuItem<String>(
+                            value: "${item.id}",
+                            child: Text(
+                              item.productName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                    setState(() {
+                      selectedProductValue = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
+                  searchController: textEditingController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for an item...',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return (item.value.toString().contains(searchValue));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingController.clear();
+                    }
+                  }),
+              Container(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: quantityController,
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quantity is required';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Quantity*",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 10),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: patowaveBlack.withAlpha(30),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        border: Border.all(color: Colors.grey, width: 1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                        child: Text(
+                          selectedUnit,
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  if (addItemToSalesFormKey.currentState!.validate()) {
+                    for (SingleProduct dx in allProducts) {
+                      if ("${dx.id}" == selectedProductValue &&
+                          !addedItemsToSales.contains(dx)) {
+                        addedItemsToSales.add(
+                          SingleProduct(
+                            quantity: int.parse(quantityController.text),
+                            productUnit: dx.productUnit,
+                            productName: dx.productName,
+                            id: dx.id,
+                            sellingPrice: dx.sellingPrice,
+                            purchasesPrice: dx.purchasesPrice,
+                          ),
+                        );
+                      }
+                      setState(() {});
+                    }
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text(
+                  "Add Item",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _addItemsToPurchases(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Add Item to Purchases',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Form(
+          key: addItemToPurchasesFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              DropdownButtonFormField2(
+                  value: selectedValue,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select item';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: const Text(
+                      'Select Item',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: allProducts
+                      .map((item) => DropdownMenuItem<String>(
+                            value: "${item.id}",
+                            child: Text(
+                              item.productName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedValue = value.toString();
+                  },
+                  searchController: textEditingController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for an item...',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return (item.value.toString().contains(searchValue));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingController.clear();
+                    }
+                  }),
+              Container(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quantity is required';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Quantity",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Unit",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  if (addItemToPurchasesFormKey.currentState!.validate()) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text(
+                  "Add Item",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _allAddedItemsToSales(BuildContext context) {
+    List<Widget> data = [];
+    for (SingleProduct dx in addedItemsToSales) {
+      data.add(_singleSelectedProduct(context, dx));
+      data.add(Container(height: 10));
+    }
+    return Column(children: data);
+  }
+
+  _singleSelectedProduct(BuildContext context, SingleProduct product) {
+    return Dismissible(
+      key: Key("${product.id}"),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          _onDeleteData(context, product);
+        } else {
+          _onDeleteData(context, product);
+        }
+        return false;
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    product.productName,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Tsh ${product.getTotalPrice()}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              Container(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Subtotal:",
+                    style: TextStyle(fontSize: 10),
+                  ),
+                  Text(
+                    "${product.addedToCart} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.getTotalPrice()}",
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _onDeleteData(BuildContext context, SingleProduct product) {
+    List<SingleProduct> newData = [];
+    for (SingleProduct dx in addedItemsToSales) {
+      if (dx.id != product.id) {
+        newData.add(dx);
+      }
+    }
+    setState(() {
+      addedItemsToSales = newData;
+    });
+    // allProducts
+  }
 }

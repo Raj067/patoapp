@@ -64,6 +64,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleProduct(
+          productUnit: dx["primary_unit"] ?? "Items",
           id: dx['id'],
           productName: dx["product_name"],
           quantity: dx['quantity'],
@@ -91,11 +92,13 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(height: 5),
           _itemSearchBar(context),
+          Container(height: 5),
           searchController.text != ''
               ? isProductFound
                   ? Row(
@@ -219,53 +222,51 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   Widget _itemSearchBar(BuildContext context) => Row(
         children: [
           Expanded(
-            child: SizedBox(
-              height: 50,
-              child: Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                elevation: 0,
-                child: TextField(
-                  controller: searchController,
-                  cursorColor: patowavePrimary,
-                  selectionHeightStyle: BoxHeightStyle.strut,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Search item',
-                    prefixIcon: Icon(Icons.search),
-                    enabledBorder: InputBorder.none,
-                  ),
-                  onChanged: (val) {
-                    _onSearchChange(val);
-                  },
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 50,
-            child: Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
               ),
-              elevation: 0,
-              child: IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const AddProductPage(),
-                      fullscreenDialog: true,
-                    ),
-                  );
+              height: 45,
+              child: TextFormField(
+                controller: searchController,
+                cursorColor: patowavePrimary,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  border: InputBorder.none,
+                  hintText: 'Search item',
+                  prefixIcon: Icon(Icons.search),
+                  enabledBorder: InputBorder.none,
+                  alignLabelWithHint: true,
+                ),
+                onChanged: (val) {
+                  _onSearchChange(val);
                 },
               ),
+            ),
+          ),
+          Container(width: 5),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            height: 45,
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const AddProductPage(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -297,6 +298,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     List<Widget> data = [];
     for (var element in customData) {
       data.add(_singleProductTile(context, element));
+      data.add(Container(height: 10));
     }
     return Expanded(
       child: ListView(
@@ -306,60 +308,60 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   }
 
   Widget _singleProductTile(BuildContext context, SingleProduct product) {
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+    return Dismissible(
+      key: Key("${product.id}"),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          _addDataToCartManual(context, product);
+        } else {
+          _onResetSingleData(product);
+          // productAdjustment(context, product);
+        }
+        // if (direction == DismissDirection.startToEnd) {
+        //   setState(() {
+        //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
+        //   },);
+        //   return false;
+        // }
+        return false;
+      },
+      background: Container(
+        decoration: BoxDecoration(
+          color: patowavePrimary,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 16),
+            child: Icon(
+              Icons.add_shopping_cart_rounded,
+              color: patowaveWhite,
+            ),
+          ),
         ),
       ),
-      elevation: 0,
-      child: Dismissible(
-        key: Key("${product.id}"),
-        confirmDismiss: (direction) async {
-          if (direction == DismissDirection.startToEnd) {
-            _addDataToCartManual(context, product);
-          } else {
-            _onResetSingleData(product);
-            // productAdjustment(context, product);
-          }
-          // if (direction == DismissDirection.startToEnd) {
-          //   setState(() {
-          //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
-          //   },);
-          //   return false;
-          // }
-          return false;
-        },
-        background: Container(
-          decoration: BoxDecoration(
-            color: patowavePrimary,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Icon(
-                Icons.add_shopping_cart_rounded,
-                color: patowaveWhite,
-              ),
+      secondaryBackground: Container(
+        decoration: BoxDecoration(
+          color: patowaveErrorRed,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Icon(
+              Icons.clear,
+              color: patowaveWhite,
             ),
           ),
         ),
-        secondaryBackground: Container(
-          decoration: BoxDecoration(
-            color: patowaveErrorRed,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: const Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(
-                Icons.clear,
-                color: patowaveWhite,
-              ),
-            ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
           ),
         ),
         child: InkWell(

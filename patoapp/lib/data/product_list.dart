@@ -14,7 +14,7 @@ class SingleProduct {
   int addedToCart = 0;
   bool isAddedToCartAutomatic = false;
   int id;
-  // String productUnit = '';
+  String productUnit = '';
 
   SingleProduct({
     required this.productName,
@@ -22,6 +22,7 @@ class SingleProduct {
     required this.purchasesPrice,
     required this.id,
     required this.quantity,
+    required this.productUnit,
     this.stockLevel = 0,
     this.thumbnail = "",
     this.totalItemsSold = 90,

@@ -253,30 +253,22 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: patowaveBlack.withAlpha(30),
-                  hintStyle: const TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 14,
+              Container(
+                decoration: BoxDecoration(
+                  color: patowaveBlack.withAlpha(30),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
                   ),
-                  hintText: customer.fullName,
-                  border: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    borderSide: BorderSide(
-                      color: patowaveBlack.withAlpha(30),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    borderSide: BorderSide(
-                      color: patowaveBlack.withAlpha(30),
+                  border: Border.all(color: Colors.grey, width: 1),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                  child: Text(
+                    customer.fullName,
+                    style: const TextStyle(
+                      // color: Color.fromARGB(255, 124, 124, 124),
+                      fontStyle: FontStyle.italic,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -365,30 +357,22 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: patowaveBlack.withAlpha(30),
-                  hintStyle: const TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 14,
+              Container(
+                decoration: BoxDecoration(
+                  color: patowaveBlack.withAlpha(30),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
                   ),
-                  hintText: customer.fullName,
-                  border: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    borderSide: BorderSide(
-                      color: patowaveBlack.withAlpha(30),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    borderSide: BorderSide(
-                      color: patowaveBlack.withAlpha(30),
+                  border: Border.all(color: Colors.grey, width: 1),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                  child: Text(
+                    customer.fullName,
+                    style: const TextStyle(
+                      // color: Color.fromARGB(255, 124, 124, 124),
+                      fontStyle: FontStyle.italic,
+                      fontSize: 14,
                     ),
                   ),
                 ),

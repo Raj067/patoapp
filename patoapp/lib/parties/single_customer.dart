@@ -95,7 +95,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                 ),
               ),
               elevation: 0,
-              color: patowavePrimary,
+              color: patowavePrimary.withAlpha(100),
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {},
@@ -106,12 +106,12 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     children: const [
                       Text(
                         'Send Payment Reminder',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(),
                       ),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.white, size: 14),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                      ),
                     ],
                   ),
                 ),
