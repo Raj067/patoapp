@@ -4,7 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddItemsToSale extends StatefulWidget {
-  const AddItemsToSale({Key? key}) : super(key: key);
+  final List<String> items;
+  const AddItemsToSale({
+    Key? key,
+    required this.items,
+  }) : super(key: key);
 
   @override
   State<AddItemsToSale> createState() => _AddItemsToSaleState();
@@ -28,17 +32,6 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
     'PACKS (Pac)',
     'PAIRS (Prs)',
     'PIECES (Pcs)',
-  ];
-
-  final List<String> items = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
   ];
 
   String? selectedValue;
@@ -75,7 +68,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
           key: addItemToSalesFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               DropdownButtonFormField2(
                   value: selectedValue,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
@@ -107,7 +100,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: items
+                  items: widget.items
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -158,7 +151,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                       textEditingController.clear();
                     }
                   }),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -190,55 +183,51 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                   ),
                   Container(width: 10),
                   Expanded(
-                    child: SizedBox(
-                      height: 45,
-                      child: DropdownButtonFormField2(
-                        value: selectedPrimaryUnit,
-                        selectedItemHighlightColor:
-                            patowavePrimary.withAlpha(50),
-                        scrollbarAlwaysShow: true,
-                        dropdownMaxHeight: 200,
-                        decoration: InputDecoration(
-                          label: const Text(
-                            'Unit',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
+                    child: DropdownButtonFormField2(
+                      value: selectedPrimaryUnit,
+                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                      scrollbarAlwaysShow: true,
+                      dropdownMaxHeight: 200,
+                      decoration: InputDecoration(
+                        label: const Text(
+                          'Unit',
+                          style: TextStyle(fontSize: 14),
                         ),
-                        isExpanded: true,
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                        ),
-                        dropdownDecoration: BoxDecoration(
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        items: primaryUnits
-                            .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (value) {
-                          //Do something when changing the item if you want.
-                        },
-                        onSaved: (value) {
-                          selectedValue = value.toString();
-                        },
                       ),
+                      isExpanded: true,
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: primaryUnits
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        //Do something when changing the item if you want.
+                      },
+                      onSaved: (value) {
+                        selectedValue = value.toString();
+                      },
                     ),
                   ),
                 ],
               ),
-              Container(height: 10),
+              Container(height: 15),
             ],
           ),
         ),

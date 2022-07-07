@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +17,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
   final salesTransactionFormKey = GlobalKey<FormState>();
   final expensesTransactionFormKey = GlobalKey<FormState>();
-  
+
   final List<String> customersList = [
     'Customer1',
     'Customer2',
@@ -28,8 +29,19 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     'Customer8',
   ];
 
+  final List<String> items = [
+    'A_Item1',
+    'A_Item2',
+    'A_Item3',
+    'A_Item4',
+    'B_Item1',
+    'B_Item2',
+    'B_Item3',
+    'B_Item4',
+  ];
   String? selectedCustmer;
   final TextEditingController customerController = TextEditingController();
+  List<Map> addedItemsToSales = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +92,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                         Container(
                           width: 5,
                         ),
-                        const Text("Sales"),
+                        const Text("Cash Sales"),
                       ],
                     ),
                   ),
@@ -246,20 +258,81 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Party Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+              DropdownButtonFormField2(
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  decoration: InputDecoration(
+                    label: const Text(
+                      'Select Customer',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                ),
-              ),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: customersList
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    selectedCustmer = value.toString();
+                  },
+                  searchController: customerController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      controller: customerController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for customer...',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return (item.value.toString().contains(searchValue));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      customerController.clear();
+                    }
+                  }),
               Container(height: 15),
               InkWell(
                 borderRadius: BorderRadius.circular(15),
@@ -267,7 +340,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const AddItemsToSale(),
+                      builder: (BuildContext context) => AddItemsToSale(
+                        items: items,
+                      ),
                       fullscreenDialog: true,
                     ),
                   );
@@ -412,7 +487,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     context,
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) =>
-                          const AddItemsToPurchases(),
+                          AddItemsToPurchases(items: items),
                       fullscreenDialog: true,
                     ),
                   );
@@ -460,19 +535,82 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Contact",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              DropdownButtonFormField2(
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Add Contact',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: customersList
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  selectedCustmer = value.toString();
+                },
+                searchController: customerController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 4,
+                    right: 8,
+                    left: 8,
+                  ),
+                  child: TextFormField(
+                    cursorColor: patowavePrimary,
+                    controller: customerController,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      hintText: 'Search for contact...',
+                      hintStyle: const TextStyle(fontSize: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
+                searchMatchFn: (item, searchValue) {
+                  return (item.value.toString().contains(searchValue));
+                },
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    customerController.clear();
+                  }
+                },
               ),
               Container(height: 15),
               Row(
@@ -663,4 +801,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       ],
     );
   }
+
+  // void _addedItemsToSales(String raj) {
+  //   print("Hello rajabu $raj");
+  //   print(addedItemsToSales);
+  // }
 }

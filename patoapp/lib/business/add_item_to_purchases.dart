@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddItemsToPurchases extends StatefulWidget {
-  const AddItemsToPurchases({Key? key}) : super(key: key);
+  final List<String> items;
+  const AddItemsToPurchases({Key? key, required this.items}) : super(key: key);
 
   @override
   State<AddItemsToPurchases> createState() => _AddItemsToPurchasesState();
@@ -28,17 +29,6 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
     'PACKS (Pac)',
     'PAIRS (Prs)',
     'PIECES (Pcs)',
-  ];
-
-  final List<String> items = [
-    'A_Item1',
-    'A_Item2',
-    'A_Item3',
-    'A_Item4',
-    'B_Item1',
-    'B_Item2',
-    'B_Item3',
-    'B_Item4',
   ];
 
   String? selectedValue;
@@ -75,7 +65,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
           key: addItemToPurchasesFormKey,
           child: ListView(
             children: [
-              Container(height: 10),
+              Container(height: 15),
               DropdownButtonFormField2(
                   value: selectedValue,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
@@ -107,7 +97,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: items
+                  items: widget.items
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -158,7 +148,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                       textEditingController.clear();
                     }
                   }),
-              Container(height: 10),
+              Container(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -234,7 +224,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                   ),
                 ],
               ),
-              Container(height: 10),
+              Container(height: 15),
             ],
           ),
         ),
