@@ -12,8 +12,11 @@ ThemeData patowaveDarkTheme() {
     textButtonTheme: _textButtonThemeData,
     elevatedButtonTheme: _elevatedButtonThemeData,
     inputDecorationTheme: _inputDecorationTheme,
+    appBarTheme: _appBarTheme,
   );
 }
+
+AppBarTheme _appBarTheme = const AppBarTheme(elevation: 0);
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
   contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),

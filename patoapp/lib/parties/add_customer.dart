@@ -94,7 +94,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter customer name';
+                    return 'Customer Name is required';
                   }
                   return null;
                 },
@@ -115,7 +115,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter phone number';
+                    return 'Phone Number is required';
                   }
                   return null;
                 },
@@ -140,8 +140,8 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter address';
-                  }
+                    return 'Address is required';
+                 }
                   return null;
                 },
                 cursorColor: patowavePrimary,

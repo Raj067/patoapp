@@ -17,6 +17,11 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   String receivedAmount = '0';
   final paymentInFormKey = GlobalKey<FormState>();
   final paymentOutFormKey = GlobalKey<FormState>();
+  // Items added for selling
+  List salesItems = [];
+  // Items added for purchases
+  List purchasesItems = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,7 +236,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter amount received';
+                    return 'Received Amount is required';
                   }
                   return null;
                 },
@@ -409,7 +414,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter amount paid';
+                    return 'Paid Amount is required';
                   }
                   return null;
                 },

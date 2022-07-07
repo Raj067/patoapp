@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddItemsToSale extends StatefulWidget {
@@ -43,6 +44,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
   String? selectedValue;
   String selectedPrimaryUnit = 'BOX (Box)';
   final TextEditingController textEditingController = TextEditingController();
+  final addItemToSalesFormKey = GlobalKey<FormState>();
   @override
   void dispose() {
     textEditingController.dispose();
@@ -69,20 +71,29 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: DropdownButtonFormField2(
+        child: Form(
+          key: addItemToSalesFormKey,
+          child: ListView(
+            children: [
+              Container(height: 10),
+              DropdownButtonFormField2(
                   value: selectedValue,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select item';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     label: const Text(
                       'Select Item',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
@@ -122,6 +133,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                       left: 8,
                     ),
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
                       controller: textEditingController,
                       decoration: InputDecoration(
                         isDense: true,
@@ -146,17 +158,25 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                       textEditingController.clear();
                     }
                   }),
-            ),
-            Container(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+              Container(height: 10),
+              Row(
+                children: [
+                  Expanded(
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quantity is required';
+                        }
+                        return null;
+                      },
                       decoration: const InputDecoration(
                         label: Text(
-                          "Quantity",
+                          "Quantity*",
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
@@ -168,58 +188,59 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                       ),
                     ),
                   ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
-                    child: DropdownButtonFormField2(
-                      value: selectedPrimaryUnit,
-                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                      scrollbarAlwaysShow: true,
-                      dropdownMaxHeight: 200,
-                      decoration: InputDecoration(
-                        label: const Text(
-                          'Unit',
-                          style: TextStyle(fontSize: 14),
+                  Container(width: 10),
+                  Expanded(
+                    child: SizedBox(
+                      height: 45,
+                      child: DropdownButtonFormField2(
+                        value: selectedPrimaryUnit,
+                        selectedItemHighlightColor:
+                            patowavePrimary.withAlpha(50),
+                        scrollbarAlwaysShow: true,
+                        dropdownMaxHeight: 200,
+                        decoration: InputDecoration(
+                          label: const Text(
+                            'Unit',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                         ),
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        border: OutlineInputBorder(
+                        isExpanded: true,
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                        ),
+                        dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                      ),
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                      ),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      items: primaryUnits
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                        items: primaryUnits
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        //Do something when changing the item if you want.
-                      },
-                      onSaved: (value) {
-                        selectedValue = value.toString();
-                      },
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          //Do something when changing the item if you want.
+                        },
+                        onSaved: (value) {
+                          selectedValue = value.toString();
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-          ],
+                ],
+              ),
+              Container(height: 10),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -241,7 +262,9 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (addItemToSalesFormKey.currentState!.validate()) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text(
                   "Add Item",

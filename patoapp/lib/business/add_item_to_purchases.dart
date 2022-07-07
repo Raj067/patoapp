@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddItemsToPurchases extends StatefulWidget {
@@ -43,6 +44,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
   String? selectedValue;
   String selectedPrimaryUnit = 'BOX (Box)';
   final TextEditingController textEditingController = TextEditingController();
+  final addItemToPurchasesFormKey = GlobalKey<FormState>();
   @override
   void dispose() {
     textEditingController.dispose();
@@ -69,20 +71,29 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: DropdownButtonFormField2(
+        child: Form(
+          key: addItemToPurchasesFormKey,
+          child: ListView(
+            children: [
+              Container(height: 10),
+              DropdownButtonFormField2(
                   value: selectedValue,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'Please select item';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     label: const Text(
                       'Select Item',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     border: OutlineInputBorder(
@@ -122,6 +133,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                       left: 8,
                     ),
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
                       controller: textEditingController,
                       decoration: InputDecoration(
                         isDense: true,
@@ -146,14 +158,22 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                       textEditingController.clear();
                     }
                   }),
-            ),
-            Container(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+              Container(height: 10),
+              Row(
+                children: [
+                  Expanded(
                     child: TextFormField(
+                      cursorColor: patowavePrimary,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quantity is required';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: const InputDecoration(
                         label: Text(
                           "Quantity",
@@ -168,11 +188,8 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                       ),
                     ),
                   ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
+                  Container(width: 10),
+                  Expanded(
                     child: DropdownButtonFormField2(
                       value: selectedPrimaryUnit,
                       selectedItemHighlightColor: patowavePrimary.withAlpha(50),
@@ -215,11 +232,11 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                       },
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-          ],
+                ],
+              ),
+              Container(height: 10),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -241,7 +258,9 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (addItemToPurchasesFormKey.currentState!.validate()) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text(
                   "Add Item",

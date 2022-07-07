@@ -18,8 +18,11 @@ ThemeData patowaveLightTheme() {
     dialogTheme: _dialogTheme,
     inputDecorationTheme: _inputDecorationTheme,
     checkboxTheme: _checkboxTheme,
+    appBarTheme: _appBarTheme,
   );
 }
+
+AppBarTheme _appBarTheme = const AppBarTheme(elevation: 0);
 
 CheckboxThemeData _checkboxTheme = CheckboxThemeData(
   shape: const RoundedRectangleBorder(

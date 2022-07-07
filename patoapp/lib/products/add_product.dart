@@ -208,7 +208,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add Item name';
+                    return 'Item name is required';
                   }
                   return null;
                 },
@@ -300,7 +300,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add Sales Price';
+                    return 'Sales Price is required';
                   }
                   return null;
                 },
@@ -325,7 +325,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add Purchases Price';
+                    return 'Purchases Price is required';
                   }
                   return null;
                 },
@@ -496,7 +496,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add service name';
+                    return 'Service Name is required';
                   }
                   return null;
                 },
@@ -517,7 +517,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add service charge';
+                    return 'Service charge is required';
                   }
                   return null;
                 },
@@ -542,7 +542,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please add service unit';
+                    return 'Service unit is required';
                   }
                   return null;
                 },

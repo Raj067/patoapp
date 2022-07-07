@@ -16,8 +16,20 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
   final salesTransactionFormKey = GlobalKey<FormState>();
   final expensesTransactionFormKey = GlobalKey<FormState>();
-  final addItemToSalesFormKey = GlobalKey<FormState>();
-  final addItemToPurchasesFormKey = GlobalKey<FormState>();
+  
+  final List<String> customersList = [
+    'Customer1',
+    'Customer2',
+    'Customer3',
+    'Customer4',
+    'Customer5',
+    'Customer6',
+    'Customer7',
+    'Customer8',
+  ];
+
+  String? selectedCustmer;
+  final TextEditingController customerController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

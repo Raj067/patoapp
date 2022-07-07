@@ -221,7 +221,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter amount received';
+                    return 'Received Amount is required';
                   }
                   return null;
                 },
@@ -333,7 +333,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter paid amount';
+                    return 'Amount Paid is required';
                   }
                   return null;
                 },
