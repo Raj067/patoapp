@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
-  _login() async {
-    var data = await http.get(
-      Uri.parse("http://29b2-196-249-98-242.ngrok.io/api/sample/"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization":
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU2ODMxMTgzLCJpYXQiOjE2NTY4MjgxODMsImp0aSI6Ijg1YTBlMTE3YjBiMjQ0NTc4ZDY5YTc1YWFjNTcyOWNmIiwidXNlcl9pZCI6MX0.kjPdRzKGeHjSJkLnjYmM3KSqsmE9s_w2-iBNvKwNGDU",
-      },
-    );
-    return data;
-  }
+  final loginFormKey = GlobalKey<FormState>();
 
+  LoginPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,28 +38,39 @@ class LoginPage extends StatelessWidget {
                 left: 10,
                 right: 10,
                 top: 100,
-                child: Column(
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Login To Patowave",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Welcome back!",
-                        style: TextStyle(
-                          fontSize: 12,
+                child: Form(
+                  key: loginFormKey,
+                  child: Column(
+                    children: [
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Login To Patowave",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
+                      Container(height: 5),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Welcome back!",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Container(height: 15),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         decoration: const InputDecoration(
                           label: Text(
                             "Phone Number",
@@ -82,11 +84,15 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
+                      Container(height: 15),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          }
+                          return null;
+                        },
+                        obscureText: true,
                         decoration: const InputDecoration(
                           label: Text(
                             "Password",
@@ -100,18 +106,18 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    // Container(height: 10),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // print(MediaQuery.of(context).size.height);
-                        },
-                        child: const Text("Forgot Password?"),
-                      ),
-                    )
-                  ],
+                      // Container(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            // print(MediaQuery.of(context).size.height);
+                          },
+                          child: const Text("Forgot Password?"),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -144,7 +150,14 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          _login();
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (loginFormKey.currentState!.validate()) {
+                            // If the form is valid, display a snackbar. In the real world,
+                            // you'd often call a server or save the information in a database.
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data')),
+                            );
+                          }
                         },
                         child: const Text(
                           "Login",
@@ -166,7 +179,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => const SignupPage(),
+                          builder: (BuildContext context) => SignupPage(),
                           fullscreenDialog: true,
                         ),
                       );

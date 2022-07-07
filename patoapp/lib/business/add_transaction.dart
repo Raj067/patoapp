@@ -14,7 +14,10 @@ class AddTransactionDialog extends StatefulWidget {
 
 class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
-
+  final salesTransactionFormKey = GlobalKey<FormState>();
+  final expensesTransactionFormKey = GlobalKey<FormState>();
+  final addItemToSalesFormKey = GlobalKey<FormState>();
+  final addItemToPurchasesFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,16 +111,18 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               )
             ],
           ),
-          const Divider(height: 0),
           Table(
-            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            border: TableBorder.all(
+              width: 1.0,
+              color: Colors.grey.withAlpha(100),
+            ),
             children: [
               TableRow(children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      _value == 1 ? "Invoice No 1" : "Bill No 1",
+                      _value == 1 ? "Receipt No 1" : "Bill No 1",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -159,7 +164,31 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (_value == 1) {
+                    // for payment in
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (salesTransactionFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  } else {
+                    // for payment out
+
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (expensesTransactionFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                    }
+                  }
+                },
                 child: const Text(
                   "Add Transaction",
                 ),
@@ -175,15 +204,26 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: salesTransactionFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'This field is required';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Amount",
+                    "Amount Received*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -193,11 +233,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
                     "Party Name",
@@ -210,17 +248,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              color: patowavePrimary,
-              child: InkWell(
+              Container(height: 15),
+              InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
@@ -231,84 +260,95 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     ),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Add Items to sale',
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.white, size: 14),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            _discount(),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Amount",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Balance due",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: patowaveErrorRed),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: patowaveErrorRed),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            SizedBox(
-              // height: 180,
-              child: TextFormField(
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Descriptions",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: patowavePrimary.withAlpha(100),
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          "Add Items to sales",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 14,
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              _discount(),
+              Container(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Discount",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Tsh: 1000.00",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Total Amount",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Tsh: 1000.00",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+              SizedBox(
+                // height: 180,
+                child: TextFormField(
+                  cursorColor: patowavePrimary,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  minLines: 3,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    label: Text(
+                      "Descriptions",
+                      style:
+                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -318,15 +358,26 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+        child: Form(
+          key: expensesTransactionFormKey,
+          child: ListView(
+            children: [
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'This field is required';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   label: Text(
-                    "Amount",
+                    "Amount Paid*",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -336,21 +387,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            const Text(
-              "Other Informations:",
-              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-            ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+              Container(height: 15),
+              const Text(
+                "Other Informations:",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              elevation: 0,
-              color: patowavePrimary,
-              child: InkWell(
+              Container(height: 10),
+              InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   Navigator.push(
@@ -362,29 +405,36 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     ),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Add Items to Purchases',
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.white,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: patowavePrimary.withAlpha(100),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          "Add Items to Purchases",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.white, size: 14),
-                    ],
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 14,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
                     "Expenses Category",
@@ -397,11 +447,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            SizedBox(
-              height: 45,
-              child: TextFormField(
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
                     "Add Contact",
@@ -414,88 +462,51 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Amount",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Row(
-                    children: const [
-                      Text(
-                        "Paid Amount",
-                        style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+              Container(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Total Amount",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Tsh",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
+                  Text(
+                    "Tsh: 1000.00",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Balance due",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: patowaveErrorRed),
-                ),
-                Text(
-                  "Tsh: 1000.00",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      color: patowaveErrorRed),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            SizedBox(
-              // height: 180,
-              child: TextFormField(
+                ],
+              ),
+              Container(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Balance due",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: patowaveErrorRed),
+                  ),
+                  Text(
+                    "Tsh: 1000.00",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: patowaveErrorRed),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 3,
+                minLines: 3,
+                maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(
                     "Descriptions",
@@ -508,8 +519,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -527,7 +538,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               const Text(
                 "Discount",
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
               Container(width: 5),
               Container(
@@ -552,6 +562,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
+                    cursorColor: patowavePrimary,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -563,6 +574,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        borderSide: BorderSide(
+                          color: patowavePrimary,
+                          width: 2,
                         ),
                       ),
                     ),
@@ -594,6 +615,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
+                    cursorColor: patowavePrimary,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -605,6 +627,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(15),
                           bottomRight: Radius.circular(15),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        borderSide: BorderSide(
+                          color: patowavePrimary,
+                          width: 2,
                         ),
                       ),
                     ),

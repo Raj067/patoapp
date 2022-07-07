@@ -17,8 +17,19 @@ ThemeData patowaveLightTheme() {
     floatingActionButtonTheme: _floatingActionButtonTheme,
     dialogTheme: _dialogTheme,
     inputDecorationTheme: _inputDecorationTheme,
+    checkboxTheme: _checkboxTheme,
   );
 }
+
+CheckboxThemeData _checkboxTheme = CheckboxThemeData(
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(5),
+    ),
+  ),
+  // MaterialStateProperty<Color?>? checkColor,
+  checkColor: MaterialStateProperty.all(patowavePrimary),
+);
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
   contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),

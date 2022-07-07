@@ -272,11 +272,11 @@ class TopProfileIcon extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const LoginPage(),
+                      builder: (BuildContext context) => LoginPage(),
                       fullscreenDialog: true,
                     ),
                   );
-                }, 
+                },
                 child: const Text(
                   "Logout",
                   style: TextStyle(fontSize: 16),

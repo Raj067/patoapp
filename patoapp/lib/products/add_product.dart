@@ -521,6 +521,10 @@ class _AddProductPageState extends State<AddProductPage> {
                   }
                   return null;
                 },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 decoration: const InputDecoration(
                   label: Text(
                     "Service Charge*",

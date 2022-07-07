@@ -110,9 +110,11 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
               )
             ],
           ),
-          const Divider(height: 0),
           Table(
-            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            border: TableBorder.all(
+              width: 1.0,
+              color: Colors.grey.withAlpha(100),
+            ),
             children: [
               TableRow(children: [
                 Padding(
@@ -292,7 +294,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                minLines: 2,
+                minLines: 3,
                 maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(
@@ -404,7 +406,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
-                minLines: 2,
+                minLines: 3,
                 maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(

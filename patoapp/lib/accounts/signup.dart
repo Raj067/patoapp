@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/accounts/set_account.dart';
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  SignupPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final signupFormKey = GlobalKey<FormState>();
+
+  bool initialValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +46,23 @@ class SignupPage extends StatelessWidget {
                 left: 10,
                 right: 10,
                 top: 100,
-                child: Column(
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                child: Form(
+                  key: signupFormKey,
+                  child: Column(
+                    children: [
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
+                      Container(height: 15),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         decoration: const InputDecoration(
                           label: Text(
                             "Phone Number",
@@ -62,11 +76,9 @@ class SignupPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
+                      Container(height: 15),
+                      TextFormField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           label: Text(
                             "Password",
@@ -80,11 +92,9 @@ class SignupPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    Container(height: 10),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
+                      Container(height: 15),
+                      TextFormField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           label: Text(
                             "Re enter Password",
@@ -98,27 +108,33 @@ class SignupPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    // Container(height: 10),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: false,
-                          onChanged: (val) {},
-                        ),
-                        const Text(
-                          "By signing up, you agree to",
-                        ),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: const Text(
-                        //     "",
-                        //     textAlign: TextAlign.start,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ],
+                      // Container(height: 15),
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: initialValue,
+                            onChanged: (val) {
+                              setState(() {
+                                initialValue
+                                    ? initialValue = false
+                                    : initialValue = true;
+                              });
+                            },
+                          ),
+                          const Text(
+                            "By signing up, you agree to",
+                          ),
+                          // TextButton(
+                          //   onPressed: () {},
+                          //   child: const Text(
+                          //     "",
+                          //     textAlign: TextAlign.start,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -171,7 +187,7 @@ class SignupPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => const LoginPage(),
+                          builder: (BuildContext context) => LoginPage(),
                           fullscreenDialog: true,
                         ),
                       );
