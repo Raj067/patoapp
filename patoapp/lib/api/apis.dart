@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 Map d = {
   "access":
@@ -13,6 +14,7 @@ String baseUrl = "$url/";
 String imageBaseUrl = url;
 String accessToken = d['access'];
 const String refreshToken = "";
+var formatter = NumberFormat('#,###,###');
 
 Map<String, String> authHeaders = {
   'Content-Type': 'application/json; charset=UTF-8',

@@ -70,8 +70,23 @@ def greeting_cards(request, *args, **kwargs):
 
 @api_view(['POST'])
 def add_new_customer_api(request):
-    print(request.data)
     if request.method == "POST":
+        reg = Customer(
+            shop=get_shop(request)[0],
+            customer_name=request.data.get('customerName'),
+            customer_number=request.data.get('phoneNumber'),
+            customer_email=request.data.get('emailAddress'),
+            customer_address=request.data.get('address'),
+        )
+        reg.save()
+        if request.data.get("openingBalance") > 0:
+            reg.customer_payment.create(
+                shop=get_shop(request)[0],
+                customer=reg,
+                is_payment_in=request.data.get("toReceive"),
+                description="Opening Balance",
+                amount=request.data.get("openingBalance"),
+            )
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

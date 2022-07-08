@@ -198,11 +198,12 @@ class _PartiesPageState extends State<PartiesPage> {
               //   height: 10,
               // ),
               Text(
-                "${customer.getAmount()}",
+                "Tsh: ${formatter.format(customer.getAmount())}",
                 style: TextStyle(
-                    color: customer.isToReceive()
-                        ? patowaveGreen
-                        : patowaveErrorRed),
+                  color:
+                      customer.isToReceive() ? patowaveGreen : patowaveErrorRed,
+                  fontSize: 12,
+                ),
               ),
               Text(
                 customer.isToReceive() ? "Receive" : "Give",
@@ -356,7 +357,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? customersGeneral.totalDebtWeek : customersGeneral.totalDebtMonth}",
+                            "Tsh ${isWeek ? formatter.format(customersGeneral.totalDebtWeek) : formatter.format(customersGeneral.totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 18,
@@ -376,7 +377,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? customersGeneral.customersDebtWeek : customersGeneral.customersDebtMonth}",
+                            "Tsh ${isWeek ? formatter.format(customersGeneral.customersDebtWeek) : formatter.format(customersGeneral.customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 18,

@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
@@ -372,9 +373,9 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
               ),
             ],
           ),
-          Text("${received == 0 ? '-' : received}"),
+          Text(received == 0 ? '-' : formatter.format(received)),
           Text(
-            "${paid == 0 ? '-' : paid}",
+            paid == 0 ? '-' : formatter.format(paid),
             style: const TextStyle(color: patowaveErrorRed),
           ),
         ],
@@ -425,7 +426,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                           ],
                         ),
                         Text(
-                          "${customer.getAmount()}",
+                          "Tsh: ${formatter.format(customer.getAmount())}",
                           style: TextStyle(
                               color: customer.isToReceive()
                                   ? patowaveGreen

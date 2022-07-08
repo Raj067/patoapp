@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -22,8 +23,14 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   TextEditingController address = TextEditingController();
   TextEditingController emailAddress = TextEditingController();
   TextEditingController openingBalance = TextEditingController();
-  TextEditingController transactionDate = TextEditingController();
   bool toReceive = false;
+  TextEditingController dateInput = TextEditingController();
+  @override
+  void initState() {
+    dateInput.text = DateFormat('yyyy-MM-dd')
+        .format(DateTime.now()); //set the initial value of text field
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -217,17 +224,45 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   ),
                   Container(width: 10),
                   Expanded(
-                    child: InputDatePickerFormField(
-                      // transactionDate
-                      onDateSubmitted: (val) {
-                        transactionDate.text = val.toString();
-                      },
+                    child: TextFormField(
+                      controller: dateInput,
+                      //editing controller of this TextField
+                      decoration: const InputDecoration(
+                        label: Text(
+                          "Date",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                      ),
 
-                      firstDate: DateTime(2000, 1, 1),
-                      lastDate: DateTime(2025, 1, 1),
-                      initialDate: DateTime.now(),
+                      readOnly: true,
+                      //set it true, so that user will not able to edit text
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(DateTime.now().year - 5),
+                            //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime(DateTime.now().year + 5));
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                          setState(() {
+                            dateInput.text =
+                                formattedDate; //set output date to TextField value.
+                          });
+                        } else {}
+                      },
                     ),
-                  )
+                  ),
                 ],
               ),
               Container(height: 15),
@@ -288,7 +323,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                       address: address.text,
                       toReceive: toReceive,
                       emailAddress: emailAddress.text,
-                      transactionDate: transactionDate.text,
+                      transactionDate: dateInput.text,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
@@ -324,7 +359,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         'phoneNumber': phoneNumber,
         'address': address,
         'emailAddress': emailAddress,
-        'openingBalance': openingBalance,
+        'openingBalance': openingBalance == "" ? 0 : int.parse(openingBalance),
         'transactionDate': transactionDate,
         'toReceive': toReceive,
       }),
@@ -337,7 +372,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Customer created')),
       );
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
