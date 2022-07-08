@@ -61,7 +61,8 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(height: 15),
-                      TextFormField(cursorColor: patowavePrimary,
+                      TextFormField(
+                        cursorColor: patowavePrimary,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
@@ -86,7 +87,8 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(height: 15),
-                      TextFormField(cursorColor: patowavePrimary,
+                      TextFormField(
+                        cursorColor: patowavePrimary,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
