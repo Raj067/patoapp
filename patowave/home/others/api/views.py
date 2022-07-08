@@ -67,15 +67,9 @@ def greeting_cards(request, *args, **kwargs):
 
 # ----------- FOR CUSTOMER ----------------
 
-@api_view(['POST'])
-def add_new_customer_api(request):
-    print(request.data)
-    if request.method == "POST":
-        return Response(status=status.HTTP_201_CREATED)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-def add_new_payment_api(request):
+def add_new_customer_api(request):
     print(request.data)
     if request.method == "POST":
         return Response(status=status.HTTP_201_CREATED)
@@ -109,4 +103,3 @@ def adding_payment_customer_api(request):
         data.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
-

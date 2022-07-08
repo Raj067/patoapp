@@ -30,8 +30,5 @@ api_urls = [
          edit_existing_customer_api, name='edit_existing_customer_api'),
     path('api/adding-payment-customer/',
          adding_payment_customer_api, name='adding_payment_customer_api'),
-    path('api/add-new-payment/',
-         add_new_payment_api, name='add_new_payment_api'),
 
-    # add_new_payment_api
 ]

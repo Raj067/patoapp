@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -27,7 +30,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   TextEditingController amountPaid = TextEditingController();
   TextEditingController paymentInDesc = TextEditingController(text: "");
   TextEditingController paymentOutDesc = TextEditingController(text: "");
-  String selectedUser = "0";
+  TextEditingController userController = TextEditingController();
+  String userSelected = "0";
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +192,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
+
+                      _addPaymentToCustomer(
+                        isPaymentIn: true,
+                        amount: int.parse(amountReceived.text),
+                        description: paymentInDesc.text == ""
+                            ? "Payment In"
+                            : paymentInDesc.text,
+                        id: int.parse(userSelected),
+                      );
                     }
                   } else {
                     // for payment out
@@ -198,6 +211,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       // you'd often call a server or save the information in a database.
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
+                      );
+                      _addPaymentToCustomer(
+                        isPaymentIn: false,
+                        amount: int.parse(amountPaid.text),
+                        description: paymentInDesc.text == ""
+                            ? "Payment Out"
+                            : paymentOutDesc.text,
+                        id: int.parse(userSelected),
                       );
                     }
                   }
@@ -215,7 +236,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
 
   _paymentIn() {
     String? selectedUser;
-    final TextEditingController textEditingController = TextEditingController();
 
     return Expanded(
       child: Padding(
@@ -226,6 +246,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             children: [
               Container(height: 15),
               TextFormField(
+                controller: amountReceived,
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
@@ -300,11 +321,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       .toList(),
                   onChanged: (value) {
                     //Do something when changing the item if you want.
+                    setState(() {
+                      userSelected = value.toString();
+                    });
                   },
                   onSaved: (value) {
                     selectedUser = value.toString();
                   },
-                  searchController: textEditingController,
+                  searchController: userController,
                   searchInnerWidget: Padding(
                     padding: const EdgeInsets.only(
                       top: 8,
@@ -313,7 +337,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       left: 8,
                     ),
                     child: TextFormField(
-                      controller: textEditingController,
+                      controller: userController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: const EdgeInsets.symmetric(
@@ -334,7 +358,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   //This to clear the search value when you close the menu
                   onMenuStateChange: (isOpen) {
                     if (!isOpen) {
-                      textEditingController.clear();
+                      userController.clear();
                     }
                   }),
               Container(height: 15),
@@ -359,6 +383,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               ),
               Container(height: 20),
               TextFormField(
+                controller: paymentInDesc,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -385,7 +410,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
 
   _paymentOut() {
     String? selectedUser;
-    final TextEditingController textEditingController = TextEditingController();
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -395,6 +420,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             children: [
               Container(height: 15),
               TextFormField(
+                controller: amountPaid,
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
@@ -469,11 +495,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       .toList(),
                   onChanged: (value) {
                     //Do something when changing the item if you want.
+                    setState(() {
+                      userSelected = value.toString();
+                    });
                   },
                   onSaved: (value) {
                     selectedUser = value.toString();
                   },
-                  searchController: textEditingController,
+                  searchController: userController,
                   searchInnerWidget: Padding(
                     padding: const EdgeInsets.only(
                       top: 8,
@@ -482,7 +511,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       left: 8,
                     ),
                     child: TextFormField(
-                      controller: textEditingController,
+                      controller: userController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: const EdgeInsets.symmetric(
@@ -503,7 +532,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   //This to clear the search value when you close the menu
                   onMenuStateChange: (isOpen) {
                     if (!isOpen) {
-                      textEditingController.clear();
+                      userController.clear();
                     }
                   }),
               Container(height: 15),
@@ -526,6 +555,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               ),
               Container(height: 20),
               TextFormField(
+                controller: paymentOutDesc,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -548,5 +578,39 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         ),
       ),
     );
+  }
+
+  _addPaymentToCustomer({
+    required int amount,
+    required String description,
+    required bool isPaymentIn,
+    required int id,
+  }) async {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/adding-payment-customer/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'amount': amount,
+        'description': description,
+        'isPaymentIn': isPaymentIn,
+        'id': id,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Renaming the customer
+
+      // Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Customer updated successfully')),
+      );
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Failed to updated customer.')),
+      // );
+      throw Exception('Failed to updated customer.');
+    }
   }
 }
