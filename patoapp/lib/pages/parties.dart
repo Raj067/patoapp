@@ -38,7 +38,9 @@ class _PartiesPageState extends State<PartiesPage> {
   fetchData(String path) async {
     // Data for general analysis
     var generalData = await http.get(
-      Uri.parse("${baseUrl}api/general-parties-details/"),
+      Uri.parse(
+        "${baseUrl}api/general-parties-details/",
+      ),
       headers: authHeaders,
     );
     if (generalData.statusCode == 200) {
@@ -111,7 +113,9 @@ class _PartiesPageState extends State<PartiesPage> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => const AddPaymentDialog(),
+              builder: (BuildContext context) => AddPaymentDialog(
+                finalData: customData,
+              ),
               fullscreenDialog: true,
             ),
           );
@@ -232,8 +236,9 @@ class _PartiesPageState extends State<PartiesPage> {
                       _onSearchChange(val);
                     },
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.fromLTRB(10, 7, 10, 0),
                       border: InputBorder.none,
-                      hintText: 'Search',
+                      hintText: 'Search Contact',
                       prefixIcon: const Icon(Icons.search),
                       enabledBorder: InputBorder.none,
                       suffixIcon: InkWell(
@@ -264,7 +269,8 @@ class _PartiesPageState extends State<PartiesPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => AddCustomerDialog(),
+                        builder: (BuildContext context) =>
+                            const AddCustomerDialog(),
                         fullscreenDialog: true,
                       ),
                     );

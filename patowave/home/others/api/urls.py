@@ -23,5 +23,15 @@ api_urls = [
          inventory_pruducts_api, name='inventory_pruducts_api'),
     path('api/parties-details/',
          parties_details_api, name='parties_details_api'),
+    # CUSTOMERS
+    path('api/add-new-customer/',
+         add_new_customer_api, name='add_new_customer_api'),
+    path('api/edit-existing-customer/',
+         edit_existing_customer_api, name='edit_existing_customer_api'),
+    path('api/adding-payment-customer/',
+         adding_payment_customer_api, name='adding_payment_customer_api'),
+    path('api/add-new-payment/',
+         add_new_payment_api, name='add_new_payment_api'),
 
+    # add_new_payment_api
 ]

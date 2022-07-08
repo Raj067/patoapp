@@ -2,10 +2,15 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddPaymentDialog extends StatefulWidget {
-  const AddPaymentDialog({Key? key}) : super(key: key);
+  final List<SingleCustomer> finalData;
+  const AddPaymentDialog({
+    Key? key,
+    required this.finalData,
+  }) : super(key: key);
 
   @override
   State<AddPaymentDialog> createState() => _AddPaymentDialogState();
@@ -17,10 +22,12 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   String receivedAmount = '0';
   final paymentInFormKey = GlobalKey<FormState>();
   final paymentOutFormKey = GlobalKey<FormState>();
-  // Items added for selling
-  List salesItems = [];
-  // Items added for purchases
-  List purchasesItems = [];
+
+  TextEditingController amountReceived = TextEditingController();
+  TextEditingController amountPaid = TextEditingController();
+  TextEditingController paymentInDesc = TextEditingController(text: "");
+  TextEditingController paymentOutDesc = TextEditingController(text: "");
+  String selectedUser = "0";
 
   @override
   Widget build(BuildContext context) {
@@ -207,18 +214,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   }
 
   _paymentIn() {
-    final List<String> items = [
-      'A_Item1',
-      'A_Item2',
-      'A_Item3',
-      'A_Item4',
-      'B_Item1',
-      'B_Item2',
-      'B_Item3',
-      'B_Item4',
-    ];
-
-    String? selectedValue;
+    String? selectedUser;
     final TextEditingController textEditingController = TextEditingController();
 
     return Expanded(
@@ -267,7 +263,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     }
                     return null;
                   },
-                  value: selectedValue,
+                  value: selectedUser,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -289,11 +285,13 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: items
+                  items: widget.finalData
+                      .where((element) => element.amount >= 0)
+                      .toList()
                       .map((item) => DropdownMenuItem<String>(
-                            value: item,
+                            value: "${item.id}",
                             child: Text(
-                              item,
+                              item.fullName,
                               style: const TextStyle(
                                 fontSize: 14,
                               ),
@@ -304,7 +302,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     //Do something when changing the item if you want.
                   },
                   onSaved: (value) {
-                    selectedValue = value.toString();
+                    selectedUser = value.toString();
                   },
                   searchController: textEditingController,
                   searchInnerWidget: Padding(
@@ -386,18 +384,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   }
 
   _paymentOut() {
-    final List<String> items = [
-      'A_Item1',
-      'A_Item2',
-      'A_Item3',
-      'A_Item4',
-      'B_Item1',
-      'B_Item2',
-      'B_Item3',
-      'B_Item4',
-    ];
-
-    String? selectedValue;
+    String? selectedUser;
     final TextEditingController textEditingController = TextEditingController();
     return Expanded(
       child: Padding(
@@ -445,7 +432,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     }
                     return null;
                   },
-                  value: selectedValue,
+                  value: selectedUser,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -467,11 +454,13 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: items
+                  items: widget.finalData
+                      .where((element) => element.amount < 0)
+                      .toList()
                       .map((item) => DropdownMenuItem<String>(
-                            value: item,
+                            value: "${item.id}",
                             child: Text(
-                              item,
+                              item.fullName,
                               style: const TextStyle(
                                 fontSize: 14,
                               ),
@@ -482,7 +471,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     //Do something when changing the item if you want.
                   },
                   onSaved: (value) {
-                    selectedValue = value.toString();
+                    selectedUser = value.toString();
                   },
                   searchController: textEditingController,
                   searchInnerWidget: Padding(

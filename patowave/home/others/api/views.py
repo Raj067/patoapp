@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from django.http import FileResponse, HttpResponse, JsonResponse
 # from rest_framework.views import APIView
-# from rest_framework import status
+from rest_framework import status
 # from rest_framework.permissions import IsAdminUser
 # from accounts.models import CustomUser
 # from rest_framework.permissions import AllowAny
@@ -64,92 +64,49 @@ def greeting_cards(request, *args, **kwargs):
     data = GreetingCard.objects.all()
     serializer = GreetingCardSerializer(data, many=True)
     return Response(serializer.data)
-# ................ SHOP APIs ...........................
+
+# ----------- FOR CUSTOMER ----------------
+
+@api_view(['POST'])
+def add_new_customer_api(request):
+    print(request.data)
+    if request.method == "POST":
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def add_new_payment_api(request):
+    print(request.data)
+    if request.method == "POST":
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-# @authenticated_api
-# def add_new_shop(request, *args, **kwargs):
-#     if request.method == 'POST':
-#         return add_new_shop_der(request)
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
+@api_view(['POST'])
+def edit_existing_customer_api(request):
+    if request.method == "POST":
+        data = Customer.objects.get(id=request.data.get("id"))
+        data.customer_name = request.data.get("customerName")
+        data.customer_number = request.data.get("phoneNumber")
+        data.customer_email = request.data.get("address")
+        data.customer_address = request.data.get("emailAddress")
+        data.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-# @authenticated_api
-# def edit_existing_shop(request, shop_id, *args, **kwargs):
-#     if request.method == 'POST':
-#         return edit_existing_shop_der(request, shop_id)
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
+@api_view(['POST'])
+def adding_payment_customer_api(request):
+    if request.method == "POST":
+        data = Customer.objects.get(id=request.data.get("id"))
+        data.customer_payment.create(
+            shop=get_shop(request)[0],
+            customer=data,
+            is_payment_in=request.data.get("isPaymentIn"),
+            description=request.data.get("description"),
+            amount=request.data.get("amount"),
+        )
+        data.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
-# @authenticated_api
-# def delete_existing_shop(request, shop_id, *args, **kwargs):
-#     if request.method == 'POST':
-#         shop = Shop.objects.get(id=shop_id)
-#         shop.delete()
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
-
-# # ................... PRODUCT APIs ............................
-
-
-# @authenticated_api
-# def add_new_product(request, *args, **kwargs):
-#     if request.method == 'POST':
-#         return add_new_product_der(request)
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
-
-
-# @authenticated_api
-# def edit_existing_product(request, product_id, *args, **kwargs):
-#     if request.method == 'POST':
-#         return edit_existing_product_der(request, product_id)
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
-
-
-# @authenticated_api
-# def delete_existing_product(request, product_id, *args, **kwargs):
-#     if request.method == 'POST':
-#         product = Product.objects.get(id=product_id)
-#         product.delete()
-#     data = {}
-#     return JsonResponse(data=data, safe=False)
-
-
-# # @authenticated_api
-# def all_shop_products(request, *args, **kwargs):
-#     # if not get_shop(request):
-#     #     return JsonResponse(data={'response': [], 'status': 505}, safe=False)
-
-#     # shop = get_shop(request)[0]
-#     product = [i for i in Product.objects.all()]  # if i.shop == shop]
-#     data = {'response': [
-#         {'product_name': i.product_name, 'product_code': i.product_code,
-#          'purchases_price': i.purchases_price, 'selling_price': i.selling_price,
-#          'quantity': i.quantity, 'stock': i.stock} for i in product],
-#         'status': 404
-#     }
-#     return JsonResponse(data=data, safe=False)
-
-
-# @authenticated_api
-# def single_shop_product(request, product_id, * args, **kwargs):
-#     i = Product.objects.get(id=product_id)
-#     data = {'response': {'product_name': i.product_name, 'product_code': i.product_code,
-#             'purchases_price': i.purchases_price, 'selling_price': i.selling_price,
-#                          'quantity': i.quantity, 'stock': i.stock},
-#             'status': 404}
-#     return JsonResponse(data=data, safe=False)
-
-# # ................... CUSTOMERS DETAILS .......................
-
-
-# @authenticated_api
-# def all_shop_customers(request, *args, **kwargs):
-#     if not get_shop(request):
-#         return JsonResponse(data={'response': [], 'status': 505}, safe=False)
-#     shop = get_shop(request)[0]
-#     return all_shop_customers_der(request, shop)

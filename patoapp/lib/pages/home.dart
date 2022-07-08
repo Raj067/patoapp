@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
+import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
@@ -8,6 +12,7 @@ import 'package:patoapp/more/overview.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
@@ -29,6 +34,37 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   double tzs = 2300.0;
   double euro = 0.920;
   double gbp = 34.90;
+  List<SingleCustomer> customData = [];
+  fetchData() async {
+    // Financial data
+    var data = await http.get(
+      Uri.parse("${baseUrl}api/parties-details/"),
+      headers: authHeaders,
+    );
+    if (data.statusCode == 200) {
+      List<SingleCustomer> finalData = [];
+      for (var dx in jsonDecode(data.body)) {
+        finalData.add(SingleCustomer(
+          address: dx['customer_address'],
+          email: dx['customer_email'] ?? "",
+          financialData: dx['financial_data'],
+          fullName: dx['customer_name'],
+          phoneNumber: dx['customer_number'],
+          amount: dx['effective_amount'],
+          id: dx['id'],
+        ));
+      }
+      customData = finalData;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   _getRate({required double currency}) {
     double fcurrency = 0;
     baseCurrency == 'USD'
@@ -694,8 +730,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const AddPaymentDialog(),
+                          builder: (BuildContext context) => AddPaymentDialog(
+                            finalData: customData,
+                          ),
                           fullscreenDialog: true,
                         ),
                       );

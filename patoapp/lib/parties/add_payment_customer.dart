@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -22,6 +25,12 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   String receivedAmount = '0';
   final paidAmountFormKey1 = GlobalKey<FormState>();
   final receivedAmountformKey1 = GlobalKey<FormState>();
+
+  TextEditingController amountReceived = TextEditingController();
+  TextEditingController amountPaid = TextEditingController();
+  TextEditingController paymentInDesc = TextEditingController(text: "");
+  TextEditingController paymentOutDesc = TextEditingController(text: "");
+
   @override
   void initState() {
     super.initState();
@@ -186,6 +195,14 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')),
                         );
+                        _addPaymentCustomer(
+                          isPaymentIn: true,
+                          amount: int.parse(amountReceived.text),
+                          description: paymentInDesc.text == ""
+                              ? "Payment In"
+                              : paymentInDesc.text,
+                          id: widget.customer.id,
+                        );
                       }
                     }
                   } else {
@@ -197,6 +214,14 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                         // you'd often call a server or save the information in a database.
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')),
+                        );
+                        _addPaymentCustomer(
+                          isPaymentIn: false,
+                          amount: int.parse(amountPaid.text),
+                          description: paymentOutDesc.text == ""
+                              ? "Payment Out"
+                              : paymentOutDesc.text,
+                          id: widget.customer.id,
                         );
                       }
                     }
@@ -223,6 +248,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
             children: [
               Container(height: 15),
               TextFormField(
+                controller: amountReceived,
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
@@ -293,6 +319,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
               ),
               Container(height: 20),
               TextFormField(
+                controller: paymentInDesc,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -327,6 +354,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
             children: [
               Container(height: 15),
               TextFormField(
+                controller: amountPaid,
                 cursorColor: patowavePrimary,
                 onChanged: (val) {
                   setState(() {
@@ -397,6 +425,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
               ),
               Container(height: 20),
               TextFormField(
+                controller: paymentOutDesc,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -419,5 +448,39 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
         ),
       ),
     );
+  }
+
+  _addPaymentCustomer({
+    required int amount,
+    required String description,
+    required bool isPaymentIn,
+    required int id,
+  }) async {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/adding-payment-customer/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'amount': amount,
+        'description': description,
+        'isPaymentIn': isPaymentIn,
+        'id': id,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Renaming the customer
+
+      // Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Customer updated successfully')),
+      );
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Failed to updated customer.')),
+      // );
+      throw Exception('Failed to updated customer.');
+    }
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -13,6 +16,14 @@ class AddCustomerDialog extends StatefulWidget {
 
 class _AddCustomerDialogState extends State<AddCustomerDialog> {
   final addCustomerFormKey = GlobalKey<FormState>();
+  // Controllers for form
+  TextEditingController customerName = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController emailAddress = TextEditingController();
+  TextEditingController openingBalance = TextEditingController();
+  TextEditingController transactionDate = TextEditingController();
+  bool toReceive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +103,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               ),
               Container(height: 15),
               TextFormField(
+                controller: customerName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Customer Name is required';
@@ -113,6 +125,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               ),
               Container(height: 15),
               TextFormField(
+                controller: phoneNumber,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Phone Number is required';
@@ -138,16 +151,11 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               ),
               Container(height: 15),
               TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Address is required';
-                  }
-                  return null;
-                },
+                controller: address,
                 cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
-                    "Address*",
+                    "Address",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -159,6 +167,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               ),
               Container(height: 15),
               TextFormField(
+                controller: emailAddress,
                 cursorColor: patowavePrimary,
                 decoration: const InputDecoration(
                   label: Text(
@@ -177,6 +186,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      controller: openingBalance,
                       cursorColor: patowavePrimary,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -208,6 +218,11 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   Container(width: 10),
                   Expanded(
                     child: InputDatePickerFormField(
+                      // transactionDate
+                      onDateSubmitted: (val) {
+                        transactionDate.text = val.toString();
+                      },
+
                       firstDate: DateTime(2000, 1, 1),
                       lastDate: DateTime(2025, 1, 1),
                       initialDate: DateTime.now(),
@@ -233,9 +248,11 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     totalSwitches: 2,
                     labels: const ['To receive', 'To be paid'],
                     radiusStyle: true,
-                    // onToggle: (index) {
-                    //   print('switched to: $index');
-                    // },
+                    onToggle: (index) {
+                      setState(() {
+                        index == 1 ? toReceive = true : toReceive = false;
+                      });
+                    },
                   ),
                 ],
               ),
@@ -264,8 +281,15 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 ),
                 onPressed: () {
                   if (addCustomerFormKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
+                    _addingCustomer(
+                      customerName: customerName.text,
+                      phoneNumber: phoneNumber.text,
+                      openingBalance: openingBalance.text,
+                      address: address.text,
+                      toReceive: toReceive,
+                      emailAddress: emailAddress.text,
+                      transactionDate: transactionDate.text,
+                    );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
@@ -281,6 +305,44 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         ),
       ),
     );
+  }
+
+  _addingCustomer({
+    required String customerName,
+    required String phoneNumber,
+    required String address,
+    required String emailAddress,
+    required String openingBalance,
+    required String transactionDate,
+    required bool toReceive,
+  }) async {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/add-new-customer/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'customerName': customerName,
+        'phoneNumber': phoneNumber,
+        'address': address,
+        'emailAddress': emailAddress,
+        'openingBalance': openingBalance,
+        'transactionDate': transactionDate,
+        'toReceive': toReceive,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      // return Album.fromJson(jsonDecode(response.body));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Customer created')),
+      );
+      Navigator.pop(context);
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to create album.');
+    }
   }
 
   Future<void> _openingBalanceToolTip(
@@ -302,4 +364,45 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
       },
     );
   }
+
+// Future<Album> createAlbum(String title) async {
+//     final response = await http.post(
+//       Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+//       headers: <String, String>{
+//         'Content-Type': 'application/json; charset=UTF-8',
+//       },
+//       body: jsonEncode(<String, String>{
+//         'title': title,
+//       }),
+//     );
+
+//     if (response.statusCode == 201) {
+//       // If the server did return a 201 CREATED response,
+//       // then parse the JSON.
+//       return Album.fromJson(jsonDecode(response.body));
+//     } else {
+//       // If the server did not return a 201 CREATED response,
+//       // then throw an exception.
+//       throw Exception('Failed to create album.');
+//     }
+//   }
+//   Future<void> _openingBalanceToolTip(
+//     BuildContext context,
+//   ) async {
+//     await showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return const AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.all(
+//               Radius.circular(30),
+//             ),
+//           ),
+//           elevation: 0,
+//           content: Text(
+//               "Amount to be paid/received from the contact before adding them to Patowave"),
+//         );
+//       },
+//     );
+//   }
 }
