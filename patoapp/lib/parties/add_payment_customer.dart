@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+// import 'package:bottom_loader/bottom_loader.dart';
 
 class AddPaymentCustomerDialog extends StatefulWidget {
   final SingleCustomer customer;
