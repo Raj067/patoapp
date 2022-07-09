@@ -6,7 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+// import 'package:contacts_service/contacts_service.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   const AddCustomerDialog({Key? key}) : super(key: key);
@@ -25,6 +27,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   TextEditingController openingBalance = TextEditingController();
   bool toReceive = false;
   TextEditingController dateInput = TextEditingController();
+
   @override
   void initState() {
     dateInput.text = DateFormat('yyyy-MM-dd')
@@ -59,7 +62,17 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               Container(height: 10),
               InkWell(
                 borderRadius: BorderRadius.circular(15),
-                onTap: () {},
+                onTap: () async {
+                  // if (await Permission.contacts.request().isGranted) {
+                  //   // Either the permission was already granted before or the user just granted it.
+                  //   List<Contact> contacts = await ContactsService.getContacts(
+                  //       withThumbnails: false);
+                  //   print(contacts);
+                  // }
+                  // List<Contact> contacts =
+                  //     await ContactsService.getContacts(withThumbnails: false);
+                  // print(contacts);
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: patowavePrimary.withAlpha(100),
