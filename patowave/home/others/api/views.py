@@ -31,11 +31,27 @@ def general_parties_details(request, *args, **kwargs):
     data = general_parties_data(request, get_shop(request))
     return Response(data)
 
+#  =============FOR BUSINESS ==========
+
 
 @api_view(['GET'])
 def general_business_details(request, *args, **kwargs):
     data = general_business_data(request, get_shop(request))
     return Response(data)
+
+
+@api_view(['GET'])
+def business_financial_transactions(request, *args, **kwargs):
+    data = business_financial_data(request, get_shop(request))
+    return Response(data)
+
+
+@api_view(['GET'])
+def financial_header(request, *args, **kwargs):
+    data = financial_header_data(request, get_shop(request))
+    return Response(data)
+
+# ==================================
 
 
 @api_view(['GET'])

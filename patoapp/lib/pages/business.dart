@@ -27,6 +27,9 @@ class _BusinessPageState extends State<BusinessPage> {
     expensesMonth: 0,
     expensesWeek: 0,
   );
+  List<FinancialData> allFinancialData = [];
+  List<FinancialHeaderData> allFinancialHeader = [];
+  bool isLoading = true;
   fetchData() async {
     // Data for general analysis
     var generalData = await http.get(
@@ -43,6 +46,53 @@ class _BusinessPageState extends State<BusinessPage> {
         expensesWeek: jsonDecode(generalData.body)['expenses_week'],
       );
     }
+    // Fetching Financial Header Data api/financial-header/
+    var dataHeader = await http.get(
+      Uri.parse(
+        "${baseUrl}api/financial-header/",
+      ),
+      headers: authHeaders,
+    );
+    if (dataHeader.statusCode == 200) {
+      List<FinancialHeaderData> myData = [];
+      for (var dx in jsonDecode(dataHeader.body)) {
+        myData.add(FinancialHeaderData(
+          date: DateTime.parse(dx['date']),
+          income: dx['income'], //dx['income']
+          expenses: dx['expenses'], //dx['expenses']
+        ));
+      }
+      allFinancialHeader = myData;
+    }
+    // FETCHING FINANCIAL DATA
+    var data = await http.get(
+      Uri.parse(
+        "${baseUrl}api/business-financial-transactions/",
+      ),
+      headers: authHeaders,
+    );
+    if (data.statusCode == 200) {
+      List<FinancialData> myData = [];
+      for (var dx in jsonDecode(data.body)) {
+        myData.add(
+          FinancialData(
+            date: DateTime.parse(dx['date']),
+            isCashSale: dx['isCashSale'],
+            isPaymentIn: dx['isPaymentIn'],
+            isExpenses: dx['isExpenses'],
+            isPaymentOut: dx['isPaymentOut'],
+            isPurchases: dx['isPurchases'],
+            isInvoice: dx['isInvoice'],
+            name: dx['name'] ?? "",
+            description: dx['description'] ?? "",
+            details: dx['details'],
+            amount: dx['amount'],
+          ),
+        );
+      }
+      allFinancialData = myData;
+    }
+    isLoading = false;
     setState(() {});
   }
 
@@ -62,8 +112,15 @@ class _BusinessPageState extends State<BusinessPage> {
           children: [
             Container(height: 5),
             _firstRowBusinessData(context),
-            // SecondRowBusinessData(),
-            _allFinancialData(context),
+            // SecondRowBusinessData(),()
+            isLoading
+                ? const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : _allFinancialData(context),
           ],
         ),
       ),
@@ -311,7 +368,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         ],
                       ),
                       Text(
-                        "Tsh. ${data.getTotalPrice()}",
+                        "Tsh. ${data.amount}",
                         style: TextStyle(
                           fontSize: 16,
                           color: data.isIncome()
@@ -436,7 +493,7 @@ class _BusinessPageState extends State<BusinessPage> {
             data.isIncome()
                 ? Expanded(
                     child: Text(
-                      "${data.getTotalPrice()}",
+                      "${data.amount}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   )
@@ -448,7 +505,7 @@ class _BusinessPageState extends State<BusinessPage> {
             data.isIncome()
                 ? const Text("-")
                 : Text(
-                    "${data.getTotalPrice()}",
+                    "${data.amount}",
                     style: const TextStyle(color: patowaveErrorRed),
                   ),
           ],
@@ -460,8 +517,8 @@ class _BusinessPageState extends State<BusinessPage> {
   Widget _singleColumnFinancialData(
     BuildContext context, {
     required List data,
-    required double income,
-    required double expenses,
+    required int income,
+    required int expenses,
     required String date,
   }) {
     List<Widget> myData = [
@@ -543,18 +600,22 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  // _cashSalesButtomSheetData(List<List> data) {
-  //   List<Widget> req = [];
-  //   for (var dx in data) {
-  //     req.add(Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text("${dx[0]} ${dx[1]}"),
-  //         Text("${dx[1]}"),
-  //       ],
-  //     ));
-  //   }
-  //   return Column(children: req);
-  // }
-
+  List<Map> allBusinessFinancialData() {
+    List<Map> finaldata = [];
+    for (var element in allFinancialHeader) {
+      List data = [];
+      for (var dx in allFinancialData) {
+        if (element.getTimeString() == dx.getTimeString()) {
+          data.add(dx);
+        }
+      }
+      if (data.isNotEmpty) {
+        finaldata.add({
+          "header": element,
+          "data": data,
+        });
+      }
+    }
+    return finaldata;
+  }
 }

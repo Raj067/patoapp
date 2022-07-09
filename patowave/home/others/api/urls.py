@@ -10,8 +10,7 @@ api_urls = [
          name='top_selling_items'),
     path('api/general-parties-details/', general_parties_details,
          name='general_parties_details'),
-    path('api/general-business-details/', general_business_details,
-         name='general_business_data'),
+
     path('api/general-inventory-analysis/', general_inventory_analysis,
          name='general_inventory_analysis'),
 
@@ -31,4 +30,11 @@ api_urls = [
     path('api/adding-payment-customer/',
          adding_payment_customer_api, name='adding_payment_customer_api'),
 
+    # BUSINESS financial_header
+    path('api/general-business-details/', general_business_details,
+         name='general_business_data'),
+    path('api/business-financial-transactions/', business_financial_transactions,
+         name='business_financial_transactions'),
+    path('api/financial-header/', financial_header,
+         name='financial_header'),
 ]
