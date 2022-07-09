@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
                 left: 100,
                 child: Center(
                   child: SvgPicture.asset(
-                    "assets/onboarding/welcome.svg",
+                    "assets/onboarding/myLogo.svg",
                     width: 60,
                     height: 60,
                   ),
@@ -182,7 +182,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => SignupPage(),
+                          builder: (BuildContext context) => const SignupPage(),
                           fullscreenDialog: true,
                         ),
                       );

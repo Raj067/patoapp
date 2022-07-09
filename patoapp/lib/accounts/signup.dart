@@ -6,7 +6,7 @@ import 'package:patoapp/accounts/set_account.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class SignupPage extends StatefulWidget {
-  SignupPage({Key? key}) : super(key: key);
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
   State<SignupPage> createState() => _SignupPageState();

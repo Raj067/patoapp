@@ -1,5 +1,3 @@
-import 'package:patoapp/data/customer_list.dart';
-
 class FinancialData {
   // int id;
   DateTime date;

@@ -120,7 +120,7 @@ class CashSoldItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    product_unit = models.CharField(max_length=100, null=True, blank=True)
+    product_unit = models.CharField(max_length=100,)
 
     cash_sale_data = models.ForeignKey("CashSale", on_delete=models.CASCADE)
     # Registration
@@ -133,7 +133,7 @@ class PurchasedItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    product_unit = models.CharField(max_length=100, null=True, blank=True)
+    product_unit = models.CharField(max_length=100, default="Items")
 
     cash_sale_data = models.ForeignKey("Purchase", on_delete=models.CASCADE)
     # Registration
@@ -183,9 +183,9 @@ class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    balance_due = models.IntegerField()
+    # balance_due = models.IntegerField()
 
-    description = models.CharField(max_length=500, null=True, blank=True)
+    description = models.CharField(max_length=500, default="Purchases")
 
     purchased_items = models.ManyToManyField(
         Shop, blank=True, related_name='purchases_data_name', through=PurchasedItem)
@@ -227,8 +227,12 @@ class Payment(models.Model):
 class Expense(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    expenses_category = models.CharField(max_length=500)
-    description = models.CharField(max_length=500)
+    categories = [
+        ("direct", "Direct Expenses"),
+        ("indirect", "Indirect Expenses"),
+    ]
+    expenses_category = models.CharField(max_length=200, choices=categories)
+    description = models.CharField(max_length=500, default="Expenses")
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -248,6 +252,6 @@ class GreetingCard(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
- 
+
     def __str__(self) -> str:
         return f"card {self.id}"

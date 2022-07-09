@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
