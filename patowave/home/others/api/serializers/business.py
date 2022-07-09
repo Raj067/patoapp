@@ -64,13 +64,15 @@ def business_financial_data(request, shop):
                 "isInvoice": False,
                 "isPurchases": True,
                 "details": [{
-                    "id": i.id,
-                    "product": i.product.product_name,
-                    "quantity": i.quantity,
-                    "price": i.price,
-                    "product_unit": i.product_unit,
-                    "date": i.updated_at,
-                } for i in dx.purchased_items.all()]
+                        "id": i.id,
+                        "product": i.product.product_name,
+                        "quantity": i.quantity,
+                        "price": i.price,
+                        "product_unit": i.product_unit,
+                        "date": i.updated_at,
+                        }
+                    for i in dx.purchased_items.all()
+                ]
             })
 
     # for dx in Invoice.objects.all():

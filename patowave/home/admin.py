@@ -26,6 +26,25 @@ class PaymentAdmin(admin.ModelAdmin):
                     'is_payment_in', 'amount', 'created_at']
 
 
+class PurchasedItemInline(admin.TabularInline):
+    model = PurchasedItem
+
+
+class PurchasesAdmin(admin.ModelAdmin):
+    inlines = [PurchasedItemInline]
+    list_display = ['customer', 'shop',
+                    'description', 'amount', 'created_at']
+
+
+class CashSoldItemInline(admin.TabularInline):
+    model = CashSoldItem
+
+
+class CashSaleAdmin(admin.ModelAdmin):
+    inlines = [CashSoldItemInline]
+    list_display = ['shop', 'amount', 'created_at']
+
+
 class PaymentInline(admin.TabularInline):
     model = Payment
 
@@ -54,9 +73,10 @@ admin.site.register(Service, ServiceAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Invoice)
 admin.site.register(InvoiceSoldItem)
-admin.site.register(CashSoldItem)
-admin.site.register(CashSale)
-admin.site.register(Purchase)
+# admin.site.register(CashSoldItem)
+admin.site.register(CashSale, CashSaleAdmin)
+admin.site.register(Purchase,  PurchasesAdmin)
+# admin.site.register(PurchasedItem)
 admin.site.register(Feedback,  FeedbackAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Expense)

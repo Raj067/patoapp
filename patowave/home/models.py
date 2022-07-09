@@ -135,7 +135,7 @@ class PurchasedItem(models.Model):
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100, default="Items")
 
-    cash_sale_data = models.ForeignKey("Purchase", on_delete=models.CASCADE)
+    purchases_data = models.ForeignKey("Purchase", on_delete=models.CASCADE)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

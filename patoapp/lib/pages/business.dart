@@ -224,7 +224,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? businessGeneral.salesWeek : businessGeneral.salesMonth}",
+                            "Tsh ${isWeek ? formatter.format(businessGeneral.salesWeek) : formatter.format(businessGeneral.salesMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -252,7 +252,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? businessGeneral.expensesWeek : businessGeneral.expensesMonth}",
+                            "Tsh ${isWeek ? formatter.format(businessGeneral.expensesWeek) : formatter.format(businessGeneral.expensesMonth)}",
                             style: const TextStyle(
                               color: patowaveErrorRed,
                               fontSize: 16,
@@ -274,7 +274,7 @@ class _BusinessPageState extends State<BusinessPage> {
                   children: [
                     const Text("Profit"),
                     Text(
-                      "Tshs ${isWeek ? businessGeneral.profitWeek : businessGeneral.profitMonth}",
+                      "Tshs ${isWeek ? formatter.format(businessGeneral.profitWeek) : formatter.format(businessGeneral.profitMonth)}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   ],
@@ -368,7 +368,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         ],
                       ),
                       Text(
-                        "Tsh. ${data.amount}",
+                        "Tsh. ${formatter.format(data.amount)}",
                         style: TextStyle(
                           fontSize: 16,
                           color: data.isIncome()
@@ -378,13 +378,23 @@ class _BusinessPageState extends State<BusinessPage> {
                       ),
                     ],
                   ),
-                  // data.isCashSale
-                  //     ? Column(children: [
-                  //         const Divider(height: 0),
-                  //         _cashSalesButtomSheetData(data.details[1])
-                  //       ])
-                  //     : Container(),
-                  Container(height: 30),
+                  Container(height: 15),
+                  // FOR PURCHASES ONLY
+                  data.isPurchases
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Items",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            _listItemsButtomSheet(data.details),
+                          ],
+                        )
+                      : Container(),
+                  // END
+                  Container(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -491,27 +501,87 @@ class _BusinessPageState extends State<BusinessPage> {
               ),
             ),
             data.isIncome()
-                ? Expanded(
-                    child: Text(
-                      "${data.amount}",
-                      style: const TextStyle(color: patowaveGreen),
+                ? Text(
+                    formatter.format(data.amount),
+                    style: const TextStyle(
+                      color: patowaveGreen,
                     ),
                   )
-                : const Expanded(
-                    child: Center(
-                      child: Text("-"),
+                : Text(
+                    formatter.format(data.amount),
+                    style: const TextStyle(
+                      color: patowaveErrorRed,
                     ),
                   ),
-            data.isIncome()
-                ? const Text("-")
-                : Text(
-                    "${data.amount}",
-                    style: const TextStyle(color: patowaveErrorRed),
-                  ),
+            // data.isIncome()
+            //     ? Expanded(
+            //         child: Text(
+            //           formatter.format(data.amount),
+            //           style: const TextStyle(color: patowaveGreen),
+            //         ),
+            //       )
+            //     : const Expanded(
+            //         child: Center(
+            //           child: Text("-"),
+            //         ),
+            //       ),
+            // data.isIncome()
+            //     ? const Text("-")
+            //     : Text(
+            //         formatter.format(data.amount),
+            //         style: const TextStyle(color: patowaveErrorRed),
+            //       ),
           ],
         ),
       ),
     );
+  }
+
+  _listItemsButtomSheet(List data) {
+    List<Widget> fData = [];
+    for (var dx in data) {
+      fData.add(
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const Expanded(
+          child: Text(
+            "Product 1",
+            style: TextStyle(fontSize: 12),
+          ),
+        ),
+        // Container(width:10),
+        const Text(
+          "10",
+          style: TextStyle(fontSize: 12),
+        ),
+        Container(width: 4),
+        const Text(
+          "Items",
+          style: TextStyle(fontSize: 12),
+        ),
+        Container(width: 4),
+        const Text(
+          "X",
+          style: TextStyle(fontSize: 12),
+        ),
+        Container(width: 4),
+        const Text(
+          "2700",
+          style: TextStyle(fontSize: 12),
+        ),
+        Container(width: 4),
+        const Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "4500",
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
+        ),
+      ]));
+      fData.add(Container(height: 5));
+    }
+    return Column(children: fData);
   }
 
   Widget _singleColumnFinancialData(
