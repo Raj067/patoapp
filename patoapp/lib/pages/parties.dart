@@ -52,6 +52,7 @@ class _PartiesPageState extends State<PartiesPage> {
         customersDebtWeek:
             jsonDecode(generalData.body)['total_customer_debt_week'],
       );
+      setState(() {});
     }
 
     // Financial data
@@ -74,10 +75,8 @@ class _PartiesPageState extends State<PartiesPage> {
       }
       customData = finalData;
       isAlreadyLoad = true;
+      setState(() {});
     }
-
-    // customData = allCustomerDetails();
-    setState(() {});
   }
 
   @override

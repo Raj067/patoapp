@@ -11,18 +11,42 @@ class EditMyBusiness extends StatefulWidget {
 
 class _EditMyBusinessState extends State<EditMyBusiness> {
   final List<String> businessCategories = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
+    "FMCG Shop",
+    "Salon and hairdresser",
+    "Hardware store",
+    "Home Service",
+    "Restaurant/hotel",
+    "Liquor store",
+    "Chemical and fertilizer",
+    "Construction materials and equipment",
+    "Repairing/plumbing/Electrician",
+    "Book/ Stationery store",
+    "Fashion accessory/ Cosmetics",
+    "Fruit and vegetables",
+    "Dairy products",
+    "Furniture",
+    "Jewery and germs",
+    "Pharmacy/medical",
+    "Industrial machinery and equipments",
+    "Mobile and accessories",
+    "Bakery",
+    "Toys and gifts",
+    "Coaching and training",
+    "Fitness center",
+    "Real estate",
+    "Tour and travel",
+    "NGO and charitable",
+    "Oil and gas",
+    "Others"
   ];
+
   final List<String> businessTypes = [
-    "Type 1",
-    "Type 2",
-    "Type 3",
-    "Type 4",
-    "Type 5",
+    "Retail",
+    "Wholesale",
+    "Service",
+    "Distributor",
+    "Manufacturing",
+    "Others",
   ];
 
   int value = 1;

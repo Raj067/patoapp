@@ -14,7 +14,7 @@ class ProductsCart extends StatefulWidget {
 }
 
 class _ProductsCartState extends State<ProductsCart> {
-  int totalAmount = 0;
+  double totalAmount = 0;
   int balanceDue = 0;
   double discount = 0;
   @override
@@ -97,7 +97,7 @@ class _ProductsCartState extends State<ProductsCart> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Tsh: $discount",
+                        "Tsh: ${discount.toInt()}",
                         style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -115,7 +115,7 @@ class _ProductsCartState extends State<ProductsCart> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Tsh: $totalAmount",
+                        "Tsh: ${totalAmount.toInt() - discount.toInt()}",
                         style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -198,11 +198,22 @@ class _ProductsCartState extends State<ProductsCart> {
                 child: SizedBox(
                   height: 35,
                   child: TextFormField(
+                    // controller: firstValue,
                     cursorColor: patowavePrimary,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
+                    onChanged: (val) {
+                      // secondValue.text = "";
+                      if (val != "") {
+                        discount = int.parse(val) / 100 * totalAmount;
+                        setState(() {});
+                      } else {
+                        discount = 0;
+                        setState(() {});
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: "0",
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
@@ -256,6 +267,16 @@ class _ProductsCartState extends State<ProductsCart> {
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
+                    onChanged: (val) {
+                      // firstValue.text = "";
+                      if (val != "") {
+                        discount = double.parse(val);
+                        setState(() {});
+                      } else {
+                        discount = 0;
+                        setState(() {});
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: "0.00",
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
@@ -298,7 +319,7 @@ class _ProductsCartState extends State<ProductsCart> {
       }
     }
     setState(() {
-      totalAmount = price;
+      totalAmount = price.toDouble();
     });
     return Column(children: data);
   }

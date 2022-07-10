@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/business/edit_transaction.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/business_financial_data.dart';
@@ -27,6 +28,7 @@ class _BusinessPageState extends State<BusinessPage> {
     expensesMonth: 0,
     expensesWeek: 0,
   );
+
   List<FinancialData> allFinancialData = [];
   List<FinancialHeaderData> allFinancialHeader = [];
   bool isLoading = true;
@@ -63,6 +65,7 @@ class _BusinessPageState extends State<BusinessPage> {
         ));
       }
       allFinancialHeader = myData;
+      setState(() {});
     }
     // FETCHING FINANCIAL DATA
     var data = await http.get(
@@ -91,9 +94,9 @@ class _BusinessPageState extends State<BusinessPage> {
         );
       }
       allFinancialData = myData;
+      setState(() {});
     }
     isLoading = false;
-    setState(() {});
   }
 
   @override
@@ -380,7 +383,7 @@ class _BusinessPageState extends State<BusinessPage> {
                   ),
                   Container(height: 15),
                   // FOR PURCHASES ONLY
-                  data.isPurchases
+                  data.isPurchases || data.isCashSale
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -451,7 +454,16 @@ class _BusinessPageState extends State<BusinessPage> {
                       Container(width: 10),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const EditTransaction(),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(
                               const Size(45, 45),
@@ -542,44 +554,44 @@ class _BusinessPageState extends State<BusinessPage> {
     for (var dx in data) {
       fData.add(
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Expanded(
+        Expanded(
           child: Text(
-            "Product 1",
-            style: TextStyle(fontSize: 12),
+            dx['product'],
+            style: const TextStyle(fontSize: 12),
           ),
         ),
         // Container(width:10),
-        const Text(
-          "10",
-          style: TextStyle(fontSize: 12),
+        Text(
+          "${dx['quantity']}",
+          style: const TextStyle(fontSize: 12),
+        ),
+        Container(width: 4),
+        Text(
+          dx['product_unit'],
+          style: const TextStyle(fontSize: 12),
         ),
         Container(width: 4),
         const Text(
-          "Items",
+          "x",
           style: TextStyle(fontSize: 12),
         ),
         Container(width: 4),
-        const Text(
-          "X",
-          style: TextStyle(fontSize: 12),
+        Text(
+          "${dx['price']}",
+          style: const TextStyle(fontSize: 12),
         ),
         Container(width: 4),
-        const Text(
-          "2700",
-          style: TextStyle(fontSize: 12),
-        ),
-        Container(width: 4),
-        const Expanded(
+        Expanded(
           child: Align(
             alignment: Alignment.centerRight,
             child: Text(
-              "4500",
-              style: TextStyle(fontSize: 12),
+              "${dx['quantity'] * dx['price']}",
+              style: const TextStyle(fontSize: 12),
             ),
           ),
         ),
       ]));
-      fData.add(Container(height: 5));
+      fData.add(Container(height: 2));
     }
     return Column(children: fData);
   }

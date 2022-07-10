@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 Map d = {
-  "access":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxMjM4NzU0LCJpYXQiOjE2NTY4Mzc4NjUsImp0aSI6ImMxZDNkOTc4MjMxNDRkYzE5ZGY3MzZjYzU2MDAyYTRiIiwidXNlcl9pZCI6MX0.zYVEki_oeBvDAFEUBdXQv-VeTKxuHzFzBkm-BShqwZY",
   "refresh":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NDY5NDc1NCwiaWF0IjoxNjU2OTE4NzU0LCJqdGkiOiJiNmExZTEzMTE2OTE0ZDBiOTdiNGIwM2YzODRiMGUyMiIsInVzZXJfaWQiOjF9.ybhW9rA_EVqOH7hawSuNazaFcONqqDP_Tgdbj4nuxK4"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NTE1MTQ0NywiaWF0IjoxNjU3Mzc1NDQ3LCJqdGkiOiI5YTgyMDg3ZmM2YTM0YTlkYTIxOGE4OTNmOTM5OTIyNiIsInVzZXJfaWQiOjF9.PUAqkOFtu5w6Y_Dpz00tiyn_9Rlm9Xn4-xvi2ceyA88",
+  "access":
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxNjk1NDQ3LCJpYXQiOjE2NTczNzU0NDcsImp0aSI6IjZhZWJlZWQ2OTIwOTQxOGM4ZGY3NmE1OWE0M2ViZmFiIiwidXNlcl9pZCI6MX0.3FXaqg2VH689OK8uFkybT4oY68xd_wP5cGn3EkiCymw"
 };
 String url = "http://localhost:8000";
 String baseUrl = "$url/";

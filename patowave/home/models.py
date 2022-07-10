@@ -50,11 +50,11 @@ class Product(models.Model):
     selling_price_primary = models.IntegerField()
     selling_price_secondary = models.IntegerField(
         default=0, null=True, blank=True)
-    quantity = models.IntegerField()
-    stock_level = models.IntegerField()
+    quantity = models.IntegerField(default=0)
+    stock_level = models.IntegerField(default=0)
     primary_unit = models.CharField(max_length=100)
-    secondary_unit = models.CharField(max_length=100)
-    rate_unit = models.IntegerField()
+    secondary_unit = models.CharField(max_length=100, null=True, blank=True)
+    rate_unit = models.IntegerField(null=True, blank=True)
 
     # other details
     product_image = models.ImageField(
@@ -99,7 +99,7 @@ class Customer(models.Model):
     customer_name = models.CharField(max_length=100)
     customer_number = models.CharField(max_length=100)
     customer_email = models.EmailField(null=True, blank=True)
-    customer_address = models.CharField(max_length=100)
+    customer_address = models.CharField(max_length=100, blank=True, null=True)
     customer_payment = models.ManyToManyField(
         "Payment", blank=True, related_name='data_customer_payment')
     customer_invoice = models.ManyToManyField(
@@ -156,7 +156,7 @@ class InvoiceSoldItem(models.Model):
 class CashSale(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     sold_items = models.ManyToManyField(
-        Shop, blank=True, related_name='sales_data_name', through=CashSoldItem)
+        CashSoldItem, blank=True, related_name='sales_data_name')
     amount = models.IntegerField()
 
     # Registration
@@ -173,7 +173,7 @@ class Invoice(models.Model):
     description = models.CharField(max_length=500)
 
     sold_items = models.ManyToManyField(
-        Shop, blank=True, related_name='invoice_data_name', through=InvoiceSoldItem)
+        InvoiceSoldItem, blank=True, related_name='invoice_data_name')
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -188,7 +188,7 @@ class Purchase(models.Model):
     description = models.CharField(max_length=500, default="Purchases")
 
     purchased_items = models.ManyToManyField(
-        Shop, blank=True, related_name='purchases_data_name', through=PurchasedItem)
+        PurchasedItem, blank=True, related_name='purchases_data_name')
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

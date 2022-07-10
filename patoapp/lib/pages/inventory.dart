@@ -62,6 +62,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     List<SingleProduct> finalData = [];
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
+        print(dx);
         finalData.add(SingleProduct(
           productUnit: dx["primary_unit"] ?? "Items",
           id: dx['id'],
@@ -69,7 +70,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           quantity: dx['quantity'],
           purchasesPrice: dx['purchases_price'],
           sellingPrice: dx['selling_price_primary'],
-          stockLevel: dx['stock_level'],
+          stockLevel: dx['stock_level'] ?? 0,
           supplierName: dx['supplier_name'] ?? '',
           supplierContact: dx['supplier_number'] ?? '',
           thumbnail: dx['product_image'] ?? '',
