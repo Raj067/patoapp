@@ -8,14 +8,26 @@ ThemeData patowaveDarkTheme() {
     floatingActionButtonTheme: _floatingActionButtonTheme,
     tabBarTheme: _tabBarTheme,
     dialogTheme: _dialogTheme,
+    iconTheme: _customIconTheme(base.iconTheme),
+    primaryIconTheme: _customIconTheme(base.iconTheme),
     outlinedButtonTheme: _outlinedButtonTheme,
     textButtonTheme: _textButtonThemeData,
     elevatedButtonTheme: _elevatedButtonThemeData,
     inputDecorationTheme: _inputDecorationTheme,
     appBarTheme: _appBarTheme,
     checkboxTheme: _checkboxTheme,
+    progressIndicatorTheme: _progressIndicatorTheme,
   );
 }
+
+IconThemeData _customIconTheme(IconThemeData original) {
+  return original.copyWith(color: Colors.grey);
+}
+
+ProgressIndicatorThemeData _progressIndicatorTheme =
+    const ProgressIndicatorThemeData(
+  color: patowavePrimary,
+);
 
 CheckboxThemeData _checkboxTheme = CheckboxThemeData(
   shape: const RoundedRectangleBorder(
@@ -34,7 +46,7 @@ InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
   contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
   iconColor: Colors.grey,
   focusColor: patowavePrimary,
-  hintStyle: TextStyle(color: patowavePrimary),
+  // hintStyle: TextStyle(color: patowavePrimary),
   labelStyle: TextStyle(color: Colors.grey),
   floatingLabelStyle: TextStyle(color: patowavePrimary),
   focusedBorder: OutlineInputBorder(

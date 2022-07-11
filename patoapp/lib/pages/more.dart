@@ -66,8 +66,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Inventory Analysis'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             )
@@ -96,8 +95,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Tutorials'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -155,8 +153,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('General Settings'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -194,8 +191,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Reminder Automation'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -253,8 +249,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Terms & Conditions'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -292,8 +287,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Privacy Policy'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -331,8 +325,7 @@ class MorePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
                                   Text('Feedback'),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black38, size: 14),
+                                  Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),

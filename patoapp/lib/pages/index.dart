@@ -44,14 +44,14 @@ class _HomePageState extends State<HomePage> {
             icon: _selectedIndex == 0
                 ? SvgPicture.asset(
                     "assets/svg/home2.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   )
                 : SvgPicture.asset(
                     color: Theme.of(context).iconTheme.color,
                     "assets/svg/home1.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   ),
             label: 'Home',
           ),
@@ -59,23 +59,27 @@ class _HomePageState extends State<HomePage> {
             icon: _selectedIndex == 1
                 ? SvgPicture.asset(
                     "assets/svg/b2.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   )
                 : SvgPicture.asset(
                     color: Theme.of(context).iconTheme.color,
                     "assets/svg/b1.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   ),
             label: 'Business',
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 2
-                ? const FaIcon(FontAwesomeIcons.solidUser)
+                ? const FaIcon(
+                    FontAwesomeIcons.solidUser,
+                    size: 20,
+                  )
                 : FaIcon(
                     FontAwesomeIcons.user,
                     color: Theme.of(context).iconTheme.color,
+                    size: 20,
                   ),
             label: 'Contacts',
           ),
@@ -83,14 +87,14 @@ class _HomePageState extends State<HomePage> {
             icon: _selectedIndex == 3
                 ? SvgPicture.asset(
                     "assets/svg/more2.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   )
                 : SvgPicture.asset(
                     color: Theme.of(context).iconTheme.color,
                     "assets/svg/more1.svg",
-                    width: 25,
-                    height: 25,
+                    width: 20,
+                    height: 20,
                   ),
             label: 'More',
           ),

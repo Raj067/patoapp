@@ -64,8 +64,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Profit and Loss'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -95,8 +94,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Debt Reports'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -127,8 +125,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Cashflow'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -158,8 +155,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Balance sheet'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -189,8 +185,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Daybook'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -221,8 +216,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Expenses Reports'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -252,8 +246,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Sales Reports'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -284,8 +277,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Purchases Reports'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -316,8 +308,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Inventory Reports'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -348,8 +339,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Inventory Summary'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),
@@ -380,8 +370,7 @@ class MainReportsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('All Transactions'),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black38, size: 14),
+                      Icon(Icons.arrow_forward_ios, size: 14),
                     ],
                   ),
                 ),

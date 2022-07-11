@@ -21,6 +21,9 @@ class Shop(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
     def __str__(self) -> str:
         return self.name
 
@@ -37,6 +40,9 @@ class ShopUser(models.Model):
     # One user can possess several shops or roles
     # hence all the roles possessed by user should be defined here
     is_admin = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("-id",)
 
     def __str__(self) -> str:
         return f'{self.user} -> {self.shop}'
@@ -69,6 +75,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
     def __str__(self) -> str:
         return self.product_name
 
@@ -89,6 +98,9 @@ class Service(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
 
     def __str__(self) -> str:
         return self.service_name
@@ -111,6 +123,9 @@ class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
     def __str__(self) -> str:
         return self.customer_name
 
@@ -128,6 +143,9 @@ class CashSoldItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
 
 class PurchasedItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -141,6 +159,9 @@ class PurchasedItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
 
 class InvoiceSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -153,6 +174,9 @@ class InvoiceSoldItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
 
 class CashSale(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -164,6 +188,9 @@ class CashSale(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
 
 
 class Invoice(models.Model):
@@ -180,6 +207,9 @@ class Invoice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
 
 class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
@@ -194,6 +224,9 @@ class Purchase(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
 
 
 class Feedback(models.Model):
@@ -222,6 +255,9 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
     def __str__(self) -> str:
         return f"{self.customer}"
 
@@ -239,6 +275,9 @@ class Expense(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ("-id",)
+
 
 class GreetingCard(models.Model):
     categories = [
@@ -254,6 +293,9 @@ class GreetingCard(models.Model):
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
 
     def __str__(self) -> str:
         return f"card {self.id}"

@@ -348,21 +348,53 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       right: 8,
                       left: 8,
                     ),
-                    child: TextFormField(
-                      cursorColor: patowavePrimary,
-                      controller: customerController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: patowavePrimary,
+                            controller: customerController,
+                            decoration: const InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for customer...',
+                              hintStyle: TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        hintText: 'Search for customer...',
-                        hintStyle: const TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    _addNewCustomer(context),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: const Text("add"),
+                        )
+                      ],
                     ),
                   ),
                   searchMatchFn: (item, searchValue) {
@@ -1036,7 +1068,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   if (addItemToSalesFormKey.currentState!.validate()) {
                     for (SingleProduct dx in allProducts) {
                       if ("${dx.id}" == selectedProductValue &&
-                          !addedItemsToSales.contains(dx)) {
+                          !addedItemsToSales.map((e) => e.id).contains(dx.id)) {
                         addedItemsToSales.add(
                           SingleProduct(
                             quantity: int.parse(quantityController.text),
@@ -1062,6 +1094,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         ),
       ),
     );
+  }
+
+  _addNewCustomer(BuildContext context) {
+    return Scaffold(appBar: AppBar(), body: Center(child: Text("hello")));
   }
 
   _addItemsToPurchases(BuildContext context) {
@@ -1300,7 +1336,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Tsh ${product.getTotalPrice()}",
+                    "Tsh ${product.quantity * product.sellingPrice}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -1316,7 +1352,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     style: TextStyle(fontSize: 10),
                   ),
                   Text(
-                    "${product.addedToCart} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.getTotalPrice()}",
+                    "${product.quantity} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.quantity * product.sellingPrice}",
                     style: const TextStyle(fontSize: 10),
                   ),
                 ],

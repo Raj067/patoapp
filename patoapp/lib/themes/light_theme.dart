@@ -66,7 +66,7 @@ const TabBarTheme _tabBarTheme = TabBarTheme(
 );
 
 IconThemeData _customIconTheme(IconThemeData original) {
-  return original.copyWith(color: patowaveBlack);
+  return original.copyWith(color: Colors.grey);
 }
 
 TextTheme _buildPatoTextTheme(TextTheme base) {

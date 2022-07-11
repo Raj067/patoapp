@@ -62,7 +62,6 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     List<SingleProduct> finalData = [];
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
-        print(dx);
         finalData.add(SingleProduct(
           productUnit: dx["primary_unit"] ?? "Items",
           id: dx['id'],

@@ -361,7 +361,7 @@ class _BusinessPageState extends State<BusinessPage> {
         Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => const TransactionReceipt(),
+            builder: (BuildContext context) => TransactionReceipt(data: data),
             fullscreenDialog: true,
           ),
         );
@@ -411,7 +411,7 @@ class _BusinessPageState extends State<BusinessPage> {
                     ],
                   ),
                   Container(height: 15),
-                  // FOR PURCHASES ONLY
+                  // FOR PURCHASES AND CASH SALE ONLY
                   data.isPurchases || data.isCashSale
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -579,50 +579,29 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   _listItemsButtomSheet(List data) {
-    List<Widget> fData = [];
+    List<TableRow> fData = [];
     for (var dx in data) {
-      fData.add(
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Expanded(
+      fData.add(TableRow(children: [
+        Text(
+          dx['product'],
+          style: const TextStyle(fontSize: 12),
+        ),
+        Center(
           child: Text(
-            dx['product'],
+            "${dx['quantity']} ${dx['product_unit']} x ${dx['price']}",
             style: const TextStyle(fontSize: 12),
           ),
         ),
-        // Container(width:10),
-        Text(
-          "${dx['quantity']}",
-          style: const TextStyle(fontSize: 12),
-        ),
-        Container(width: 4),
-        Text(
-          dx['product_unit'],
-          style: const TextStyle(fontSize: 12),
-        ),
-        Container(width: 4),
-        const Text(
-          "x",
-          style: TextStyle(fontSize: 12),
-        ),
-        Container(width: 4),
-        Text(
-          "${dx['price']}",
-          style: const TextStyle(fontSize: 12),
-        ),
-        Container(width: 4),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "${dx['quantity'] * dx['price']}",
-              style: const TextStyle(fontSize: 12),
-            ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "${dx['quantity'] * dx['price']}",
+            style: const TextStyle(fontSize: 12),
           ),
         ),
       ]));
-      fData.add(Container(height: 2));
     }
-    return Column(children: fData);
+    return Table(children: fData);
   }
 
   Widget _singleColumnFinancialData(
