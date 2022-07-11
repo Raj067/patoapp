@@ -158,6 +158,7 @@ class CashSale(models.Model):
     sold_items = models.ManyToManyField(
         CashSoldItem, blank=True, related_name='sales_data_name')
     amount = models.IntegerField()
+    discount = models.IntegerField()
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

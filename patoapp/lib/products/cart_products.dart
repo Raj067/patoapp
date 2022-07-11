@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -149,7 +153,26 @@ class _ProductsCartState extends State<ProductsCart> {
                   ),
                 ),
                 onPressed: () {
-                  loadingInventoryData('api/inventory-products/');
+                  showPleaseWait(
+                    context: context,
+                    builder: (context) => const ModalFit(),
+                  );
+                  // A list of products
+                  List<Map> items = [];
+                  for (var element in widget.products) {
+                    if (element.addedToCart > 0) {
+                      items.add({
+                        "id": element.id,
+                        "price": element.getTotalPrice(),
+                        "quantity": element.addedToCart,
+                      });
+                    }
+                  }
+                  submitSalesData(
+                    amount: totalAmount.toInt(),
+                    discount: discount,
+                    items: items,
+                  );
                 },
                 child: const Text(
                   "Save Transaction",
@@ -371,5 +394,37 @@ class _ProductsCartState extends State<ProductsCart> {
         ),
       ),
     );
+  }
+
+  submitSalesData({
+    required int amount,
+    required double discount,
+    required List<Map> items,
+  }) async {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/cash-sales-transaction/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'amount': amount,
+        'discount': discount,
+        'items': items,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // Renaming the customer
+
+      Navigator.pop(context);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Customer updated successfully')),
+      // );
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Failed to updated customer.')),
+      // );
+      throw Exception('Failed to updated customer.');
+    }
   }
 }

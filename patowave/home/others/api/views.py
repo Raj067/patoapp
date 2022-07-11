@@ -134,3 +134,37 @@ def adding_payment_customer_api(request):
         data.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+# FOR TRANSACTIONS - SALES
+
+
+@api_view(['POST'])
+def cash_sales_transaction_api(request):
+    if request.method == "POST":
+        # print(request.data)
+        amount = request.data.get('amount')
+        discount = request.data.get('discount')
+        items = request.data.get('items')
+        reg = CashSale(
+            shop=get_shop(request)[0],
+            amount=amount,
+            discount=discount,
+        )
+
+        reg.save()
+        for dx in items:
+            reg.sold_items.create(
+                shop=get_shop(request)[0],
+                product=Product.objects.get(id=dx.get('id')),
+                price=dx.get('price'),
+                product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
+                quantity=dx.get('quantity'),
+                cash_sale_data=reg,
+            )
+            # Once transaction completed
+            # successfully, decreasing the quantity of products
+            prod = Product.objects.get(id=dx.get('id'))
+            prod.quantity = prod.quantity - dx.get('quantity')
+            prod.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)

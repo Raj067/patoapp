@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:bottom_loader/bottom_loader.dart';
 
 class AddPaymentCustomerDialog extends StatefulWidget {
   final SingleCustomer customer;
@@ -193,8 +193,9 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                       if (receivedAmountformKey1.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
+                        showPleaseWait(
+                          context: context,
+                          builder: (context) => const ModalFit(),
                         );
                         _addPaymentCustomer(
                           isPaymentIn: true,
@@ -213,8 +214,9 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                       if (paidAmountFormKey1.currentState!.validate()) {
                         // If the form is valid, display a snackbar. In the real world,
                         // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
+                        showPleaseWait(
+                          context: context,
+                          builder: (context) => const ModalFit(),
                         );
                         _addPaymentCustomer(
                           isPaymentIn: false,
@@ -470,11 +472,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
 
     if (response.statusCode == 201) {
       // Renaming the customer
-
-      // Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Customer updated successfully')),
-      );
+      Navigator.pop(context);
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.

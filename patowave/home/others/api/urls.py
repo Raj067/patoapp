@@ -37,4 +37,8 @@ api_urls = [
          name='business_financial_transactions'),
     path('api/financial-header/', financial_header,
          name='financial_header'),
+
+    # TRANSACTIONS cash_sales_transaction_api
+    path('api/cash-sales-transaction/', cash_sales_transaction_api,
+         name='cash_sales_transaction_api'),
 ]

@@ -21,20 +21,3 @@ Map<String, String> authHeaders = {
   "Authorization": "Bearer $accessToken",
 };
 
-loadingInventoryData(String path) async {
-  var data = await http.get(
-    Uri.parse(baseUrl + path),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      "Authorization": "Bearer $accessToken",
-    },
-  );
-  // // For error and and codes redirect to login page
-  // if (data.statusCode != 401) {
-  //   return jsonDecode(data.body);
-  // } else {}
-  // print(data);
-  // print(data.statusCode);
-
-  return jsonDecode(data.body);
-}

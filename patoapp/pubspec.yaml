@@ -42,7 +42,8 @@ dependencies:
   toggle_switch: ^2.0.1
   http: 0.13.4
   percent_indicator: 4.2.2
-  bottom_loader: 0.2.2
+  # bottom_loader: 0.2.2
+  modal_bottom_sheet: 2.1.0
   # contacts_service: ^0.6.3
   # permission_handler: 10.0.0
   date_picker_timeline: 1.2.3
