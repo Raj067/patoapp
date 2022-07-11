@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
 
 class AddTransactionDialog extends StatefulWidget {
-  const AddTransactionDialog({Key? key}) : super(key: key);
+  final List<SingleCustomer> finalData;
+  const AddTransactionDialog({
+    Key? key,
+    required this.finalData,
+  }) : super(key: key);
 
   @override
   State<AddTransactionDialog> createState() => _AddTransactionDialogState();
@@ -27,17 +32,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   List<SingleProduct> addedItemsToPurchases = [];
   bool isLoading = false;
   String selectedUnit = "Items";
-
-  final List<String> customersList = [
-    'Customer1',
-    'Customer2',
-    'Customer3',
-    'Customer4',
-    'Customer5',
-    'Customer6',
-    'Customer7',
-    'Customer8',
-  ];
 
   String? selectedValue;
   String? selectedProductValue;
@@ -98,7 +92,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           'Add Transaction',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -330,11 +323,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: customersList
+                  items: widget.finalData
                       .map((item) => DropdownMenuItem<String>(
-                            value: item,
+                            value: "${item.id}",
                             child: Text(
-                              item,
+                              item.fullName,
                               style: const TextStyle(
                                 fontSize: 14,
                               ),
@@ -610,11 +603,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                items: customersList
+                items: widget.finalData
                     .map((item) => DropdownMenuItem<String>(
-                          value: item,
+                          value: "${item.id}",
                           child: Text(
-                            item,
+                            item.fullName,
                             style: const TextStyle(
                               fontSize: 14,
                             ),

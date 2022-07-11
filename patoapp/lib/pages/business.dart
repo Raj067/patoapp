@@ -4,6 +4,7 @@ import 'package:patoapp/business/edit_transaction.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/business_financial_data.dart';
+import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -32,6 +33,31 @@ class _BusinessPageState extends State<BusinessPage> {
   List<FinancialData> allFinancialData = [];
   List<FinancialHeaderData> allFinancialHeader = [];
   bool isLoading = true;
+  List<SingleCustomer> customData = [];
+  fetchCustomer() async {
+    // Financial data
+    var data = await http.get(
+      Uri.parse("${baseUrl}api/parties-details/"),
+      headers: authHeaders,
+    );
+    if (data.statusCode == 200) {
+      List<SingleCustomer> finalData = [];
+      for (var dx in jsonDecode(data.body)) {
+        finalData.add(SingleCustomer(
+          address: dx['customer_address'],
+          email: dx['customer_email'] ?? "",
+          financialData: dx['financial_data'],
+          fullName: dx['customer_name'],
+          phoneNumber: dx['customer_number'],
+          amount: dx['effective_amount'],
+          id: dx['id'],
+        ));
+      }
+      customData = finalData;
+    }
+    setState(() {});
+  }
+
   fetchData() async {
     // Data for general analysis
     var generalData = await http.get(
@@ -103,6 +129,7 @@ class _BusinessPageState extends State<BusinessPage> {
   void initState() {
     super.initState();
     fetchData();
+    fetchCustomer();
   }
 
   @override
@@ -132,7 +159,9 @@ class _BusinessPageState extends State<BusinessPage> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => const AddTransactionDialog(),
+              builder: (BuildContext context) => AddTransactionDialog(
+                finalData: customData,
+              ),
               fullscreenDialog: true,
             ),
           );

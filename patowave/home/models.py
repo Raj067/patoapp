@@ -117,6 +117,7 @@ class Customer(models.Model):
 
 class CashSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()

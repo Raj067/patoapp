@@ -626,10 +626,10 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   }
 
   _headerDesign(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 90,
       width: MediaQuery.of(context).size.width,
-      // color: Colors.yellow,
+      color: Colors.transparent,
       child: Stack(
         children: [
           _upperRow(),
@@ -687,7 +687,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                              const AddTransactionDialog(),
+                               AddTransactionDialog(
+                            finalData: customData,
+                          ),
                           fullscreenDialog: true,
                         ),
                       );
