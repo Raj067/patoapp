@@ -34,11 +34,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   String selectedUnit = "Items";
 
   String? selectedValue;
-  String? selectedProductValue;
+  String? selectedProductValueSales;
+  String? selectedProductValuePurchases;
   String? selectedCustmer;
+  String? expensesCategory;
   final TextEditingController customerController = TextEditingController();
   final TextEditingController textEditingController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController();
+  final TextEditingController quantityControllerSales = TextEditingController();
+  final TextEditingController quantityControllerPurchases =
+      TextEditingController();
+  final TextEditingController expensesController = TextEditingController();
 
   // Fetching data
   fetchData() async {
@@ -80,7 +85,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   void dispose() {
     textEditingController.dispose();
     customerController.dispose();
-    quantityController.dispose();
+    quantityControllerPurchases.dispose();
+    quantityControllerSales.dispose();
     super.dispose();
   }
 
@@ -517,6 +523,36 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   _addExpenses() {
+    List<String> expenses = [
+      "Purchase",
+      "Carriage Inward",
+      "Royalties charge",
+      "Sales Commission",
+      "Unloading Charge",
+      "Rent",
+      "Food",
+      "Breakfast",
+      "Printing",
+      "Repair and Maintenance",
+      "Equipment",
+      "Fuel",
+      "Utilities",
+      "Training",
+      "Insurance",
+      "Advertisement",
+      "Payroll",
+      "Commission",
+      "Electricity",
+      "Taxes",
+      "License fee",
+      "Packaging material",
+      "Furniture and fitting",
+      "Loans and advances",
+      "Service fee",
+      "Software subscription",
+      "Transport",
+      "Others",
+    ];
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -555,6 +591,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
               Container(height: 10),
+              addedItemsToPurchases.isNotEmpty
+                  ? _allAddedItemsToPurchases(context)
+                  : Container(),
               InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
@@ -595,19 +634,82 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Expenses Category",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              DropdownButtonFormField2(
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Expenses Category',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: expenses
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  expensesCategory = value.toString();
+                },
+                searchController: expensesController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 4,
+                    right: 8,
+                    left: 8,
+                  ),
+                  child: TextFormField(
+                    cursorColor: patowavePrimary,
+                    controller: expensesController,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      hintText: 'Search for expenses...',
+                      hintStyle: const TextStyle(fontSize: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
+                searchMatchFn: (item, searchValue) {
+                  return (item.value.toString().contains(searchValue));
+                },
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    expensesController.clear();
+                  }
+                },
               ),
               Container(height: 15),
               DropdownButtonFormField2(
@@ -902,7 +1004,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               Container(height: 15),
               DropdownButtonFormField2(
-                  value: selectedValue,
+                  value: selectedProductValueSales,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -946,11 +1048,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   onChanged: (value) {
                     //Do something when changing the item if you want.
                     setState(() {
-                      selectedProductValue = value.toString();
+                      selectedProductValueSales = value.toString();
                     });
                   },
                   onSaved: (value) {
-                    selectedValue = value.toString();
+                    selectedProductValueSales = value.toString();
                   },
                   searchController: textEditingController,
                   searchInnerWidget: Padding(
@@ -991,7 +1093,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      controller: quantityController,
+                      controller: quantityControllerSales,
                       cursorColor: patowavePrimary,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -1067,11 +1169,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 onPressed: () {
                   if (addItemToSalesFormKey.currentState!.validate()) {
                     for (SingleProduct dx in allProducts) {
-                      if ("${dx.id}" == selectedProductValue &&
+                      if ("${dx.id}" == selectedProductValueSales &&
                           !addedItemsToSales.map((e) => e.id).contains(dx.id)) {
                         addedItemsToSales.add(
                           SingleProduct(
-                            quantity: int.parse(quantityController.text),
+                            quantity: int.parse(quantityControllerSales.text),
                             productUnit: dx.productUnit,
                             productName: dx.productName,
                             id: dx.id,
@@ -1125,7 +1227,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               Container(height: 15),
               DropdownButtonFormField2(
-                  value: selectedValue,
+                  value: selectedProductValuePurchases,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -1168,9 +1270,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       .toList(),
                   onChanged: (value) {
                     //Do something when changing the item if you want.
+                    setState(() {
+                      selectedProductValuePurchases = value.toString();
+                    });
                   },
                   onSaved: (value) {
-                    selectedValue = value.toString();
+                    selectedProductValuePurchases = value.toString();
                   },
                   searchController: textEditingController,
                   searchInnerWidget: Padding(
@@ -1212,6 +1317,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   Expanded(
                     child: TextFormField(
                       cursorColor: patowavePrimary,
+                      controller: quantityControllerPurchases,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Quantity is required';
@@ -1238,17 +1344,21 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                   Container(width: 10),
                   Expanded(
-                    child: TextFormField(
-                      cursorColor: patowavePrimary,
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Unit",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: patowaveBlack.withAlpha(30),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
+                        border: Border.all(color: Colors.grey, width: 1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                        child: Text(
+                          selectedUnit,
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -1281,6 +1391,25 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
                 onPressed: () {
                   if (addItemToPurchasesFormKey.currentState!.validate()) {
+                    for (SingleProduct dx in allProducts) {
+                      if ("${dx.id}" == selectedProductValuePurchases &&
+                          !addedItemsToPurchases
+                              .map((e) => e.id)
+                              .contains(dx.id)) {
+                        addedItemsToPurchases.add(
+                          SingleProduct(
+                            quantity:
+                                int.parse(quantityControllerPurchases.text),
+                            productUnit: dx.productUnit,
+                            productName: dx.productName,
+                            id: dx.id,
+                            sellingPrice: dx.sellingPrice,
+                            purchasesPrice: dx.purchasesPrice,
+                          ),
+                        );
+                      }
+                      setState(() {});
+                    }
                     Navigator.pop(context);
                   }
                 },
@@ -1304,14 +1433,24 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     return Column(children: data);
   }
 
-  _singleSelectedProduct(BuildContext context, SingleProduct product) {
+  _allAddedItemsToPurchases(BuildContext context) {
+    List<Widget> data = [];
+    for (SingleProduct dx in addedItemsToPurchases) {
+      data.add(_singleSelectedProduct(context, dx, isSales: false));
+      data.add(Container(height: 10));
+    }
+    return Column(children: data);
+  }
+
+  _singleSelectedProduct(BuildContext context, SingleProduct product,
+      {bool isSales = true}) {
     return Dismissible(
       key: Key("${product.id}"),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          _onDeleteData(context, product);
+          _onDeleteData(context, product, isSales: isSales);
         } else {
-          _onDeleteData(context, product);
+          _onDeleteData(context, product, isSales: isSales);
         }
         return false;
       },
@@ -1364,16 +1503,29 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     );
   }
 
-  _onDeleteData(BuildContext context, SingleProduct product) {
-    List<SingleProduct> newData = [];
-    for (SingleProduct dx in addedItemsToSales) {
-      if (dx.id != product.id) {
-        newData.add(dx);
+  _onDeleteData(BuildContext context, SingleProduct product,
+      {bool isSales = true}) {
+    if (isSales) {
+      List<SingleProduct> newData = [];
+      for (SingleProduct dx in addedItemsToSales) {
+        if (dx.id != product.id) {
+          newData.add(dx);
+        }
       }
+      setState(() {
+        addedItemsToSales = newData;
+      });
+    } else {
+      List<SingleProduct> newData = [];
+      for (SingleProduct dx in addedItemsToPurchases) {
+        if (dx.id != product.id) {
+          newData.add(dx);
+        }
+      }
+      setState(() {
+        addedItemsToPurchases = newData;
+      });
     }
-    setState(() {
-      addedItemsToSales = newData;
-    });
     // allProducts
   }
 }

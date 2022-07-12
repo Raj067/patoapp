@@ -1,16 +1,14 @@
 // ignore: file_names
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -33,7 +31,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   String shopName = "Happy Shop";
   String address = "Happy Shop";
   String telphone = "Happy Shop";
-  bool isLoading = true;
+  bool isLoading = false;
   fetchData() {}
   @override
   Widget build(BuildContext context) {
@@ -213,11 +211,16 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     ),
                                   )
                                 : Container(),
+
                             Container(height: 10),
-                            const FaIcon(
-                              FontAwesomeIcons.barcode,
+                            Center(
+                              child: QrImage(
+                                data:
+                                    "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
+                                version: QrVersions.auto,
+                                size: 200.0,
+                              ),
                             ),
-                            Container(height: 10),
                           ],
                         ),
                       ),
