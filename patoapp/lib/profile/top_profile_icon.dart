@@ -3,6 +3,7 @@ import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TopProfileIcon extends StatelessWidget {
   const TopProfileIcon({Key? key}) : super(key: key);
@@ -268,7 +269,7 @@ class TopProfileIcon extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
@@ -276,6 +277,8 @@ class TopProfileIcon extends StatelessWidget {
                       fullscreenDialog: true,
                     ),
                   );
+                  var prefs = await SharedPreferences.getInstance();
+                  prefs.setBool('isLogin', false);
                 },
                 child: const Text(
                   "Logout",

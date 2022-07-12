@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 PreferredSizeWidget mainTopBar(
         PreferredSizeWidget button, BuildContext context) =>
     AppBar(
+      automaticallyImplyLeading: false,
       title: const ProfileIcon(),
       actions: const [NotificationIcon(), SizedBox(width: 20)],
       bottom: button,

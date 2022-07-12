@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -13,11 +14,13 @@ void main() {
       overlays: [SystemUiOverlay.bottom]).then((_) {
     SharedPreferences.getInstance().then((prefs) {
       var darkModeOn = prefs.getBool('darkMode') ?? false;
+      bool isLogin = prefs.getBool('isLogin') ?? false;
+
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
           create: (_) => ThemeNotifier(
               darkModeOn ? patowaveDarkTheme() : patowaveLightTheme()),
-          child: const MyApp(),
+          child: MyApp(isLogin: isLogin),
         ),
       );
     });
@@ -37,14 +40,15 @@ void main() {
 // }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isLogin;
+  const MyApp({Key? key, required this.isLogin}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: "PatoApp",
       theme: themeNotifier.getTheme(),
-      home: const HomePage(),
+      home: isLogin ? const HomePage() : const WelcomePage(),
       darkTheme: patowaveDarkTheme(),
       debugShowCheckedModeBanner: false,
     );

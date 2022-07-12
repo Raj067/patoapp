@@ -634,83 +634,103 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               Container(height: 15),
-              DropdownButtonFormField2(
-                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                scrollbarAlwaysShow: true,
-                dropdownMaxHeight: 200,
-
-                decoration: InputDecoration(
-                  label: const Text(
-                    'Expenses Category',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                ),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                items: expenses
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  //Do something when changing the item if you want.
-                },
-                onSaved: (value) {
-                  expensesCategory = value.toString();
-                },
-                searchController: expensesController,
-                searchInnerWidget: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 4,
-                    right: 8,
-                    left: 8,
-                  ),
-                  child: TextFormField(
-                    cursorColor: patowavePrimary,
-                    controller: expensesController,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
+              addedItemsToPurchases.isNotEmpty
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: patowaveBlack.withAlpha(30),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                        border: Border.all(color: Colors.grey, width: 1),
                       ),
-                      hintText: 'Search for expenses...',
-                      hintStyle: const TextStyle(fontSize: 12),
-                      border: OutlineInputBorder(
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                        child: Text(
+                          "Purchases",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    )
+                  : DropdownButtonFormField2(
+                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                      scrollbarAlwaysShow: true,
+                      dropdownMaxHeight: 200,
+                      decoration: InputDecoration(
+                        label: const Text(
+                          'Expenses Category',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      isExpanded: true,
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
+                      dropdownDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                       ),
+                      items: expenses
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        //Do something when changing the item if you want.
+                      },
+                      onSaved: (value) {
+                        expensesCategory = value.toString();
+                      },
+                      searchController: expensesController,
+                      searchInnerWidget: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                          bottom: 4,
+                          right: 8,
+                          left: 8,
+                        ),
+                        child: TextFormField(
+                          cursorColor: patowavePrimary,
+                          controller: expensesController,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 8,
+                            ),
+                            hintText: 'Search for expenses...',
+                            hintStyle: const TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                      ),
+                      searchMatchFn: (item, searchValue) {
+                        return (item.value.toString().contains(searchValue));
+                      },
+                      //This to clear the search value when you close the menu
+                      onMenuStateChange: (isOpen) {
+                        if (!isOpen) {
+                          expensesController.clear();
+                        }
+                      },
                     ),
-                  ),
-                ),
-                searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
-                },
-                //This to clear the search value when you close the menu
-                onMenuStateChange: (isOpen) {
-                  if (!isOpen) {
-                    expensesController.clear();
-                  }
-                },
-              ),
               Container(height: 15),
               DropdownButtonFormField2(
                 selectedItemHighlightColor: patowavePrimary.withAlpha(50),
@@ -1199,7 +1219,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   _addNewCustomer(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: Center(child: Text("hello")));
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+        ),
+        body: const Center(child: const Text("hello")));
   }
 
   _addItemsToPurchases(BuildContext context) {

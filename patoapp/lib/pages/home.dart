@@ -85,6 +85,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const ProfileIcon(),
         actions: const [NotificationIcon(), SizedBox(width: 20)],
         elevation: 0,
@@ -96,7 +97,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           Expanded(
             child: ListView(
               children: [
-                Container(height: 10),
+                // Container(height: 10),
                 _currencyExchange(),
                 _calendarSection(),
                 _upcomingSchedule(),
@@ -687,7 +688,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                               AddTransactionDialog(
+                              AddTransactionDialog(
                             finalData: customData,
                           ),
                           fullscreenDialog: true,

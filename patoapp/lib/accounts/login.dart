@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
+import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
@@ -29,7 +31,7 @@ class LoginPage extends StatelessWidget {
                 left: 100,
                 child: Center(
                   child: SvgPicture.asset(
-                    "assets/onboarding/myLogo.svg",
+                    "assets/onboarding/welcome.svg",
                     width: 60,
                     height: 60,
                   ),
@@ -152,14 +154,19 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (loginFormKey.currentState!.validate()) {
-                            // If the form is valid, display a snackbar. In the real world,
-                            // you'd often call a server or save the information in a database.
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                            // Navigator.popUntil(context, (route) => false);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const HomePage(),
+                              ),
                             );
+                            var prefs = await SharedPreferences.getInstance();
+                            prefs.setBool('isLogin', true);
                           }
                         },
                         child: const Text(
