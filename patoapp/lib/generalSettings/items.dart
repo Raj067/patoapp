@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class ApplicationSettings extends StatelessWidget {
-  const ApplicationSettings({Key? key}) : super(key: key);
+class ItemsSettings extends StatelessWidget {
+  const ItemsSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Application Settings',
+          'Items Settings',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

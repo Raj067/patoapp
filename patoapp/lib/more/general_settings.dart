@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/generalSettings/application.dart';
+import 'package:patoapp/generalSettings/items.dart';
 import 'package:patoapp/generalSettings/transaction.dart';
 import 'package:patoapp/generalSettings/user_management.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -134,6 +135,57 @@ class GeneralSettingsDialog extends StatelessWidget {
                 ),
               ),
             ),
+            // Card(
+            //   shape: const RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(15),
+            //     ),
+            //   ),
+            //   elevation: 0,
+            //   child: InkWell(
+            //     borderRadius: BorderRadius.circular(15),
+            //     onTap: () {},
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(10),
+            //       child: Row(
+            //         children: [
+            //           SvgPicture.asset("assets/svg/print.svg",
+            //               width: 25, height: 25),
+            //           Container(
+            //             width: 10,
+            //           ),
+            //           const Text('Print'),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Card(
+            //   shape: const RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(15),
+            //     ),
+            //   ),
+            //   elevation: 0,
+            //   child: InkWell(
+            //     borderRadius: BorderRadius.circular(15),
+            //     onTap: () {},
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(10),
+            //       child: Row(
+            //         children: [
+            //           SvgPicture.asset("assets/svg/organization.svg",
+            //               width: 25, height: 25),
+            //           Container(
+            //             width: 10,
+            //           ),
+            //           const Text('Taxes'),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -143,57 +195,15 @@ class GeneralSettingsDialog extends StatelessWidget {
               elevation: 0,
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/svg/print.svg",
-                          width: 25, height: 25),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('Print'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/svg/organization.svg",
-                          width: 25, height: 25),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('Taxes'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const ItemsSettings(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(

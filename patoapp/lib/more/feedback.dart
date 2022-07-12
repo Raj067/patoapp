@@ -27,8 +27,45 @@ class FeedbackDialog extends StatelessWidget {
         child: ListView(
           children: [
             Container(height: 10),
+            const Text(
+              "Contact us at:",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Container(height: 10),
+            Row(
+              children: [
+                const Icon(
+                  Icons.phone,
+                  size: 16,
+                ),
+                Container(width: 10),
+                const Text("0123456789"),
+              ],
+            ),
+            Container(height: 10),
+            Row(
+              children: [
+                const Icon(
+                  Icons.phone_android,
+                  size: 16,
+                ),
+                Container(width: 10),
+                const Text("0123456789"),
+              ],
+            ),
+            Container(height: 30),
+            const Text(
+              "Feedback",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Container(height: 10),
             SizedBox(
-              height: 800,
               child: TextFormField(
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -47,9 +84,33 @@ class FeedbackDialog extends StatelessWidget {
                 ),
               ),
             ),
-            Container(height: 10),
-            const Center(
-              child: Text("Feedback"),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  "Submit Feedback",
+                ),
+              ),
             ),
           ],
         ),
