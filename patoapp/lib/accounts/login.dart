@@ -27,13 +27,14 @@ class LoginPage extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                top: 30,
-                left: 100,
+                top: 20,
+                left: 10,
+                right: 10,
                 child: Center(
-                  child: SvgPicture.asset(
-                    "assets/onboarding/welcome.svg",
-                    width: 60,
-                    height: 60,
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: 90,
+                    height: 90,
                   ),
                 ),
               ),

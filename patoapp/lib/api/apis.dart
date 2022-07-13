@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 Map d = {
@@ -20,4 +17,3 @@ Map<String, String> authHeaders = {
   'Content-Type': 'application/json; charset=UTF-8',
   "Authorization": "Bearer $accessToken",
 };
-

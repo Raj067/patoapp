@@ -255,6 +255,7 @@ class _PartiesPageState extends State<PartiesPage> {
             ),
             SizedBox(
               height: 50,
+              width: 45,
               child: Card(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
@@ -262,10 +263,12 @@ class _PartiesPageState extends State<PartiesPage> {
                   ),
                 ),
                 elevation: 0,
-                child: IconButton(
-                  splashRadius: 15,
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
+                child: InkWell(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  child: const Icon(Icons.add),
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(

@@ -41,7 +41,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final bool isLogin;
-  const MyApp({Key? key, required this.isLogin}) : super(key: key);
+  const MyApp({Key? key, required this.isLogin}) : super(key: key); 
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);

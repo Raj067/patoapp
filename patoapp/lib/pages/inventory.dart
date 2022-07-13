@@ -255,9 +255,12 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
               ),
             ),
             height: 45,
-            child: IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
+            width: 45,
+            child: InkWell(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
@@ -266,6 +269,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   ),
                 );
               },
+              child: const Icon(Icons.add),
             ),
           ),
         ],

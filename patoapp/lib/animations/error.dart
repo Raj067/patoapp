@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patoapp/themes/light_theme.dart';
 
-class ModalFit extends StatelessWidget {
-  const ModalFit({Key? key}) : super(key: key);
+class ModalFitError extends StatelessWidget {
+  const ModalFitError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class ModalFit extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const <Widget>[
-            CircularProgressIndicator(),
-            Text("Please Wait....")
+            Icon(Icons.error, size: 30, color: patowaveErrorRed),
+            Text("Error occured")
           ],
         ),
       ),
@@ -23,11 +24,12 @@ class ModalFit extends StatelessWidget {
   }
 }
 
-class FloatingModal extends StatelessWidget {
+class FloatingModalError extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
 
-  const FloatingModal({Key? key, required this.child, this.backgroundColor})
+  const FloatingModalError(
+      {Key? key, required this.child, this.backgroundColor})
       : super(key: key);
 
   @override
@@ -46,7 +48,7 @@ class FloatingModal extends StatelessWidget {
   }
 }
 
-Future<T> showPleaseWait<T>({
+Future<T> showErrorMessage<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   Color? backgroundColor,
@@ -54,8 +56,7 @@ Future<T> showPleaseWait<T>({
   final result = await showCustomModalBottomSheet(
       context: context,
       builder: builder,
-      isDismissible: false,
-      containerWidget: (_, animation, child) => FloatingModal(
+      containerWidget: (_, animation, child) => FloatingModalError(
             child: child,
           ),
       expand: false);

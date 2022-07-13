@@ -488,7 +488,7 @@ class _BusinessPageState extends State<BusinessPage> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    const EditTransaction(),
+                                    EditTransaction(data: data),
                                 fullscreenDialog: true,
                               ),
                             );
