@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -119,8 +120,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text("Time:"),
-                                Text(
-                                    "${widget.data.date.hour}:${widget.data.date.minute} HRS"),
+                                Text(DateFormat('hh:mm a')
+                                    .format(widget.data.date)),
                               ],
                             ),
                             widget.data.isPaymentIn ||

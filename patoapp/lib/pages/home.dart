@@ -466,7 +466,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               ),
               Card(
                 elevation: 0,
-                // color: Colors.white,
+                // color: Colors.white, AddNotification
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
@@ -477,7 +477,10 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Text("Add Schedule", style: TextStyle(fontSize: 16)),
+                      Text(
+                        "Add Schedule",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ],
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
@@ -451,7 +452,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         ],
                       ),
                       Text(
-                        "Time: ${data.date.hour}:${data.date.minute}",
+                        "Time: ${DateFormat('hh:mm a').format(data.date)}",
                       ),
                     ],
                   ),
