@@ -5,7 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddProductPage extends StatefulWidget {
-  const AddProductPage({Key? key}) : super(key: key);
+  final bool isProductImage;
+  final bool isProductBarcode;
+  const AddProductPage({
+    Key? key,
+    required this.isProductImage,
+    required this.isProductBarcode,
+  }) : super(key: key);
 
   @override
   State<AddProductPage> createState() => _AddProductPageState();
@@ -55,12 +61,14 @@ class _AddProductPageState extends State<AddProductPage> {
             color: patowaveWhite,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_a_photo),
-            onPressed: () {},
-          )
-        ],
+        actions: widget.isProductImage
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.add_a_photo),
+                  onPressed: () {},
+                ),
+              ]
+            : [],
       ),
       body: Column(
         children: [
@@ -224,25 +232,32 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Item Code",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
+              widget.isProductBarcode
+                  ? Column(
+                      children: [
+                        Container(height: 15),
+                        TextFormField(
+                          cursorColor: patowavePrimary,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            label: Text(
+                              "Item Code",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 14),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
               Container(height: 15),
               DropdownButtonFormField2(
                 validator: (value) {
@@ -601,7 +616,8 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           ),
           elevation: 0,
-          content: Text('Item available before start using Patowave'),);
+          content: Text('Item available before start using Patowave'),
+        );
       },
     );
   }
@@ -619,7 +635,9 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           ),
           elevation: 0,
-          content: Text("Minimum quantity of item you wish to maintain. Patowave will notify you when stock falls below this level"),);
+          content: Text(
+              "Minimum quantity of item you wish to maintain. Patowave will notify you when stock falls below this level"),
+        );
       },
     );
   }

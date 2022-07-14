@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ReminderDialog extends StatelessWidget {
+class ReminderDialog extends StatefulWidget {
   const ReminderDialog({Key? key}) : super(key: key);
+
+  @override
+  State<ReminderDialog> createState() => _ReminderDialogState();
+}
+
+class _ReminderDialogState extends State<ReminderDialog> {
+  bool selfPaymentReminder = false;
+
+  bool automaticReminder = false;
+
+  fetchPreference() async {
+    var prefs = await SharedPreferences.getInstance();
+    selfPaymentReminder = prefs.getBool('selfPaymentReminder') ?? true;
+    automaticReminder = prefs.getBool('automaticReminder') ?? true;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPreference();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +57,17 @@ class ReminderDialog extends StatelessWidget {
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
-                  value: true,
-                  onChanged: (val) {},
+                  value: selfPaymentReminder,
+                  onChanged: (val) async {
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('selfPaymentReminder', val);
+                    fetchPreference();
+                  },
                 ),
               ],
             ),
           ),
+          const Divider(height: 0),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Row(
@@ -49,12 +77,17 @@ class ReminderDialog extends StatelessWidget {
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
-                  value: true,
-                  onChanged: (val) {},
+                  value: automaticReminder,
+                  onChanged: (val) async {
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('automaticReminder', val);
+                    fetchPreference();
+                  },
                 ),
               ],
             ),
           ),
+          const Divider(height: 0),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Row(
@@ -70,6 +103,7 @@ class ReminderDialog extends StatelessWidget {
               ],
             ),
           ),
+          const Divider(height: 0),
           const Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Text("Reminder Message"),

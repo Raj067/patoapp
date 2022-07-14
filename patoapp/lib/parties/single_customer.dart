@@ -20,9 +20,6 @@ class SingleCustomerPage extends StatefulWidget {
 }
 
 class _SingleCustomerPageState extends State<SingleCustomerPage> {
-  DateTime _selectedDate =
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-
   TextEditingController dateInput = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -183,10 +180,11 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text("Note"),
-                          Text("Received"),
-                          Text("Paid"),
+                        children: [
+                          const Text("Note"),
+                          Container(),
+                          const Text("Received"),
+                          const Text("Paid"),
                         ],
                       ),
                     ),
@@ -267,7 +265,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
   }
 
   _allFinancialData() {
-    List<Widget> data = [];
+    List<TableRow> data = [];
     for (var dx in widget.customer.financialData) {
       data.add(_singleFinancialData(
         date: dx['date'],
@@ -275,25 +273,38 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
         received: dx['received'],
         paid: dx['paid'],
       ));
-      data.add(
-        const Divider(height: 0, indent: 10, endIndent: 10),
-      );
+      // data.add(
+      //   const Divider(height: 0, indent: 10, endIndent: 10),
+      // );
     }
-    return Column(children: data);
+    return Table(
+      children: data,
+      border: TableBorder(
+        horizontalInside: BorderSide(
+          width: 1,
+          color: Theme.of(context).dividerColor,
+        ),
+      ),
+      // Map<int, TableColumnWidth>? columnWidths,
+      columnWidths: const {
+        0: FractionColumnWidth(0.50),
+        1: FractionColumnWidth(0.25),
+        2: FractionColumnWidth(0.25),
+      },
+    );
   }
 
-  _singleFinancialData({
+  TableRow _singleFinancialData({
     required String description,
     required String date,
     required int received,
     required int paid,
   }) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+    return TableRow(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+          child: Row(
             children: [
               received == 0
                   ? const Icon(
@@ -304,28 +315,44 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       Icons.keyboard_arrow_up,
                       color: patowaveGreen,
                     ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    description,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    date,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      description,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: patowaveWarning,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          Text(received == 0 ? '-' : formatter.format(received)),
-          Text(
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Text(
+            received == 0 ? '-' : formatter.format(received),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: patowaveGreen),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(5, 10, 10, 10),
+          child: Text(
             paid == 0 ? '-' : formatter.format(paid),
+            textAlign: TextAlign.right,
             style: const TextStyle(color: patowaveErrorRed),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

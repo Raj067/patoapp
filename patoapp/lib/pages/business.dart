@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/business/edit_transaction.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/business_financial_data.dart';
@@ -384,21 +385,25 @@ class _BusinessPageState extends State<BusinessPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data.getDescriptionName(),
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Container(height: 4),
-                          Text(
-                            data.getDescriptionDetails(),
-                            style: const TextStyle(fontSize: 12),
-                          )
-                        ],
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data.getDescriptionName(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Container(height: 4),
+                            Text(
+                              data.getDescriptionDetails(),
+                              style: const TextStyle(fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
+                      Container(width: 10),
                       Text(
                         "Tsh. ${formatter.format(data.amount)}",
                         style: TextStyle(
@@ -457,10 +462,16 @@ class _BusinessPageState extends State<BusinessPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              data.deleteTransaction();
-                            });
-                            Navigator.pop(context);
+                            showPleaseWait(
+                              context: context,
+                              builder: (context) => const ModalFit(),
+                            );
+                            _deletingTransaction(data);
+
+                            // setState(() {
+                            //   data.deleteTransaction();
+                            // });
+                            // Navigator.pop(context);
                           },
                           style: ButtonStyle(
                             // MaterialStateProperty<Color?>? backgroundColor,
@@ -480,37 +491,37 @@ class _BusinessPageState extends State<BusinessPage> {
                           child: const Text("Delete"),
                         ),
                       ),
-                      Container(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    EditTransaction(data: data),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(
-                              const Size(45, 45),
-                            ),
-                            shape: MaterialStateProperty.all(
-                              const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30),
-                                ),
-                              ),
-                            ),
-                          ),
-                          child: const Text(
-                            "Edit",
-                            style: TextStyle(color: patowaveWhite),
-                          ),
-                        ),
-                      ),
+                      // Container(width: 10),
+                      // Expanded(
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+                      //       Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute<void>(
+                      //           builder: (BuildContext context) =>
+                      //               EditTransaction(data: data),
+                      //           fullscreenDialog: true,
+                      //         ),
+                      //       );
+                      //     },
+                      //     style: ButtonStyle(
+                      //       minimumSize: MaterialStateProperty.all(
+                      //         const Size(45, 45),
+                      //       ),
+                      //       shape: MaterialStateProperty.all(
+                      //         const RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.all(
+                      //             Radius.circular(30),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     child: const Text(
+                      //       "Edit",
+                      //       style: TextStyle(color: patowaveWhite),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
@@ -541,6 +552,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 ],
               ),
             ),
+            Container(width: 20),
             data.isIncome()
                 ? Text(
                     formatter.format(data.amount),
@@ -554,24 +566,6 @@ class _BusinessPageState extends State<BusinessPage> {
                       color: patowaveErrorRed,
                     ),
                   ),
-            // data.isIncome()
-            //     ? Expanded(
-            //         child: Text(
-            //           formatter.format(data.amount),
-            //           style: const TextStyle(color: patowaveGreen),
-            //         ),
-            //       )
-            //     : const Expanded(
-            //         child: Center(
-            //           child: Text("-"),
-            //         ),
-            //       ),
-            // data.isIncome()
-            //     ? const Text("-")
-            //     : Text(
-            //         formatter.format(data.amount),
-            //         style: const TextStyle(color: patowaveErrorRed),
-            //       ),
           ],
         ),
       ),
@@ -636,8 +630,10 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
     ];
     for (FinancialData element in data) {
-      myData.add(_singleFinancialData(context, element));
-      myData.add(const Divider(height: 0));
+      if (!element.isDeleted) {
+        myData.add(_singleFinancialData(context, element));
+        myData.add(const Divider(height: 0));
+      }
     }
     return Column(children: myData);
   }
@@ -707,5 +703,34 @@ class _BusinessPageState extends State<BusinessPage> {
       }
     }
     return finaldata;
+  }
+
+  _deletingTransaction(FinancialData data) async {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/deleting-single-transaction/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'transaction': data.getTransactionType(),
+        'id': data.getTransactionID(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      setState(() {
+        data.deleteTransaction();
+      });
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

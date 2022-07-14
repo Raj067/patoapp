@@ -1,5 +1,4 @@
 class FinancialData {
-  // int id;
   DateTime date;
   bool isCashSale = true;
   bool isExpenses = false;
@@ -11,6 +10,8 @@ class FinancialData {
   String description = "";
   List details = [0, 0];
   int amount = 0;
+  // for frontend purposes only
+  bool isDeleted = false;
   FinancialData({
     required this.date,
     this.amount = 0,
@@ -77,6 +78,32 @@ class FinancialData {
     return "-";
   }
 
+  getTransactionType() {
+    if (isCashSale) {
+      return "cash_sale";
+    }
+    if (isPaymentIn || isPaymentOut) {
+      return "payment";
+    }
+    if (isExpenses || isPurchases) {
+      return "expenses";
+    }
+    return "";
+  }
+
+  List<int> getTransactionID() {
+    // if (getTransactionType() == "cash_sale") {}
+    // if (getTransactionType() == "payment") {
+    //   return details[0]['id'];
+    // }
+    // if (getTransactionType() == "expenses") {}
+    List<int> data = [];
+    for (var i in details) {
+      data.add(i['id']);
+    }
+    return data;
+  }
+
   // getTotalPrice() {
   //   return details[0];
   // }
@@ -107,7 +134,10 @@ class FinancialData {
     return "${date.day}/${date.month}/${date.year}";
   }
 
-  deleteTransaction() {}
+  deleteTransaction() {
+    isDeleted = true;
+    // SEND SOME RESPONSE TO THE BACKEND
+  }
 }
 
 class FinancialHeaderData {

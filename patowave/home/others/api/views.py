@@ -51,6 +51,20 @@ def financial_header(request, *args, **kwargs):
     data = financial_header_data(request, get_shop(request))
     return Response(data)
 
+
+@api_view(['POST'])
+def deleting_single_transaction_api(request):
+    if request.method == "POST":
+        print(request.data)
+        # data = Customer.objects.get(id=request.data.get("id"))
+        # data.customer_name = request.data.get("customerName")
+        # data.customer_number = request.data.get("phoneNumber")
+        # data.customer_email = request.data.get("address")
+        # data.customer_address = request.data.get("emailAddress")
+        # data.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 # ==================================
 
 

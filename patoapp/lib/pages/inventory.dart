@@ -8,6 +8,7 @@ import 'package:patoapp/products/single_product_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({Key? key}) : super(key: key);
@@ -82,10 +83,21 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     setState(() {});
   }
 
+  // For Preferences
+  bool isProductImage = false;
+  bool isProductBarcode = false;
+  fetchPreference() async {
+    var prefs = await SharedPreferences.getInstance();
+    isProductImage = prefs.getBool('isProductImage') ?? false;
+    isProductBarcode = prefs.getBool('isProductBarcode') ?? false;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     fetchData("api/inventory-products/");
+    fetchPreference();
   }
 
   @override
@@ -264,7 +276,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const AddProductPage(),
+                    builder: (BuildContext context) => AddProductPage(
+                      isProductImage: isProductImage,
+                      isProductBarcode: isProductBarcode,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -320,12 +335,6 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           _onResetSingleData(product);
           // productAdjustment(context, product);
         }
-        // if (direction == DismissDirection.startToEnd) {
-        //   setState(() {
-        //     flavors[index] = flavor.copyWith(isFavorite: !flavor.isFavorite);
-        //   },);
-        //   return false;
-        // }
         return false;
       },
       background: Container(
@@ -397,31 +406,33 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                product.thumbnail == ""
-                    ? Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
-                      )
-                    : Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          // color: Theme.of(context).scaffoldBackgroundColor,
+                isProductImage
+                    ? product.thumbnail == ""
+                        ? Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                          )
+                        : Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              // color: Theme.of(context).scaffoldBackgroundColor,
 
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                "$imageBaseUrl${product.thumbnail}"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
-                      ),
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "$imageBaseUrl${product.thumbnail}"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                          )
+                    : Container(height: 50),
                 Container(
                   width: 10,
                 ),

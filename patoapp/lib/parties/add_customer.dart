@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:permission_handler/permission_handler.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+// import 'package:toggle_switch/toggle_switch.dart';
 // import 'package:contacts_service/contacts_service.dart';
 
 class AddCustomerDialog extends StatefulWidget {
@@ -279,31 +281,82 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 ],
               ),
               Container(height: 15),
-              Row(
-                children: [
-                  ToggleSwitch(
-                    minWidth: MediaQuery.of(context).size.width - 50,
-                    minHeight: 45,
-                    cornerRadius: 20.0,
-                    activeBgColors: const [
-                      [patowavePrimary],
-                      [patowavePrimary]
-                    ],
-                    activeFgColor: patowaveWhite,
-                    inactiveBgColor: Colors.grey.withAlpha(100),
-                    inactiveFgColor: patowaveBlack,
-                    initialLabelIndex: 1,
-                    totalSwitches: 2,
-                    labels: const ['To receive', 'To be paid'],
-                    radiusStyle: true,
-                    onToggle: (index) {
-                      setState(() {
-                        index == 1 ? toReceive = true : toReceive = false;
-                      });
-                    },
+              Container(
+                decoration: BoxDecoration(
+                  color: patowavePrimary.withAlpha(100),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
                   ),
-                ],
+                ),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        // index == 0 ? toReceive = true : toReceive = false;
+
+                        decoration: toReceive
+                            ? const BoxDecoration(
+                                color: patowavePrimary,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              )
+                            : const BoxDecoration(),
+                        height: 45,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              !toReceive ? toReceive = true : toReceive = false;
+                            });
+                          },
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "To receive",
+                              style: TextStyle(
+                                color:
+                                    toReceive ? patowaveWhite : patowaveBlack,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: !toReceive
+                            ? const BoxDecoration(
+                                color: patowavePrimary,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              )
+                            : const BoxDecoration(),
+                        height: 45,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              !toReceive ? toReceive = true : toReceive = false;
+                            });
+                          },
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "To be paid",
+                              style: TextStyle(
+                                color:
+                                    !toReceive ? patowaveWhite : patowaveBlack,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              Container(height: 15),
             ],
           ),
         ),
@@ -329,6 +382,10 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 ),
                 onPressed: () {
                   if (addCustomerFormKey.currentState!.validate()) {
+                    showPleaseWait(
+                      context: context,
+                      builder: (context) => const ModalFit(),
+                    );
                     _addingCustomer(
                       customerName: customerName.text,
                       phoneNumber: phoneNumber.text,
@@ -337,9 +394,6 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                       toReceive: toReceive,
                       emailAddress: emailAddress.text,
                       transactionDate: dateInput.text,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
                     );
                   }
                 },
@@ -379,17 +433,19 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     );
 
     if (response.statusCode == 201) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      // return Album.fromJson(jsonDecode(response.body));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Customer created')),
-      );
-      // Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      throw Exception('Failed to create album.');
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
     }
   }
 
@@ -412,45 +468,4 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
       },
     );
   }
-
-// Future<Album> createAlbum(String title) async {
-//     final response = await http.post(
-//       Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//       },
-//       body: jsonEncode(<String, String>{
-//         'title': title,
-//       }),
-//     );
-
-//     if (response.statusCode == 201) {
-//       // If the server did return a 201 CREATED response,
-//       // then parse the JSON.
-//       return Album.fromJson(jsonDecode(response.body));
-//     } else {
-//       // If the server did not return a 201 CREATED response,
-//       // then throw an exception.
-//       throw Exception('Failed to create album.');
-//     }
-//   }
-//   Future<void> _openingBalanceToolTip(
-//     BuildContext context,
-//   ) async {
-//     await showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return const AlertDialog(
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.all(
-//               Radius.circular(30),
-//             ),
-//           ),
-//           elevation: 0,
-//           content: Text(
-//               "Amount to be paid/received from the contact before adding them to Patowave"),
-//         );
-//       },
-//     );
-//   }
 }

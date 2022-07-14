@@ -30,15 +30,17 @@ api_urls = [
     path('api/adding-payment-customer/',
          adding_payment_customer_api, name='adding_payment_customer_api'),
 
-    # BUSINESS financial_header
+    # BUSINESS deleting_single_transaction_api
     path('api/general-business-details/', general_business_details,
          name='general_business_data'),
     path('api/business-financial-transactions/', business_financial_transactions,
          name='business_financial_transactions'),
     path('api/financial-header/', financial_header,
          name='financial_header'),
+    path('api/deleting-single-transaction/', deleting_single_transaction_api,
+         name='deleting_single_transaction_api'),
 
-    # TRANSACTIONS cash_sales_transaction_api
+    # TRANSACTIONS
     path('api/cash-sales-transaction/', cash_sales_transaction_api,
          name='cash_sales_transaction_api'),
 ]

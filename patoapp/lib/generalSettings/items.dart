@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemsSettings extends StatelessWidget {
+class ItemsSettings extends StatefulWidget {
   const ItemsSettings({Key? key}) : super(key: key);
+
+  @override
+  State<ItemsSettings> createState() => _ItemsSettingsState();
+}
+
+class _ItemsSettingsState extends State<ItemsSettings> {
+  bool isProductImage = false;
+  bool isProductBarcode = false;
+  fetchPreference() async {
+    var prefs = await SharedPreferences.getInstance();
+    isProductImage = prefs.getBool('isProductImage') ?? false;
+    isProductBarcode = prefs.getBool('isProductBarcode') ?? false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPreference();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +51,16 @@ class ItemsSettings extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Self payment reminder"),
+                const Text("Product Image"),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
-                  value: true,
-                  onChanged: (val) {},
+                  value: isProductImage,
+                  onChanged: (val) async {
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('isProductImage', val);
+                    fetchPreference();
+                  },
                 ),
               ],
             ),
@@ -46,12 +71,16 @@ class ItemsSettings extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Automatic Reminder"),
+                const Text("Product Barcode"),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
-                  value: true,
-                  onChanged: (val) {},
+                  value: isProductBarcode,
+                  onChanged: (val) async {
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('isProductBarcode', val);
+                    fetchPreference();
+                  },
                 ),
               ],
             ),

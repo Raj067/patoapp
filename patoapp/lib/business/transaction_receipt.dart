@@ -133,9 +133,18 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text("Customer Name:"),
-                                          Text(
-                                              widget.data.getDescriptionName()),
+                                          const Text("Customer:"),
+                                          Container(width: 20),
+                                          Expanded(
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                widget.data
+                                                    .getDescriptionName(),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -153,8 +162,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(widget.data
-                                              .getDescriptionDetails()),
+                                          Expanded(
+                                            child: Text(widget.data
+                                                .getDescriptionDetails()),
+                                          ),
+                                          Container(width: 10),
                                           Text(formatter
                                               .format(widget.data.amount)),
                                         ],
