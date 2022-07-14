@@ -4,7 +4,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -219,6 +218,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                     "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
                                 version: QrVersions.auto,
                                 size: 200.0,
+                                // embeddedImage:
+                                //     const AssetImage("assets/images/qr.png"),
+                                // embeddedImageStyle:
+                                //     QrEmbeddedImageStyle(color: Colors.white),
                               ),
                             ),
                           ],

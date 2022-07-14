@@ -4,6 +4,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -189,8 +191,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     if (paymentInFormKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
+                      showPleaseWait(
+                        context: context,
+                        builder: (context) => const ModalFit(),
                       );
 
                       _addPaymentToCustomer(
@@ -209,8 +212,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     if (paymentOutFormKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
+                      showPleaseWait(
+                        context: context,
+                        builder: (context) => const ModalFit(),
                       );
                       _addPaymentToCustomer(
                         isPaymentIn: false,
@@ -598,19 +602,19 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     );
 
     if (response.statusCode == 201) {
-      // Renaming the customer
-
-      // Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Customer updated successfully')),
-      );
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Failed to updated customer.')),
-      // );
-      throw Exception('Failed to updated customer.');
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
     }
   }
 }

@@ -1,6 +1,8 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/parties/edit_customer.dart';
@@ -21,6 +23,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
   DateTime _selectedDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
+  TextEditingController dateInput = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +40,9 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.customer.fullName,
+                widget.customer.fullName.length > 10
+                    ? widget.customer.fullName.replaceRange(10, null, '...')
+                    : widget.customer.fullName,
                 style: const TextStyle(
                   color: patowaveWhite,
                   fontSize: 16,
@@ -99,7 +104,12 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
               color: patowavePrimary.withAlpha(100),
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
-                onTap: () {},
+                onTap: () {
+                  showPleaseWait(
+                    context: context,
+                    builder: (context) => const ModalFit(),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
@@ -112,6 +122,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       Icon(
                         Icons.arrow_forward_ios,
                         size: 14,
+                        color: patowaveBlack,
                       ),
                     ],
                   ),
@@ -181,71 +192,6 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     ),
                   ),
                   _allFinancialData(),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           const Icon(Icons.keyboard_arrow_up,
-                  //               color: patowaveErrorRed),
-                  //           Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: const [
-                  //               Text(
-                  //                 "-",
-                  //                 style: TextStyle(fontSize: 12),
-                  //               ),
-                  //               Text(
-                  //                 "01/01/2020",
-                  //                 style: TextStyle(fontSize: 12),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       const Text("-"),
-                  //       const Text(
-                  //         "12,000",
-                  //         style: TextStyle(color: patowaveErrorRed),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const Divider(),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           const Icon(Icons.keyboard_arrow_down,
-                  //               color: patowaveGreen),
-                  //           Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: const [
-                  //               Text(
-                  //                 "Opening Balance",
-                  //                 style: TextStyle(fontSize: 12),
-                  //               ),
-                  //               Text(
-                  //                 "02/01/2020",
-                  //                 style: TextStyle(fontSize: 12),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       const Text(
-                  //         "8,900",
-                  //         style: TextStyle(color: patowaveGreen),
-                  //       ),
-                  //       const Text("-"),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             )
@@ -441,8 +387,24 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
             const Divider(height: 0),
             InkWell(
               borderRadius: BorderRadius.circular(15),
-              onTap: () {
-                _selectDueDate();
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(DateTime.now().year - 5),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(DateTime.now().year + 5),
+                    initialDatePickerMode: DatePickerMode.day,
+                    helpText: "Select Due Date");
+
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('EEE, M/d/y').format(pickedDate);
+                  setState(() {
+                    dateInput.text =
+                        formattedDate; //set output date to TextField value.
+                  });
+                } else {}
               },
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -460,19 +422,30 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text("Set payment date"),
-                              Text(
-                                "Due date",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
+                            children: [
+                              const Text("Set payment date"),
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Due date",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Container(width: 10),
+                                  Text(
+                                    dateInput.text != '' ? dateInput.text : '',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: patowaveWarning,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                           const Icon(
                             Icons.arrow_forward_ios,
-                            color: Colors.black38,
                             size: 14,
                           ),
                         ],
@@ -485,60 +458,4 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
           ],
         ),
       );
-
-  void _selectDueDate() async {
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020, 1, 1),
-      lastDate: DateTime(2025, 1, 1),
-      helpText: 'Select due date',
-    );
-    if (newDate != null) {
-      setState(() {
-        _selectedDate = newDate;
-      });
-    }
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key, this.restorationId}) : super(key: key);
-
-  final String? restorationId;
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-/// RestorationProperty objects can be used because of RestorationMixin.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  DateTime _date = DateTime(2020, 11, 17);
-
-  void _selectDate() async {
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(2017, 1),
-      lastDate: DateTime(2022, 7),
-      helpText: 'Select a date',
-    );
-    if (newDate != null) {
-      setState(() {
-        _date = newDate;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: SvgPicture.asset(
-        "assets/svg/calendar.svg",
-      ),
-      onTap: () {
-        _selectDate();
-      },
-    );
-  }
 }
