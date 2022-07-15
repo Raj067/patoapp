@@ -11,7 +11,10 @@ import 'package:patoapp/themes/light_theme.dart';
 
 class ProductsCart extends StatefulWidget {
   final List<SingleProduct> products;
-  const ProductsCart({Key? key, required this.products}) : super(key: key);
+  final Function resetData;
+  const ProductsCart(
+      {Key? key, required this.products, required this.resetData})
+      : super(key: key);
 
   @override
   State<ProductsCart> createState() => _ProductsCartState();
@@ -420,13 +423,11 @@ class _ProductsCartState extends State<ProductsCart> {
           element.quantity = element.quantity - element.addedToCart;
         }
       }
+      widget.resetData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Customer updated successfully')),
-      // );
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.

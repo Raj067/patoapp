@@ -185,6 +185,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) => ProductsCart(
                               products: customData,
+                              resetData: _onResetAllData,
                             ),
                             fullscreenDialog: true,
                           ),
