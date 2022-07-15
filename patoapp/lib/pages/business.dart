@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
@@ -23,6 +24,11 @@ class BusinessPage extends StatefulWidget {
 class _BusinessPageState extends State<BusinessPage> {
   String dropdownValue = 'Last Month';
   bool isWeek = true;
+  DateTimeRange pickedRangeDate = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now(),
+  );
+  bool isDateFilter = false;
   BusinessGeneral businessGeneral = BusinessGeneral(
     salesMonth: 0,
     salesWeek: 0,
@@ -33,7 +39,6 @@ class _BusinessPageState extends State<BusinessPage> {
   );
 
   List<FinancialData> allFinancialData = [];
-  List<FinancialHeaderData> allFinancialHeader = [];
   bool isLoading = true;
   List<SingleCustomer> customData = [];
   fetchCustomer() async {
@@ -76,25 +81,7 @@ class _BusinessPageState extends State<BusinessPage> {
         expensesWeek: jsonDecode(generalData.body)['expenses_week'],
       );
     }
-    // Fetching Financial Header Data api/financial-header/
-    var dataHeader = await http.get(
-      Uri.parse(
-        "${baseUrl}api/financial-header/",
-      ),
-      headers: authHeaders,
-    );
-    if (dataHeader.statusCode == 200) {
-      List<FinancialHeaderData> myData = [];
-      for (var dx in jsonDecode(dataHeader.body)) {
-        myData.add(FinancialHeaderData(
-          date: DateTime.parse(dx['date']),
-          income: dx['income'], //dx['income']
-          expenses: dx['expenses'], //dx['expenses']
-        ));
-      }
-      allFinancialHeader = myData;
-      setState(() {});
-    }
+
     // FETCHING FINANCIAL DATA
     var data = await http.get(
       Uri.parse(
@@ -370,6 +357,12 @@ class _BusinessPageState extends State<BusinessPage> {
       },
       onLongPress: () {
         showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
           context: context,
           builder: (context) {
             // Using Wrap makes the bottom sheet height the height of the content.
@@ -548,8 +541,14 @@ class _BusinessPageState extends State<BusinessPage> {
                   ),
                   Text(
                     data.getDescriptionDetails(),
-                    style: const TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 12),
                   ),
+                  Text(
+                    DateFormat('EEE, M/d/y').format(data.date),
+                    style:
+                        const TextStyle(fontSize: 12, color: patowaveWarning),
+                  ),
+                  // DateFormat('EEE, M/d/y').format(pickedDate)
                 ],
               ),
             ),
@@ -599,81 +598,35 @@ class _BusinessPageState extends State<BusinessPage> {
     return Table(children: fData);
   }
 
-  Widget _singleColumnFinancialData(
-    BuildContext context, {
-    required List data,
-    required int income,
-    required int expenses,
-    required String date,
-  }) {
-    List<Widget> myData = [
-      Container(
-        color: patowavePrimary.withAlpha(50),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(date),
-              Text(
-                "$income",
-                style: const TextStyle(
-                    color: patowaveGreen, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "$expenses",
-                style: const TextStyle(
-                    color: patowaveErrorRed, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ];
-    for (FinancialData element in data) {
-      if (!element.isDeleted) {
-        myData.add(_singleFinancialData(context, element));
-        myData.add(const Divider(height: 0));
-      }
-    }
-    return Column(children: myData);
-  }
-
   _allFinancialData(BuildContext context) {
     List<Widget> data = [
+      _searchBox(context),
       Container(
         decoration: BoxDecoration(
-          color: Colors.black.withAlpha(50),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
+          color: patowavePrimary.withAlpha(100),
+          // borderRadius: const BorderRadius.only(
+          //   topLeft: Radius.circular(15),
+          //   topRight: Radius.circular(15),
+          // ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text("Date"),
-              Text("Income "),
-              Text("Expenses "),
+              Text("Details"),
+              Text("Amount "),
             ],
           ),
         ),
       ),
     ];
-    for (var element in allBusinessFinancialData()) {
-      data.add(
-        _singleColumnFinancialData(
-          context,
-          data: element['data'],
-          date: element['header'].getTimeString(),
-          income: element['header'].income,
-          expenses: element['header'].expenses,
-        ),
-      );
+    for (var element in allFinancialData) {
+      if (!element.isDeleted) {
+        data.add(_singleFinancialData(context, element));
+        data.add(const Divider(height: 0));
+      }
     }
-
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -687,23 +640,102 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  List<Map> allBusinessFinancialData() {
-    List<Map> finaldata = [];
-    for (var element in allFinancialHeader) {
-      List data = [];
-      for (var dx in allFinancialData) {
-        if (element.getTimeString() == dx.getTimeString()) {
-          data.add(dx);
-        }
-      }
-      if (data.isNotEmpty) {
-        finaldata.add({
-          "header": element,
-          "data": data,
-        });
-      }
-    }
-    return finaldata;
+  _searchBox(BuildContext context) {
+    return SizedBox(
+      height: 47,
+      child: InkWell(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+        onTap: () async {
+          DateTimeRange? pickedDate = await showDateRangePicker(
+            context: context,
+            firstDate: DateTime(DateTime.now().year - 1),
+            lastDate: DateTime(DateTime.now().year + 20),
+            currentDate: DateTime.now(),
+            confirmText: "SELECT",
+            saveText: "SELECT",
+            helpText: "Select Transaction Date Range",
+            initialDateRange: DateTimeRange(
+              start: DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day - 3,
+              ),
+              end: DateTime.now(),
+            ),
+          );
+          if (pickedDate != null) {
+            setState(() {
+              pickedRangeDate = pickedDate;
+              isDateFilter = true;
+            });
+          } else {}
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.search),
+                  Container(width: 10),
+                  !isDateFilter
+                      ? const Text("Search Transaction")
+                      : Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Transactions from ",
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat('EEE, M/d/y')
+                                      .format(pickedRangeDate.start),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: patowaveWarning,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  " to ",
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat('EEE, M/d/y')
+                                      .format(pickedRangeDate.end),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: patowaveWarning,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                ],
+              ),
+              SvgPicture.asset(
+                "assets/svg/calendar.svg",
+                height: 33,
+                width: 33,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   _deletingTransaction(FinancialData data) async {

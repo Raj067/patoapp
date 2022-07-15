@@ -8,6 +8,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:permission_handler/permission_handler.dart';
 // import 'package:toggle_switch/toggle_switch.dart';
 // import 'package:contacts_service/contacts_service.dart';
@@ -89,8 +90,10 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                       children: [
                         Row(
                           children: [
-                            const FaIcon(
-                              FontAwesomeIcons.addressBook,
+                            SvgPicture.asset(
+                              "assets/svg/contacts.svg",
+                              width: 33,
+                              height: 33,
                             ),
                             Container(width: 8),
                             Column(
@@ -117,6 +120,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                         const Icon(
                           Icons.arrow_forward_ios,
                           size: 14,
+                          color: patowaveBlack,
                         ),
                       ],
                     ),

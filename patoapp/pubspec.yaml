@@ -121,6 +121,7 @@ flutter:
     - assets/svg/organization.svg
     - assets/svg/dataConfiguration.svg
     - assets/svg/calendar.svg
+    - assets/svg/contacts.svg
     - assets/svg/genericSortingDesc.svg
     - assets/icon/icon.png
     - assets/flags/dollar.png
