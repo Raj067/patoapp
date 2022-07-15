@@ -241,6 +241,7 @@ class _PartiesPageState extends State<PartiesPage> {
                       hintText: 'Search Contact',
                       prefixIcon: const Icon(Icons.search),
                       enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                       suffixIcon: InkWell(
                         child: const Padding(
                           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),

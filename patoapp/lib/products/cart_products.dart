@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -21,6 +21,7 @@ class _ProductsCartState extends State<ProductsCart> {
   double totalAmount = 0;
   int balanceDue = 0;
   double discount = 0;
+  int receiptNo = Random().nextInt(10000);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +59,15 @@ class _ProductsCartState extends State<ProductsCart> {
             ),
             children: [
               TableRow(children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
+                Padding(
+                  padding: const EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      "Receipt No 1",
-                      style:
-                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                      "Receipt No $receiptNo",
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
@@ -412,8 +415,14 @@ class _ProductsCartState extends State<ProductsCart> {
     );
 
     if (response.statusCode == 201) {
-      // Renaming the customer
-
+      for (var element in widget.products) {
+        if (element.addedToCart > 0) {
+          element.quantity = element.quantity - element.addedToCart;
+        }
+      }
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(content: Text('Customer updated successfully')),

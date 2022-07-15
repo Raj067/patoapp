@@ -51,6 +51,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   int allAddedProductPrice = 0;
   bool isProductFound = true;
   int itemsMatchedInSearch = 0;
+  int addedItemsToCart = 0;
   TextEditingController searchController = TextEditingController();
 
   bool isAlreadyLoad = false;
@@ -195,7 +196,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total Items: $allAddedProduct',
+                              'Total Items: $addedItemsToCart',
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
@@ -250,6 +251,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   hintText: 'Search item',
                   prefixIcon: Icon(Icons.search),
                   enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   alignLabelWithHint: true,
                 ),
                 onChanged: (val) {
@@ -729,8 +731,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     List<SingleProduct> newAddedData = [];
     List<SingleProduct> newUnAddedData = [];
     int val = 0;
+    int addedItems = 0;
     int price = 0;
     for (var element in customData) {
+      element.addedToCart > 0 ? addedItems += 1 : addedItems;
       val += element.addedToCart;
       price += element.getTotalPrice();
       if (element != pName) {
@@ -745,6 +749,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     allAddedProductPrice = price;
     customData = [pName, ...newAddedData, ...newUnAddedData];
     allAddedProduct = val;
+    addedItemsToCart = addedItems;
   }
 
   _onResetAllData() {
@@ -766,8 +771,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     product.isAddedToCartAutomatic = false;
     List<SingleProduct> newData = [];
     int val = 0;
+    int addedItems = 0;
     int price = 0;
     for (var element in customData) {
+      element.addedToCart > 0 ? addedItems += 1 : addedItems;
       val += element.addedToCart;
       price += element.getTotalPrice();
       newData.add(element);
@@ -775,6 +782,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     allAddedProductPrice = price;
     customData = newData;
     allAddedProduct = val;
+    addedItemsToCart = addedItems;
     setState(() {});
   }
 }
