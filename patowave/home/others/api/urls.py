@@ -35,8 +35,6 @@ api_urls = [
          name='general_business_data'),
     path('api/business-financial-transactions/', business_financial_transactions,
          name='business_financial_transactions'),
-    path('api/financial-header/', financial_header,
-         name='financial_header'),
     path('api/deleting-single-transaction/', deleting_single_transaction_api,
          name='deleting_single_transaction_api'),
 

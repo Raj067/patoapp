@@ -35,7 +35,7 @@ class _PartiesPageState extends State<PartiesPage> {
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
-  fetchData(String path) async {
+  fetchData() async {
     // Data for general analysis
     var generalData = await http.get(
       Uri.parse(
@@ -57,7 +57,7 @@ class _PartiesPageState extends State<PartiesPage> {
 
     // Financial data
     var data = await http.get(
-      Uri.parse(baseUrl + path),
+      Uri.parse("${baseUrl}api/parties-details/"),
       headers: authHeaders,
     );
     if (data.statusCode == 200) {
@@ -82,7 +82,7 @@ class _PartiesPageState extends State<PartiesPage> {
   @override
   void initState() {
     super.initState();
-    fetchData("api/parties-details/");
+    fetchData();
   }
 
   @override
@@ -114,6 +114,7 @@ class _PartiesPageState extends State<PartiesPage> {
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddPaymentDialog(
                 finalData: customData,
+                refreshData: fetchData,
               ),
               fullscreenDialog: true,
             ),
@@ -183,6 +184,7 @@ class _PartiesPageState extends State<PartiesPage> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
+                  refreshData: fetchData,
                 ),
                 fullscreenDialog: true,
               ),
@@ -256,7 +258,7 @@ class _PartiesPageState extends State<PartiesPage> {
             ),
             SizedBox(
               height: 50,
-              width: 45,
+              width: 50,
               child: Card(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
@@ -274,7 +276,7 @@ class _PartiesPageState extends State<PartiesPage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            const AddCustomerDialog(),
+                            AddCustomerDialog(refreshData: fetchData),
                         fullscreenDialog: true,
                       ),
                     );

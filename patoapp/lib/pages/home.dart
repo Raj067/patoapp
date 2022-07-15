@@ -738,6 +738,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) => AddPaymentDialog(
                             finalData: customData,
+                            refreshData: () {},
                           ),
                           fullscreenDialog: true,
                         ),

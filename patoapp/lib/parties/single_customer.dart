@@ -12,8 +12,13 @@ import 'package:patoapp/themes/light_theme.dart';
 class SingleCustomerPage extends StatefulWidget {
   final String? restorationId;
   final SingleCustomer customer;
-  const SingleCustomerPage(
-      {super.key, required this.customer, this.restorationId});
+  final Function refreshData;
+  const SingleCustomerPage({
+    super.key,
+    required this.customer,
+    this.restorationId,
+    required this.refreshData,
+  });
 
   @override
   State<SingleCustomerPage> createState() => _SingleCustomerPageState();
@@ -71,8 +76,13 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) =>
-                      EditCustomer(customer: widget.customer),
+                  builder: (BuildContext context) => EditCustomer(
+                    customer: widget.customer,
+                    refreshData: () {
+                      widget.refreshData();
+                      Navigator.pop(context);
+                    },
+                  ),
                   fullscreenDialog: true,
                 ),
               );
@@ -219,7 +229,13 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
-                        customer: widget.customer, isPaymentIn: false),
+                      customer: widget.customer,
+                      isPaymentIn: false,
+                      refreshData: () {
+                        widget.refreshData();
+                        Navigator.pop(context);
+                      },
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -249,7 +265,13 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
-                        customer: widget.customer, isPaymentIn: true),
+                      customer: widget.customer,
+                      isPaymentIn: true,
+                      refreshData: () {
+                        widget.refreshData();
+                        Navigator.pop(context);
+                      },
+                    ),
                     fullscreenDialog: true,
                   ),
                 );

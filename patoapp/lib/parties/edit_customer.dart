@@ -9,8 +9,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class EditCustomer extends StatefulWidget {
+  final Function refreshData;
   final SingleCustomer customer;
-  const EditCustomer({Key? key, required this.customer}) : super(key: key);
+  const EditCustomer({
+    Key? key,
+    required this.customer,
+    required this.refreshData,
+  }) : super(key: key);
 
   @override
   State<EditCustomer> createState() => _EditCustomerState();
@@ -217,6 +222,7 @@ class _EditCustomerState extends State<EditCustomer> {
     if (response.statusCode == 201) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
+      widget.refreshData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // Navigator

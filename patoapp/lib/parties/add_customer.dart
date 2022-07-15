@@ -14,7 +14,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:contacts_service/contacts_service.dart';
 
 class AddCustomerDialog extends StatefulWidget {
-  const AddCustomerDialog({Key? key}) : super(key: key);
+  final Function refreshData;
+  const AddCustomerDialog({Key? key, required this.refreshData})
+      : super(key: key);
 
   @override
   State<AddCustomerDialog> createState() => _AddCustomerDialogState();
@@ -439,6 +441,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     if (response.statusCode == 201) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
+      widget.refreshData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // Navigator

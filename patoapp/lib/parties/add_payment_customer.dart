@@ -12,9 +12,13 @@ import 'package:patoapp/themes/light_theme.dart';
 class AddPaymentCustomerDialog extends StatefulWidget {
   final SingleCustomer customer;
   final bool isPaymentIn;
-  const AddPaymentCustomerDialog(
-      {Key? key, required this.customer, required this.isPaymentIn})
-      : super(key: key);
+  final Function refreshData;
+  const AddPaymentCustomerDialog({
+    Key? key,
+    required this.customer,
+    required this.isPaymentIn,
+    required this.refreshData,
+  }) : super(key: key);
 
   @override
   State<AddPaymentCustomerDialog> createState() =>
@@ -474,8 +478,10 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     if (response.statusCode == 201) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
+      widget.refreshData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
+      // Refresh page
       // Navigator
     } else {
       // ignore: use_build_context_synchronously
