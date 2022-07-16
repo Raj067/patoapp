@@ -693,6 +693,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                           builder: (BuildContext context) =>
                               AddTransactionDialog(
                             finalData: customData,
+                            resetData: () {},
                           ),
                           fullscreenDialog: true,
                         ),

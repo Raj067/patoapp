@@ -4,6 +4,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/data/customer_list.dart';
@@ -12,11 +14,11 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
 
 class AddTransactionDialog extends StatefulWidget {
+  final Function resetData;
   final List<SingleCustomer> finalData;
-  const AddTransactionDialog({
-    Key? key,
-    required this.finalData,
-  }) : super(key: key);
+  const AddTransactionDialog(
+      {Key? key, required this.finalData, required this.resetData})
+      : super(key: key);
 
   @override
   State<AddTransactionDialog> createState() => _AddTransactionDialogState();
@@ -36,7 +38,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
   int receiptNo = Random().nextInt(10000);
   int billNo = Random().nextInt(10000);
-
+  // for cash sales
+  double totalAmount = 0;
+  double discountAmount = 0;
   String? selectedValue;
   String? selectedProductValueSales;
   String? selectedProductValuePurchases;
@@ -247,6 +251,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     if (salesTransactionFormKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
+                      submitSalesCustomerData();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
@@ -293,6 +298,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'This field is required';
+                  }
+                  if (value !=
+                      "${totalAmount.toInt() - discountAmount.toInt()}") {
+                    return "Amount received should be Tsh: ${totalAmount.toInt() - discountAmount.toInt()}";
                   }
                   return null;
                 },
@@ -352,6 +361,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       .toList(),
                   onChanged: (value) {
                     //Do something when changing the item if you want.
+                    setState(() {
+                      selectedCustmer = value.toString();
+                    });
                   },
                   onSaved: (value) {
                     selectedCustmer = value.toString();
@@ -470,16 +482,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Discount",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Tsh: 1000.00",
-                    style: TextStyle(
+                    "Tsh: ${discountAmount.toInt()}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -488,16 +500,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Total Amount",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Tsh: 1000.00",
-                    style: TextStyle(
+                    "Tsh: ${totalAmount.toInt() - discountAmount.toInt()}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -781,6 +793,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     .toList(),
                 onChanged: (value) {
                   //Do something when changing the item if you want.
+                  setState(() {
+                    selectedCustmer = value.toString();
+                  });
                 },
                 onSaved: (value) {
                   selectedCustmer = value.toString();
@@ -925,6 +940,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
+                    onChanged: (val) {
+                      // discountAmount
+                      if (val != "") {
+                        discountAmount = int.parse(val) / 100 * totalAmount;
+                        setState(() {});
+                      } else {
+                        discountAmount = 0;
+                        setState(() {});
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: "0",
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
@@ -978,6 +1003,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
+                    onChanged: (val) {
+                      if (val != "") {
+                        discountAmount = double.parse(val);
+                        setState(() {});
+                      } else {
+                        discountAmount = 0;
+                        setState(() {});
+                      }
+                    },
                     decoration: const InputDecoration(
                       hintText: "0.00",
                       contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
@@ -1453,10 +1487,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
   _allAddedItemsToSales(BuildContext context) {
     List<Widget> data = [];
+    double val = 0;
     for (SingleProduct dx in addedItemsToSales) {
+      val += dx.quantity * dx.sellingPrice;
       data.add(_singleSelectedProduct(context, dx));
       data.add(Container(height: 10));
     }
+    setState(() {
+      totalAmount = val;
+    });
     return Column(children: data);
   }
 
@@ -1534,13 +1573,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       {bool isSales = true}) {
     if (isSales) {
       List<SingleProduct> newData = [];
+      double val = 0;
       for (SingleProduct dx in addedItemsToSales) {
         if (dx.id != product.id) {
+          val += dx.quantity * dx.sellingPrice;
           newData.add(dx);
         }
       }
       setState(() {
         addedItemsToSales = newData;
+        totalAmount = val;
       });
     } else {
       List<SingleProduct> newData = [];
@@ -1554,5 +1596,50 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       });
     }
     // allProducts
+  }
+
+  // api/cash-sales-customer-transaction/
+  submitSalesCustomerData() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    List<Map> items = [];
+    for (var element in addedItemsToSales) {
+      items.add({
+        "id": element.id,
+        "price": element.sellingPrice,
+        "quantity": element.quantity,
+      });
+    }
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
+      headers: authHeaders,
+      body: jsonEncode(<String, dynamic>{
+        'amount': totalAmount - discountAmount,
+        'discount': discountAmount,
+        'items': items,
+        'receiptNo': receiptNo,
+        "customer":
+            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

@@ -152,6 +152,7 @@ class _BusinessPageState extends State<BusinessPage> {
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
                 finalData: customData,
+                resetData: fetchData,
               ),
               fullscreenDialog: true,
             ),

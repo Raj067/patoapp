@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:patoapp/parties/invoice_details.dart';
+import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class MainInvoicePage extends StatelessWidget {
@@ -29,7 +29,7 @@ class MainInvoicePage extends StatelessWidget {
           children: [
             Container(height: 10),
             _invoiceHeader(),
-            const InvoiceDetails(),
+            // const InvoiceDetails(),
           ],
         ),
       ),
@@ -52,7 +52,18 @@ class MainInvoicePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // CreateNewInvoice
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const CreateNewInvoice(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
                 child: const Text(
                   "Create New Invoice",
                   style: TextStyle(color: patowaveWhite),

@@ -41,4 +41,6 @@ api_urls = [
     # TRANSACTIONS
     path('api/cash-sales-transaction/', cash_sales_transaction_api,
          name='cash_sales_transaction_api'),
+    path('api/cash-sales-customer-transaction/', cash_sales_customer_transaction_api,
+         name='cash_sales_customer_transaction_api'),
 ]

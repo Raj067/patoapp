@@ -107,4 +107,28 @@ def business_financial_data(request, shop):
                     "date": i.updated_at,
                 } for i in dx.sold_items.all()]
             })
+    for dx in CashSaleCustomer.objects.all():
+        if dx.shop in shop:
+            data.append({
+                "date": dx.updated_at,
+                "description": "Cash Sales",
+                "name": dx.customer.customer_name,
+                "amount": dx.amount,
+                "discount": dx.discount,
+                "isCashSale": True,
+                "isExpenses": False,
+                "isPaymentIn": False,
+                "isPaymentOut": False,
+                "isInvoice": False,
+                "isPurchases": False,
+                "receipt": dx.receipt_no,
+                "details": [{
+                    "id": i.id,
+                    "product": i.product.product_name,
+                    "quantity": i.quantity,
+                    "price": i.price,
+                    "product_unit": i.product_unit,
+                    "date": i.updated_at,
+                } for i in dx.sold_items.all()]
+            })
     return data
