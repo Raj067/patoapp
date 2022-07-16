@@ -22,6 +22,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   int invoiceNo = Random().nextInt(10000);
   double totalAmount = 0;
   double discountAmount = 0;
+  double receivedAmount = 0;
   String? selectedCustmer;
   String? selectedProductValueSales;
   bool isLoading = false;
@@ -210,11 +211,13 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   if (value == null || value.isEmpty) {
                     return 'This field is required';
                   }
-                  if (value !=
-                      "${totalAmount.toInt() - discountAmount.toInt()}") {
-                    return "Amount received should be Tsh: ${totalAmount.toInt() - discountAmount.toInt()}";
-                  }
                   return null;
+                },
+                onChanged: (val) {
+                  if (val != "") {
+                    receivedAmount = double.parse(val);
+                    setState(() {});
+                  }
                 },
                 decoration: const InputDecoration(
                   label: Text(
@@ -431,6 +434,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                         Icon(
                           Icons.arrow_forward_ios,
                           size: 14,
+                          color: patowaveBlack,
                         ),
                       ],
                     ),
@@ -468,6 +472,25 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ),
                   Text(
                     "Tsh: ${totalAmount.toInt() - discountAmount.toInt()}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Container(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Due Amount",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: patowavePrimary,
+                    ),
+                  ),
+                  Text(
+                    "Tsh: ${totalAmount.toInt() - discountAmount.toInt() - receivedAmount.toInt()}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
