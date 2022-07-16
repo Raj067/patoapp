@@ -175,7 +175,7 @@ class _ProductsCartState extends State<ProductsCart> {
                     }
                   }
                   submitSalesData(
-                    amount: totalAmount.toInt(),
+                    amount: totalAmount.toInt() - discount.toInt(),
                     discount: discount,
                     items: items,
                   );
@@ -414,6 +414,7 @@ class _ProductsCartState extends State<ProductsCart> {
         'amount': amount,
         'discount': discount,
         'items': items,
+        'receiptNo': receiptNo,
       }),
     );
 

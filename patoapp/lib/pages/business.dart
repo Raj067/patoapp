@@ -105,6 +105,8 @@ class _BusinessPageState extends State<BusinessPage> {
             description: dx['description'] ?? "",
             details: dx['details'],
             amount: dx['amount'],
+            receipt: dx['receipt'],
+            discount: dx['discount'],
           ),
         );
       }

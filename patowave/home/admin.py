@@ -40,6 +40,15 @@ class CashSoldItemInline(admin.TabularInline):
     model = CashSoldItem
 
 
+class CashSoldItemCustomerInline(admin.TabularInline):
+    model = CashSoldItemCustomer
+
+
+class CashSaleCustomerAdmin(admin.ModelAdmin):
+    inlines = [CashSoldItemCustomerInline]
+    list_display = ['shop', 'amount', 'created_at']
+
+
 class CashSaleAdmin(admin.ModelAdmin):
     inlines = [CashSoldItemInline]
     list_display = ['shop', 'amount', 'created_at']
@@ -75,6 +84,8 @@ admin.site.register(Invoice)
 admin.site.register(InvoiceSoldItem)
 admin.site.register(CashSoldItem)
 admin.site.register(CashSale, CashSaleAdmin)
+admin.site.register(CashSaleCustomer, CashSaleCustomerAdmin)
+admin.site.register(CashSoldItemCustomer)
 admin.site.register(Purchase,  PurchasesAdmin)
 admin.site.register(PurchasedItem)
 admin.site.register(Feedback,  FeedbackAdmin)

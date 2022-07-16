@@ -146,6 +146,21 @@ class CashSoldItem(models.Model):
         ordering = ("-id",)
 
 
+class CashSoldItemCustomer(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    product_unit = models.CharField(max_length=100,)
+
+    cash_sale_customer = models.ForeignKey("CashSaleCustomer", on_delete=models.CASCADE)
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
 class PurchasedItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -181,6 +196,24 @@ class CashSale(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     sold_items = models.ManyToManyField(
         CashSoldItem, blank=True, related_name='sales_data_name')
+    receipt_no = models.CharField(max_length=50, default="123")
+    amount = models.IntegerField()
+    discount = models.IntegerField()
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+
+class CashSaleCustomer(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    sold_items = models.ManyToManyField(
+        CashSoldItemCustomer, blank=True, related_name='sales_data_customer')
+    receipt_no = models.CharField(max_length=50, default="123")
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField()
     discount = models.IntegerField()
 
@@ -195,6 +228,7 @@ class CashSale(models.Model):
 class Invoice(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    invoice_no = models.CharField(max_length=50, default="123")
     amount = models.IntegerField()
     balance_due = models.IntegerField()
     discount = models.IntegerField(default=0)
@@ -214,7 +248,7 @@ class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    # balance_due = models.IntegerField()
+    bill_no = models.CharField(max_length=50, default="123")
 
     description = models.CharField(max_length=500, default="Purchases")
 
@@ -245,7 +279,7 @@ class Feedback(models.Model):
 class Payment(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
+    receipt_no = models.CharField(max_length=50, default="123")
     is_payment_in = models.BooleanField(default=True)
     amount = models.IntegerField()
     description = models.CharField(max_length=500, null=True, blank=True)
@@ -263,6 +297,7 @@ class Payment(models.Model):
 
 class Expense(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    bill_no = models.CharField(max_length=50, default="123")
     amount = models.IntegerField()
     categories = [
         ("direct", "Direct Expenses"),

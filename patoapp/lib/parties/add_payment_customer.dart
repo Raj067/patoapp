@@ -8,6 +8,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:math';
 
 class AddPaymentCustomerDialog extends StatefulWidget {
   final SingleCustomer customer;
@@ -29,6 +30,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   int _value = 1;
   String paidAmount = '0';
   String receivedAmount = '0';
+  int receiptNo = Random().nextInt(10000);
   final paidAmountFormKey1 = GlobalKey<FormState>();
   final receivedAmountformKey1 = GlobalKey<FormState>();
 
@@ -146,7 +148,9 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      _value == 1 ? "Receipt No 1" : "Receipt No 1",
+                      _value == 1
+                          ? "Receipt No $receiptNo"
+                          : "Receipt No $receiptNo",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -472,6 +476,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
         'description': description,
         'isPaymentIn': isPaymentIn,
         'id': id,
+        "receiptNo": receiptNo,
       }),
     );
 

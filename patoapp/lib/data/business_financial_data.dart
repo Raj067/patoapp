@@ -10,11 +10,15 @@ class FinancialData {
   String description = "";
   List details = [0, 0];
   int amount = 0;
+  int discount = 0;
+  String receipt = "";
   // for frontend purposes only
   bool isDeleted = false;
   FinancialData({
     required this.date,
-    this.amount = 0,
+    required this.amount,
+    required this.discount,
+    required this.receipt,
     required this.details,
     required this.isCashSale,
     this.isExpenses = false,
@@ -140,19 +144,19 @@ class FinancialData {
   }
 }
 
-class FinancialHeaderData {
-  DateTime date;
-  int income;
-  int expenses;
-  FinancialHeaderData({
-    required this.date,
-    required this.income,
-    required this.expenses,
-  });
-  getTimeString() {
-    return "${date.day}/${date.month}/${date.year}";
-  }
-}
+// class FinancialHeaderData {
+//   DateTime date;
+//   int income;
+//   int expenses;
+//   FinancialHeaderData({
+//     required this.date,
+//     required this.income,
+//     required this.expenses,
+//   });
+//   getTimeString() {
+//     return "${date.day}/${date.month}/${date.year}";
+//   }
+// }
 
 // List<FinancialHeaderData> allFinancialHeaderData() {
 //   return [

@@ -1,10 +1,11 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -32,6 +33,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   List<SingleProduct> addedItemsToPurchases = [];
   bool isLoading = false;
   String selectedUnit = "Items";
+
+  int receiptNo = Random().nextInt(10000);
+  int billNo = Random().nextInt(10000);
 
   String? selectedValue;
   String? selectedProductValueSales;
@@ -193,7 +197,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      _value == 1 ? "Receipt No 1" : "Bill No 1",
+                      _value == 1 ? "Receipt No $receiptNo" : "Bill No $billNo",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -309,9 +313,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return 'This field is required';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     label: const Text(
-                      'Select Customer',
+                      'Select Customer*',
                       style: TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
@@ -393,7 +403,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    _addNewCustomer(context),
+                                    AddNewCustomerTransaction(
+                                        refreshData: () {}),
                                 fullscreenDialog: true,
                               ),
                             );
@@ -1216,14 +1227,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         ),
       ),
     );
-  }
-
-  _addNewCustomer(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-        ),
-        body: const Center(child: const Text("hello")));
   }
 
   _addItemsToPurchases(BuildContext context) {

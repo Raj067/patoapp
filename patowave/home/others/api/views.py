@@ -44,7 +44,7 @@ def general_business_details(request, *args, **kwargs):
 def business_financial_transactions(request, *args, **kwargs):
     data = business_financial_data(request, get_shop(request))
     return Response(data)
-    
+
 
 @api_view(['POST'])
 def deleting_single_transaction_api(request):
@@ -138,6 +138,7 @@ def adding_payment_customer_api(request):
             is_payment_in=request.data.get("isPaymentIn"),
             description=request.data.get("description"),
             amount=request.data.get("amount"),
+            receipt_no=str(request.data.get('receiptNo')),
         )
         data.save()
         return Response(status=status.HTTP_201_CREATED)
@@ -157,6 +158,7 @@ def cash_sales_transaction_api(request):
             shop=get_shop(request)[0],
             amount=amount,
             discount=discount,
+            receipt_no=str(request.data.get('receiptNo')),
         )
 
         reg.save()

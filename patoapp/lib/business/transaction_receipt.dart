@@ -126,6 +126,37 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                             ),
                             widget.data.isPaymentIn ||
                                     widget.data.isPaymentOut ||
+                                    widget.data.isCashSale ||
+                                    widget.data.isPurchases ||
+                                    widget.data.isExpenses
+                                ? Column(
+                                    children: [
+                                      Container(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(widget.data.isPurchases ||
+                                                  widget.data.isExpenses
+                                              ? "Bill No:"
+                                              : "Receipt No:"),
+                                          Container(width: 20),
+                                          Expanded(
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                widget.data.receipt,
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                            widget.data.isPaymentIn ||
+                                    widget.data.isPaymentOut ||
                                     widget.data.isExpenses
                                 ? Column(
                                     children: [
@@ -194,6 +225,46 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                 : Container(),
                             Container(height: 10),
                             const Text("=================================="),
+
+                            widget.data.isCashSale
+                                ? Column(
+                                    children: [
+                                      Container(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Expanded(
+                                            child: Text("Amount"),
+                                          ),
+                                          Container(width: 10),
+                                          Text(formatter.format(
+                                              widget.data.amount +
+                                                  widget.data.discount)),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                            widget.data.isCashSale
+                                ? Column(
+                                    children: [
+                                      Container(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Expanded(
+                                            child: Text("Discount"),
+                                          ),
+                                          Container(width: 10),
+                                          Text(formatter
+                                              .format(widget.data.discount)),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                             Container(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

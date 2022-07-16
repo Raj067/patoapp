@@ -237,23 +237,47 @@ class _PartiesPageState extends State<PartiesPage> {
                     onChanged: (val) {
                       _onSearchChange(val);
                     },
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.fromLTRB(10, 7, 10, 0),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(10, 7, 10, 0),
                       border: InputBorder.none,
                       hintText: 'Search Contact',
-                      prefixIcon: const Icon(Icons.search),
+                      prefixIcon: Icon(Icons.search),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      suffixIcon: InkWell(
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                          child: MyStatefulWidget(restorationId: "hello"),
-                        ),
-                        onTap: () {},
-                      ),
+                      // suffixIcon: InkWell(
+                      //   borderRadius: const BorderRadius.all(
+                      //     Radius.circular(15),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.fromLTRB(2, 5, 2, 5),
+                      //     child: SvgPicture.asset(
+                      //       "assets/svg/calendar.svg",
+                      //     ),
+                      //   ),
+                      //   onTap: () {},
+                      // ),
                     ),
                   ),
                 ),
+              ),
+            ),
+            Container(
+              height: 43,
+              width: 43,
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              child: InkWell(
+                onTap: () {
+                  _reArrangeDataAlphabetically();
+                },
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                child: const Icon(Icons.sort_by_alpha, color: patowavePrimary),
               ),
             ),
             SizedBox(
@@ -494,45 +518,10 @@ class _PartiesPageState extends State<PartiesPage> {
       ),
     );
   }
-}
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key, this.restorationId}) : super(key: key);
-
-  final String? restorationId;
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-/// RestorationProperty objects can be used because of RestorationMixin.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  DateTime _date = DateTime(2020, 11, 17);
-
-  void _selectDate() async {
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(2017, 1),
-      lastDate: DateTime(2022, 7),
-      helpText: 'Select a date',
-    );
-    if (newDate != null) {
-      setState(() {
-        _date = newDate;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: SvgPicture.asset(
-        "assets/svg/calendar.svg",
-      ),
-      onTap: () {
-        _selectDate();
-      },
-    );
+  _reArrangeDataAlphabetically() {
+    customData.sort(
+        (a, b) => a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase()));
+    setState(() {});
   }
 }
