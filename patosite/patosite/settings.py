@@ -32,7 +32,7 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if ENVIRONMENT.get('DEBUG').lower() == 'true' else False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['http://50.116.38.43', 'http://127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
 
 # Application definition
