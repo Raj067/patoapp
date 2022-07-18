@@ -52,6 +52,7 @@ dependencies:
   sqflite:
   path:
   flutter_local_notifications:
+  get: 4.6.5
 
   # url_launcher: 6.1.3
   # accordion: 2.4.0

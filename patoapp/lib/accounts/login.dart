@@ -5,6 +5,7 @@ import 'package:patoapp/accounts/signup.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 // import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
@@ -168,6 +169,8 @@ class LoginPage extends StatelessWidget {
                             );
                             var prefs = await SharedPreferences.getInstance();
                             prefs.setBool('isLogin', true);
+
+                            // Storing the keys
                           }
                         },
                         child: const Text(

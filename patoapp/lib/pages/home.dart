@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
@@ -474,14 +473,25 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Add Schedule",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute<void>(
+                      //     builder: (BuildContext context) => AddNotificationNew(),
+                      //     fullscreenDialog: true,
+                      //   ),
+                      // );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Add Schedule",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
