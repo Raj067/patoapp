@@ -16,6 +16,8 @@ api_urls = [
 
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     #     # Shop api
+
+    path('api/signup-user/', signup_user, name='signup_user'),
     path('api/shop-profile-details/',
          shop_profile_details, name='shop_profile_details'),
     path('api/inventory-products/',

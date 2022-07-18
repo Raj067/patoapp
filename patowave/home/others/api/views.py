@@ -8,10 +8,39 @@ from django.http import FileResponse, HttpResponse, JsonResponse
 # from rest_framework.views import APIView
 from rest_framework import status
 # from rest_framework.permissions import IsAdminUser
-# from accounts.models import CustomUser
-# from rest_framework.permissions import AllowAny
+from accounts.models import CustomUser
+from rest_framework.permissions import AllowAny
 
 from rest_framework.decorators import api_view, permission_classes
+
+from rest_framework_simplejwt.tokens import RefreshToken
+
+# def get_tokens_for_user(user):
+#     refresh = RefreshToken.for_user(user)
+
+#     return {
+#         'refresh': str(refresh),
+#         'access': str(refresh.access_token),
+#     }
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def signup_user(request, *args, **kwargs):
+    if request.method == "POST":
+        user = CustomUser(
+            username=request.data.get("username")
+        )
+        user.set_password(request.data.get("password"))
+        user.save()
+        refresh = RefreshToken.for_user(user)
+
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+        return Response(data=data, status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
