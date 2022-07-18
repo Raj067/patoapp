@@ -55,9 +55,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
   // Fetching data
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     var data = await http.get(
       Uri.parse("${baseUrl}api/inventory-products/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
 
     List<SingleProduct> finalData = [];
@@ -1612,9 +1613,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         "quantity": element.quantity,
       });
     }
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'amount': totalAmount - discountAmount,
         'discount': discountAmount,

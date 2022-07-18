@@ -163,9 +163,10 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
     required String transactionDate,
     required bool toReceive,
   }) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/add-new-customer/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'customerName': customerName,
         'phoneNumber': phoneNumber,

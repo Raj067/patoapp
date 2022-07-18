@@ -5,7 +5,8 @@ import 'package:patoapp/accounts/signup.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 // import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
@@ -171,6 +172,19 @@ class LoginPage extends StatelessWidget {
                             prefs.setBool('isLogin', true);
 
                             // Storing the keys
+                            // Create storage
+                            const storage = FlutterSecureStorage();
+                            Map tokens = {
+                              "refresh":
+                                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NTE1MTQ0NywiaWF0IjoxNjU3Mzc1NDQ3LCJqdGkiOiI5YTgyMDg3ZmM2YTM0YTlkYTIxOGE4OTNmOTM5OTIyNiIsInVzZXJfaWQiOjF9.PUAqkOFtu5w6Y_Dpz00tiyn_9Rlm9Xn4-xvi2ceyA88",
+                              "access":
+                                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxNjk1NDQ3LCJpYXQiOjE2NTczNzU0NDcsImp0aSI6IjZhZWJlZWQ2OTIwOTQxOGM4ZGY3NmE1OWE0M2ViZmFiIiwidXNlcl9pZCI6MX0.3FXaqg2VH689OK8uFkybT4oY68xd_wP5cGn3EkiCymw"
+                            };
+                            // Write value
+                            await storage.write(
+                                key: "refresh", value: tokens['refresh']);
+                            await storage.write(
+                                key: "access", value: tokens['access']);
                           }
                         },
                         child: const Text(

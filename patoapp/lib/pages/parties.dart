@@ -7,7 +7,6 @@ import 'package:patoapp/reports/debt_reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -36,12 +35,13 @@ class _PartiesPageState extends State<PartiesPage> {
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     // Data for general analysis
     var generalData = await http.get(
       Uri.parse(
         "${baseUrl}api/general-parties-details/",
       ),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (generalData.statusCode == 200) {
       customersGeneral = CustomersGeneral(
@@ -58,7 +58,7 @@ class _PartiesPageState extends State<PartiesPage> {
     // Financial data
     var data = await http.get(
       Uri.parse("${baseUrl}api/parties-details/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<SingleCustomer> finalData = [];

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/accounts/set_account.dart';
 import 'package:patoapp/themes/light_theme.dart';

@@ -42,10 +42,11 @@ class _BusinessPageState extends State<BusinessPage> {
   bool isLoading = true;
   List<SingleCustomer> customData = [];
   fetchCustomer() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     // Financial data
     var data = await http.get(
       Uri.parse("${baseUrl}api/parties-details/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<SingleCustomer> finalData = [];
@@ -66,10 +67,11 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     // Data for general analysis
     var generalData = await http.get(
       Uri.parse("${baseUrl}api/general-business-details/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (generalData.statusCode == 200) {
       businessGeneral = BusinessGeneral(
@@ -87,7 +89,7 @@ class _BusinessPageState extends State<BusinessPage> {
       Uri.parse(
         "${baseUrl}api/business-financial-transactions/",
       ),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<FinancialData> myData = [];
@@ -742,9 +744,10 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   _deletingTransaction(FinancialData data) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/deleting-single-transaction/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'transaction': data.getTransactionType(),
         'id': data.getTransactionID(),

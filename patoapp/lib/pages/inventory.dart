@@ -56,9 +56,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
 
   bool isAlreadyLoad = false;
   fetchData(String path) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     var data = await http.get(
       Uri.parse(baseUrl + path),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
 
     List<SingleProduct> finalData = [];

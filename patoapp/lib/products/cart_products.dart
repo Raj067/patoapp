@@ -407,9 +407,10 @@ class _ProductsCartState extends State<ProductsCart> {
     required double discount,
     required List<Map> items,
   }) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/cash-sales-transaction/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'amount': amount,
         'discount': discount,

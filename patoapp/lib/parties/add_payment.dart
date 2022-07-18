@@ -594,9 +594,10 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     required bool isPaymentIn,
     required int id,
   }) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/adding-payment-customer/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'amount': amount,
         'description': description,

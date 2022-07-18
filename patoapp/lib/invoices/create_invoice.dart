@@ -38,10 +38,11 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final TextEditingController quantityControllerSales = TextEditingController();
   final TextEditingController dueDate = TextEditingController();
   fetchCustomer() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     // Financial data
     var data = await http.get(
       Uri.parse("${baseUrl}api/parties-details/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<SingleCustomer> finalData = [];
@@ -63,9 +64,10 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
   // Fetching data
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     var data = await http.get(
       Uri.parse("${baseUrl}api/inventory-products/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
 
     List<SingleProduct> finalData = [];

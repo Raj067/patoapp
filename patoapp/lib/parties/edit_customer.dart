@@ -207,9 +207,10 @@ class _EditCustomerState extends State<EditCustomer> {
     required String emailAddress,
     required int id,
   }) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/edit-existing-customer/'),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
         'customerName': customerName,
         'phoneNumber': phoneNumber,

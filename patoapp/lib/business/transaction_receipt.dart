@@ -2,9 +2,9 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:ui' as ui;
+// import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -22,10 +22,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   final GlobalKey globalKey = GlobalKey();
   Future<void> capturePng() async {
     //Get the render object from context.
-    RenderRepaintBoundary boundary =
-        globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    // RenderRepaintBoundary boundary =
+    //     globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     //Convert to the image
-    final ui.Image image = await boundary.toImage();
+    // final ui.Image image = await boundary.toImage();
   }
 
   String shopName = "Happy Shop";

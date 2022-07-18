@@ -35,10 +35,11 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   double gbp = 34.90;
   List<SingleCustomer> customData = [];
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     // Financial data
     var data = await http.get(
       Uri.parse("${baseUrl}api/parties-details/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<SingleCustomer> finalData = [];

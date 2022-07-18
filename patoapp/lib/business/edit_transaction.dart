@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -20,7 +19,7 @@ class _EditTransactionState extends State<EditTransaction> {
   TextEditingController paymentInDesc = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    String shopName = "Happy Shop";
+    // String shopName = "Happy Shop";
     return Scaffold(
       appBar: AppBar(
         title: const Text(

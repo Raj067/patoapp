@@ -1,19 +1,23 @@
 import 'package:intl/intl.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-Map d = {
-  "refresh":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NTE1MTQ0NywiaWF0IjoxNjU3Mzc1NDQ3LCJqdGkiOiI5YTgyMDg3ZmM2YTM0YTlkYTIxOGE4OTNmOTM5OTIyNiIsInVzZXJfaWQiOjF9.PUAqkOFtu5w6Y_Dpz00tiyn_9Rlm9Xn4-xvi2ceyA88",
-  "access":
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxNjk1NDQ3LCJpYXQiOjE2NTczNzU0NDcsImp0aSI6IjZhZWJlZWQ2OTIwOTQxOGM4ZGY3NmE1OWE0M2ViZmFiIiwidXNlcl9pZCI6MX0.3FXaqg2VH689OK8uFkybT4oY68xd_wP5cGn3EkiCymw"
-};
+// Create storage
+const storage = FlutterSecureStorage();
+
 String url = "http://localhost:8000";
 String baseUrl = "$url/";
 String imageBaseUrl = url;
-String accessToken = d['access'];
-const String refreshToken = "";
 var formatter = NumberFormat('#,###,###');
 
-Map<String, String> authHeaders = {
-  'Content-Type': 'application/json; charset=UTF-8',
-  "Authorization": "Bearer $accessToken",
-};
+Map<String, String> getAuthHeaders(String accessToken) {
+  Map<String, String> authHeaders = {
+    'Content-Type': 'application/json; charset=UTF-8',
+    "Authorization": "Bearer $accessToken",
+  };
+  return authHeaders;
+}
+
+// Map<String, String> authHeaders = {
+//   'Content-Type': 'application/json; charset=UTF-8',
+//   "Authorization": "Bearer accessToken",
+// };

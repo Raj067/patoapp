@@ -53,6 +53,7 @@ dependencies:
   path:
   flutter_local_notifications:
   get: 4.6.5
+  flutter_secure_storage:
 
   # url_launcher: 6.1.3
   # accordion: 2.4.0

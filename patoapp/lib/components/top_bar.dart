@@ -54,9 +54,10 @@ class _ProfileIconState extends State<ProfileIcon> {
   String logoUrl = "";
 
   fetchData(String path) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     var data = await http.get(
       Uri.parse(baseUrl + path),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     name = jsonDecode(data.body)['name'];
     setState(() {});

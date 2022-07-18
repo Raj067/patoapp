@@ -155,7 +155,7 @@ class _SetAccountPageState extends State<SetAccountPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: ((context) => HomePage())));
+                                      builder: ((context) => const HomePage())));
                             }
                             // Login user
                             var prefs = await SharedPreferences.getInstance();

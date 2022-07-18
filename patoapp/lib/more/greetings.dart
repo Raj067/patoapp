@@ -19,11 +19,12 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
   List goodMorningData = [];
   bool isLoading = true;
   fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
     var cardData = await http.get(
       Uri.parse(
         "${baseUrl}api/greeting-cards/",
       ),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (cardData.statusCode == 200) {
       List<SingleGreetingCard> newDataThankYou = [];

@@ -25,9 +25,10 @@ class _InventoryAnalysisState extends State<InventoryAnalysis> {
 
   fetchData() async {
     // Data for general analysis
+    String accessToken = await storage.read(key: 'access') ?? "";
     var generalData = await http.get(
       Uri.parse("${baseUrl}api/general-inventory-analysis/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (generalData.statusCode == 200) {
       inventoryAnalysisData = InventAnalysisData(
@@ -41,7 +42,7 @@ class _InventoryAnalysisState extends State<InventoryAnalysis> {
     // Data for general analysis
     var data = await http.get(
       Uri.parse("${baseUrl}api/top-selling-items/"),
-      headers: authHeaders,
+      headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
       List<SingleTopProduct> myAllTopItems = [];

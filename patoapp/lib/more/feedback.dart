@@ -29,7 +29,7 @@ class FeedbackDialog extends StatelessWidget {
             Container(height: 10),
             const Text(
               "Contact us at:",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
