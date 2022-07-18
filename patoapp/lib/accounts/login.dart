@@ -1,18 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final loginFormKey = GlobalKey<FormState>();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController password = TextEditingController();
 
-  LoginPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +80,7 @@ class LoginPage extends StatelessWidget {
                       Container(height: 15),
                       TextFormField(
                         cursorColor: patowavePrimary,
+                        controller: phoneNumber,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
@@ -94,6 +107,7 @@ class LoginPage extends StatelessWidget {
                       Container(height: 15),
                       TextFormField(
                         cursorColor: patowavePrimary,
+                        controller: password,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
@@ -160,31 +174,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () async {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (loginFormKey.currentState!.validate()) {
-                            // Navigator.popUntil(context, (route) => false);
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const HomePage(),
-                              ),
-                            );
-                            var prefs = await SharedPreferences.getInstance();
-                            prefs.setBool('isLogin', true);
-
-                            // Storing the keys
-                            // Create storage
-                            const storage = FlutterSecureStorage();
-                            Map tokens = {
-                              "refresh":
-                                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2NTE1MTQ0NywiaWF0IjoxNjU3Mzc1NDQ3LCJqdGkiOiI5YTgyMDg3ZmM2YTM0YTlkYTIxOGE4OTNmOTM5OTIyNiIsInVzZXJfaWQiOjF9.PUAqkOFtu5w6Y_Dpz00tiyn_9Rlm9Xn4-xvi2ceyA88",
-                              "access":
-                                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYxNjk1NDQ3LCJpYXQiOjE2NTczNzU0NDcsImp0aSI6IjZhZWJlZWQ2OTIwOTQxOGM4ZGY3NmE1OWE0M2ViZmFiIiwidXNlcl9pZCI6MX0.3FXaqg2VH689OK8uFkybT4oY68xd_wP5cGn3EkiCymw"
-                            };
-                            // Write value
-                            await storage.write(
-                                key: "refresh", value: tokens['refresh']);
-                            await storage.write(
-                                key: "access", value: tokens['access']);
+                            _loginUser(context);
                           }
                         },
                         child: const Text(
@@ -221,5 +211,61 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _loginUser(BuildContext context) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/token/'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'username': phoneNumber.text,
+        'password': password.text,
+      }),
+    );
+    if (response.statusCode == 200) {
+      // Create storage
+      Map tokens = jsonDecode(response.body);
+      // Write value
+      await storage.write(key: "refresh", value: tokens['refresh']);
+      await storage.write(key: "access", value: tokens['access']);
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const HomePage(),
+        ),
+      );
+    } else {
+      SnackBar(
+        content: Text("hello"),
+      );
+    }
+    print('-----------');
+    print(response.statusCode);
+    print(response.body);
+    print(response);
+    // if (response.statusCode == 201) {
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pop(context);
+    //   widget.resetData();
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pop(context);
+    //   // Navigator
+    // } else {
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pop(context);
+    //   showErrorMessage(
+    //     context: context,
+    //     builder: (context) => const ModalFitError(),
+    //   );
+    //   // throw Exception('Failed to updated customer.');
+    // }
   }
 }

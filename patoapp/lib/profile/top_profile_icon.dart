@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/accounts/login.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -270,15 +271,15 @@ class TopProfileIcon extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
+                  await storage.deleteAll();
+                  // ignore: use_build_context_synchronously
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => LoginPage(),
+                      builder: (BuildContext context) => const LoginPage(),
                       fullscreenDialog: true,
                     ),
                   );
-                  var prefs = await SharedPreferences.getInstance();
-                  prefs.setBool('isLogin', false);
                 },
                 child: const Text(
                   "Logout",

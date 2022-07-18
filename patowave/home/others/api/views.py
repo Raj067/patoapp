@@ -64,7 +64,7 @@ def deleting_single_transaction_api(request):
 
 @api_view(['GET'])
 def shop_profile_details(request, *args, **kwargs):
-    data = get_shop(request)[0]if get_shop(request) else []
+    data = get_shop(request)[0]if get_shop(request) else None
     serializer = ShopProfileSerializer(data, many=False)
     return Response(serializer.data)
 
