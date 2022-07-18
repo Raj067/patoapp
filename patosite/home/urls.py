@@ -8,6 +8,4 @@ home_urls = [
     path('about/', about_page, name="about_page"),
     path('blog/', blog_page, name="blog_page"),
     path('contact/', contact_page, name="contact_page"),
-    path('privacy-policy/', privacy_page, name="privacy_page"),
-    path('terms-and-conditions/', terms_page, name="terms_page"),
 ]

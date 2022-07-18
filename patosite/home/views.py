@@ -17,9 +17,3 @@ def blog_page(request, *args, **kwargs):
 
 def contact_page(request, *args, **kwargs):
     return render(request, 'contact.html', {})
-
-def privacy_page(request, *args, **kwargs):
-    return render(request, 'privacy.html', {})
-
-def terms_page(request, *args, **kwargs):
-    return render(request, 'terms.html', {})
