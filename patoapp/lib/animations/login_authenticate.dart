@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class ModalFitError extends StatelessWidget {
-  const ModalFitError({Key? key}) : super(key: key);
+class ModalFitLoginAuthenticate extends StatelessWidget {
+  const ModalFitLoginAuthenticate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ModalFitError extends StatelessWidget {
             children: <Widget>[
               const Icon(Icons.error, size: 30, color: patowaveErrorRed),
               Container(width: 15),
-              const Text("Server error occured")
+              const Text("Invalid Login Credentials"),
             ],
           ),
         ),
@@ -27,11 +27,11 @@ class ModalFitError extends StatelessWidget {
   }
 }
 
-class FloatingModalError extends StatelessWidget {
+class FloatingModalLoginAuthenticate extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
 
-  const FloatingModalError(
+  const FloatingModalLoginAuthenticate(
       {Key? key, required this.child, this.backgroundColor})
       : super(key: key);
 
@@ -51,7 +51,7 @@ class FloatingModalError extends StatelessWidget {
   }
 }
 
-Future<T> showErrorMessage<T>({
+Future<T> showLoginAuthenticateMessage<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   Color? backgroundColor,
@@ -59,7 +59,7 @@ Future<T> showErrorMessage<T>({
   final result = await showCustomModalBottomSheet(
       context: context,
       builder: builder,
-      containerWidget: (_, animation, child) => FloatingModalError(
+      containerWidget: (_, animation, child) => FloatingModalLoginAuthenticate(
             child: child,
           ),
       expand: false);

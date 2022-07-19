@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/accounts/signup.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/login_authenticate.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -235,6 +235,7 @@ class _LoginPageState extends State<LoginPage> {
       // Write value
       await storage.write(key: "refresh", value: tokens['refresh']);
       await storage.write(key: "access", value: tokens['access']);
+      await storage.write(key: "shopName", value: "true");
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
@@ -242,30 +243,20 @@ class _LoginPageState extends State<LoginPage> {
           builder: (BuildContext context) => const HomePage(),
         ),
       );
+    } else if (response.statusCode == 401) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showLoginAuthenticateMessage(
+        context: context,
+        builder: (context) => const ModalFitLoginAuthenticate(),
+      );
     } else {
-      SnackBar(
-        content: Text("hello"),
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
       );
     }
-    print('-----------');
-    print(response.statusCode);
-    print(response.body);
-    print(response);
-    // if (response.statusCode == 201) {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   widget.resetData();
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   // Navigator
-    // } else {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   showErrorMessage(
-    //     context: context,
-    //     builder: (context) => const ModalFitError(),
-    //   );
-    //   // throw Exception('Failed to updated customer.');
-    // }
-  }
+}
 }

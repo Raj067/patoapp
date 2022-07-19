@@ -12,20 +12,18 @@ class ModalFitAuthenticate extends StatelessWidget {
       top: false,
       child: SizedBox(
         height: 100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            const Icon(Icons.error, size: 30, color: patowaveErrorRed),
-            Column(
-              children: [
-                Container(),
-                const Expanded(
-                  child: Text(
-                      "User with the same phone number already exist, try another phone number"),
-                ),
-              ],
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Row(
+            children: <Widget>[
+              const Icon(Icons.error, size: 30, color: patowaveErrorRed),
+              Container(width: 15),
+              const Expanded(
+                child: Text(
+                    "User with the same phone number already exist, try another phone number"),
+              ),
+            ],
+          ),
         ),
       ),
     ));

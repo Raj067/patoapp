@@ -273,13 +273,18 @@ class TopProfileIcon extends StatelessWidget {
                 onPressed: () async {
                   await storage.deleteAll();
                   // ignore: use_build_context_synchronously
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const LoginPage(),
-                      fullscreenDialog: true,
-                    ),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute<void>(
+                  //     builder: (BuildContext context) => const LoginPage(),
+                  //     fullscreenDialog: true,
+                  //   ),
+                  // );
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                      (Route<dynamic> route) => false);
                 },
                 child: const Text(
                   "Logout",

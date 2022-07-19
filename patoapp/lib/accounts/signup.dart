@@ -282,12 +282,9 @@ class _SignupPageState extends State<SignupPage> {
       await storage.write(key: "refresh", value: tokens['refresh']);
       await storage.write(key: "access", value: tokens['access']);
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const SetAccountPage(),
-        ),
-      );
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const SetAccountPage()),
+          (Route<dynamic> route) => false);
     } else if (response.statusCode == 500) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);

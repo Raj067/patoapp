@@ -254,9 +254,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
                       submitSalesCustomerData();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
                     }
                   } else {
                     // for payment out

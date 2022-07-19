@@ -11,12 +11,15 @@ class ModalFit extends StatelessWidget {
       top: false,
       child: SizedBox(
         height: 100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            CircularProgressIndicator(),
-            Text("Please Wait....")
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Row(
+            children: <Widget>[
+              const CircularProgressIndicator(),
+              Container(width: 15),
+              const Text("Please Wait....")
+            ],
+          ),
         ),
       ),
     ));

@@ -131,4 +131,5 @@ def business_financial_data(request, shop):
                     "date": i.updated_at,
                 } for i in dx.sold_items.all()]
             })
+    data = sorted(data, key=lambda item: item.get('date'),reverse=True)
     return data
