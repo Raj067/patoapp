@@ -1,27 +1,12 @@
-
 from home.models import *
 from .functions.func import get_shop
 from .serializer import *
 from rest_framework.response import Response
-
-from django.http import FileResponse, HttpResponse, JsonResponse
-# from rest_framework.views import APIView
 from rest_framework import status
-# from rest_framework.permissions import IsAdminUser
 from accounts.models import CustomUser
 from rest_framework.permissions import AllowAny
-
 from rest_framework.decorators import api_view, permission_classes
-
 from rest_framework_simplejwt.tokens import RefreshToken
-
-# def get_tokens_for_user(user):
-#     refresh = RefreshToken.for_user(user)
-
-#     return {
-#         'refresh': str(refresh),
-#         'access': str(refresh.access_token),
-#     }
 
 
 @api_view(['GET', 'POST'])
@@ -32,7 +17,11 @@ def signup_user(request, *args, **kwargs):
             username=request.data.get("username")
         )
         user.set_password(request.data.get("password"))
-        user.save()
+        try:
+            user.save()
+        except:
+            # User already exist
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         refresh = RefreshToken.for_user(user)
 
         data = {
@@ -40,6 +29,25 @@ def signup_user(request, *args, **kwargs):
             'access': str(refresh.access_token),
         }
         return Response(data=data, status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def setting_account_api(request):
+    if request.method == "POST":
+        shop = Shop(
+            name=request.data.get('businessName'),
+            instagram_name=request.data.get('instagramName'),
+            email=request.data.get('businessEmail'),
+            address=request.data.get('businessAddress'),
+        )
+        shop.save()
+        shop_user = ShopUser(
+            shop=shop,
+            user=request.user,
+        )
+        shop_user.save()
+        return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -95,7 +103,8 @@ def deleting_single_transaction_api(request):
 def shop_profile_details(request, *args, **kwargs):
     data = get_shop(request)[0]if get_shop(request) else None
     serializer = ShopProfileSerializer(data, many=False)
-    return Response(serializer.data)
+    dt = {**serializer.data, 'phone': request.user.username}
+    return Response(dt)
 
 
 @api_view(['GET', 'POST'])
@@ -240,5 +249,28 @@ def cash_sales_customer_transaction_api(request):
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
 
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+# For products
+
+
+@api_view(['POST'])
+def add_new_product_api(request):
+    if request.method == "POST":
+        product = Product(
+            shop=get_shop(request)[0],
+            product_name=request.data.get('productName'),
+            quantity=request.data.get('quantity'),
+            purchases_price=request.data.get('purchasesPrice'),
+            selling_price_primary=request.data.get('sellingPrice'),
+            stock_level=request.data.get('stockLevel'),
+            primary_unit=request.data.get('primaryUnit'),
+            is_service=request.data.get('isService'),
+            supplier_name=request.data.get('supplierName'),
+            supplier_number=request.data.get('supplierNumber'),
+            supplier_email=request.data.get('supplierEmail'),
+        )
+        product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)

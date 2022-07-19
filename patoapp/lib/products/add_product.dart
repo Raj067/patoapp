@@ -1,16 +1,23 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddProductPage extends StatefulWidget {
   final bool isProductImage;
   final bool isProductBarcode;
+  final Function resetData;
   const AddProductPage({
     Key? key,
     required this.isProductImage,
     required this.isProductBarcode,
+    required this.resetData,
   }) : super(key: key);
 
   @override
@@ -18,24 +25,6 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
-  final List<String> primaryUnits = [
-    'BAGS (Bags)',
-    'BOTTLES (Btl)',
-    'BOX (Box)',
-    'BUNDLES (Bdl)',
-    'CANS (Can)',
-    'CARTONS (Ctn)',
-    'DOZENS (Dzn)',
-    'GRAMMES (gm)',
-    'KILOGRAMS (Kg)',
-    'LITRE (Ltr)',
-    'METERS (Mtr)',
-    'MILILITRE (Ml)',
-    'NUMBERS (Nos)',
-    'PACKS (Pac)',
-    'PAIRS (Prs)',
-    'PIECES (Pcs)',
-  ];
   String? selectedPrimaryUnit;
 
   String? selectedValue;
@@ -43,6 +32,31 @@ class _AddProductPageState extends State<AddProductPage> {
   int _value = 1;
   final addProductFormKey = GlobalKey<FormState>();
   final addServicesFormKey = GlobalKey<FormState>();
+  // Controllers
+
+  TextEditingController productName = TextEditingController();
+  TextEditingController purchasesPrice = TextEditingController();
+  TextEditingController sellingPrice = TextEditingController();
+  TextEditingController quantity = TextEditingController();
+  TextEditingController stockLevel = TextEditingController();
+  TextEditingController primaryUnit = TextEditingController();
+  TextEditingController supplierName = TextEditingController();
+  TextEditingController supplierNumber = TextEditingController();
+  TextEditingController supplierEmail = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    productName.dispose();
+    purchasesPrice.dispose();
+    sellingPrice.dispose();
+    quantity.dispose();
+    stockLevel.dispose();
+    primaryUnit.dispose();
+    supplierName.dispose();
+    supplierNumber.dispose();
+    supplierEmail.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,22 +187,14 @@ class _AddProductPageState extends State<AddProductPage> {
 
                     // Validate returns true if the form is valid, or false otherwise.
                     if (addProductFormKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      _submitProduct(isService: false);
                     }
                   } else {
                     // for payment out
 
                     // Validate returns true if the form is valid, or false otherwise.
                     if (addServicesFormKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      _submitProduct(isService: true);
                     }
                   }
                 },
@@ -214,6 +220,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: productName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Item name is required';
@@ -299,6 +306,9 @@ class _AddProductPageState extends State<AddProductPage> {
                         ))
                     .toList(),
                 onChanged: (value) {
+                  setState(() {
+                    primaryUnit.text = value.toString();
+                  });
                   //Do something when changing the item if you want.
                 },
                 onSaved: (value) {
@@ -313,6 +323,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: sellingPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Sales Price is required';
@@ -338,6 +349,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: purchasesPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Purchases Price is required';
@@ -366,6 +378,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   Expanded(
                     child: TextFormField(
                       cursorColor: patowavePrimary,
+                      controller: quantity,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -397,6 +410,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   Expanded(
                     child: TextFormField(
                       cursorColor: patowavePrimary,
+                      controller: stockLevel,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -445,6 +459,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(height: 15),
                         TextFormField(
                           cursorColor: patowavePrimary,
+                          controller: supplierName,
                           decoration: const InputDecoration(
                             label: Text(
                               "Name",
@@ -461,6 +476,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(height: 15),
                         TextFormField(
                           cursorColor: patowavePrimary,
+                          controller: supplierNumber,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -481,6 +497,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(height: 15),
                         TextFormField(
                           cursorColor: patowavePrimary,
+                          controller: supplierEmail,
                           decoration: const InputDecoration(
                             label: Text(
                               "Email",
@@ -517,6 +534,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: productName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Service Name is required';
@@ -538,6 +556,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: sellingPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Service charge is required';
@@ -563,6 +582,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: primaryUnit,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Service unit is required';
@@ -584,6 +604,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Container(height: 15),
               TextFormField(
                 cursorColor: patowavePrimary,
+                controller: supplierName,
                 decoration: const InputDecoration(
                   label: Text(
                     "Description",
@@ -616,7 +637,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           ),
           elevation: 0,
-          content: Text('Item available before start using Patowave'),
+          content: Text('Items available before start using Patowave'),
         );
       },
     );
@@ -640,5 +661,49 @@ class _AddProductPageState extends State<AddProductPage> {
         );
       },
     );
+  }
+// api/add-new-product/
+
+  _submitProduct({required bool isService}) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/add-new-product/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'productName': productName.text,
+        'purchasesPrice':
+            purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
+        'sellingPrice':
+            sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
+        'quantity': quantity.text != '' ? int.parse(quantity.text) : 0,
+        'stockLevel': stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
+        'primaryUnit': primaryUnit.text,
+        'supplierName': supplierName.text,
+        'supplierNumber': supplierNumber.text,
+        'supplierEmail': supplierEmail.text,
+        'isService': isService,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print("--------received--------");
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

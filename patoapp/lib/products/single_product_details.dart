@@ -6,9 +6,17 @@ import 'package:patoapp/themes/light_theme.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class SingleProductDetails extends StatefulWidget {
-  const SingleProductDetails({super.key, required this.product});
+  const SingleProductDetails({
+    super.key,
+    required this.product,
+    required this.isProductImage,
+    required this.isProductBarcode,
+    required this.resetData,
+  });
   final SingleProduct product;
-
+  final bool isProductImage;
+  final bool isProductBarcode;
+  final Function resetData;
   @override
   State<SingleProductDetails> createState() => _SingleProductDetailsState();
 }
@@ -33,8 +41,14 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) =>
-                      EditProduct(product: widget.product),
+                  builder: (BuildContext context) => EditProduct(
+                    product: widget.product,
+                    isProductBarcode: widget.isProductBarcode,
+                    isProductImage: widget.isProductImage,
+                    resetData: () {
+                      widget.resetData();
+                    },
+                  ),
                   fullscreenDialog: true,
                 ),
               );

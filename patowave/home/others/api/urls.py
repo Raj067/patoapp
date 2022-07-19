@@ -16,8 +16,10 @@ api_urls = [
 
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     #     # Shop api
-
+    # setting_account_api
     path('api/signup-user/', signup_user, name='signup_user'),
+    path('api/setting-account/', setting_account_api,
+         name='setting_account_api'),
     path('api/shop-profile-details/',
          shop_profile_details, name='shop_profile_details'),
     path('api/inventory-products/',
@@ -45,4 +47,8 @@ api_urls = [
          name='cash_sales_transaction_api'),
     path('api/cash-sales-customer-transaction/', cash_sales_customer_transaction_api,
          name='cash_sales_customer_transaction_api'),
+     
+     # Product 
+    path('api/add-new-product/', add_new_product_api,
+         name='add_new_product_api'),
 ]

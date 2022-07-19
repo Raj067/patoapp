@@ -9,6 +9,7 @@ User = settings.AUTH_USER_MODEL
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     slogan = models.CharField(max_length=100, null=True, blank=True)
+    instagram_name = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=15, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     logo = models.ImageField(upload_to='logo/', blank=True, null=True)
@@ -52,7 +53,7 @@ class Product(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length=100, null=True, blank=True)
-    purchases_price = models.IntegerField()
+    purchases_price = models.IntegerField(default=0)
     selling_price_primary = models.IntegerField()
     selling_price_secondary = models.IntegerField(
         default=0, null=True, blank=True)
@@ -62,6 +63,7 @@ class Product(models.Model):
     secondary_unit = models.CharField(max_length=100, null=True, blank=True)
     rate_unit = models.IntegerField(null=True, blank=True)
 
+    is_service = models.BooleanField(default=False)
     # other details
     product_image = models.ImageField(
         upload_to='products/', blank=True, null=True)
@@ -153,13 +155,15 @@ class CashSoldItemCustomer(models.Model):
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100,)
 
-    cash_sale_customer = models.ForeignKey("CashSaleCustomer", on_delete=models.CASCADE)
+    cash_sale_customer = models.ForeignKey(
+        "CashSaleCustomer", on_delete=models.CASCADE)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ("-id",)
+
 
 class PurchasedItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)

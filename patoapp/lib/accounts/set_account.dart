@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +17,11 @@ class SetAccountPage extends StatefulWidget {
 
 class _SetAccountPageState extends State<SetAccountPage> {
   final setAccountFormKey = GlobalKey<FormState>();
+
+  TextEditingController businessName = TextEditingController();
+  TextEditingController businessEmail = TextEditingController();
+  TextEditingController businessAddress = TextEditingController();
+  TextEditingController instagramName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +62,7 @@ class _SetAccountPageState extends State<SetAccountPage> {
                       ),
                       Container(height: 15),
                       TextFormField(
+                        controller: businessName,
                         cursorColor: patowavePrimary,
                         validator: (value) {
                           if (value == null || value == "") {
@@ -75,6 +86,7 @@ class _SetAccountPageState extends State<SetAccountPage> {
                       Container(height: 15),
                       TextFormField(
                         cursorColor: patowavePrimary,
+                        controller: businessEmail,
                         decoration: const InputDecoration(
                           label: Text(
                             "Business Email",
@@ -91,6 +103,7 @@ class _SetAccountPageState extends State<SetAccountPage> {
                       Container(height: 15),
                       TextFormField(
                         cursorColor: patowavePrimary,
+                        controller: businessAddress,
                         validator: (value) {
                           if (value == null || value == "") {
                             return 'Business Address is required';
@@ -113,6 +126,7 @@ class _SetAccountPageState extends State<SetAccountPage> {
                       Container(height: 15),
                       TextFormField(
                         cursorColor: patowavePrimary,
+                        controller: instagramName,
                         decoration: const InputDecoration(
                           label: Text(
                             "Instagram Name",
@@ -152,22 +166,8 @@ class _SetAccountPageState extends State<SetAccountPage> {
                           ),
                           onPressed: () async {
                             if (setAccountFormKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => const HomePage())));
+                              _settingAccount(context);
                             }
-                            // Login user
-                            var prefs = await SharedPreferences.getInstance();
-                            prefs.setBool('isLogin', true);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute<void>(
-                            //     builder: (BuildContext context) =>
-                            //         const MainEntryHomePage(),
-                            //     fullscreenDialog: true,
-                            //   ),
-                            // );
                           },
                           child: const Text(
                             "Finish",
@@ -184,5 +184,44 @@ class _SetAccountPageState extends State<SetAccountPage> {
         ),
       ),
     );
+  }
+
+  _settingAccount(BuildContext context) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/setting-account/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'businessName': businessName.text,
+        'businessEmail': businessEmail.text,
+        'businessAddress': businessAddress.text,
+        'instagramName': instagramName.text,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      await storage.write(key: "shopName", value: businessName.text);
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const HomePage(),
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

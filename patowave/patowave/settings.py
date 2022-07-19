@@ -32,9 +32,9 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY')
 DEBUG = True if ENVIRONMENT.get('DEBUG').lower() == 'true' else False
 
 ALLOWED_HOSTS = ALLOWED_HOSTS = [
-    '139.144.63.15', '139.144.63.15:9000', '127.0.0.1'
+    '139.144.63.15', '139.144.63.15:9000', '127.0.0.1', 'localhost',
     'https://api.patowave.com/', 'http://api.patowave.com/']
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = ['localhost',
     'https://api.patowave.com/', 'http://api.patowave.com/']
 
 # Application definition

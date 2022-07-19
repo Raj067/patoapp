@@ -2,48 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class EditProduct extends StatefulWidget {
   final SingleProduct product;
-  const EditProduct({Key? key, required this.product}) : super(key: key);
+  final bool isProductImage;
+  final bool isProductBarcode;
+  final Function resetData;
+  const EditProduct({
+    Key? key,
+    required this.product,
+    required this.isProductImage,
+    required this.isProductBarcode,
+    required this.resetData,
+  }) : super(key: key);
 
   @override
   State<EditProduct> createState() => _EditProductState();
 }
 
 class _EditProductState extends State<EditProduct> {
-  final List<String> genderItems = [
-    'Male',
-    'Female',
-  ];
-  final List<String> primaryUnits = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
-  final List<String> secondaryUnits = [
-    'Item a',
-    'Item b',
-    'Item c',
-    'Item d',
-    'Item e',
-    'Item f',
-    'Item g',
-    'Item h',
-  ];
   String? selectedPrimaryUnit;
-  String? selectedSecondaryUnit;
 
   String? selectedValue;
   bool _isSupplierActivated = false;
   final editProductFormKey = GlobalKey<FormState>();
+  final editServicesFormKey = GlobalKey<FormState>();
+
+  TextEditingController productName = TextEditingController();
+  TextEditingController purchasesPrice = TextEditingController();
+  TextEditingController sellingPrice = TextEditingController();
+  TextEditingController quantity = TextEditingController();
+  TextEditingController stockLevel = TextEditingController();
+  TextEditingController primaryUnit = TextEditingController();
+  TextEditingController supplierName = TextEditingController();
+  TextEditingController supplierNumber = TextEditingController();
+  TextEditingController supplierEmail = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    productName.text = widget.product.productName;
+    purchasesPrice.text = "${widget.product.purchasesPrice}";
+    sellingPrice.text = "${widget.product.sellingPrice}";
+    quantity.text = "${widget.product.quantity}";
+    stockLevel.text = "${widget.product.stockLevel}";
+    // primaryUnit.text = '';
+    supplierName.text = widget.product.supplierName;
+    supplierNumber.text = widget.product.supplierContact;
+    supplierEmail.text = widget.product.supplierEmail;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    productName.dispose();
+    purchasesPrice.dispose();
+    sellingPrice.dispose();
+    quantity.dispose();
+    stockLevel.dispose();
+    primaryUnit.dispose();
+    supplierName.dispose();
+    supplierNumber.dispose();
+    supplierEmail.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,16 +87,18 @@ class _EditProductState extends State<EditProduct> {
             color: patowaveWhite,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_a_photo),
-            onPressed: () {},
-          )
-        ],
+        actions: widget.isProductImage
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.add_a_photo),
+                  onPressed: () {},
+                ),
+              ]
+            : [],
       ),
       body: Column(
         children: [
-          _addProduct(),
+          _editProduct(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -105,7 +132,7 @@ class _EditProductState extends State<EditProduct> {
     );
   }
 
-  _addProduct() {
+  _editProduct() {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -115,7 +142,7 @@ class _EditProductState extends State<EditProduct> {
             children: [
               Container(height: 15),
               TextFormField(
-                initialValue: widget.product.productName,
+                controller: productName,
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -136,26 +163,33 @@ class _EditProductState extends State<EditProduct> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                initialValue: "${widget.product.productCode}",
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Item Code",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-              Container(height: 15),
+              widget.isProductBarcode
+                  ? Column(
+                      children: [
+                        TextFormField(
+                          initialValue: "${widget.product.productCode}",
+                          cursorColor: patowavePrimary,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            label: Text(
+                              "Item Code",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 14),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(height: 15),
+                      ],
+                    )
+                  : Container(),
               DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
@@ -197,6 +231,7 @@ class _EditProductState extends State<EditProduct> {
                     .toList(),
                 onChanged: (value) {
                   //Do something when changing the item if you want.
+                  primaryUnit.text = value.toString();
                 },
                 onSaved: (value) {
                   selectedValue = value.toString();
@@ -209,7 +244,7 @@ class _EditProductState extends State<EditProduct> {
               ),
               Container(height: 15),
               TextFormField(
-                initialValue: "${widget.product.sellingPrice}",
+                controller: sellingPrice,
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -235,7 +270,7 @@ class _EditProductState extends State<EditProduct> {
               ),
               Container(height: 15),
               TextFormField(
-                initialValue: "${widget.product.purchasesPrice}",
+                controller: purchasesPrice,
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -264,7 +299,7 @@ class _EditProductState extends State<EditProduct> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      initialValue: "${widget.product.quantity}",
+                      controller: quantity,
                       cursorColor: patowavePrimary,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -296,7 +331,7 @@ class _EditProductState extends State<EditProduct> {
                   Container(width: 10),
                   Expanded(
                     child: TextFormField(
-                      initialValue: "${widget.product.stockLevel}",
+                      controller: stockLevel,
                       cursorColor: patowavePrimary,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -345,7 +380,7 @@ class _EditProductState extends State<EditProduct> {
                       children: [
                         Container(height: 15),
                         TextFormField(
-                          initialValue: widget.product.supplierName,
+                          controller: supplierName,
                           cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
@@ -362,7 +397,7 @@ class _EditProductState extends State<EditProduct> {
                         ),
                         Container(height: 15),
                         TextFormField(
-                          initialValue: widget.product.supplierContact,
+                          controller: supplierNumber,
                           cursorColor: patowavePrimary,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
@@ -383,7 +418,7 @@ class _EditProductState extends State<EditProduct> {
                         ),
                         Container(height: 15),
                         TextFormField(
-                          initialValue: widget.product.supplierEmail,
+                          controller: supplierEmail,
                           cursorColor: patowavePrimary,
                           decoration: const InputDecoration(
                             label: Text(
@@ -402,6 +437,109 @@ class _EditProductState extends State<EditProduct> {
                       ],
                     )
                   : Container(height: 15),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _editService() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Form(
+          key: editServicesFormKey,
+          child: ListView(
+            children: [
+              // _formField1(),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                controller: productName,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Service Name is required';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Service Name*",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                controller: sellingPrice,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Service charge is required';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Service Charge*",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 15),
+              TextFormField(
+                initialValue: widget.product.productUnit,
+                cursorColor: patowavePrimary,
+                controller: primaryUnit,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Service unit is required';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Service Unit*",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+              Container(height: 15),
+              TextFormField(
+                cursorColor: patowavePrimary,
+                controller: supplierName,
+                decoration: const InputDecoration(
+                  label: Text(
+                    "Description",
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

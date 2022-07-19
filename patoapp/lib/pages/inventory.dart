@@ -283,6 +283,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                     builder: (BuildContext context) => AddProductPage(
                       isProductImage: isProductImage,
                       isProductBarcode: isProductBarcode,
+                      resetData: () {
+                        fetchData("api/inventory-products/");
+                      },
                     ),
                     fullscreenDialog: true,
                   ),
@@ -400,6 +403,11 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => SingleProductDetails(
                   product: product,
+                  isProductImage: isProductImage,
+                  isProductBarcode: isProductBarcode,
+                  resetData: () {
+                    fetchData("api/inventory-products/");
+                  },
                 ),
                 fullscreenDialog: true,
               ),

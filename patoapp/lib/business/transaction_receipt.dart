@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'dart:async';
+import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 // import 'dart:ui' as ui;
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -28,11 +29,30 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     // final ui.Image image = await boundary.toImage();
   }
 
-  String shopName = "Happy Shop";
-  String address = "Happy Shop";
-  String telphone = "Happy Shop";
-  bool isLoading = false;
-  fetchData() {}
+  String shopName = "";
+  String address = "";
+  String telphone = "";
+  bool isLoading = true;
+  fetchData(String path) async {
+    String accessToken = await storage.read(key: 'access') ?? "";
+    var data = await http.get(
+      Uri.parse(baseUrl + path),
+      headers: getAuthHeaders(accessToken),
+    );
+    print(jsonDecode(data.body));
+    shopName = jsonDecode(data.body)['name'];
+    address = jsonDecode(data.body)['address'];
+    telphone = jsonDecode(data.body)['phone'];
+    isLoading = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData("api/shop-profile-details/");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -238,9 +258,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                                             child: Text("Amount"),
                                           ),
                                           Container(width: 10),
-                                          Text(formatter.format(
-                                              widget.data.amount +
-                                                  widget.data.discount)),
+                                          Text(
+                                            formatter.format(
+                                                widget.data.amount +
+                                                    widget.data.discount),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -328,25 +350,29 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   _listItemsButtomSheet(List data) {
     List<TableRow> fData = [];
     for (var dx in data) {
-      fData.add(TableRow(children: [
-        Text(
-          dx['product'],
-          style: const TextStyle(fontSize: 12),
+      fData.add(
+        TableRow(
+          children: [
+            Text(
+              dx['product'],
+              style: const TextStyle(fontSize: 12),
+            ),
+            Center(
+              child: Text(
+                "${dx['quantity']} ${dx['product_unit']} x ${dx['price'] / dx['quantity']}",
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                formatter.format(dx['price']),
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+          ],
         ),
-        Center(
-          child: Text(
-            "${dx['quantity']} ${dx['product_unit']} x ${dx['price']}",
-            style: const TextStyle(fontSize: 12),
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            "${dx['quantity'] * dx['price']}",
-            style: const TextStyle(fontSize: 12),
-          ),
-        ),
-      ]));
+      );
     }
     return Table(children: fData);
   }

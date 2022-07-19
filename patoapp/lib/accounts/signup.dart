@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/accounts/set_account.dart';
+import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/signup_authenticate.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -23,11 +25,11 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController password1 = TextEditingController();
   TextEditingController password2 = TextEditingController();
   // regular expression to check if string
-  RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
   //A function that validate user entered password
   bool validatePassword(String pass) {
-    String _password = pass.trim();
-    if (pass_valid.hasMatch(_password)) {
+    String password = pass.trim();
+    if (passValid.hasMatch(password)) {
       return true;
     } else {
       return false;
@@ -219,17 +221,7 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: () {
                           if (signupFormKey.currentState!.validate()) {
                             _signUpUser(context);
-                            print(
-                                "---------------accepted -------------------");
                           }
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute<void>(
-                          //     builder: (BuildContext context) =>
-                          //         const SetAccountPage(),
-                          //     fullscreenDialog: true,
-                          //   ),
-                          // );
                         },
                         child: const Text(
                           "Sign Up",
@@ -251,7 +243,7 @@ class _SignupPageState extends State<SignupPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => LoginPage(),
+                          builder: (BuildContext context) => const LoginPage(),
                           fullscreenDialog: true,
                         ),
                       );
@@ -283,43 +275,34 @@ class _SignupPageState extends State<SignupPage> {
         'password': password1.text,
       }),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       // Create storage
       Map tokens = jsonDecode(response.body);
       // Write value
       await storage.write(key: "refresh", value: tokens['refresh']);
       await storage.write(key: "access", value: tokens['access']);
       // ignore: use_build_context_synchronously
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute<void>(
-      //     builder: (BuildContext context) => const HomePage(),
-      //   ),
-      // );
-    } else {
-      SnackBar(
-        content: Text("hello"),
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const SetAccountPage(),
+        ),
       );
+    } else if (response.statusCode == 500) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showAuthenticateMessage(
+        context: context,
+        builder: (context) => const ModalFitAuthenticate(),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
     }
-    print('-----------');
-    print(response.statusCode);
-    print(response.body);
-    print(response);
-    // if (response.statusCode == 201) {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   widget.resetData();
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   // Navigator
-    // } else {
-    //   // ignore: use_build_context_synchronously
-    //   Navigator.pop(context);
-    //   showErrorMessage(
-    //     context: context,
-    //     builder: (context) => const ModalFitError(),
-    //   );
-    //   // throw Exception('Failed to updated customer.');
-    // }
   }
 }

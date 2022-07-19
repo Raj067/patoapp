@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
@@ -431,12 +432,13 @@ class _ProductsCartState extends State<ProductsCart> {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Failed to updated customer.')),
-      // );
-      throw Exception('Failed to updated customer.');
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
     }
   }
 }
