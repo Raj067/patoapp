@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -49,7 +53,7 @@ class _EditProductState extends State<EditProduct> {
     sellingPrice.text = "${widget.product.sellingPrice}";
     quantity.text = "${widget.product.quantity}";
     stockLevel.text = "${widget.product.stockLevel}";
-    // primaryUnit.text = '';
+    primaryUnit.text = widget.product.productUnit;
     supplierName.text = widget.product.supplierName;
     supplierNumber.text = widget.product.supplierContact;
     supplierEmail.text = widget.product.supplierEmail;
@@ -98,7 +102,7 @@ class _EditProductState extends State<EditProduct> {
       ),
       body: Column(
         children: [
-          _editProduct(),
+          widget.product.isService ? _editService() : _editProduct(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -120,7 +124,17 @@ class _EditProductState extends State<EditProduct> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (widget.product.isService) {
+                    if (editServicesFormKey.currentState!.validate()) {
+                      _submitProduct();
+                    }
+                  } else {
+                    if (editProductFormKey.currentState!.validate()) {
+                      _submitProduct();
+                    }
+                  }
+                },
                 child: const Text(
                   "Edit Item",
                 ),
@@ -503,7 +517,6 @@ class _EditProductState extends State<EditProduct> {
               ),
               Container(height: 15),
               TextFormField(
-                initialValue: widget.product.productUnit,
                 cursorColor: patowavePrimary,
                 controller: primaryUnit,
                 validator: (value) {
@@ -584,5 +597,49 @@ class _EditProductState extends State<EditProduct> {
         );
       },
     );
+  }
+
+  _submitProduct() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/edit-product/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'productName': productName.text,
+        'purchasesPrice':
+            purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
+        'sellingPrice':
+            sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
+        'quantity': quantity.text != '' ? int.parse(quantity.text) : 0,
+        'stockLevel': stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
+        'primaryUnit': primaryUnit.text,
+        'supplierName': supplierName.text,
+        'supplierNumber': supplierNumber.text,
+        'supplierEmail': supplierEmail.text,
+        'id': widget.product.id,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

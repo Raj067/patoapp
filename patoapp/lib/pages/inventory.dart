@@ -66,6 +66,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleProduct(
+          isService: dx['is_service'] ?? false,
           productUnit: dx["primary_unit"] ?? "Items",
           id: dx['id'],
           productName: dx["product_name"],

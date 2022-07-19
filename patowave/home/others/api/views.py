@@ -274,3 +274,56 @@ def add_new_product_api(request):
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def edit_product_api(request):
+    if request.method == "POST":
+        product = Product.objects.get(id=request.data.get('id'))
+        product.product_name=request.data.get('productName')
+        product.quantity=request.data.get('quantity')
+        product.purchases_price=request.data.get('purchasesPrice')
+        product.selling_price_primary=request.data.get('sellingPrice')
+        product.stock_level=request.data.get('stockLevel')
+        product.primary_unit=request.data.get('primaryUnit')
+        product.supplier_name=request.data.get('supplierName')
+        product.supplier_number=request.data.get('supplierNumber')
+        product.supplier_email=request.data.get('supplierEmail')
+        product.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+@api_view(['POST'])
+def add_new_product_api(request):
+    if request.method == "POST":
+        product = Product(
+            shop=get_shop(request)[0],
+            product_name=request.data.get('productName'),
+            quantity=request.data.get('quantity'),
+            purchases_price=request.data.get('purchasesPrice'),
+            selling_price_primary=request.data.get('sellingPrice'),
+            stock_level=request.data.get('stockLevel'),
+            primary_unit=request.data.get('primaryUnit'),
+            is_service=request.data.get('isService'),
+            supplier_name=request.data.get('supplierName'),
+            supplier_number=request.data.get('supplierNumber'),
+            supplier_email=request.data.get('supplierEmail'),
+        )
+        product.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def delete_product_api(request):
+    if request.method == "POST":
+        product = Product.objects.get(id=request.data.get('id'))
+        product.delete()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def adjust_product_api(request):
+    if request.method == "POST":
+        product = Product.objects.get(id=request.data.get('id'))
+        product.quantity=request.data.get('quantity')
+        product.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)

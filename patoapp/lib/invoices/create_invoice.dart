@@ -74,6 +74,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     if (data.statusCode == 200) {
       for (var dx in jsonDecode(data.body)) {
         finalData.add(SingleProduct(
+          isService: dx['is_service'] ?? false,
           productUnit: dx["primary_unit"] ?? "Items",
           id: dx['id'],
           productName: dx["product_name"],
@@ -868,6 +869,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                           !addedItemsToSales.map((e) => e.id).contains(dx.id)) {
                         addedItemsToSales.add(
                           SingleProduct(
+                            isService: false,
                             quantity: int.parse(quantityControllerSales.text),
                             productUnit: dx.productUnit,
                             productName: dx.productName,

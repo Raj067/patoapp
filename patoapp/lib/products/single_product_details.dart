@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -304,7 +309,9 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _deleteProduct();
+                        },
                         child: const Text(
                           "Delete",
                           style: TextStyle(color: patowaveWhite),
@@ -397,8 +404,8 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                   onPressed: () {
                     setState(() {
                       product.adjustProductQuantity(int.parse(controller.text));
+                      _adjustProduct(int.parse(controller.text));
                     });
-                    Navigator.pop(context);
                   },
                   child: const Text(
                     "Add",
@@ -411,5 +418,73 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
         );
       },
     );
+  }
+
+// api/adjust-product/
+  _adjustProduct(int quantity) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/adjust-product/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'quantity': quantity,
+        'id': widget.product.id,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
+  }
+
+  _deleteProduct() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/delete-product/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'id': widget.product.id,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

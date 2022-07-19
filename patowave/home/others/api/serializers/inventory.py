@@ -11,5 +11,5 @@ class ProductSerializer(serializers.ModelSerializer):
             'selling_price_secondary', 'quantity', 'stock_level',
             'primary_unit', 'secondary_unit', 'rate_unit',
             'supplier_name', 'supplier_number', 'supplier_email',
-            'created_at', 'product_image',
+            'created_at', 'product_image','is_service',
         )

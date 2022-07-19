@@ -47,8 +47,14 @@ api_urls = [
          name='cash_sales_transaction_api'),
     path('api/cash-sales-customer-transaction/', cash_sales_customer_transaction_api,
          name='cash_sales_customer_transaction_api'),
-     
-     # Product 
+
+    # Product adjust_product_api
     path('api/add-new-product/', add_new_product_api,
          name='add_new_product_api'),
+    path('api/edit-product/', edit_product_api,
+         name='edit_product_api'),
+    path('api/delete-product/', delete_product_api,
+         name='delete_product_api'),
+    path('api/adjust-product/', adjust_product_api,
+         name='adjust_product_api'),
 ]

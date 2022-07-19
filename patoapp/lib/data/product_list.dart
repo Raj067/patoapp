@@ -15,6 +15,7 @@ class SingleProduct {
   bool isAddedToCartAutomatic = false;
   int id;
   String productUnit = '';
+  bool isService=false;
 
   SingleProduct({
     required this.productName,
@@ -23,6 +24,7 @@ class SingleProduct {
     required this.id,
     required this.quantity,
     required this.productUnit,
+    required this.isService,
     this.stockLevel = 0,
     this.thumbnail = "",
     this.totalItemsSold = 90,
