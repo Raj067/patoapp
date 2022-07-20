@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/controllers/shedules_controller.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/components/top_bar.dart';
@@ -28,7 +26,6 @@ class MainEntryHomePage extends StatefulWidget {
 }
 
 class _MainEntryHomePageState extends State<MainEntryHomePage> {
-  final SheduleController _sheduleController = Get.put(SheduleController());
   List<SheduleModel> _shedules = [];
   String baseCurrency = "USD";
   final List<String> currencyList = [
@@ -237,6 +234,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     List<Widget> data = [];
     for (SheduleModel dx in _shedules) {
       data.add(_singleShedule(
+        shedule: dx,
         id: dx.id ?? 0,
         title: dx.title,
         description: dx.description,
@@ -249,6 +247,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   }
 
   _singleShedule({
+    required SheduleModel shedule,
     required int id,
     required String title,
     required String description,
@@ -273,10 +272,11 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) =>
-                    SingleShedule(fetchShedule: () {
-                  fetchShedule();
-                }),
+                builder: (BuildContext context) => SingleShedule(
+                    shedule: shedule,
+                    fetchShedule: () {
+                      fetchShedule();
+                    }),
                 fullscreenDialog: true,
               ),
             );

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class SingleShedule extends StatefulWidget {
   final Function fetchShedule;
-  const SingleShedule({Key? key, required this.fetchShedule}) : super(key: key);
+  final SheduleModel shedule;
+  const SingleShedule(
+      {Key? key, required this.fetchShedule, required this.shedule})
+      : super(key: key);
 
   @override
   State<SingleShedule> createState() => _SingleSheduleState();
