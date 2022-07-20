@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/shedules_controller.dart';
+import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/customer_list.dart';
@@ -27,8 +28,8 @@ class MainEntryHomePage extends StatefulWidget {
 }
 
 class _MainEntryHomePageState extends State<MainEntryHomePage> {
-  // final SheduleController _sheduleController = Get.put(SheduleController());
-  // List<SheduleModel> _shedules = [];
+  final SheduleController _sheduleController = Get.put(SheduleController());
+  List<SheduleModel> _shedules = [];
   String baseCurrency = "USD";
   final List<String> currencyList = [
     'USD',
@@ -66,7 +67,20 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     setState(() {});
   }
 
-  fetchShedule() {
+  // get all shedule in the database
+  fetchShedule() async {
+    List<Map<String, dynamic>> shedules = await DBHelper.query();
+    _shedules = [];
+    _shedules.addAll(shedules
+        .map((e) => SheduleModel(
+            id: e['id'],
+            dateEvent: e['dateEvent'],
+            endTime: e['endTime'],
+            startTime: e['startTime'],
+            title: e['title'],
+            description: e['description'],
+            isCompleted: e['isCompleted'] ?? 0))
+        .toList());
     setState(() {});
   }
 
@@ -210,15 +224,38 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          _singleShedule(),
-          _singleShedule(),
-          _singleShedule(),
+          _allShedules(),
+          // _singleShedule(),
+          // _singleShedule(),
+          // _singleShedule(),
         ]),
       ),
     );
   }
 
-  _singleShedule() {
+  _allShedules() {
+    List<Widget> data = [];
+    for (SheduleModel dx in _shedules) {
+      data.add(_singleShedule(
+        id: dx.id ?? 0,
+        title: dx.title,
+        description: dx.description,
+        dateEvent: dx.dateEvent,
+        startTime: dx.startTime,
+        endTime: dx.endTime,
+      ));
+    }
+    return Column(children: data);
+  }
+
+  _singleShedule({
+    required int id,
+    required String title,
+    required String description,
+    required String dateEvent,
+    required String startTime,
+    required String endTime,
+  }) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 2.5, 10, 2.5),
       child: Card(
@@ -254,7 +291,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "time 1",
+                      startTime,
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
@@ -267,7 +304,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       color: Theme.of(context).iconTheme.color,
                     ),
                     Text(
-                      "time 2",
+                      endTime,
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
@@ -279,17 +316,25 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Founders Meeting",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(
-                      "subtitle 1",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      title.length > 20
+                          ? title.replaceRange(20, null, '...')
+                          : title,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
-                      "Created at 29-06-2022",
+                      description.length > 20
+                          ? description.replaceRange(20, null, '...')
+                          : description,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      "Created at $dateEvent",
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
