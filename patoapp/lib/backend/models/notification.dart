@@ -1,12 +1,20 @@
 class NotificationModel {
-  final int id;
-  final String name;
-  final int age;
+  final int? id;
+  final String title;
+  final String description;
+  final String dateEvent;
+  final String startTime;
+  final String endTime;
+  final bool isCompleted;
 
   const NotificationModel({
-    required this.id,
-    required this.name,
-    required this.age,
+    this.id,
+    required this.title,
+    required this.description,
+    required this.dateEvent,
+    required this.startTime,
+    required this.endTime,
+    required this.isCompleted,
   });
 
   // Convert a Dog into a Map. The keys must correspond to the names of the
@@ -14,8 +22,11 @@ class NotificationModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
-      'age': age,
+      'title': title,
+      'description': description,
+      'dateEvent': dateEvent,
+      'startTime': startTime,
+      'endTime': endTime,
     };
   }
 
@@ -23,6 +34,6 @@ class NotificationModel {
   // each dog when using the print statement.
   @override
   String toString() {
-    return 'Dog{id: $id, name: $name, age: $age}';
+    return 'NotificationModel{id: $id, title: $title, dateEvent: $dateEvent}';
   }
 }

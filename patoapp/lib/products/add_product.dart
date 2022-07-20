@@ -690,7 +690,6 @@ class _AddProductPageState extends State<AddProductPage> {
     );
 
     if (response.statusCode == 201) {
-      print("--------received--------");
       widget.resetData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);

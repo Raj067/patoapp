@@ -474,19 +474,20 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     Radius.circular(15),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const AddNotificationNew(),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(15),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const AddNotificationNew(),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

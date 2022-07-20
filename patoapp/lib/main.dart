@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -20,7 +21,7 @@ void main() {
       String? shopName = await storage.read(key: 'shopName');
       bool isLogin = accessToken == null ? false : true;
       bool isShopProfile = shopName == null ? false : true;
-
+      await DBHelper.initDb();
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
           create: (_) => ThemeNotifier(
