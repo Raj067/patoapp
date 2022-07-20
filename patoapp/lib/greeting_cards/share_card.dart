@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/greeting_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareGreetingCard extends StatelessWidget {
   final SingleGreetingCard myCard;
@@ -114,7 +115,9 @@ class ShareGreetingCard extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                Share.share('text', subject: 'subject');
+              },
               child: const Text(
                 "Send",
               ),

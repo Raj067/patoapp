@@ -1,15 +1,17 @@
 // ignore: file_names
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-// import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -39,7 +41,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       Uri.parse(baseUrl + path),
       headers: getAuthHeaders(accessToken),
     );
-    print(jsonDecode(data.body));
     shopName = jsonDecode(data.body)['name'];
     address = jsonDecode(data.body)['address'];
     telphone = jsonDecode(data.body)['phone'];
@@ -52,6 +53,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     super.initState();
     fetchData("api/shop-profile-details/");
   }
+
+  final doc = pw.Document();
 
   @override
   Widget build(BuildContext context) {
@@ -71,279 +74,283 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           ),
         ),
       ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView(
-              children: [
-                RepaintBoundary(
-                  key: globalKey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Card(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      elevation: 0,
+      body:
+          // PdfPreview(
+          //   build: (format) => _generatePdf(format, 'hello world'),
+          // ),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  children: [
+                    RepaintBoundary(
+                      key: globalKey,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            widget.data.isCashSale
-                                ? const Text(
-                                    "Cash Sale",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  )
-                                : const Text(
-                                    "Transaction Receipt",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                            Container(height: 10),
-                            Text(shopName),
-                            Container(height: 10),
-                            const Text("=================================="),
-                            Container(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Address:"),
-                                Text(address),
-                              ],
+                        child: Card(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
                             ),
-                            Container(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Tel:"),
-                                Text(telphone),
-                              ],
-                            ),
-                            Container(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Date:"),
-                                Text(widget.data.getTimeString()),
-                              ],
-                            ),
-                            Container(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text("Time:"),
-                                Text(DateFormat('hh:mm a')
-                                    .format(widget.data.date)),
-                              ],
-                            ),
-                            widget.data.isPaymentIn ||
-                                    widget.data.isPaymentOut ||
-                                    widget.data.isCashSale ||
-                                    widget.data.isPurchases ||
-                                    widget.data.isExpenses
-                                ? Column(
-                                    children: [
-                                      Container(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(widget.data.isPurchases ||
-                                                  widget.data.isExpenses
-                                              ? "Bill No:"
-                                              : "Receipt No:"),
-                                          Container(width: 20),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                widget.data.receipt,
-                                                textAlign: TextAlign.right,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            widget.data.isPaymentIn ||
-                                    widget.data.isPaymentOut ||
-                                    widget.data.isExpenses
-                                ? Column(
-                                    children: [
-                                      Container(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text("Customer:"),
-                                          Container(width: 20),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                widget.data
-                                                    .getDescriptionName(),
-                                                textAlign: TextAlign.right,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            Container(height: 10),
-                            const Text("=================================="),
-                            widget.data.isPaymentIn ||
-                                    widget.data.isPaymentOut ||
-                                    widget.data.isExpenses
-                                ? Column(
-                                    children: [
-                                      Container(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Text(widget.data
-                                                .getDescriptionDetails()),
-                                          ),
-                                          Container(width: 10),
-                                          Text(formatter
-                                              .format(widget.data.amount)),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            // FOR PURCHASES AND CASH SALE ONLY
-                            widget.data.isPurchases || widget.data.isCashSale
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Items",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _listItemsButtomSheet(
-                                          widget.data.details),
-                                    ],
-                                  )
-                                : Container(),
-                            Container(height: 10),
-                            const Text("=================================="),
-
-                            widget.data.isCashSale
-                                ? Column(
-                                    children: [
-                                      Container(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Expanded(
-                                            child: Text("Amount"),
-                                          ),
-                                          Container(width: 10),
-                                          Text(
-                                            formatter.format(
-                                                widget.data.amount +
-                                                    widget.data.discount),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            widget.data.isCashSale
-                                ? Column(
-                                    children: [
-                                      Container(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Expanded(
-                                            child: Text("Discount"),
-                                          ),
-                                          Container(width: 10),
-                                          Text(formatter
-                                              .format(widget.data.discount)),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            Container(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "TOTAL:",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  formatter.format(widget.data.amount),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Text("=================================="),
-                            Container(height: 10),
-                            widget.data.isCashSale
-                                ? const Text(
-                                    "Thank You For Your Purchases",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                : Container(),
-
-                            Container(height: 10),
-                            Center(
-                              child: QrImage(
-                                data:
-                                    "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
-                                version: QrVersions.auto,
-                                size: 200.0,
-                                // embeddedImage:
-                                //     const AssetImage("assets/images/qr.png"),
-                                // embeddedImageStyle:
-                                //     QrEmbeddedImageStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
+                          ),
+                          elevation: 0,
+                          child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: _myReceipt()),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           capturePng();
         },
         child: const Icon(Icons.share),
       ),
+    );
+  }
+
+  Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: format,
+        build: (context) => pw.Placeholder(),
+      ),
+    );
+
+    return pdf.save();
+  }
+
+  _myReceipt() {
+    return Column(
+      children: [
+        widget.data.isCashSale
+            ? const Text(
+                "Cash Sale",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              )
+            : const Text(
+                "Transaction Receipt",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+        Container(height: 10),
+        Text(shopName),
+        Container(height: 10),
+        const Text("=================================="),
+        Container(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Address:"),
+            Text(address),
+          ],
+        ),
+        Container(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Tel:"),
+            Text(telphone),
+          ],
+        ),
+        Container(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Date:"),
+            Text(widget.data.getTimeString()),
+          ],
+        ),
+        Container(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Time:"),
+            Text(DateFormat('hh:mm a').format(widget.data.date)),
+          ],
+        ),
+        widget.data.isPaymentIn ||
+                widget.data.isPaymentOut ||
+                widget.data.isCashSale ||
+                widget.data.isPurchases ||
+                widget.data.isExpenses
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(widget.data.isPurchases || widget.data.isExpenses
+                          ? "Bill No:"
+                          : "Receipt No:"),
+                      Container(width: 20),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            widget.data.receipt,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        widget.data.isPaymentIn ||
+                widget.data.isPaymentOut ||
+                widget.data.isExpenses
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("Customer:"),
+                      Container(width: 20),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            widget.data.getDescriptionName(),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        Container(height: 10),
+        const Text("=================================="),
+        widget.data.isPaymentIn ||
+                widget.data.isPaymentOut ||
+                widget.data.isExpenses
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(widget.data.getDescriptionDetails()),
+                      ),
+                      Container(width: 10),
+                      Text(formatter.format(widget.data.amount)),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        // FOR PURCHASES AND CASH SALE ONLY
+        widget.data.isPurchases || widget.data.isCashSale
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Items",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  _listItemsButtomSheet(widget.data.details),
+                ],
+              )
+            : Container(),
+        Container(height: 10),
+        const Text("=================================="),
+
+        widget.data.isCashSale
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        child: Text("Amount"),
+                      ),
+                      Container(width: 10),
+                      Text(
+                        formatter
+                            .format(widget.data.amount + widget.data.discount),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        widget.data.isCashSale
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        child: Text("Discount"),
+                      ),
+                      Container(width: 10),
+                      Text(formatter.format(widget.data.discount)),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        Container(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "TOTAL:",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              formatter.format(widget.data.amount),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const Text("=================================="),
+        Container(height: 10),
+        widget.data.isCashSale
+            ? const Text(
+                "Thank You For Your Purchases",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              )
+            : Container(),
+
+        Container(height: 10),
+        Center(
+          child: QrImageView(
+            data:
+                "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
+            version: QrVersions.auto,
+            size: 200.0,
+            // embeddedImage:
+            //     const AssetImage("assets/images/qr.png"),
+            // embeddedImageStyle:
+            //     QrEmbeddedImageStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
+// import 'package:pdfx/pdfx.dart';
 
-class PrivacyPolicyDialog extends StatelessWidget {
+class PrivacyPolicyDialog extends StatefulWidget {
   const PrivacyPolicyDialog({Key? key}) : super(key: key);
 
+  @override
+  State<PrivacyPolicyDialog> createState() => _PrivacyPolicyDialogState();
+}
+
+class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
+  // final pdfPinchController = PdfControllerPinch(
+  //   document: PdfDocument.openAsset('pdf/privacy-policy.pdf'),
+  // );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +21,6 @@ class PrivacyPolicyDialog extends StatelessWidget {
           'Privacy Policy',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -23,9 +31,9 @@ class PrivacyPolicyDialog extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Privacy and Policy"),
-      ),
+      // body: PdfViewPinch(
+      //   controller: pdfPinchController,
+      // ),
     );
   }
 }
