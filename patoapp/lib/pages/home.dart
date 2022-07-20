@@ -9,6 +9,7 @@ import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/more/overview.dart';
 import 'package:patoapp/shedule/add_shedule.dart';
+import 'package:patoapp/shedule/single_shedule.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -216,14 +217,28 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 2.5, 10, 2.5),
       child: Card(
-          color: patowavePrimary.withAlpha(50),
-          elevation: 0,
-          // color: Colors.white,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+        color: patowavePrimary.withAlpha(50),
+        elevation: 0,
+        // color: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
           ),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    SingleShedule(fetchShedule: () {
+                  fetchShedule();
+                }),
+                fullscreenDialog: true,
+              ),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
@@ -237,20 +252,20 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       "time 1",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.black.withAlpha(100),
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                     SvgPicture.asset(
                       "assets/svg/line1.svg",
                       width: 25,
                       height: 25,
-                      color: Colors.black.withAlpha(100),
+                      color: Theme.of(context).iconTheme.color,
                     ),
                     Text(
                       "time 2",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.black.withAlpha(100),
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                   ],
@@ -272,22 +287,27 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       "Created at 29-06-2022",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.black.withAlpha(100),
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                   ],
                 ),
                 Column(
-                  children: const [
+                  children: [
                     Text(
-                      "View",
-                      style: TextStyle(fontSize: 12),
+                      "view",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 

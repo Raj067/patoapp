@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class SingleShedule extends StatelessWidget {
-  const SingleShedule({Key? key}) : super(key: key);
+class SingleShedule extends StatefulWidget {
+  final Function fetchShedule;
+  const SingleShedule({Key? key, required this.fetchShedule}) : super(key: key);
 
+  @override
+  State<SingleShedule> createState() => _SingleSheduleState();
+}
+
+class _SingleSheduleState extends State<SingleShedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Daybook',
+          'Shedule',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -25,6 +31,41 @@ class SingleShedule extends StatelessWidget {
       body: const Center(
         child: Text("Daybook"),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  // MaterialStateProperty<Color?>? backgroundColor,
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  _sheduleCompleted(context);
+                },
+                child: const Text(
+                  "Shedule Completed",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  _sheduleCompleted(BuildContext context) async {
+    widget.fetchShedule();
+    Navigator.pop(context);
   }
 }
