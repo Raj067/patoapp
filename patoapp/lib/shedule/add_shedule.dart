@@ -279,7 +279,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       endTime: endTime.text,
       dateEvent: sheduleDate.text,
       title: myTitle.text,
-      isCompleted: false,
+      isCompleted: 0,
     );
 
     await _sheduleController.addShedule(shedule);

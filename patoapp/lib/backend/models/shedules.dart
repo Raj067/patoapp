@@ -5,7 +5,7 @@ class SheduleModel {
   final String dateEvent;
   final String startTime;
   final String endTime;
-  final bool isCompleted;
+  final int isCompleted;
 
   const SheduleModel({
     this.id,
@@ -17,8 +17,6 @@ class SheduleModel {
     required this.isCompleted,
   });
 
-  // Convert a Dog into a Map. The keys must correspond to the names of the
-  // columns in the database.
   Map<String, dynamic> toJson() {
     return {
       'id': id,
