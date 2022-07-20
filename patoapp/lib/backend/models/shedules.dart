@@ -1,4 +1,4 @@
-class NotificationModel {
+class SheduleModel {
   final int? id;
   final String title;
   final String description;
@@ -7,7 +7,7 @@ class NotificationModel {
   final String endTime;
   final bool isCompleted;
 
-  const NotificationModel({
+  const SheduleModel({
     this.id,
     required this.title,
     required this.description,
@@ -34,6 +34,6 @@ class NotificationModel {
   // each dog when using the print statement.
   @override
   String toString() {
-    return 'NotificationModel{id: $id, title: $title, dateEvent: $dateEvent}';
+    return 'SheduleModel{id: $id, title: $title, dateEvent: $dateEvent}';
   }
 }

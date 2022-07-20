@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/customer_list.dart';
-import 'package:patoapp/notifications/add_notification.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/more/overview.dart';
+import 'package:patoapp/shedule/add_shedule.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,10 +60,15 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     setState(() {});
   }
 
+  fetchShedule() {
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     fetchData();
+    fetchShedule();
   }
 
   _getRate({required double currency}) {
@@ -481,7 +486,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            const AddNotificationNew(),
+                            AddSheduleNew(fetchShedule: () {
+                          fetchShedule();
+                        }),
                         fullscreenDialog: true,
                       ),
                     );

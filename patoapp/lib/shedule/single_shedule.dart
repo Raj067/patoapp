@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class AddNotificationNew extends StatelessWidget {
-  const AddNotificationNew({Key? key}) : super(key: key);
+class SingleShedule extends StatelessWidget {
+  const SingleShedule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

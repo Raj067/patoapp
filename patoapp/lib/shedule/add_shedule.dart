@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/backend/controllers/notifications_controller.dart';
-import 'package:patoapp/backend/models/notification.dart';
+import 'package:patoapp/backend/controllers/shedules_controller.dart';
+import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-class AddNotificationNew extends StatefulWidget {
-  const AddNotificationNew({Key? key}) : super(key: key);
+class AddSheduleNew extends StatefulWidget {
+  final Function fetchShedule;
+  const AddSheduleNew({Key? key, required this.fetchShedule}) : super(key: key);
 
   @override
-  State<AddNotificationNew> createState() => _AddNotificationNewState();
+  State<AddSheduleNew> createState() => _AddSheduleNewState();
 }
 
-class _AddNotificationNewState extends State<AddNotificationNew> {
+class _AddSheduleNewState extends State<AddSheduleNew> {
   final addSheduleFormKey = GlobalKey<FormState>();
   final SheduleController _sheduleController = Get.put(SheduleController());
   TextEditingController myTitle = TextEditingController();
@@ -256,7 +257,7 @@ class _AddNotificationNewState extends State<AddNotificationNew> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (addSheduleFormKey.currentState!.validate()) {
-                    _addNotificationToDB();
+                    _addSheduleToDB();
                   }
                 },
                 child: const Text(
@@ -270,8 +271,9 @@ class _AddNotificationNewState extends State<AddNotificationNew> {
     );
   }
 
-  _addNotificationToDB() async {
-    NotificationModel shedule = NotificationModel(
+  _addSheduleToDB() async {
+    Navigator.pop(context);
+    SheduleModel shedule = SheduleModel(
       startTime: startTime.text,
       description: description.text,
       endTime: endTime.text,
@@ -280,7 +282,8 @@ class _AddNotificationNewState extends State<AddNotificationNew> {
       isCompleted: false,
     );
 
-    int value = await _sheduleController.addShedule(shedule);
-    print(value);
+    await _sheduleController.addShedule(shedule);
+    // print(value);
+    widget.fetchShedule();
   }
 }

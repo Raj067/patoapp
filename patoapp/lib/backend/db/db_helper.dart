@@ -1,4 +1,4 @@
-import 'package:patoapp/backend/models/notification.dart';
+import 'package:patoapp/backend/models/shedules.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
@@ -24,7 +24,7 @@ class DBHelper {
     }
   }
 
-  static Future<int> insertDb(NotificationModel shedule) async {
+  static Future<int> insertDb(SheduleModel shedule) async {
     print("insert function called");
     return await _db?.insert(_tableName, shedule.toJson()) ?? 0;
   }
