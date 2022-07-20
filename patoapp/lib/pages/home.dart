@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/data/customer_list.dart';
+import 'package:patoapp/notifications/add_notification.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
@@ -12,7 +13,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:date_picker_timeline/date_picker_timeline.dart';
+// import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -440,18 +441,19 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               Container(
                 height: 15,
               ),
-              DatePicker(
-                DateTime.now(),
-                initialSelectedDate: DateTime.now(),
-                selectionColor: Colors.black,
-                selectedTextColor: Colors.white,
-                onDateChange: (date) {
-                  // New date selected
-                  setState(() {
-                    // _selectedValue = date;
-                  });
-                },
-              ),
+              // DatePicker(
+              //   DateTime.now(),
+              //   initialSelectedDate: DateTime.now(),
+              //   selectionColor: Colors.black,
+              //   selectedTextColor: Colors.white,
+              //   onDateChange: (date) {
+              //     // New date selected
+              //     setState(() {
+              //       // _selectedValue = date;
+              //     });
+              //   },
+              // ),
+
               Row(
                 children: [
                   _singleDay(),
@@ -476,13 +478,14 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   padding: const EdgeInsets.all(10),
                   child: InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute<void>(
-                      //     builder: (BuildContext context) => AddNotificationNew(),
-                      //     fullscreenDialog: true,
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const AddNotificationNew(),
+                          fullscreenDialog: true,
+                        ),
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

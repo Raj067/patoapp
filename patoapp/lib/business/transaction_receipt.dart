@@ -9,9 +9,6 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/data/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -53,8 +50,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     super.initState();
     fetchData("api/shop-profile-details/");
   }
-
-  final doc = pw.Document();
 
   @override
   Widget build(BuildContext context) {
@@ -110,19 +105,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         child: const Icon(Icons.share),
       ),
     );
-  }
-
-  Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-        pageFormat: format,
-        build: (context) => pw.Placeholder(),
-      ),
-    );
-
-    return pdf.save();
   }
 
   _myReceipt() {
