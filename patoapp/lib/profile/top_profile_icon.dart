@@ -4,7 +4,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class TopProfileIcon extends StatelessWidget {
   const TopProfileIcon({Key? key}) : super(key: key);

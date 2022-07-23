@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class SingleShedule extends StatefulWidget {
   final Function fetchShedule;
@@ -32,37 +34,135 @@ class _SingleSheduleState extends State<SingleShedule> {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Daybook"),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  // MaterialStateProperty<Color?>? backgroundColor,
-                  minimumSize: MaterialStateProperty.all(
-                    const Size(45, 45),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  _sheduleCompleted(context);
-                },
-                child: const Text(
-                  "Shedule Completed",
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height > 650
+              ? MediaQuery.of(context).size.height
+              : 650,
+          color: patowavePrimary,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: 280,
+                child: TableCalendar(
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: DateTime.now(),
+                  rowHeight: 30.0,
                 ),
               ),
-            ),
-          ],
+              Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  height: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            widget.shedule.title,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const Divider(),
+                        Row(
+                          children: [
+                            Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: patowavePrimary.withAlpha(50),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Start: ${widget.shedule.startTime}",
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SvgPicture.asset(
+                                    "assets/svg/line1.svg",
+                                    width: 25,
+                                    height: 60,
+                                    color: Theme.of(context).iconTheme.color,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: patowavePrimary.withAlpha(50),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "End: ${widget.shedule.endTime}",
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  widget.shedule.description,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  // MaterialStateProperty<Color?>? backgroundColor,
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(45, 45),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _sheduleCompleted(context);
+                                },
+                                child: const Text(
+                                  "Shedule Completed",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+            ],
+          ),
         ),
       ),
     );
