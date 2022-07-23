@@ -220,6 +220,7 @@ class CashSaleCustomer(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField()
     discount = models.IntegerField()
+    description = models.CharField(max_length=500, null=True, blank=True)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
@@ -250,8 +251,10 @@ class Invoice(models.Model):
 
 class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    amount = models.IntegerField()
+    customer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=True, blank=True)
+    amount_paid = models.IntegerField()
+    total_amount = models.IntegerField()
     bill_no = models.CharField(max_length=50, default="123")
 
     description = models.CharField(max_length=500, default="Purchases")
@@ -301,13 +304,11 @@ class Payment(models.Model):
 
 class Expense(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=True, blank=True)
     bill_no = models.CharField(max_length=50, default="123")
     amount = models.IntegerField()
-    categories = [
-        ("direct", "Direct Expenses"),
-        ("indirect", "Indirect Expenses"),
-    ]
-    expenses_category = models.CharField(max_length=200, choices=categories)
+    expenses_category = models.CharField(max_length=200)
     description = models.CharField(max_length=500, default="Expenses")
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

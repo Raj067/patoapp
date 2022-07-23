@@ -1,3 +1,4 @@
+from tokenize import String
 from home.models import *
 from .functions.func import get_shop
 from .serializer import *
@@ -182,6 +183,74 @@ def adding_payment_customer_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# FOR TRANSACTIONS - Expenses & Purchases
+
+
+@api_view(['POST'])
+def purchases_transaction_api(request):
+    if request.method == "POST":
+        # print(request.data)
+        amount_paid = request.data.get('amount_paid')
+        total_amount = request.data.get('total_amount')
+        customer = request.data.get('customer')
+        billNo = request.data.get('billNo')
+        items = request.data.get('items')
+        description = request.data.get('description')
+        reg = Purchase(
+            shop=get_shop(request)[0],
+            amount_paid=amount_paid,
+            total_amount=total_amount,
+            bill_no=str(billNo),
+            description=description,
+        )
+        reg.save()
+        if customer:
+            reg.customer = Customer.objects.get(id=customer)
+            reg.save()
+
+        for dx in items:
+            reg.purchased_items.create(
+                shop=get_shop(request)[0],
+                product=Product.objects.get(id=dx.get('id')),
+                price=dx.get('price'),
+                product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
+                quantity=dx.get('quantity'),
+                purchases_data=reg,
+            )
+            # Once transaction completed
+            # successfully, increasing the quantity of products
+            prod = Product.objects.get(id=dx.get('id'))
+            prod.quantity = prod.quantity + dx.get('quantity')
+            prod.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def expenses_transaction_api(request):
+    if request.method == "POST":
+        print(request.data)
+        amount = request.data.get('amount_paid')
+        category = request.data.get('category')
+        customer = request.data.get('customer')
+        billNo = request.data.get('billNo')
+        description = request.data.get('description')
+        reg = Expense(
+            shop=get_shop(request)[0],
+            amount=amount,
+            bill_no=str(billNo),
+            description=description,
+            expenses_category=category,
+        )
+        reg.save()
+        if customer:
+            reg.customer = Customer.objects.get(id=customer)
+            reg.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 # FOR TRANSACTIONS - SALES
 
 
@@ -192,10 +261,12 @@ def cash_sales_transaction_api(request):
         amount = request.data.get('amount')
         discount = request.data.get('discount')
         items = request.data.get('items')
+        description = request.data.get('description')
         reg = CashSale(
             shop=get_shop(request)[0],
             amount=amount,
             discount=discount,
+            description=description,
             receipt_no=str(request.data.get('receiptNo')),
         )
 
@@ -275,22 +346,25 @@ def add_new_product_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def edit_product_api(request):
     if request.method == "POST":
         product = Product.objects.get(id=request.data.get('id'))
-        product.product_name=request.data.get('productName')
-        product.quantity=request.data.get('quantity')
-        product.purchases_price=request.data.get('purchasesPrice')
-        product.selling_price_primary=request.data.get('sellingPrice')
-        product.stock_level=request.data.get('stockLevel')
-        product.primary_unit=request.data.get('primaryUnit')
-        product.supplier_name=request.data.get('supplierName')
-        product.supplier_number=request.data.get('supplierNumber')
-        product.supplier_email=request.data.get('supplierEmail')
+        product.product_name = request.data.get('productName')
+        product.quantity = request.data.get('quantity')
+        product.purchases_price = request.data.get('purchasesPrice')
+        product.selling_price_primary = request.data.get('sellingPrice')
+        product.stock_level = request.data.get('stockLevel')
+        product.primary_unit = request.data.get('primaryUnit')
+        product.supplier_name = request.data.get('supplierName')
+        product.supplier_number = request.data.get('supplierNumber')
+        product.supplier_email = request.data.get('supplierEmail')
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['POST'])
 def add_new_product_api(request):
     if request.method == "POST":
@@ -311,6 +385,7 @@ def add_new_product_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def delete_product_api(request):
     if request.method == "POST":
@@ -319,11 +394,12 @@ def delete_product_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def adjust_product_api(request):
     if request.method == "POST":
         product = Product.objects.get(id=request.data.get('id'))
-        product.quantity=request.data.get('quantity')
+        product.quantity = request.data.get('quantity')
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)

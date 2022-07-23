@@ -35,10 +35,22 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     'GBP',
   ];
   double usd = 1.0;
-  double tzs = 2300.0;
-  double euro = 0.920;
-  double gbp = 34.90;
+  double tzs = 2331.0;
+  double euro = 0.9796;
+  double gbp = 0.8340;
   List<SingleCustomer> customData = [];
+  fetchRates() async {
+    var data = await http.get(
+      Uri.parse('https://api.exchangerate.host/latest'),
+    );
+    usd = jsonDecode(data.body)['rates']['USD'] * 1.0;
+    gbp = jsonDecode(data.body)['rates']['GBP'] * 1.0;
+    euro = jsonDecode(data.body)['rates']['EUR'] * 1.0;
+    tzs = jsonDecode(data.body)['rates']['TZS'] * 1.0;
+    setState(() {});
+    // EUR GBP TZS USD
+  }
+
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
     // Financial data
@@ -86,6 +98,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     super.initState();
     fetchData();
     fetchShedule();
+    fetchRates();
   }
 
   _getRate({required double currency}) {

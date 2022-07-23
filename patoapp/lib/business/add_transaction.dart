@@ -45,14 +45,18 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   String? selectedProductValueSales;
   String? selectedProductValuePurchases;
   String? selectedCustmer;
-  String? expensesCategory;
+  String expensesCategory = 'Purchases';
   final TextEditingController customerController = TextEditingController();
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController quantityControllerSales = TextEditingController();
   final TextEditingController quantityControllerPurchases =
       TextEditingController();
   final TextEditingController expensesController = TextEditingController();
-
+// expenses
+  final TextEditingController totalAmountPaid = TextEditingController();
+  final TextEditingController expensesDescription = TextEditingController();
+  final TextEditingController salesDescription = TextEditingController();
+  double totalPurchasesAmount = 0.0;
   // Fetching data
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
@@ -93,11 +97,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
   @override
   void dispose() {
+    super.dispose();
     textEditingController.dispose();
     customerController.dispose();
     quantityControllerPurchases.dispose();
     quantityControllerSales.dispose();
-    super.dispose();
   }
 
   @override
@@ -253,18 +257,16 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     if (salesTransactionFormKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
-                      submitSalesCustomerData();
+                      _submitSalesCustomerData();
                     }
                   } else {
                     // for payment out
 
                     // Validate returns true if the form is valid, or false otherwise.
                     if (expensesTransactionFormKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      addedItemsToPurchases.isNotEmpty
+                          ? _submitPurchasesData()
+                          : _submitExpensesData();
                     }
                   }
                 },
@@ -518,6 +520,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               SizedBox(
                 // height: 180,
                 child: TextFormField(
+                  controller: salesDescription,
                   cursorColor: patowavePrimary,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
@@ -584,6 +587,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               Container(height: 15),
               TextFormField(
+                controller: totalAmountPaid,
+                onChanged: (val) {
+                  setState(() {
+                    totalAmountPaid.text;
+                  });
+                },
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -714,6 +723,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           .toList(),
                       onChanged: (value) {
                         //Do something when changing the item if you want.
+                        setState(() {
+                          expensesCategory = value.toString();
+                        });
                       },
                       onSaved: (value) {
                         expensesCategory = value.toString();
@@ -837,43 +849,50 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               Container(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Total Amount",
                     style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Tsh: 1000.00",
-                    style: TextStyle(
+                    "Tsh: ${totalAmountPaid.text}",
+                    style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Balance due",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: patowaveErrorRed),
-                  ),
-                  Text(
-                    "Tsh: 1000.00",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: patowaveErrorRed),
-                  ),
-                ],
-              ),
+              addedItemsToPurchases.isNotEmpty
+                  ? Column(
+                      children: [
+                        Container(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Balance due",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: patowaveErrorRed),
+                            ),
+                            Text(
+                              "Tsh: ${int.parse(totalAmountPaid.text == '' ? '0' : totalAmountPaid.text) - totalPurchasesAmount}",
+                              style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: patowaveErrorRed),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Container(),
               Container(height: 15),
               TextFormField(
+                controller: expensesDescription,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -1502,10 +1521,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
   _allAddedItemsToPurchases(BuildContext context) {
     List<Widget> data = [];
+    double val = 0;
     for (SingleProduct dx in addedItemsToPurchases) {
+      val += dx.quantity * dx.sellingPrice;
       data.add(_singleSelectedProduct(context, dx, isSales: false));
       data.add(Container(height: 10));
     }
+    setState(() {
+      totalPurchasesAmount = val;
+    });
     return Column(children: data);
   }
 
@@ -1599,8 +1623,97 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     // allProducts
   }
 
+  _submitPurchasesData() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    List<Map> items = [];
+    for (var element in addedItemsToPurchases) {
+      items.add({
+        "id": element.id,
+        "price": element.sellingPrice,
+        "quantity": element.quantity,
+      });
+    }
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/purchases-transaction/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'amount_paid':
+            totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
+        'total_amount': totalPurchasesAmount,
+        'items': items,
+        'billNo': billNo,
+        'description': expensesDescription.text == ""
+            ? "Purchases"
+            : expensesDescription.text,
+        "customer":
+            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
+  }
+
+  _submitExpensesData() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/expenses-transaction/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'amount_paid':
+            totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
+        'category': expensesCategory,
+        'description': expensesDescription.text == ""
+            ? "Expenses"
+            : expensesDescription.text,
+        'billNo': billNo,
+        "customer":
+            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
+  }
+
   // api/cash-sales-customer-transaction/
-  submitSalesCustomerData() async {
+  _submitSalesCustomerData() async {
     showPleaseWait(
       context: context,
       builder: (context) => const ModalFit(),
@@ -1611,6 +1724,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         "id": element.id,
         "price": element.sellingPrice,
         "quantity": element.quantity,
+        "description": salesDescription.text,
       });
     }
     String accessToken = await storage.read(key: 'access') ?? "";

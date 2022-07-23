@@ -36,21 +36,34 @@ class _SingleSheduleState extends State<SingleShedule> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height > 650
+          height: MediaQuery.of(context).size.height > 510
               ? MediaQuery.of(context).size.height
-              : 650,
+              : 510,
           color: patowavePrimary,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 280,
+              SizedBox(
+                height: 260,
+                // color: Colors.blue,
                 child: TableCalendar(
-                  firstDay: DateTime.utc(2010, 10, 16),
+                  firstDay: DateTime.utc(2010, 1, 1),
                   lastDay: DateTime.utc(2030, 3, 14),
                   focusedDay: DateTime.now(),
                   rowHeight: 30.0,
+                  // calendarFormat: CalendarFormat.week,
+                  // shouldFillViewport: true,
+                  // calendarStyle: const CalendarStyle(
+                  //   todayDecoration: BoxDecoration(
+                  //       color: Colors.yellow, shape: BoxShape.rectangle),
+                  //   // cellPadding: EdgeInsets.all(1),
+                  // ),
+                  headerStyle: const HeaderStyle(
+                    titleCentered: true,
+                    formatButtonVisible: false,
+                  ),
+                  // headerVisible:false,
                 ),
               ),
               Container(

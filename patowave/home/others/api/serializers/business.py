@@ -59,7 +59,7 @@ def business_financial_data(request, shop):
                 "date": dx.updated_at,
                 "description": dx.description,
                 "name": dx.customer.customer_name,
-                "amount": dx.amount,
+                "amount": dx.amount_paid,
                 "discount": 0,
                 "isCashSale": False,
                 "isExpenses": False,
@@ -131,5 +131,5 @@ def business_financial_data(request, shop):
                     "date": i.updated_at,
                 } for i in dx.sold_items.all()]
             })
-    data = sorted(data, key=lambda item: item.get('date'),reverse=True)
+    data = sorted(data, key=lambda item: item.get('date'), reverse=True)
     return data

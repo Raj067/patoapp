@@ -33,7 +33,7 @@ class PurchasedItemInline(admin.TabularInline):
 class PurchasesAdmin(admin.ModelAdmin):
     inlines = [PurchasedItemInline]
     list_display = ['customer', 'shop',
-                    'description', 'amount', 'created_at']
+                    'description', 'amount_paid', 'total_amount', 'created_at']
 
 
 class CashSoldItemInline(admin.TabularInline):
