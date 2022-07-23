@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/invoices/create_invoice.dart';
+import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class MainInvoicePage extends StatelessWidget {
@@ -29,6 +30,19 @@ class MainInvoicePage extends StatelessWidget {
           children: [
             Container(height: 10),
             _invoiceHeader(),
+            TextButton(
+              onPressed: () {
+                // PreviewInvoice
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => PreviewInvoice(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Text("sample invoice"),
+            ),
             // const InvoiceDetails(),
           ],
         ),

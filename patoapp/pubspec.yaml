@@ -58,7 +58,8 @@ dependencies:
   flutter_secure_storage:
   # pdfx:
   pdf: 3.8.1
-  table_calendar: 
+  table_calendar:
+  flutter_pdfview: ^1.2.1
   # printing: 5.9.1
   # share_plus: 4.0.10
 
