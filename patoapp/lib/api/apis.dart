@@ -4,7 +4,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // Create storage
 const storage = FlutterSecureStorage();
 
-String url = "http://localhost:8000";
+// String url = "http://localhost:8000";
+String url = "https://api.patowave.com";
 String baseUrl = "$url/";
 String imageBaseUrl = url;
 var formatter = NumberFormat('#,###,###');
