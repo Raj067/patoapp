@@ -41,6 +41,106 @@ class TopProfileIcon extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset("assets/images/card.png"),
+                  Container(
+                    height: 200,
+                    width: 300,
+                    color: Colors.green,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Image.asset("assets/images/card.png"),
+                        ),
+                        Positioned(
+                          top: 95,
+                          // left: 50,
+                          right: 26,
+                          bottom: 0,
+                          child: Text(
+                            "Company Name",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          // top: 95,
+                          // left: 50,
+                          right: 26,
+                          bottom: 50,
+                          child: Text(
+                            "Slogan Here",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveBlack,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 60,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            "Dar es salaam",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 80,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            "Phone Number",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 100,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 120,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            "Instagram Name",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
