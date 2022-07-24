@@ -33,11 +33,11 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY')
 DEBUG = True if ENVIRONMENT.get('DEBUG').lower() == 'true' else False
 
 ALLOWED_HOSTS = ['139.144.63.15', '139.144.63.15:8000', '127.0.0.1'
-    'www.patowave.com', 'patowave.com']
+                 'www.patowave.com', 'patowave.com']
 # CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
 
 # Application definition
-  
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -164,3 +164,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS_ORIGIN
 CORS_ORIGIN_ALLOW_ALL = True
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
