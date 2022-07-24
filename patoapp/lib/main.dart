@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
@@ -11,6 +13,15 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patoapp/accounts/set_account.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -22,6 +33,7 @@ void main() {
       bool isLogin = accessToken == null ? false : true;
       bool isShopProfile = shopName == null ? false : true;
       await DBHelper.initDb();
+      HttpOverrides.global = MyHttpOverrides();
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
           create: (_) => ThemeNotifier(
