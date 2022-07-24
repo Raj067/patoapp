@@ -87,7 +87,7 @@ def business_financial_transactions(request, *args, **kwargs):
 @api_view(['POST'])
 def deleting_single_transaction_api(request):
     if request.method == "POST":
-        print(request.data)
+        # print(request.data)
         # data = Customer.objects.get(id=request.data.get("id"))
         # data.customer_name = request.data.get("customerName")
         # data.customer_number = request.data.get("phoneNumber")

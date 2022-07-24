@@ -91,6 +91,7 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
       headers: getAuthHeaders(accessToken),
     );
+    print(data.body);
     if (data.statusCode == 200) {
       List<FinancialData> myData = [];
       for (var dx in jsonDecode(data.body)) {

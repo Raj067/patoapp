@@ -40,11 +40,11 @@ class TopProfileIcon extends StatelessWidget {
               elevation: 0,
               child: Column(
                 children: [
-                  Image.asset("assets/images/card.png"),
-                  Container(
+                  // Image.asset("assets/images/card.png"),
+                  SizedBox(
                     height: 200,
                     width: 300,
-                    color: Colors.green,
+                    // color: Colors.green,
                     child: Stack(
                       children: [
                         Positioned(
@@ -54,7 +54,7 @@ class TopProfileIcon extends StatelessWidget {
                           bottom: 0,
                           child: Image.asset("assets/images/card.png"),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 95,
                           // left: 50,
                           right: 26,
@@ -68,7 +68,7 @@ class TopProfileIcon extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           // top: 95,
                           // left: 50,
                           right: 26,
@@ -82,7 +82,7 @@ class TopProfileIcon extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 60,
                           left: 30,
                           // right: 26,
@@ -96,7 +96,7 @@ class TopProfileIcon extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 80,
                           left: 30,
                           // right: 26,
@@ -110,7 +110,7 @@ class TopProfileIcon extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 100,
                           left: 30,
                           // right: 26,
@@ -124,7 +124,7 @@ class TopProfileIcon extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 120,
                           left: 30,
                           // right: 26,

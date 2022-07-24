@@ -58,7 +58,7 @@ def business_financial_data(request, shop):
             data.append({
                 "date": dx.updated_at,
                 "description": dx.description,
-                "name": dx.customer.customer_name,
+                "name": dx.customer.customer_name if dx.customer else 'Purchases',
                 "amount": dx.amount_paid,
                 "discount": 0,
                 "isCashSale": False,
