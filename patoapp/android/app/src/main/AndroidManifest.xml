@@ -89,7 +89,7 @@
         </intent>
     </queries>
    <application
-        android:label="patoapp"
+        android:label="PatoWave"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
