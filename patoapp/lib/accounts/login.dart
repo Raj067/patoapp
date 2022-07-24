@@ -218,7 +218,8 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) => const ModalFit(),
     );
-
+    print('${baseUrl}api/token/');
+    print('-------------------');
     final response = await http.post(
       Uri.parse('${baseUrl}api/token/'),
       headers: {
@@ -251,12 +252,12 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context) => const ModalFitLoginAuthenticate(),
       );
     } else {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showErrorMessage(
         context: context,
         builder: (context) => const ModalFitError(),
       );
     }
-}
+  }
 }
