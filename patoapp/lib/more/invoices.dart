@@ -36,7 +36,7 @@ class MainInvoicePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => PreviewInvoice(),
+                    builder: (BuildContext context) => const PreviewInvoice(),
                     fullscreenDialog: true,
                   ),
                 );

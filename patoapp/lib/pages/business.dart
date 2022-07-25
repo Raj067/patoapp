@@ -22,7 +22,7 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
-  String dropdownValue = 'Last Month';
+  String dropdownValue = 'This Month';
   bool isWeek = true;
   DateTimeRange pickedRangeDate = DateTimeRange(
     start: DateTime.now(),
@@ -199,12 +199,12 @@ class _BusinessPageState extends State<BusinessPage> {
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownValue = newValue!;
-                          dropdownValue == 'Last Month'
+                          dropdownValue == 'This Month'
                               ? isWeek = false
                               : isWeek = true;
                         });
                       },
-                      items: <String>['Last Month', 'Last Week']
+                      items: <String>['This Month', 'This Week']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

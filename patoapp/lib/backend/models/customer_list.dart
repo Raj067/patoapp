@@ -31,6 +31,17 @@ class SingleCustomer {
       return -amount;
     }
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'amount': amount,
+      // 'description': description,
+      // 'dateEvent': dateEvent,
+      // 'startTime': startTime,
+      // 'endTime': endTime,
+    };
+  }
 }
 
 // allCustomerDetails() {

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/parties/edit_customer.dart';
@@ -112,9 +111,16 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
-                  showPleaseWait(
+                  showModalBottomSheet(
                     context: context,
-                    builder: (context) => const ModalFit(),
+                    builder: (context) => Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Wrap(
+                        children: [
+                          Container(),
+                        ],
+                      ),
+                    ),
                   );
                 },
                 child: Padding(

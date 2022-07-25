@@ -25,7 +25,7 @@ class _PartiesPageState extends State<PartiesPage> {
     customersDebtMonth: 0,
     customersDebtWeek: 0,
   );
-  String dropdownValue = 'Last Month';
+  String dropdownValue = 'This Month';
   bool isWeek = true;
   bool isAlreadyLoad = false;
 
@@ -501,12 +501,12 @@ class _PartiesPageState extends State<PartiesPage> {
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownValue = newValue!;
-                        dropdownValue == 'Last Month'
+                        dropdownValue == 'This Month'
                             ? isWeek = false
                             : isWeek = true;
                       });
                     },
-                    items: <String>['Last Month', 'Last Week']
+                    items: <String>['This Month', 'This Week']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
