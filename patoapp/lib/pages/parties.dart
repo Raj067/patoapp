@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/components/top_bar.dart';
-import 'package:patoapp/data/customer_list.dart';
-import 'package:patoapp/data/product_list.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/reports/debt_reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';

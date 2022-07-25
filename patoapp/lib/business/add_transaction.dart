@@ -8,8 +8,8 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/business/add_new_customer.dart';
-import 'package:patoapp/data/customer_list.dart';
-import 'package:patoapp/data/product_list.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
 

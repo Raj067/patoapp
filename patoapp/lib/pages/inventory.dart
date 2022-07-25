@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/data/product_list.dart';
+import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';

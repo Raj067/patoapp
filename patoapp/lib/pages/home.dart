@@ -5,7 +5,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/components/top_bar.dart';
-import 'package:patoapp/data/customer_list.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';

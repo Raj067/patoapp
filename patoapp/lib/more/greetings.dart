@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/data/greeting_card.dart';
+import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/greeting_cards/share_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;

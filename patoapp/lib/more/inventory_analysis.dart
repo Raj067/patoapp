@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/data/top_selling_products.dart';
+import 'package:patoapp/backend/models/top_selling_products.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
