@@ -1107,7 +1107,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               Container(height: 15),
               DropdownButtonFormField2(
-                  value: selectedProductValueSales,
+                  // value: selectedProductValueSales,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -1286,8 +1286,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           ),
                         );
                       }
-                      setState(() {});
                     }
+                    quantityControllerSales.text = '';
+                    setState(() {});
                     Navigator.pop(context);
                   }
                 },
@@ -1327,7 +1328,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             children: [
               Container(height: 15),
               DropdownButtonFormField2(
-                  value: selectedProductValuePurchases,
+                  // value: selectedProductValuePurchases,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -1430,7 +1431,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       ],
                       decoration: const InputDecoration(
                         label: Text(
-                          "Quantity",
+                          "Quantity*",
                           style: TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
@@ -1509,8 +1510,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           ),
                         );
                       }
-                      setState(() {});
                     }
+                    quantityControllerPurchases.text = '';
+                    setState(() {});
                     Navigator.pop(context);
                   }
                 },
