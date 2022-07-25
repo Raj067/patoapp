@@ -201,13 +201,20 @@ class _PartiesPageState extends State<PartiesPage> {
               Text(
                 "Tsh: ${formatter.format(customer.getAmount())}",
                 style: TextStyle(
-                  color:
-                      customer.isToReceive() ? patowaveGreen : patowaveErrorRed,
-                  fontSize: 12,
+                  color: customer.isToReceive()
+                      ? customer.getAmount() > 0
+                          ? patowaveGreen
+                          : Colors.black
+                      : patowaveErrorRed,
+                  fontSize: 14,
                 ),
               ),
               Text(
-                customer.isToReceive() ? "Receive" : "Give",
+                customer.isToReceive()
+                    ? customer.getAmount() > 0
+                        ? "Receive"
+                        : ""
+                    : "Give",
                 style: const TextStyle(fontSize: 10),
               ),
             ],

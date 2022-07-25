@@ -20,7 +20,7 @@ class DBHelper {
             "startTime STRING, endTime STRING, isCompleted INTEGER)");
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

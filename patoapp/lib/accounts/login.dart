@@ -218,8 +218,6 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) => const ModalFit(),
     );
-    print('${baseUrl}api/token/');
-    print('-------------------');
     final response = await http.post(
       Uri.parse('${baseUrl}api/token/'),
       headers: {

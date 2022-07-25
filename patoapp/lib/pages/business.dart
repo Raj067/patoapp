@@ -91,7 +91,6 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
       headers: getAuthHeaders(accessToken),
     );
-    print(data.body);
     if (data.statusCode == 200) {
       List<FinancialData> myData = [];
       for (var dx in jsonDecode(data.body)) {
@@ -301,7 +300,7 @@ class _BusinessPageState extends State<BusinessPage> {
                   children: [
                     const Text("Profit"),
                     Text(
-                      "Tshs ${isWeek ? formatter.format(businessGeneral.profitWeek) : formatter.format(businessGeneral.profitMonth)}",
+                      "Tsh ${isWeek ? formatter.format(businessGeneral.profitWeek) : formatter.format(businessGeneral.profitMonth)}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   ],
@@ -561,13 +560,13 @@ class _BusinessPageState extends State<BusinessPage> {
             Container(width: 20),
             data.isIncome()
                 ? Text(
-                    formatter.format(data.amount),
+                    "Tsh ${formatter.format(data.amount)}",
                     style: const TextStyle(
                       color: patowaveGreen,
                     ),
                   )
                 : Text(
-                    formatter.format(data.amount),
+                    "Tsh ${formatter.format(data.amount)}",
                     style: const TextStyle(
                       color: patowaveErrorRed,
                     ),

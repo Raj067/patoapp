@@ -41,7 +41,7 @@ class MainInvoicePage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text("sample invoice"),
+              child: const Text("sample invoice"),
             ),
             // const InvoiceDetails(),
           ],

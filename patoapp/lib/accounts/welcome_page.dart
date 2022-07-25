@@ -140,7 +140,7 @@ class WelcomePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (BuildContext context) => LoginPage(),
+                              builder: (BuildContext context) => const LoginPage(),
                               fullscreenDialog: true,
                             ),
                           );
