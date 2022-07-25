@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:patoapp/backend/funcs/misc.dart';
+
 class FinancialData {
   DateTime date;
   bool isCashSale = true;
@@ -12,6 +16,8 @@ class FinancialData {
   int amount = 0;
   int discount = 0;
   String receipt = "";
+  // For storing in the database
+  String id;
   // for frontend purposes only
   bool isDeleted = false;
   FinancialData({
@@ -21,6 +27,7 @@ class FinancialData {
     required this.receipt,
     required this.details,
     required this.isCashSale,
+    required this.id,
     this.isExpenses = false,
     this.isPaymentIn = false,
     this.isPaymentOut = false,
@@ -96,21 +103,12 @@ class FinancialData {
   }
 
   List<int> getTransactionID() {
-    // if (getTransactionType() == "cash_sale") {}
-    // if (getTransactionType() == "payment") {
-    //   return details[0]['id'];
-    // }
-    // if (getTransactionType() == "expenses") {}
     List<int> data = [];
     for (var i in details) {
       data.add(i['id']);
     }
     return data;
   }
-
-  // getTotalPrice() {
-  //   return details[0];
-  // }
 
   bool isIncome() {
     if (isCashSale) {
@@ -142,181 +140,26 @@ class FinancialData {
     isDeleted = true;
     // SEND SOME RESPONSE TO THE BACKEND
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      "date": date.toString(),
+      'amount': amount,
+      'discount': discount,
+      'receipt': receipt,
+      'name': name,
+      'description': description,
+      'details': jsonEncode(details),
+      'isCashSale': boolToInt(isCashSale),
+      'isExpenses': boolToInt(isExpenses),
+      'isPaymentIn': boolToInt(isPaymentIn),
+      'isPaymentOut': boolToInt(isPaymentOut),
+      'isInvoice': boolToInt(isInvoice),
+      'isPurchases': boolToInt(isPurchases),
+    };
+  }
 }
-
-// class FinancialHeaderData {
-//   DateTime date;
-//   int income;
-//   int expenses;
-//   FinancialHeaderData({
-//     required this.date,
-//     required this.income,
-//     required this.expenses,
-//   });
-//   getTimeString() {
-//     return "${date.day}/${date.month}/${date.year}";
-//   }
-// }
-
-// List<FinancialHeaderData> allFinancialHeaderData() {
-//   return [
-//     FinancialHeaderData(
-//       date: DateTime(2022, 06, 24),
-//       income: 20200,
-//       expenses: 2300,
-//     ),
-//     FinancialHeaderData(
-//       date: DateTime(2022, 06, 23),
-//       income: 10300,
-//       expenses: 3200,
-//     ),
-//     FinancialHeaderData(
-//       date: DateTime(2022, 06, 22),
-//       income: 33300,
-//       expenses: 9800,
-//     ),
-//     FinancialHeaderData(
-//       date: DateTime(2022, 06, 21),
-//       income: 18500,
-//       expenses: 1800,
-//     ),
-//     FinancialHeaderData(
-//       date: DateTime(2022, 06, 20),
-//       income: 10400,
-//       expenses: 2300,
-//     ),
-//   ];
-// }
-
-// List<FinancialData> allFinancialData() {
-//   return [
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       // id: 1,
-//       isCashSale: true,
-//       // [[qty, description, price],]
-//       details: [
-//         6000,
-//         [
-//           [12, "sample", 124],
-//         ]
-//       ],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       // id: 2,
-//       isCashSale: true,
-//       details: [2000, 2],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       name: "Anitha",
-//       // id: 3,
-//       isCashSale: true,
-//       details: [2400, 28],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       name: "Rashidi",
-//       // id: 4,
-//       isCashSale: false,
-//       isInvoice: true,
-//       details: [
-//         6400,
-//         SingleCustomer(
-//             amount: 6400,
-//             fullName: "Rashidi",
-//             id: 90,
-//             financialData: [],
-//             address: "",
-//             phoneNumber: "")
-//       ],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       description: "Breakfast",
-//       // id: 5,
-//       isCashSale: false,
-//       isExpenses: true,
-//       details: [800, 2],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 20),
-//       description: "Lunch",
-//       // id: 6,
-//       isCashSale: false,
-//       isExpenses: true,
-//       details: [1500, 28],
-//     ),
-//     // 21 - 06 - 2022
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       // id: 7,
-//       isCashSale: true,
-//       details: [
-//         2100,
-//         [
-//           [12, "sample", 124],
-//         ]
-//       ],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       // id: 8,
-//       isCashSale: true,
-//       details: [5000, 28],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       // id: 9,
-//       isCashSale: true,
-//       details: [9000, 28],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       description: "Rashidi",
-//       // id: 10,
-//       isCashSale: false,
-//       isPaymentIn: true,
-//       details: [1500, 28],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       description: "Breakfast",
-//       // id: 11,
-//       isCashSale: false,
-//       isExpenses: true,
-//       details: [800, 28],
-//     ),
-//     FinancialData(
-//       date: DateTime(2022, 06, 21),
-//       description: "Bus fair",
-//       // id: 12,
-//       isCashSale: false,
-//       isExpenses: true,
-//       details: [1000, 28],
-//     ),
-//   ];
-// }
-
-// List<Map> allBusinessFinancialData() {
-//   List<Map> finaldata = [];
-//   for (var element in allFinancialHeaderData()) {
-//     List data = [];
-//     for (var dx in allFinancialData()) {
-//       if (element.getTimeString() == dx.getTimeString()) {
-//         data.add(dx);
-//       }
-//     }
-//     if (data.isNotEmpty) {
-//       finaldata.add({
-//         "header": element,
-//         "data": data,
-//       });
-//     }
-//   }
-//   return finaldata;
-// }
 
 class BusinessGeneral {
   int salesWeek;

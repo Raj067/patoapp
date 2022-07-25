@@ -7,15 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
 
 class AddPaymentDialog extends StatefulWidget {
-  final List<SingleCustomer> finalData;
   final Function refreshData;
-  const AddPaymentDialog(
-      {Key? key, required this.finalData, required this.refreshData})
+  const AddPaymentDialog({Key? key, required this.refreshData})
       : super(key: key);
 
   @override
@@ -36,7 +35,30 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   TextEditingController paymentOutDesc = TextEditingController(text: "");
   TextEditingController userController = TextEditingController();
   String userSelected = "0";
+  List<SingleCustomer> finalCustomerData = [];
 
+  fetchCustomersDB() async {
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+    finalData.addAll(customers
+        .map((e) => SingleCustomer(
+              id: e['id'],
+              amount: e['amount'],
+              fullName: e['fullName'],
+              address: e['address'],
+              phoneNumber: "${e['phoneNumber']}",
+              email: e['email'],
+              financialData: jsonDecode(e['financialData']),
+            ))
+        .toList());
+    finalCustomerData = finalData;
+    setState(() {});
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchCustomersDB();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -314,7 +336,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: widget.finalData
+                  items: finalCustomerData
                       .where((element) => element.amount >= 0)
                       .toList()
                       .map((item) => DropdownMenuItem<String>(
@@ -488,7 +510,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: widget.finalData
+                  items: finalCustomerData
                       .where((element) => element.amount < 0)
                       .toList()
                       .map((item) => DropdownMenuItem<String>(

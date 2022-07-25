@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -9,7 +11,6 @@ import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class PartiesPage extends StatefulWidget {
   const PartiesPage({Key? key}) : super(key: key);
@@ -34,55 +35,82 @@ class _PartiesPageState extends State<PartiesPage> {
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
-  fetchData() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    // Data for general analysis
-    var generalData = await http.get(
-      Uri.parse(
-        "${baseUrl}api/general-parties-details/",
-      ),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (generalData.statusCode == 200) {
-      customersGeneral = CustomersGeneral(
-        totalDebtMonth: jsonDecode(generalData.body)['total_debt_month'],
-        totalDebtWeek: jsonDecode(generalData.body)['total_debt_week'],
-        customersDebtMonth:
-            jsonDecode(generalData.body)['total_customer_debt_month'],
-        customersDebtWeek:
-            jsonDecode(generalData.body)['total_customer_debt_week'],
-      );
-      setState(() {});
-    }
+  // fetchData() async {
+  //   String accessToken = await storage.read(key: 'access') ?? "";
+  //   // Data for general analysis
+  //   var generalData = await http.get(
+  //     Uri.parse(
+  //       "${baseUrl}api/general-parties-details/",
+  //     ),
+  //     headers: getAuthHeaders(accessToken),
+  //   );
+  //   if (generalData.statusCode == 200) {
+  //     customersGeneral = CustomersGeneral(
+  //       totalDebtMonth: jsonDecode(generalData.body)['total_debt_month'],
+  //       totalDebtWeek: jsonDecode(generalData.body)['total_debt_week'],
+  //       customersDebtMonth:
+  //           jsonDecode(generalData.body)['total_customer_debt_month'],
+  //       customersDebtWeek:
+  //           jsonDecode(generalData.body)['total_customer_debt_week'],
+  //     );
+  //     setState(() {});
+  //   }
 
-    // Financial data
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/parties-details/"),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (data.statusCode == 200) {
-      List<SingleCustomer> finalData = [];
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleCustomer(
-          address: dx['customer_address'],
-          email: dx['customer_email'] ?? "",
-          financialData: dx['financial_data'],
-          fullName: dx['customer_name'],
-          phoneNumber: dx['customer_number'],
-          amount: dx['effective_amount'],
-          id: dx['id'],
-        ));
-      }
-      customData = finalData;
-      isAlreadyLoad = true;
-      setState(() {});
-    }
+  //   // Financial data
+  //   var data = await http.get(
+  //     Uri.parse("${baseUrl}api/parties-details/"),
+  //     headers: getAuthHeaders(accessToken),
+  //   );
+  //   if (data.statusCode == 200) {
+  //     List<SingleCustomer> finalData = [];
+  //     for (var dx in jsonDecode(data.body)) {
+  //       finalData.add(SingleCustomer(
+  //         address: dx['customer_address'],
+  //         email: dx['customer_email'] ?? "",
+  //         financialData: dx['financial_data'],
+  //         fullName: dx['customer_name'],
+  //         phoneNumber: dx['customer_number'],
+  //         amount: dx['effective_amount'],
+  //         id: dx['id'],
+  //       ));
+  //     }
+  //     customData = finalData;
+  //     isAlreadyLoad = true;
+  //     setState(() {});
+  //   }
+  // }
+
+  // get all Customers in the database
+  fetchCustomersDB() async {
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+    finalData.addAll(customers
+        .map((e) => SingleCustomer(
+              id: e['id'],
+              amount: e['amount'],
+              fullName: e['fullName'],
+              address: e['address'],
+              phoneNumber: "${e['phoneNumber']}",
+              email: e['email'],
+              financialData: jsonDecode(e['financialData']),
+            ))
+        .toList());
+    customData = finalData;
+    isAlreadyLoad = true;
+    setState(() {});
+  }
+
+  refreshDataDB() async {
+    SyncCustomers syncCustomer = SyncCustomers();
+    await syncCustomer.fetchData();
+    fetchCustomersDB();
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchCustomersDB();
+    refreshDataDB();
   }
 
   @override
@@ -113,8 +141,7 @@ class _PartiesPageState extends State<PartiesPage> {
             context,
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddPaymentDialog(
-                finalData: customData,
-                refreshData: fetchData,
+                refreshData: refreshDataDB,
               ),
               fullscreenDialog: true,
             ),
@@ -184,7 +211,7 @@ class _PartiesPageState extends State<PartiesPage> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
-                  refreshData: fetchData,
+                  refreshData: refreshDataDB,
                 ),
                 fullscreenDialog: true,
               ),
@@ -307,7 +334,7 @@ class _PartiesPageState extends State<PartiesPage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            AddCustomerDialog(refreshData: fetchData),
+                            AddCustomerDialog(refreshData: refreshDataDB),
                         fullscreenDialog: true,
                       ),
                     );

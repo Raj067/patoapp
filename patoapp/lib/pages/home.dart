@@ -38,7 +38,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   double tzs = 2331.0;
   double euro = 0.9796;
   double gbp = 0.8340;
-  List<SingleCustomer> customData = [];
+
   fetchRates() async {
     var data = await http.get(
       Uri.parse('https://api.exchangerate.host/latest'),
@@ -49,31 +49,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     tzs = jsonDecode(data.body)['rates']['TZS'] * 1.0;
     setState(() {});
     // EUR GBP TZS USD
-  }
-
-  fetchData() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    // Financial data
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/parties-details/"),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (data.statusCode == 200) {
-      List<SingleCustomer> finalData = [];
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleCustomer(
-          address: dx['customer_address'],
-          email: dx['customer_email'] ?? "",
-          financialData: dx['financial_data'],
-          fullName: dx['customer_name'],
-          phoneNumber: dx['customer_number'],
-          amount: dx['effective_amount'],
-          id: dx['id'],
-        ));
-      }
-      customData = finalData;
-    }
-    setState(() {});
   }
 
   // get all shedule in the database
@@ -96,7 +71,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
     fetchShedule();
     fetchRates();
   }
@@ -797,7 +771,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
                               AddTransactionDialog(
-                            finalData: customData,
                             resetData: () {},
                           ),
                           fullscreenDialog: true,
@@ -843,7 +816,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) => AddPaymentDialog(
-                            finalData: customData,
                             refreshData: () {},
                           ),
                           fullscreenDialog: true,

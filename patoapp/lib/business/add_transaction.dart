@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -15,9 +16,8 @@ import 'package:http/http.dart' as http;
 
 class AddTransactionDialog extends StatefulWidget {
   final Function resetData;
-  final List<SingleCustomer> finalData;
-  const AddTransactionDialog(
-      {Key? key, required this.finalData, required this.resetData})
+  // final List<SingleCustomer> finalData;
+  const AddTransactionDialog({Key? key, required this.resetData})
       : super(key: key);
 
   @override
@@ -57,6 +57,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   final TextEditingController expensesDescription = TextEditingController();
   final TextEditingController salesDescription = TextEditingController();
   double totalPurchasesAmount = 0.0;
+  List<SingleCustomer> finalCustomerData = [];
   // Fetching data
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
@@ -89,10 +90,29 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     setState(() {});
   }
 
+  fetchCustomersDB() async {
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+    finalData.addAll(customers
+        .map((e) => SingleCustomer(
+              id: e['id'],
+              amount: e['amount'],
+              fullName: e['fullName'],
+              address: e['address'],
+              phoneNumber: "${e['phoneNumber']}",
+              email: e['email'],
+              financialData: jsonDecode(e['financialData']),
+            ))
+        .toList());
+    finalCustomerData = finalData;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     fetchData();
+    fetchCustomersDB();
   }
 
   @override
@@ -349,7 +369,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: widget.finalData
+                  items: finalCustomerData
                       .map((item) => DropdownMenuItem<String>(
                             value: "${item.id}",
                             child: Text(
@@ -791,7 +811,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                items: widget.finalData
+                items: finalCustomerData
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
                           child: Text(

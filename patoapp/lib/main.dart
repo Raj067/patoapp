@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -33,6 +35,8 @@ void main() {
       bool isLogin = accessToken == null ? false : true;
       bool isShopProfile = shopName == null ? false : true;
       await DBHelper.initDb();
+      await DBHelperCustomer.initDb();
+      await DBHelperBusiness.initDb();
       HttpOverrides.global = MyHttpOverrides();
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(

@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_business.dart';
+import 'package:patoapp/backend/funcs/misc.dart';
+import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
@@ -40,31 +43,31 @@ class _BusinessPageState extends State<BusinessPage> {
 
   List<FinancialData> allFinancialData = [];
   bool isLoading = true;
-  List<SingleCustomer> customData = [];
-  fetchCustomer() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    // Financial data
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/parties-details/"),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (data.statusCode == 200) {
-      List<SingleCustomer> finalData = [];
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleCustomer(
-          address: dx['customer_address'],
-          email: dx['customer_email'] ?? "",
-          financialData: dx['financial_data'],
-          fullName: dx['customer_name'],
-          phoneNumber: dx['customer_number'],
-          amount: dx['effective_amount'],
-          id: dx['id'],
-        ));
-      }
-      customData = finalData;
-    }
-    setState(() {});
-  }
+  // List<SingleCustomer> customData = [];
+  // fetchCustomer() async {
+  //   String accessToken = await storage.read(key: 'access') ?? "";
+  //   // Financial data
+  //   var data = await http.get(
+  //     Uri.parse("${baseUrl}api/parties-details/"),
+  //     headers: getAuthHeaders(accessToken),
+  //   );
+  //   if (data.statusCode == 200) {
+  //     List<SingleCustomer> finalData = [];
+  //     for (var dx in jsonDecode(data.body)) {
+  //       finalData.add(SingleCustomer(
+  //         address: dx['customer_address'],
+  //         email: dx['customer_email'] ?? "",
+  //         financialData: dx['financial_data'],
+  //         fullName: dx['customer_name'],
+  //         phoneNumber: dx['customer_number'],
+  //         amount: dx['effective_amount'],
+  //         id: dx['id'],
+  //       ));
+  //     }
+  //     customData = finalData;
+  //   }
+  //   setState(() {});
+  // }
 
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
@@ -109,6 +112,7 @@ class _BusinessPageState extends State<BusinessPage> {
             amount: dx['amount'],
             receipt: dx['receipt'],
             discount: dx['discount'],
+            id: dx['id'],
           ),
         );
       }
@@ -118,11 +122,45 @@ class _BusinessPageState extends State<BusinessPage> {
     isLoading = false;
   }
 
+  fetchBusinessDB() async {
+    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
+    List<FinancialData> finalData = [];
+    finalData.addAll(business
+        .map((dx) => FinancialData(
+              date: DateTime.parse(dx['date']),
+              isCashSale: intTobool(dx['isCashSale']),
+              isPaymentIn: intTobool(dx['isPaymentIn']),
+              isExpenses: intTobool(dx['isExpenses']),
+              isPaymentOut: intTobool(dx['isPaymentOut']),
+              isPurchases: intTobool(dx['isPurchases']),
+              isInvoice: intTobool(dx['isInvoice']),
+              name: dx['name'] ?? "",
+              description: dx['description'] ?? "",
+              details: jsonDecode(dx['details']),
+              amount: dx['amount'],
+              receipt: "${dx['receipt']}",
+              discount: dx['discount'],
+              id: dx['id'],
+            ))
+        .toList());
+    allFinancialData = finalData;
+    isLoading = false;
+    setState(() {});
+  }
+
+  refreshDataDB() async {
+    SyncBusiness syncBusiness = SyncBusiness();
+    await syncBusiness.fetchData();
+    fetchBusinessDB();
+  }
+
   @override
   void initState() {
     super.initState();
-    fetchData();
-    fetchCustomer();
+    // fetchData();
+    // fetchCustomer();
+    fetchBusinessDB();
+    refreshDataDB();
   }
 
   @override
@@ -153,7 +191,6 @@ class _BusinessPageState extends State<BusinessPage> {
             context,
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
-                finalData: customData,
                 resetData: fetchData,
               ),
               fullscreenDialog: true,

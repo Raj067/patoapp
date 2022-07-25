@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class SingleCustomer {
   String fullName = "";
   String email;
@@ -36,10 +38,11 @@ class SingleCustomer {
     return {
       'id': id,
       'amount': amount,
-      // 'description': description,
-      // 'dateEvent': dateEvent,
-      // 'startTime': startTime,
-      // 'endTime': endTime,
+      'fullName': fullName,
+      'address': address,
+      'phoneNumber': phoneNumber,
+      'email': email,
+      'financialData': jsonEncode(financialData),
     };
   }
 }
