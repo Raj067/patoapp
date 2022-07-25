@@ -34,7 +34,7 @@ class DBHelperBusiness {
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
-    return await _db!.query(_tableName, orderBy: "-id");
+    return await _db!.query(_tableName);
   }
 
   static getItem(FinancialData business) async {

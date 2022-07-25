@@ -10,7 +10,6 @@ import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
-import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -87,39 +86,39 @@ class _BusinessPageState extends State<BusinessPage> {
       );
     }
 
-    // FETCHING FINANCIAL DATA
-    var data = await http.get(
-      Uri.parse(
-        "${baseUrl}api/business-financial-transactions/",
-      ),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (data.statusCode == 200) {
-      List<FinancialData> myData = [];
-      for (var dx in jsonDecode(data.body)) {
-        myData.add(
-          FinancialData(
-            date: DateTime.parse(dx['date']),
-            isCashSale: dx['isCashSale'],
-            isPaymentIn: dx['isPaymentIn'],
-            isExpenses: dx['isExpenses'],
-            isPaymentOut: dx['isPaymentOut'],
-            isPurchases: dx['isPurchases'],
-            isInvoice: dx['isInvoice'],
-            name: dx['name'] ?? "",
-            description: dx['description'] ?? "",
-            details: dx['details'],
-            amount: dx['amount'],
-            receipt: dx['receipt'],
-            discount: dx['discount'],
-            id: dx['id'],
-          ),
-        );
-      }
-      allFinancialData = myData;
-      setState(() {});
-    }
-    isLoading = false;
+    // // FETCHING FINANCIAL DATA
+    // var data = await http.get(
+    //   Uri.parse(
+    //     "${baseUrl}api/business-financial-transactions/",
+    //   ),
+    //   headers: getAuthHeaders(accessToken),
+    // );
+    // if (data.statusCode == 200) {
+    //   List<FinancialData> myData = [];
+    //   for (var dx in jsonDecode(data.body)) {
+    //     myData.add(
+    //       FinancialData(
+    //         date: DateTime.parse(dx['date']),
+    //         isCashSale: dx['isCashSale'],
+    //         isPaymentIn: dx['isPaymentIn'],
+    //         isExpenses: dx['isExpenses'],
+    //         isPaymentOut: dx['isPaymentOut'],
+    //         isPurchases: dx['isPurchases'],
+    //         isInvoice: dx['isInvoice'],
+    //         name: dx['name'] ?? "",
+    //         description: dx['description'] ?? "",
+    //         details: dx['details'],
+    //         amount: dx['amount'],
+    //         receipt: dx['receipt'],
+    //         discount: dx['discount'],
+    //         id: dx['id'],
+    //       ),
+    //     );
+    //   }
+    //   allFinancialData = myData;
+    //   setState(() {});
+    // }
+    // isLoading = false;
   }
 
   fetchBusinessDB() async {
@@ -143,6 +142,7 @@ class _BusinessPageState extends State<BusinessPage> {
               id: dx['id'],
             ))
         .toList());
+    finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
     isLoading = false;
     setState(() {});
@@ -191,7 +191,7 @@ class _BusinessPageState extends State<BusinessPage> {
             context,
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
-                resetData: fetchData,
+                resetData: refreshDataDB,
               ),
               fullscreenDialog: true,
             ),
