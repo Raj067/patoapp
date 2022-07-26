@@ -6,6 +6,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/funcs/misc.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
@@ -17,7 +18,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class BusinessPage extends StatefulWidget {
-  const BusinessPage({Key? key}) : super(key: key);
+  final ProfileData profileData;
+  const BusinessPage({
+    Key? key,
+    required this.profileData,
+  }) : super(key: key);
 
   @override
   State<BusinessPage> createState() => _BusinessPageState();
@@ -166,7 +171,11 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainTopBar(_businessButtomTopBar(), context),
+      appBar: mainTopBar(
+        _businessButtomTopBar(),
+        context,
+        profileData: widget.profileData,
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: ListView(

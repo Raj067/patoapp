@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -13,7 +14,8 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 
 class PartiesPage extends StatefulWidget {
-  const PartiesPage({Key? key}) : super(key: key);
+  final ProfileData profileData;
+  const PartiesPage({Key? key, required this.profileData}) : super(key: key);
 
   @override
   State<PartiesPage> createState() => _PartiesPageState();
@@ -116,7 +118,8 @@ class _PartiesPageState extends State<PartiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainTopBar(_partiesButtomTopBar(), context),
+      appBar: mainTopBar(_partiesButtomTopBar(), context,
+          profileData: widget.profileData),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: ListView(

@@ -1,10 +1,7 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
-import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/profile/top_notification_icon.dart';
 import 'package:patoapp/profile/top_profile_icon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,14 +10,15 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 PreferredSizeWidget mainTopBar(
-        PreferredSizeWidget button, BuildContext context) =>
+  PreferredSizeWidget button,
+  BuildContext context, {
+  required ProfileData profileData,
+}) =>
     AppBar(
       automaticallyImplyLeading: false,
-      title: const ProfileIcon(),
+      title: ProfileIcon(profileData: profileData),
       actions: const [NotificationIcon(), SizedBox(width: 20)],
       bottom: button,
     );
@@ -46,7 +44,8 @@ class NotificationIcon extends StatelessWidget {
 }
 
 class ProfileIcon extends StatefulWidget {
-  const ProfileIcon({Key? key}) : super(key: key);
+  final ProfileData profileData;
+  const ProfileIcon({Key? key, required this.profileData}) : super(key: key);
 
   @override
   State<ProfileIcon> createState() => _ProfileIconState();
@@ -55,61 +54,6 @@ class ProfileIcon extends StatefulWidget {
 class _ProfileIconState extends State<ProfileIcon> {
   String name = "";
   String logoUrl = "";
-  ProfileData profileData = ProfileData(
-    businessName: '',
-    businessAddress: "",
-    id: 0,
-  );
-
-  fetchData(String path) async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    var data = await http.get(
-      Uri.parse(baseUrl + path),
-      headers: getAuthHeaders(accessToken),
-    );
-    // name = jsonDecode(data.body)['name'];
-    name = 'Sample Nameuu';
-    setState(() {});
-  }
-
-  // get all Customers in the database
-  fetchProfileDB() async {
-    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
-    List<ProfileData> finalData = [];
-    finalData.addAll(profile
-        .map((dx) => ProfileData(
-              instagramName: dx['instagramName'],
-              businessSignature: dx['businessSignature'],
-              businessSlogan: dx['businessSlogan'],
-              businessLogo: dx['businessLogo'],
-              businessCategory: dx['businessCategory'],
-              businessType: dx['businessType'],
-              businessEmail: dx['businessEmail'],
-              businessPhone: dx['businessPhone'],
-              businessAddress: dx['businessAddress'],
-              businessName: dx['businessName'],
-              id: dx['id'],
-            ))
-        .toList());
-    if (finalData.isNotEmpty) {
-      profileData = finalData[0];
-    }
-    setState(() {});
-  }
-
-  refreshDataDB() async {
-    SyncProfile syncProfile = SyncProfile();
-    await syncProfile.fetchData();
-    fetchProfileDB();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData("api/shop-profile-details/");
-    // fetchProfileDB();
-    // refreshDataDB();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +64,7 @@ class _ProfileIconState extends State<ProfileIcon> {
           // foregroundColor: patoBlack,
           // child: Icon(Icons.add_shopping_cart_rounded),
           ),
-      label: Text(name),
+      label: Text(widget.profileData.businessName),
       onPressed: () {
         Navigator.push(
           context,
@@ -139,8 +83,9 @@ PreferredSizeWidget _moreButtomTopBar() => const PreferredSize(
       child: DarkModeSettingsIcon(),
     );
 
-PreferredSizeWidget mainMoreTopBar(BuildContext context) =>
-    mainTopBar(_moreButtomTopBar(), context);
+PreferredSizeWidget mainMoreTopBar(
+        BuildContext context, ProfileData profileData) =>
+    mainTopBar(_moreButtomTopBar(), context, profileData: profileData);
 
 class DarkModeSettingsIcon extends StatefulWidget {
   const DarkModeSettingsIcon({Key? key}) : super(key: key);

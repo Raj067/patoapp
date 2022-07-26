@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
-import 'package:patoapp/backend/db/db_Profile.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 
 class SyncProfile {
