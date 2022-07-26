@@ -4,23 +4,23 @@ import 'package:sqflite/sqflite.dart';
 class DBHelperProfile {
   static Database? _db;
   static const int _version = 1;
-  static const String _tableName = "profile";
+  static const String _tableName = "profiles";
   static Future<void> initDb() async {
     if (_db != null) {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}dbProfile.db';
+      String path = '${await getDatabasesPath()}db_profiles.db';
       _db =
           await openDatabase(path, version: _version, onCreate: (db, version) {
         // print("-------------- Creating Profile database ------------");
         return db.execute("CREATE TABLE $_tableName("
             "id INTEGER PRIMARY KEY, "
-            "businessName STRING, businessAddress STRING, "
-            "businessPhone STRING, businessEmail STRING,  "
-            "instagramName STRING, businessType STRING, "
-            "businessCategory STRING, businessSlogan STRING, "
-            "businessLogo STRING, businessSignature STRING, "
+            "businessName STRING, businessAddress STRING NULL, "
+            "businessPhone STRING NULL, businessEmail STRING NULL,  "
+            "instagramName STRING, businessType STRING NULL, "
+            "businessCategory STRING NULL, businessSlogan STRING NULL, "
+            "businessLogo STRING NULL, businessSignature STRING NULL, "
             "createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)");
       });
     } catch (e) {
