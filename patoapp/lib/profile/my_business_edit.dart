@@ -1,9 +1,23 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class EditMyBusiness extends StatefulWidget {
-  const EditMyBusiness({Key? key}) : super(key: key);
+  final Function refreshData;
+  final ProfileData profileData;
+  const EditMyBusiness({
+    Key? key,
+    required this.profileData,
+    required this.refreshData,
+  }) : super(key: key);
 
   @override
   State<EditMyBusiness> createState() => _EditMyBusinessState();
@@ -52,6 +66,30 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   int value = 1;
   String? selectedBusinessCategory;
   String? selectedBusinessType;
+
+  TextEditingController businessName = TextEditingController();
+  TextEditingController businessPhone = TextEditingController();
+  TextEditingController businessEmail = TextEditingController();
+  TextEditingController businessAddress = TextEditingController();
+  TextEditingController instagramName = TextEditingController();
+  TextEditingController businessSlogan = TextEditingController();
+  TextEditingController businessType = TextEditingController();
+  TextEditingController businessCategory = TextEditingController();
+
+  final editShopFormKey1 = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    businessName.text = widget.profileData.businessName;
+    businessPhone.text = widget.profileData.businessPhone;
+    businessEmail.text = widget.profileData.businessEmail;
+    businessAddress.text = widget.profileData.businessAddress;
+    instagramName.text = widget.profileData.instagramName;
+    businessSlogan.text = widget.profileData.businessSlogan;
+    businessType.text = widget.profileData.businessType;
+    businessCategory.text = widget.profileData.businessCategory;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +148,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
               child: Text(value == 1 ? "Next" : "Finish"),
               onPressed: () {
                 setState(() {
-                  value == 1 ? value = 2 : Navigator.pop(context);
+                  if (value == 1) {
+                    if (editShopFormKey1.currentState!.validate()) {
+                      value == 1 ? value = 2 : Navigator.pop(context);
+                    }
+                  } else {
+                    _submitData(context);
+                  }
                 });
               },
             ),
@@ -123,24 +167,57 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   _firstScreen() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: ListView(
-        children: [
-          Container(height: 10),
-          Container(height: 10),
-          Container(height: 10),
-          const Center(
-            child: Text(
-              "Tap to add your business logo",
-              style: TextStyle(color: patowavePrimary),
+      child: Form(
+        key: editShopFormKey1,
+        child: ListView(
+          children: [
+            Container(height: 10),
+            Center(
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: patowavePrimary.withAlpha(50),
+                        foregroundColor: patowavePrimary,
+                        child: const Icon(Icons.photo, size: 50),
+                      ),
+                    ),
+                    const Positioned(
+                      right: 5,
+                      bottom: 5,
+                      child: Icon(
+                        Icons.add_circle,
+                        color: patowavePrimary,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
-          Container(height: 20),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
+            Container(height: 10),
+            const Center(
+              child: Text(
+                "Tap to add your business logo",
+                style: TextStyle(color: patowavePrimary),
+              ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: businessName,
+              cursorColor: patowavePrimary,
+              validator: (value) {
+                if (value == null || value == "") {
+                  return 'Business Name is required';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 label: Text(
-                  "Business Name",
+                  "Business Name*",
                   style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                 ),
                 border: OutlineInputBorder(
@@ -150,11 +227,36 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 ),
               ),
             ),
-          ),
-          Container(height: 10),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
+            Container(height: 15),
+            TextFormField(
+              controller: businessPhone,
+              cursorColor: patowavePrimary,
+              validator: (value) {
+                if (value == null || value == "") {
+                  return 'Phone Number is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Business Phone Number*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: businessEmail,
               decoration: const InputDecoration(
                 label: Text(
                   "Business Email",
@@ -167,14 +269,19 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 ),
               ),
             ),
-          ),
-          Container(height: 10),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: businessAddress,
+              validator: (value) {
+                if (value == null || value == "") {
+                  return 'Business Address is required';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 label: Text(
-                  "Business Address",
+                  "Business Address*",
                   style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                 ),
                 border: OutlineInputBorder(
@@ -184,11 +291,10 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 ),
               ),
             ),
-          ),
-          Container(height: 10),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: instagramName,
               decoration: const InputDecoration(
                 label: Text(
                   "Instagram Name",
@@ -201,77 +307,77 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 ),
               ),
             ),
-          ),
-          Container(height: 10),
-          const Text(
-            "Signature",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Container(height: 10),
-          Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
+            Container(height: 15),
+            const Text(
+              "Signature",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
             ),
-            elevation: 0,
-            child: Container(
-              height: 100,
-              // width: 100,
+            Container(height: 15),
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
+              child: Container(
+                height: 100,
+                // width: 100,
+              ),
             ),
-          ),
-          Container(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              OutlinedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
+            Container(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                OutlinedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
                     ),
                   ),
+                  onPressed: () {},
+                  child: const Text("Change"),
                 ),
-                onPressed: () {},
-                child: const Text("Change"),
-              ),
-              OutlinedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
+                OutlinedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
                     ),
                   ),
+                  onPressed: () {},
+                  child: const Text("Upload"),
                 ),
-                onPressed: () {},
-                child: const Text("Upload"),
-              ),
-              OutlinedButton(
-                style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                    const BorderSide(color: patowaveErrorRed),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
+                OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      const BorderSide(color: patowaveErrorRed),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
                     ),
                   ),
+                  onPressed: () {},
+                  child: const Text("Remove"),
                 ),
-                onPressed: () {},
-                child: const Text("Remove"),
-              ),
-            ],
-          ),
-          Container(height: 10),
-        ],
+              ],
+            ),
+            Container(height: 10),
+          ],
+        ),
       ),
     );
   }
@@ -281,110 +387,113 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
       padding: const EdgeInsets.all(10),
       child: ListView(
         children: [
-          SizedBox(
-            height: 45,
-            child: DropdownButtonFormField2(
-              selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-              scrollbarAlwaysShow: true,
-              dropdownMaxHeight: 200,
-              decoration: InputDecoration(
-                label: const Text(
-                  'Business Type',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+          DropdownButtonFormField2(
+            value: businessTypes.contains(businessType.text)
+                ? businessType.text
+                : null,
+            selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+            scrollbarAlwaysShow: true,
+            dropdownMaxHeight: 200,
+            decoration: InputDecoration(
+              label: const Text(
+                'Business Type',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
-              isExpanded: true,
-              icon: const Icon(
-                Icons.arrow_drop_down,
-              ),
-              dropdownDecoration: BoxDecoration(
+              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              items: businessTypes
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                //Do something when changing the item if you want.
-              },
-              onSaved: (value) {
-                selectedBusinessType = value.toString();
-              },
             ),
+            isExpanded: true,
+            icon: const Icon(
+              Icons.arrow_drop_down,
+            ),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            items: businessTypes
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              //Do something when changing the item if you want.
+              businessType.text = value.toString();
+              setState(() {});
+            },
+            onSaved: (value) {
+              selectedBusinessType = value.toString();
+            },
           ),
-          Container(height: 10),
-          SizedBox(
-            height: 45,
-            child: DropdownButtonFormField2(
-              selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-              scrollbarAlwaysShow: true,
-              dropdownMaxHeight: 200,
-              decoration: InputDecoration(
-                label: const Text(
-                  'Business Category',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+          Container(height: 15),
+          DropdownButtonFormField2(
+            value: businessCategories.contains(businessCategory.text)
+                ? businessCategory.text
+                : null,
+            selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+            scrollbarAlwaysShow: true,
+            dropdownMaxHeight: 200,
+            decoration: InputDecoration(
+              label: const Text(
+                'Business Category',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
-              isExpanded: true,
-              icon: const Icon(
-                Icons.arrow_drop_down,
-              ),
-              dropdownDecoration: BoxDecoration(
+              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              items: businessCategories
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                //Do something when changing the item if you want.
-              },
-              onSaved: (value) {
-                selectedBusinessCategory = value.toString();
-              },
             ),
+            isExpanded: true,
+            icon: const Icon(
+              Icons.arrow_drop_down,
+            ),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            items: businessCategories
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              //Do something when changing the item if you want.
+              businessCategory.text = value.toString();
+              setState(() {});
+            },
+            onSaved: (value) {
+              selectedBusinessCategory = value.toString();
+            },
           ),
-          Container(height: 10),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
-              decoration: const InputDecoration(
-                label: Text(
-                  "Business Slogan",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
+          Container(height: 15),
+          TextFormField(
+            cursorColor: patowavePrimary,
+            controller: businessSlogan,
+            decoration: const InputDecoration(
+              label: Text(
+                "Business Slogan",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
               ),
             ),
@@ -392,5 +501,48 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
         ],
       ),
     );
+  }
+
+  _submitData(BuildContext context) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/shop-profile-edit/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        "id": widget.profileData.id,
+        'businessName': businessName.text,
+        'businessEmail': businessEmail.text,
+        'businessAddress': businessAddress.text,
+        'instagramName': instagramName.text,
+        'businessPhone': businessPhone.text,
+        'businessSlogan': businessSlogan.text,
+        'businessType': businessType.text,
+        'businessCategory': businessCategory.text,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      SyncProfile syncProfile = SyncProfile();
+      await syncProfile.fetchData();
+      widget.refreshData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

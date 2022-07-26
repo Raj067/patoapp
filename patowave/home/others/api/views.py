@@ -41,6 +41,8 @@ def setting_account_api(request):
             instagram_name=request.data.get('instagramName'),
             email=request.data.get('businessEmail'),
             address=request.data.get('businessAddress'),
+            # default phone number is that of user
+            phone=request.user.username
         )
         shop.save()
         shop_user = ShopUser(
@@ -105,6 +107,23 @@ def shop_profile_details(request, *args, **kwargs):
     data = get_shop(request)  # [0]if get_shop(request) else None
     serializer = ShopProfileSerializer(data, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def shop_profile_edit(request):
+    if request.method == "POST":
+        shop = Shop.objects.get(id=request.data.get('id'))
+        shop.name = request.data.get('businessName')
+        shop.slogan = request.data.get('businessSlogan')
+        shop.instagram_name = request.data.get('instagramName')
+        shop.phone = request.data.get('businessPhone')
+        shop.email = request.data.get('businessEmail')
+        shop.address = request.data.get('businessAddress')
+        shop.business_category = request.data.get('businessCategory')
+        shop.business_type = request.data.get('businessType')
+        shop.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])

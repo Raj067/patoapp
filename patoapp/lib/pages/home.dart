@@ -3,7 +3,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
-import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/inventory.dart';
@@ -19,8 +18,7 @@ import 'package:http/http.dart' as http;
 // import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
-  final ProfileData profileData;
-  const MainEntryHomePage({Key? key, required this.profileData})
+  const MainEntryHomePage({Key? key})
       : super(key: key);
 
   @override
@@ -98,7 +96,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: ProfileIcon(profileData: widget.profileData),
+        title: const ProfileIcon(),
         actions: const [NotificationIcon(), SizedBox(width: 20)],
         elevation: 0,
       ),

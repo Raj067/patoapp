@@ -1,8 +1,5 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:patoapp/backend/db/db_profile.dart';
-import 'package:patoapp/backend/models/profile_details.dart';
-import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
@@ -20,52 +17,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  ProfileData profileData = ProfileData(
-    businessName: '',
-    id: 0,
-  );
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  fetchProfileDB() async {
-    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
-    List<ProfileData> finalData = [];
-    finalData.addAll(profile
-        .map((dx) => ProfileData(
-              instagramName: dx['instagramName'],
-              businessSignature: dx['businessSignature'],
-              businessSlogan: dx['businessSlogan'],
-              businessLogo: dx['businessLogo'],
-              businessCategory: dx['businessCategory'],
-              businessType: dx['businessType'],
-              businessEmail: dx['businessEmail'],
-              businessPhone: dx['businessPhone'],
-              businessAddress: dx['businessAddress'],
-              businessName: dx['businessName'],
-              id: dx['id'],
-            ))
-        .toList());
-    if (finalData.isNotEmpty) {
-      profileData = finalData[1];
-    }
-    setState(() {});
-  }
-
-  refreshDataDB() async {
-    SyncProfile syncProfile = SyncProfile();
-    await syncProfile.fetchData();
-    fetchProfileDB();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchProfileDB();
-    refreshDataDB();
   }
 
   @override
@@ -73,10 +28,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: <Widget>[
-          MainEntryHomePage(profileData: profileData),
-          BusinessPage(profileData: profileData),
-          PartiesPage(profileData: profileData),
-          MorePage(profileData: profileData),
+          const MainEntryHomePage(),
+          const BusinessPage(),
+          const PartiesPage(),
+          const MorePage(),
         ].elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(

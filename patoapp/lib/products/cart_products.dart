@@ -371,9 +371,11 @@ class _ProductsCartState extends State<ProductsCart> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  product.productName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    product.productName,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Text(
                   "Tsh ${product.getTotalPrice()}",

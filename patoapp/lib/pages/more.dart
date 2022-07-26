@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/more/feedback.dart';
 import 'package:patoapp/more/general_settings.dart';
 import 'package:patoapp/more/greetings.dart';
@@ -16,13 +15,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../components/top_bar.dart';
 
 class MorePage extends StatelessWidget {
-  final ProfileData profileData;
-  const MorePage({Key? key, required this.profileData}) : super(key: key);
+  const MorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainMoreTopBar(context, profileData),
+      appBar: mainMoreTopBar(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),

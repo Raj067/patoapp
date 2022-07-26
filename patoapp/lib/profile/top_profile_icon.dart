@@ -4,20 +4,28 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
+import 'package:patoapp/profile/add_new_shop.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class TopProfileIcon extends StatefulWidget {
-  const TopProfileIcon({Key? key}) : super(key: key);
+  final Function refreshData;
+  final ProfileData profileData;
+  const TopProfileIcon({
+    Key? key,
+    required this.profileData,
+    required this.refreshData,
+  }) : super(key: key);
 
   @override
   State<TopProfileIcon> createState() => _TopProfileIconState();
 }
 
 class _TopProfileIconState extends State<TopProfileIcon> {
-  List<ProfileData> profileData = [];
+  List<ProfileData> myProfileData = [];
+  int profilePercent = 20;
   fetchProfileDB() async {
     List<Map<String, dynamic>> profile = await DBHelperProfile.query();
     List<ProfileData> finalData = [];
@@ -30,13 +38,13 @@ class _TopProfileIconState extends State<TopProfileIcon> {
               businessCategory: dx['businessCategory'],
               businessType: dx['businessType'],
               businessEmail: dx['businessEmail'],
-              businessPhone: dx['businessPhone'],
+              businessPhone: "${dx['businessPhone']}",
               businessAddress: dx['businessAddress'],
               businessName: dx['businessName'],
               id: dx['id'],
             ))
         .toList());
-    profileData = finalData;
+    myProfileData = finalData;
     setState(() {});
   }
 
@@ -46,11 +54,40 @@ class _TopProfileIconState extends State<TopProfileIcon> {
     fetchProfileDB();
   }
 
+  calculatePercent() {
+    if (widget.profileData.businessName != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessPhone != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessEmail != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessAddress != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessType != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessCategory != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.businessSlogan != '') {
+      profilePercent += 10;
+    }
+    if (widget.profileData.instagramName != '') {
+      profilePercent += 10;
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     fetchProfileDB();
     refreshDataDB();
+    calculatePercent();
   }
 
   @override
@@ -87,9 +124,13 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    const Text("My Shops",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    const Text(
+                      "My Shops",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                     Container(height: 10),
                     _getAllShop(),
                     Row(
@@ -109,14 +150,16 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                               ),
                             ),
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute<void>(
-                              //     builder: (BuildContext context) =>
-                              //         const EditMyBusiness(),
-                              //     fullscreenDialog: true,
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      AddNewShop(refreshData: () {
+                                    refreshDataDB();
+                                  }),
+                                  fullscreenDialog: true,
+                                ),
+                              );
                             },
                             child: const Text("Add new shop"),
                           ),
@@ -151,84 +194,93 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                           bottom: 0,
                           child: Image.asset("assets/images/card.png"),
                         ),
-                        const Positioned(
-                          top: 95,
+                        Positioned(
+                          top: 97,
                           // left: 50,
                           right: 26,
                           bottom: 0,
                           child: Text(
-                            "Company Name",
-                            style: TextStyle(
+                            widget.profileData.businessName.length > 13
+                                ? widget.profileData.businessName
+                                    .replaceRange(13, null, '...')
+                                : widget.profileData.businessName,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveWhite,
                             ),
                           ),
                         ),
-                        const Positioned(
+                        Positioned(
                           // top: 95,
                           // left: 50,
                           right: 26,
                           bottom: 50,
                           child: Text(
-                            "Slogan Here",
-                            style: TextStyle(
+                            widget.profileData.businessSlogan == ""
+                                ? "Customer is king"
+                                : widget.profileData.businessSlogan,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveBlack,
                             ),
                           ),
                         ),
-                        const Positioned(
+                        Positioned(
                           top: 60,
                           left: 30,
                           // right: 26,
                           bottom: 0,
                           child: Text(
-                            "Dar es salaam",
-                            style: TextStyle(
+                            widget.profileData.businessAddress,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveWhite,
                             ),
                           ),
                         ),
-                        const Positioned(
+                        Positioned(
                           top: 80,
                           left: 30,
                           // right: 26,
                           bottom: 0,
                           child: Text(
-                            "Phone Number",
-                            style: TextStyle(
+                            widget.profileData.businessPhone,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveWhite,
                             ),
                           ),
                         ),
-                        const Positioned(
+                        Positioned(
                           top: 100,
                           left: 30,
                           // right: 26,
                           bottom: 0,
                           child: Text(
-                            "Email",
-                            style: TextStyle(
+                            widget.profileData.businessEmail == ""
+                                ? "Email"
+                                : widget.profileData.businessEmail,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveWhite,
                             ),
                           ),
                         ),
-                        const Positioned(
+                        Positioned(
                           top: 120,
                           left: 30,
                           // right: 26,
                           bottom: 0,
                           child: Text(
-                            "Instagram Name",
-                            style: TextStyle(
+                            widget.profileData.instagramName == ""
+                                ? "_____"
+                                : widget.profileData.instagramName,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: patowaveWhite,
@@ -328,11 +380,13 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                             radius: 45.0,
                             lineWidth: 5.0,
                             animation: true,
-                            percent: 0.7,
-                            center: const Text(
-                              "70%",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0),
+                            percent: profilePercent / 100,
+                            center: Text(
+                              "$profilePercent%",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              ),
                             ),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: patowavePrimary,
@@ -362,7 +416,10 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const EditMyBusiness(),
+                                      EditMyBusiness(
+                                    profileData: widget.profileData,
+                                    refreshData: widget.refreshData,
+                                  ),
                                   fullscreenDialog: true,
                                 ),
                               );
@@ -497,7 +554,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
 
   _getAllShop() {
     List<Widget> data = [];
-    for (ProfileData dx in profileData) {
+    for (ProfileData dx in myProfileData) {
       data.add(Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -508,7 +565,9 @@ class _TopProfileIconState extends State<TopProfileIcon> {
         elevation: 0,
         child: InkWell(
           borderRadius: BorderRadius.circular(15),
-          onTap: () {},
+          onTap: () {
+            _setShop(dx);
+          },
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
@@ -532,8 +591,13 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                         ),
                       ]),
                 ),
-                const Icon(Icons.more_vert_outlined,
-                    size: 30, color: patowavePrimary),
+                dx.id == widget.profileData.id
+                    ? const Icon(
+                        Icons.more_vert_outlined,
+                        size: 30,
+                        color: patowavePrimary,
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -542,5 +606,12 @@ class _TopProfileIconState extends State<TopProfileIcon> {
       data.add(Container(height: 5));
     }
     return Column(children: data);
+  }
+
+  _setShop(ProfileData shop) async {
+    await storage.write(key: "activeShop", value: "${shop.id}");
+    widget.refreshData();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
   }
 }

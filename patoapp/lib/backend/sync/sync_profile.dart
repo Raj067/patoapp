@@ -54,7 +54,7 @@ class SyncProfile {
                 businessCategory: dx['businessCategory'],
                 businessType: dx['businessType'],
                 businessEmail: dx['businessEmail'],
-                businessPhone: dx['businessPhone'],
+                businessPhone: "${dx['businessPhone']}",
                 businessAddress: dx['businessAddress'],
                 businessName: dx['businessName'],
                 id: dx['id'],

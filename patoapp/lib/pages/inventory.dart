@@ -453,41 +453,45 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.productName,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Tsh ${product.sellingPrice}',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Qty: ${product.quantity}',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontStyle: FontStyle.italic,
-                                  color: product.isStockLevelReached()
-                                      ? patowaveWarning
-                                      : product.quantity == 0
-                                          ? patowaveErrorRed
-                                          : patowavePrimary,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.productName,
+                              overflow: TextOverflow.fade,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Tsh ${product.sellingPrice}',
+                                  style: const TextStyle(fontSize: 12),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Qty: ${product.quantity}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic,
+                                    color: product.isStockLevelReached()
+                                        ? patowaveWarning
+                                        : product.quantity == 0
+                                            ? patowaveErrorRed
+                                            : patowavePrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       product.isAddedToCartAutomatic
                           ? Row(
@@ -590,42 +594,45 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.productName,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Tsh ${product.sellingPrice}',
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Qty: ${product.quantity}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontStyle: FontStyle.italic,
-                                        color: product.isStockLevelReached()
-                                            ? patowaveWarning
-                                            : product.quantity == 0
-                                                ? patowaveErrorRed
-                                                : patowavePrimary,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.productName,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Tsh ${product.sellingPrice}',
+                                        style: const TextStyle(fontSize: 12),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Qty: ${product.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontStyle: FontStyle.italic,
+                                          color: product.isStockLevelReached()
+                                              ? patowaveWarning
+                                              : product.quantity == 0
+                                                  ? patowaveErrorRed
+                                                  : patowavePrimary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
