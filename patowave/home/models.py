@@ -16,7 +16,8 @@ class Shop(models.Model):
     signature = models.ImageField(
         upload_to='signature/', blank=True, null=True)
     address = models.CharField(max_length=100, null=True, blank=True)
-    media_link = models.CharField(max_length=100, null=True, blank=True)
+    business_category = models.CharField(max_length=200, null=True, blank=True)
+    business_type = models.CharField(max_length=200, null=True, blank=True)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

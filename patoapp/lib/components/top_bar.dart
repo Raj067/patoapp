@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/profile/top_notification_icon.dart';
 import 'package:patoapp/profile/top_profile_icon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,6 +55,11 @@ class ProfileIcon extends StatefulWidget {
 class _ProfileIconState extends State<ProfileIcon> {
   String name = "";
   String logoUrl = "";
+  ProfileData profileData = ProfileData(
+    businessName: '',
+    businessAddress: "",
+    id: 0,
+  );
 
   fetchData(String path) async {
     String accessToken = await storage.read(key: 'access') ?? "";
@@ -63,10 +71,40 @@ class _ProfileIconState extends State<ProfileIcon> {
     setState(() {});
   }
 
+  // get all Customers in the database
+  fetchProfileDB() async {
+    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+    List<ProfileData> finalData = [];
+    finalData.addAll(profile
+        .map((dx) => ProfileData(
+              instagramSlogan: dx['instagramSlogan'],
+              businessCategory: dx['businessCategory'],
+              businessType: dx['businessType'],
+              instagramName: dx['instagramName'],
+              businessEmail: dx['businessEmail'],
+              businessAddress: dx['businessAddress'],
+              businessName: dx['businessName'],
+              id: dx['id'],
+            ))
+        .toList());
+    if (finalData.isNotEmpty) {
+      profileData = finalData[0];
+    }
+    setState(() {});
+  }
+
+  refreshDataDB() async {
+    SyncProfile syncProfile = SyncProfile();
+    await syncProfile.fetchData();
+    fetchProfileDB();
+  }
+
   @override
   void initState() {
     super.initState();
     fetchData("api/shop-profile-details/");
+    // fetchProfileDB();
+    // refreshDataDB();
   }
 
   @override

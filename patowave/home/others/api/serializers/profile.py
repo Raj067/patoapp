@@ -9,5 +9,6 @@ class ShopProfileSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'slogan',
             'phone', 'email', 'logo',
-            'signature', 'address', 'media_link',
+            'signature', 'address', 'instagram_name',
+            'business_category', 'business_type',
         )

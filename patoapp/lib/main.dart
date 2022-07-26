@@ -7,6 +7,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -37,6 +38,7 @@ void main() {
       await DBHelper.initDb();
       await DBHelperCustomer.initDb();
       await DBHelperBusiness.initDb();
+      // await DBHelperProfile.initDb();
       HttpOverrides.global = MyHttpOverrides();
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
