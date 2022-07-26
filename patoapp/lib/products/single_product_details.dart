@@ -78,89 +78,136 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
       body: ListView(
         children: [
           Column(children: [
-            SizedBox(
-              // height: 200,
-              // child: Image.network(
-              //   product.thumbnail,
-              //   fit: BoxFit.fitWidth,
-              // ),
-              child: Image.asset("assets/img.jpg", fit: BoxFit.fitWidth),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Card(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
+                  child: Center(
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundColor: patowavePrimary.withAlpha(50),
+                              foregroundColor: patowavePrimary,
+                              child: const Icon(Icons.photo, size: 50),
+                            ),
+                          ),
+                          const Positioned(
+                            right: 5,
+                            bottom: 5,
+                            child: Icon(
+                              Icons.add_circle,
+                              color: patowavePrimary,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             )
           ]),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.product.productName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+            child: Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.product.productName,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
 
-                // const Text('Transactions'),
-              ],
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Selling Price'),
-                Text("${widget.product.sellingPrice}"),
-              ],
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Purchases Price'),
-                Text("${widget.product.purchasesPrice}"),
-              ],
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Total Items sold'),
-                Text("${widget.product.totalItemsSold}"),
-              ],
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Supplier Contacts:"),
-                    Container(
-                      height: 5,
+                        // const Text('Transactions'),
+                      ],
                     ),
-                    Text("Name: ${widget.product.supplierName}"),
-                    Text("Phone: ${widget.product.supplierContact}"),
-                  ],
-                ),
-                InkWell(
-                  radius: 10,
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    // _makePhoneCall(widget.product.supplierContact);
-                  },
-                  child: const Icon(Icons.phone, color: patowaveGreen),
-                ),
-              ],
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Selling Price'),
+                        Text("${widget.product.sellingPrice}"),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Purchases Price'),
+                        Text("${widget.product.purchasesPrice}"),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Total Items sold'),
+                        Text("${widget.product.totalItemsSold}"),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Supplier Contacts:"),
+                            Container(
+                              height: 5,
+                            ),
+                            Text("Name: ${widget.product.supplierName}"),
+                            Text("Phone: ${widget.product.supplierContact}"),
+                          ],
+                        ),
+                        InkWell(
+                          radius: 10,
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            // _makePhoneCall(widget.product.supplierContact);
+                          },
+                          child: const Icon(Icons.phone, color: patowaveGreen),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -214,21 +261,6 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
           ),
         ]),
       ],
-      // persistentFooterButtons: [
-      //   OutlinedButton(
-      //     onPressed: () {},
-      //     child: const Text("Share"),
-      //   ),
-      //   ElevatedButton(
-      //     onPressed: () {
-      //       _productAdjustment(context, widget.product);
-      //     },
-      //     child: const Text(
-      //       "Adjust Item",
-      //       style: TextStyle(color: patowaveWhite),
-      //     ),
-      //   ),
-      // ],
     );
   }
 
