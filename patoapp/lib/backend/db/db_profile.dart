@@ -10,16 +10,17 @@ class DBHelperProfile {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}profile.db';
+      String path = '${await getDatabasesPath()}dbProfile.db';
       _db =
           await openDatabase(path, version: _version, onCreate: (db, version) {
-        // print("-------------- Creating customer database ------------");
+        // print("-------------- Creating Profile database ------------");
         return db.execute("CREATE TABLE $_tableName("
             "id INTEGER PRIMARY KEY, "
-            "profileName STRING, profileAddress STRING, "
-            "profileEmail STRING, instagramName STRING,  "
-            "profileType STRING, profileCategory STRING, "
-            "instagramSlogan STRING, "
+            "businessName STRING, businessAddress STRING, "
+            "businessPhone STRING, businessEmail STRING,  "
+            "instagramName STRING, businessType STRING, "
+            "businessCategory STRING, businessSlogan STRING, "
+            "businessLogo STRING, businessSignature STRING, "
             "createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)");
       });
     } catch (e) {

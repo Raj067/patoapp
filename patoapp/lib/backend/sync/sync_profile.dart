@@ -18,17 +18,20 @@ class SyncProfile {
       headers: getAuthHeaders(accessToken),
     );
     if (data.statusCode == 200) {
-      ProfileData myData = ProfileData(
-        instagramSlogan: jsonDecode(data.body)['slogan'],
-        businessCategory: jsonDecode(data.body)['business_category'],
-        businessType: jsonDecode(data.body)['business_type'],
-        instagramName: jsonDecode(data.body)['instagram_name'],
-        businessEmail: jsonDecode(data.body)['email'],
-        businessAddress: jsonDecode(data.body)['address'],
-        businessName: jsonDecode(data.body)['name'],
-        id: jsonDecode(data.body)['id'],
-      );
-      {
+      for (var dx in jsonDecode(data.body)) {
+        ProfileData myData = ProfileData(
+          instagramName: dx['instagram_name'] ?? "",
+          businessSignature: "",
+          businessSlogan: dx['slogan'] ?? "",
+          businessLogo: "",
+          businessCategory: dx['business_category'] ?? "",
+          businessType: dx['business_type'] ?? "",
+          businessEmail: dx['email'] ?? "",
+          businessPhone: dx['phone'] ?? "",
+          businessAddress: dx['address'] ?? "-",
+          businessName: dx['name'],
+          id: dx['id'],
+        );
         // Add data to the database
         try {
           await _profileController.addProfile(myData);
@@ -44,19 +47,23 @@ class SyncProfile {
       List<ProfileData> localDb = [];
       localDb.addAll(profile
           .map((dx) => ProfileData(
-                instagramSlogan: dx['instagramSlogan'],
+                instagramName: dx['instagramName'],
+                businessSignature: dx['businessSignature'],
+                businessSlogan: dx['businessSlogan'],
+                businessLogo: dx['businessLogo'],
                 businessCategory: dx['businessCategory'],
                 businessType: dx['businessType'],
-                instagramName: dx['instagramName'],
                 businessEmail: dx['businessEmail'],
+                businessPhone: dx['businessPhone'],
                 businessAddress: dx['businessAddress'],
                 businessName: dx['businessName'],
                 id: dx['id'],
               ))
           .toList());
-      int serverDb = jsonDecode(data.body)['id'];
+      List<dynamic> serverDb =
+          jsonDecode(data.body).map((e) => e['id']).toList();
       for (ProfileData dx in localDb) {
-        if (serverDb != dx.id) {
+        if (!serverDb.contains(dx.id)) {
           // If data present in the local database
           //but not on the server delete it
           await _profileController.deleteProfile(dx);

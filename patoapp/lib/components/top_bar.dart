@@ -67,7 +67,8 @@ class _ProfileIconState extends State<ProfileIcon> {
       Uri.parse(baseUrl + path),
       headers: getAuthHeaders(accessToken),
     );
-    name = jsonDecode(data.body)['name'];
+    // name = jsonDecode(data.body)['name'];
+    name = 'Sample Nameuu';
     setState(() {});
   }
 
@@ -77,11 +78,14 @@ class _ProfileIconState extends State<ProfileIcon> {
     List<ProfileData> finalData = [];
     finalData.addAll(profile
         .map((dx) => ProfileData(
-              instagramSlogan: dx['instagramSlogan'],
+              instagramName: dx['instagramName'],
+              businessSignature: dx['businessSignature'],
+              businessSlogan: dx['businessSlogan'],
+              businessLogo: dx['businessLogo'],
               businessCategory: dx['businessCategory'],
               businessType: dx['businessType'],
-              instagramName: dx['instagramName'],
               businessEmail: dx['businessEmail'],
+              businessPhone: dx['businessPhone'],
               businessAddress: dx['businessAddress'],
               businessName: dx['businessName'],
               id: dx['id'],

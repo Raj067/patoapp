@@ -1,13 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
-class TopProfileIcon extends StatelessWidget {
+class TopProfileIcon extends StatefulWidget {
   const TopProfileIcon({Key? key}) : super(key: key);
+
+  @override
+  State<TopProfileIcon> createState() => _TopProfileIconState();
+}
+
+class _TopProfileIconState extends State<TopProfileIcon> {
+  List<ProfileData> profileData = [];
+  fetchProfileDB() async {
+    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+    List<ProfileData> finalData = [];
+    finalData.addAll(profile
+        .map((dx) => ProfileData(
+              instagramName: dx['instagramName'],
+              businessSignature: dx['businessSignature'],
+              businessSlogan: dx['businessSlogan'],
+              businessLogo: dx['businessLogo'],
+              businessCategory: dx['businessCategory'],
+              businessType: dx['businessType'],
+              businessEmail: dx['businessEmail'],
+              businessPhone: dx['businessPhone'],
+              businessAddress: dx['businessAddress'],
+              businessName: dx['businessName'],
+              id: dx['id'],
+            ))
+        .toList());
+    profileData = finalData;
+    setState(() {});
+  }
+
+  refreshDataDB() async {
+    SyncProfile syncProfile = SyncProfile();
+    await syncProfile.fetchData();
+    fetchProfileDB();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfileDB();
+    refreshDataDB();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,49 +91,7 @@ class TopProfileIcon extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16)),
                     Container(height: 10),
-                    Card(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      color: patowavePrimary.withAlpha(50),
-                      elevation: 0,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        "sample shop name",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "sample shop name",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                              const Icon(Icons.more_vert_outlined,
-                                  size: 30, color: patowavePrimary),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(height: 10),
+                    _getAllShop(),
                     Row(
                       children: [
                         Expanded(
@@ -491,5 +493,54 @@ class TopProfileIcon extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _getAllShop() {
+    List<Widget> data = [];
+    for (ProfileData dx in profileData) {
+      data.add(Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        color: patowavePrimary.withAlpha(50),
+        elevation: 0,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          dx.businessName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          dx.businessAddress,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ]),
+                ),
+                const Icon(Icons.more_vert_outlined,
+                    size: 30, color: patowavePrimary),
+              ],
+            ),
+          ),
+        ),
+      ));
+      data.add(Container(height: 5));
+    }
+    return Column(children: data);
   }
 }

@@ -14,20 +14,4 @@ class BusinessController extends GetxController {
   Future<void> deleteBusiness(FinancialData business) async {
     await DBHelperBusiness.deleteItem(business);
   }
-
-  // // get all shedule in the database
-  // Future<List<FinancialData>> getBusinesss() async {
-  //   List<Map<String, dynamic>> business = await DBHelperBusiness.query();
-  //   return business
-  //       .map((e) => FinancialData(
-  //             id: e['id'],
-  //             amount: e['amount'],
-  //             fullName: e['fullName'],
-  //             address: e['address'],
-  //             phoneNumber: e['phoneNumber'],
-  //             email: e['email'],
-  //             financialData: jsonDecode(e['financialData']),
-  //           ))
-  //       .toList();
-  // }
 }

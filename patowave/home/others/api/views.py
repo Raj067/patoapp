@@ -102,10 +102,9 @@ def deleting_single_transaction_api(request):
 
 @api_view(['GET'])
 def shop_profile_details(request, *args, **kwargs):
-    data = get_shop(request)[0]if get_shop(request) else None
-    serializer = ShopProfileSerializer(data, many=False)
-    dt = {**serializer.data, 'phone': request.user.username}
-    return Response(dt)
+    data = get_shop(request)  # [0]if get_shop(request) else None
+    serializer = ShopProfileSerializer(data, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])
