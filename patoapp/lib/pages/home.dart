@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:patoapp/api/apis.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/backend/db/db_helper.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/components/top_bar.dart';
-import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
@@ -650,11 +649,14 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Row(
       children: [
         const FaIcon(FontAwesomeIcons.locationDot,
-            color: patowaveWhite, size: 16),
+            color: patowaveWhite, size: 12),
         Container(width: 10),
         const Text(
-          "Dar es salaam",
-          style: TextStyle(color: patowaveWhite),
+          "Dar es salaam, Tz",
+          style: TextStyle(
+            color: patowaveWhite,
+            fontSize: 12,
+          ),
         )
       ],
     );
@@ -664,44 +666,40 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Container(
       color: Theme.of(context).primaryColor,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
+        padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
         child: Column(
           children: [
-            _location(),
-            Container(height: 10),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Today 27°C",
-                      style: TextStyle(color: patowaveWhite),
-                    ),
-                    Container(width: 10),
-                    const FaIcon(
-                      FontAwesomeIcons.cloud,
-                      color: patowaveWhite,
-                      size: 16,
-                    ),
-                  ],
+            Row(children: [
+              const Text(
+                '27°',
+                style: TextStyle(
+                  color: patowaveWhite,
+                  fontSize: 35,
                 ),
-                Container(width: 20),
-                Row(
-                  children: [
-                    const Text(
-                      "Tomorrow 25°C",
-                      style: TextStyle(color: patowaveWhite),
-                    ),
-                    Container(width: 10),
-                    const FaIcon(
-                      FontAwesomeIcons.cloudRain,
+              ),
+              Container(width: 15),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateFormat('EEEE, d MMMM').format(DateTime.now()),
+                    style: const TextStyle(
                       color: patowaveWhite,
-                      size: 16,
+                      fontSize: 12,
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  Container(height: 5),
+                  _location(),
+                ],
+              ),
+              Container(width: 15),
+              const FaIcon(
+                FontAwesomeIcons.cloudRain,
+                color: patowaveWhite,
+                size: 30,
+              ),
+            ]),
           ],
         ),
       ),

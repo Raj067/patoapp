@@ -31,6 +31,101 @@ class TopProfileIcon extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: [
+            Container(height: 10),
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              elevation: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    const Text("My Shops",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    Container(height: 10),
+                    Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      color: patowavePrimary.withAlpha(50),
+                      elevation: 0,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: const [
+                                      Text(
+                                        "sample shop name",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "sample shop name",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                              const Icon(Icons.more_vert_outlined,
+                                  size: 30, color: patowavePrimary),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                const Size(45, 45),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute<void>(
+                              //     builder: (BuildContext context) =>
+                              //         const EditMyBusiness(),
+                              //     fullscreenDialog: true,
+                              //   ),
+                              // );
+                            },
+                            child: const Text("Add new shop"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
