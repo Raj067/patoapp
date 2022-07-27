@@ -486,9 +486,10 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     );
 
     if (response.statusCode == 201) {
+      await widget.refreshData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      widget.refreshData();
+
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // Refresh page

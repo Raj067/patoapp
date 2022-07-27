@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -77,8 +79,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) => EditCustomer(
                     customer: widget.customer,
-                    refreshData: () {
-                      widget.refreshData();
+                    refreshData: () async {
+                      await widget.refreshData();
                       Navigator.pop(context);
                     },
                   ),
@@ -237,8 +239,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
                       customer: widget.customer,
                       isPaymentIn: false,
-                      refreshData: () {
-                        widget.refreshData();
+                      refreshData: () async {
+                        await widget.refreshData();
                         Navigator.pop(context);
                       },
                     ),
@@ -273,8 +275,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
                       customer: widget.customer,
                       isPaymentIn: true,
-                      refreshData: () {
-                        widget.refreshData();
+                      refreshData: () async {
+                        await widget.refreshData();
                         Navigator.pop(context);
                       },
                     ),

@@ -208,7 +208,9 @@ class _PartiesPageState extends State<PartiesPage> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
-                  refreshData: refreshDataDB,
+                  refreshData: () async {
+                    await refreshDataDB();
+                  },
                 ),
                 fullscreenDialog: true,
               ),
