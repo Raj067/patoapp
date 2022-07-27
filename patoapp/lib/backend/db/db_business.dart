@@ -10,12 +10,12 @@ class DBHelperBusiness {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}business.db';
+      String path = '${await getDatabasesPath()}db_business.db';
       _db =
           await openDatabase(path, version: _version, onCreate: (db, version) {
         // print("-------------- Creating customer database ------------");
         return db.execute("CREATE TABLE $_tableName("
-            "id STRING PRIMARY KEY, "
+            "id STRING PRIMARY KEY,  shopId INTEGER,"
             "amount INTEGER, discount INTEGER, date TIMESTAMP, "
             "receipt STRING, isCashSale INTEGER, details TEXT,"
             "isExpenses INTEGER, isPaymentIn INTEGER, isPaymentOut INTEGER, "

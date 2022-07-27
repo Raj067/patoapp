@@ -1667,6 +1667,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         "quantity": element.quantity,
       });
     }
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/purchases-transaction/'),
@@ -1677,6 +1680,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         'total_amount': totalPurchasesAmount,
         'items': items,
         'billNo': billNo,
+        "shopId": shopId,
         'description': expensesDescription.text == ""
             ? "Purchases"
             : expensesDescription.text,
@@ -1708,6 +1712,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       context: context,
       builder: (context) => const ModalFit(),
     );
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/expenses-transaction/'),
@@ -1720,6 +1727,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ? "Expenses"
             : expensesDescription.text,
         'billNo': billNo,
+        "shopId": shopId,
         "customer":
             selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
       }),
@@ -1758,6 +1766,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         "description": salesDescription.text,
       });
     }
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
@@ -1767,6 +1778,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         'discount': discountAmount,
         'items': items,
         'receiptNo': receiptNo,
+        'shopId': shopId,
         "customer":
             selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
       }),

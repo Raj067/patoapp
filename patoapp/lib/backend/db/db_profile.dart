@@ -37,8 +37,7 @@ class DBHelperProfile {
     return await _db!.query(_tableName);
   }
 
-  static getItem(ProfileData profile) async {
-    int id = profile.id;
+  static getItem(int id) async {
     return await _db!
         .query(_tableName, where: "id = ?", whereArgs: [id], limit: 1);
   }

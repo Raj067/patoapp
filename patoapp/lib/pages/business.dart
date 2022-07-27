@@ -44,31 +44,6 @@ class _BusinessPageState extends State<BusinessPage> {
 
   List<FinancialData> allFinancialData = [];
   bool isLoading = true;
-  // List<SingleCustomer> customData = [];
-  // fetchCustomer() async {
-  //   String accessToken = await storage.read(key: 'access') ?? "";
-  //   // Financial data
-  //   var data = await http.get(
-  //     Uri.parse("${baseUrl}api/parties-details/"),
-  //     headers: getAuthHeaders(accessToken),
-  //   );
-  //   if (data.statusCode == 200) {
-  //     List<SingleCustomer> finalData = [];
-  //     for (var dx in jsonDecode(data.body)) {
-  //       finalData.add(SingleCustomer(
-  //         address: dx['customer_address'],
-  //         email: dx['customer_email'] ?? "",
-  //         financialData: dx['financial_data'],
-  //         fullName: dx['customer_name'],
-  //         phoneNumber: dx['customer_number'],
-  //         amount: dx['effective_amount'],
-  //         id: dx['id'],
-  //       ));
-  //     }
-  //     customData = finalData;
-  //   }
-  //   setState(() {});
-  // }
 
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
@@ -87,63 +62,36 @@ class _BusinessPageState extends State<BusinessPage> {
         expensesWeek: jsonDecode(generalData.body)['expenses_week'],
       );
     }
-
-    // // FETCHING FINANCIAL DATA
-    // var data = await http.get(
-    //   Uri.parse(
-    //     "${baseUrl}api/business-financial-transactions/",
-    //   ),
-    //   headers: getAuthHeaders(accessToken),
-    // );
-    // if (data.statusCode == 200) {
-    //   List<FinancialData> myData = [];
-    //   for (var dx in jsonDecode(data.body)) {
-    //     myData.add(
-    //       FinancialData(
-    //         date: DateTime.parse(dx['date']),
-    //         isCashSale: dx['isCashSale'],
-    //         isPaymentIn: dx['isPaymentIn'],
-    //         isExpenses: dx['isExpenses'],
-    //         isPaymentOut: dx['isPaymentOut'],
-    //         isPurchases: dx['isPurchases'],
-    //         isInvoice: dx['isInvoice'],
-    //         name: dx['name'] ?? "",
-    //         description: dx['description'] ?? "",
-    //         details: dx['details'],
-    //         amount: dx['amount'],
-    //         receipt: dx['receipt'],
-    //         discount: dx['discount'],
-    //         id: dx['id'],
-    //       ),
-    //     );
-    //   }
-    //   allFinancialData = myData;
-    //   setState(() {});
-    // }
-    // isLoading = false;
   }
 
   fetchBusinessDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
-    finalData.addAll(business
-        .map((dx) => FinancialData(
-              date: DateTime.parse(dx['date']),
-              isCashSale: intTobool(dx['isCashSale']),
-              isPaymentIn: intTobool(dx['isPaymentIn']),
-              isExpenses: intTobool(dx['isExpenses']),
-              isPaymentOut: intTobool(dx['isPaymentOut']),
-              isPurchases: intTobool(dx['isPurchases']),
-              isInvoice: intTobool(dx['isInvoice']),
-              name: dx['name'] ?? "",
-              description: dx['description'] ?? "",
-              details: jsonDecode(dx['details']),
-              amount: dx['amount'],
-              receipt: "${dx['receipt']}",
-              discount: dx['discount'],
-              id: dx['id'],
-            ))
-        .toList());
+    for (Map<String, dynamic> dx in business) {
+      if (dx['shopId'] == shopId) {
+        finalData.add(FinancialData(
+          date: DateTime.parse(dx['date']),
+          isCashSale: intTobool(dx['isCashSale']),
+          isPaymentIn: intTobool(dx['isPaymentIn']),
+          isExpenses: intTobool(dx['isExpenses']),
+          isPaymentOut: intTobool(dx['isPaymentOut']),
+          isPurchases: intTobool(dx['isPurchases']),
+          isInvoice: intTobool(dx['isInvoice']),
+          name: dx['name'] ?? "",
+          description: dx['description'] ?? "",
+          details: jsonDecode(dx['details']),
+          amount: dx['amount'],
+          receipt: "${dx['receipt']}",
+          discount: dx['discount'],
+          id: dx['id'],
+          shopId: dx['shopId'],
+        ));
+      }
+    }
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
     isLoading = false;

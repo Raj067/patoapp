@@ -153,7 +153,7 @@ def greeting_cards(request, *args, **kwargs):
 def add_new_customer_api(request):
     if request.method == "POST":
         reg = Customer(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             customer_name=request.data.get('customerName'),
             customer_number=request.data.get('phoneNumber'),
             customer_email=request.data.get('emailAddress'),
@@ -162,7 +162,7 @@ def add_new_customer_api(request):
         reg.save()
         if request.data.get("openingBalance") > 0:
             reg.customer_payment.create(
-                shop=get_shop(request)[0],
+                shop=Shop.objects.get(id=request.data.get('shopId')),
                 customer=reg,
                 is_payment_in=request.data.get("toReceive"),
                 description="Opening Balance",
@@ -190,7 +190,7 @@ def adding_payment_customer_api(request):
     if request.method == "POST":
         data = Customer.objects.get(id=request.data.get("id"))
         data.customer_payment.create(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             customer=data,
             is_payment_in=request.data.get("isPaymentIn"),
             description=request.data.get("description"),
@@ -215,7 +215,7 @@ def purchases_transaction_api(request):
         items = request.data.get('items')
         description = request.data.get('description')
         reg = Purchase(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             amount_paid=amount_paid,
             total_amount=total_amount,
             bill_no=str(billNo),
@@ -228,7 +228,7 @@ def purchases_transaction_api(request):
 
         for dx in items:
             reg.purchased_items.create(
-                shop=get_shop(request)[0],
+                shop=Shop.objects.get(id=request.data.get('shopId')),
                 product=Product.objects.get(id=dx.get('id')),
                 price=dx.get('price'),
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -255,7 +255,7 @@ def expenses_transaction_api(request):
         billNo = request.data.get('billNo')
         description = request.data.get('description')
         reg = Expense(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             amount=amount,
             bill_no=str(billNo),
             description=description,
@@ -281,7 +281,7 @@ def cash_sales_transaction_api(request):
         items = request.data.get('items')
         #
         reg = CashSale(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             amount=amount,
             discount=discount,
             # description=description,
@@ -291,7 +291,7 @@ def cash_sales_transaction_api(request):
         reg.save()
         for dx in items:
             reg.sold_items.create(
-                shop=get_shop(request)[0],
+                shop=Shop.objects.get(id=request.data.get('shopId')),
                 product=Product.objects.get(id=dx.get('id')),
                 price=dx.get('price'),
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -316,7 +316,7 @@ def cash_sales_customer_transaction_api(request):
         items = request.data.get('items')
         description = request.data.get('description')
         reg = CashSaleCustomer(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             amount=amount,
             discount=discount,
             description=description,
@@ -327,7 +327,7 @@ def cash_sales_customer_transaction_api(request):
 
         for dx in items:
             reg.sold_items.create(
-                shop=get_shop(request)[0],
+                shop=Shop.objects.get(id=request.data.get('shopId')),
                 product=Product.objects.get(id=dx.get('id')),
                 price=dx.get('price'),
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -350,7 +350,7 @@ def cash_sales_customer_transaction_api(request):
 def add_new_product_api(request):
     if request.method == "POST":
         product = Product(
-            shop=get_shop(request)[0],
+            shop=Shop.objects.get(id=request.data.get('shopId')),
             product_name=request.data.get('productName'),
             quantity=request.data.get('quantity'),
             purchases_price=request.data.get('purchasesPrice'),
@@ -380,27 +380,6 @@ def edit_product_api(request):
         product.supplier_name = request.data.get('supplierName')
         product.supplier_number = request.data.get('supplierNumber')
         product.supplier_email = request.data.get('supplierEmail')
-        product.save()
-        return Response(status=status.HTTP_201_CREATED)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST'])
-def add_new_product_api(request):
-    if request.method == "POST":
-        product = Product(
-            shop=get_shop(request)[0],
-            product_name=request.data.get('productName'),
-            quantity=request.data.get('quantity'),
-            purchases_price=request.data.get('purchasesPrice'),
-            selling_price_primary=request.data.get('sellingPrice'),
-            stock_level=request.data.get('stockLevel'),
-            primary_unit=request.data.get('primaryUnit'),
-            is_service=request.data.get('isService'),
-            supplier_name=request.data.get('supplierName'),
-            supplier_number=request.data.get('supplierNumber'),
-            supplier_email=request.data.get('supplierEmail'),
-        )
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)

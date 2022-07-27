@@ -18,6 +18,7 @@ class FinancialData {
   String receipt = "";
   // For storing in the database
   String id;
+  int shopId;
   // for frontend purposes only
   bool isDeleted = false;
   FinancialData({
@@ -28,6 +29,7 @@ class FinancialData {
     required this.details,
     required this.isCashSale,
     required this.id,
+    required this.shopId,
     this.isExpenses = false,
     this.isPaymentIn = false,
     this.isPaymentOut = false,
@@ -144,6 +146,7 @@ class FinancialData {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'shopId': shopId,
       "date": date.toString(),
       'amount': amount,
       'discount': discount,

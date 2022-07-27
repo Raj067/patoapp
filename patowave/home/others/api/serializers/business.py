@@ -17,6 +17,7 @@ def business_financial_data(request, shop):
         if dx.shop in shop:
             data.append({
                 "id": f"payment-{dx.id}",
+                "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": dx.description,
                 "name": dx.customer.customer_name,
@@ -38,6 +39,7 @@ def business_financial_data(request, shop):
         if dx.shop in shop:
             data.append({
                 "id": f"expense-{dx.id}",
+                "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": dx.description,
                 "name": "Expenses",
@@ -59,6 +61,7 @@ def business_financial_data(request, shop):
         if dx.shop in shop:
             data.append({
                 "id": f"purchases-{dx.id}",
+                "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": dx.description,
                 "name": dx.customer.customer_name if dx.customer else 'Purchases',
@@ -90,6 +93,7 @@ def business_financial_data(request, shop):
         if dx.shop in shop:
             data.append({
                 "id": f"cash_sale-{dx.id}",
+                "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": "Cash Sales",
                 "name": "Cash Sales",
@@ -115,6 +119,7 @@ def business_financial_data(request, shop):
         if dx.shop in shop:
             data.append({
                 "id": f"cash_sale_customer-{dx.id}",
+                "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": "Cash Sales",
                 "name": dx.customer.customer_name,

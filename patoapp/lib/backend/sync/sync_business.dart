@@ -35,6 +35,7 @@ class SyncBusiness {
           receipt: dx['receipt'],
           discount: dx['discount'],
           id: dx['id'],
+          shopId: dx['shopId'],
         );
         // Add data to the database
         try {
@@ -65,6 +66,7 @@ class SyncBusiness {
                 receipt: "${dx['receipt']}",
                 discount: dx['discount'],
                 id: dx['id'],
+                shopId: dx['shopId'],
               ))
           .toList());
       List<dynamic> serverDb =

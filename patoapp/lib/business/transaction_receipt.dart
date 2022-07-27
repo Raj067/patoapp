@@ -1,14 +1,12 @@
 // ignore: file_names
 import 'dart:async';
-import 'dart:convert';
-// import 'dart:typed_data';
 import 'package:intl/intl.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:http/http.dart' as http;
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -32,15 +30,17 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   String address = "";
   String telphone = "";
   bool isLoading = true;
-  fetchData(String path) async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    var data = await http.get(
-      Uri.parse(baseUrl + path),
-      headers: getAuthHeaders(accessToken),
-    );
-    shopName = jsonDecode(data.body)['name'];
-    address = jsonDecode(data.body)['address'];
-    telphone = jsonDecode(data.body)['phone'];
+  fetchData() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+    List<Map<String, dynamic>> profile = await DBHelperProfile.getItem(shopId);
+
+    shopName = profile[0]['businessName'];
+    address = profile[0]['businessAddress'];
+    telphone = profile[0]['businessPhone'] == ''
+        ? '-'
+        : "${profile[0]['businessPhone']}";
     isLoading = false;
     setState(() {});
   }
@@ -48,7 +48,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   @override
   void initState() {
     super.initState();
-    fetchData("api/shop-profile-details/");
+    fetchData();
   }
 
   @override

@@ -625,6 +625,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     required bool isPaymentIn,
     required int id,
   }) async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/adding-payment-customer/'),
@@ -635,6 +638,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         'isPaymentIn': isPaymentIn,
         'id': id,
         "receiptNo": receiptNo,
+        'shopId': shopId,
       }),
     );
 
