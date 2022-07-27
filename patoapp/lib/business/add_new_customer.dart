@@ -163,6 +163,10 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
     required String transactionDate,
     required bool toReceive,
   }) async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/add-new-customer/'),
@@ -175,6 +179,7 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
         'openingBalance': openingBalance == "" ? 0 : int.parse(openingBalance),
         'transactionDate': transactionDate,
         'toReceive': toReceive,
+        'shopId': shopId,
       }),
     );
 

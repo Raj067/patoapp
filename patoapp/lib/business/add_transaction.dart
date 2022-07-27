@@ -85,16 +85,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     List<SingleCustomer> finalData = [];
     for (Map<String, dynamic> e in customers) {
       if (e['shopId'] == shopId) {
-        finalData.add(SingleCustomer(
-          id: e['id'],
-          shopId: e['shopId'],
-          amount: e['amount'],
-          fullName: e['fullName'],
-          address: e['address'],
-          phoneNumber: "${e['phoneNumber']}",
-          email: e['email'],
-          financialData: jsonDecode(e['financialData']),
-        ));
+        finalData.add(fromJsonCustomer(e));
       }
     }
     finalCustomerData = finalData;

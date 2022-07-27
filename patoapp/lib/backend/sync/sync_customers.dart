@@ -40,18 +40,7 @@ class SyncCustomers {
       //  == Deleting the data that is no longer stored in the database.
       List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
       List<SingleCustomer> localDb = [];
-      localDb.addAll(customers
-          .map((e) => SingleCustomer(
-                id: e['id'],
-                shopId: e['shopId'],
-                amount: e['amount'],
-                fullName: e['fullName'],
-                address: e['address'],
-                phoneNumber: "${e['phoneNumber']}",
-                email: e['email'],
-                financialData: jsonDecode(e['financialData']),
-              ))
-          .toList());
+      localDb.addAll(customers.map((e) => fromJsonCustomer(e)).toList());
       List<dynamic> serverDb =
           jsonDecode(data.body).map((e) => e['id']).toList();
 

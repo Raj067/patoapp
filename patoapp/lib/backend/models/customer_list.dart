@@ -39,7 +39,7 @@ class SingleCustomer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'shopId':shopId,
+      'shopId': shopId,
       'amount': amount,
       'fullName': fullName,
       'address': address,
@@ -48,4 +48,17 @@ class SingleCustomer {
       'financialData': jsonEncode(financialData),
     };
   }
+}
+
+SingleCustomer fromJsonCustomer(Map<String, dynamic> e) {
+  return SingleCustomer(
+    id: e['id'],
+    shopId: e['shopId'],
+    amount: e['amount'],
+    fullName: e['fullName'],
+    address: e['address'],
+    phoneNumber: "${e['phoneNumber']}",
+    email: e['email'],
+    financialData: jsonDecode(e['financialData']),
+  );
 }
