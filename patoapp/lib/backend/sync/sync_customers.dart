@@ -26,6 +26,7 @@ class SyncCustomers {
           phoneNumber: "${dx['customer_number']}",
           amount: dx['effective_amount'],
           id: dx['id'],
+          shopId: dx['shopId'],
         );
         // Add data to the database
         try {
@@ -42,6 +43,7 @@ class SyncCustomers {
       localDb.addAll(customers
           .map((e) => SingleCustomer(
                 id: e['id'],
+                shopId: e['shopId'],
                 amount: e['amount'],
                 fullName: e['fullName'],
                 address: e['address'],

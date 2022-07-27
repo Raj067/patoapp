@@ -17,11 +17,15 @@ def general_parties_data(request, shop):
 class CustomerSerializer(serializers.ModelSerializer):
     effective_amount = SerializerMethodField()
     financial_data = SerializerMethodField()
+    shopId = SerializerMethodField()
 
     class Meta:
         model = Customer
-        fields = ('id', 'customer_name', 'customer_number','customer_address',
-                  'customer_email','effective_amount', 'financial_data')
+        fields = ('id', 'customer_name', 'customer_number', 'customer_address',
+                  'customer_email', 'effective_amount', 'financial_data', 'shopId')
+
+    def get_shopId(mySerializer, myModel):
+        return myModel.shop.id
 
     def get_effective_amount(mySerializer, myModel):
         val = 0

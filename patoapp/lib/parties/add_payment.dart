@@ -38,27 +38,36 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   List<SingleCustomer> finalCustomerData = [];
 
   fetchCustomersDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
     List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
     List<SingleCustomer> finalData = [];
-    finalData.addAll(customers
-        .map((e) => SingleCustomer(
-              id: e['id'],
-              amount: e['amount'],
-              fullName: e['fullName'],
-              address: e['address'],
-              phoneNumber: "${e['phoneNumber']}",
-              email: e['email'],
-              financialData: jsonDecode(e['financialData']),
-            ))
-        .toList());
+    for (Map<String, dynamic> e in customers) {
+      if (e['shopId'] == shopId) {
+        finalData.add(SingleCustomer(
+          id: e['id'],
+          shopId: e['shopId'],
+          amount: e['amount'],
+          fullName: e['fullName'],
+          address: e['address'],
+          phoneNumber: "${e['phoneNumber']}",
+          email: e['email'],
+          financialData: jsonDecode(e['financialData']),
+        ));
+      }
+    }
     finalCustomerData = finalData;
     setState(() {});
   }
+
   @override
   void initState() {
     super.initState();
     fetchCustomersDB();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

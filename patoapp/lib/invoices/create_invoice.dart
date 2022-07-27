@@ -55,6 +55,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           phoneNumber: dx['customer_number'],
           amount: dx['effective_amount'],
           id: dx['id'],
+          shopId: dx['shopId'],
         ));
       }
       customData = finalData;

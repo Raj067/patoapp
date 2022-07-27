@@ -10,12 +10,12 @@ class DBHelperCustomer {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}customer.db';
+      String path = '${await getDatabasesPath()}db_customer.db';
       _db =
           await openDatabase(path, version: _version, onCreate: (db, version) {
         // print("-------------- Creating customer database ------------");
         return db.execute("CREATE TABLE $_tableName("
-            "id INTEGER PRIMARY KEY, "
+            "id INTEGER PRIMARY KEY, shopId INTEGER,"
             "amount INTEGER, fullName STRING, email STRING, "
             "address STRING, phoneNumber STRING, financialData TEXT,"
             "createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)");

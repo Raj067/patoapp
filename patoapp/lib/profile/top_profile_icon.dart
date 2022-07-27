@@ -4,6 +4,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
+import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/profile/add_new_shop.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -610,8 +611,13 @@ class _TopProfileIconState extends State<TopProfileIcon> {
 
   _setShop(ProfileData shop) async {
     await storage.write(key: "activeShop", value: "${shop.id}");
-    widget.refreshData();
+    // widget.refreshData();
     // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => const HomePage(),
+      ),
+    );
   }
 }
