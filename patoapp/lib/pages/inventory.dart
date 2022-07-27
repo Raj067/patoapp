@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
+import 'package:patoapp/backend/sync/sync_products.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -55,35 +55,28 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   TextEditingController searchController = TextEditingController();
 
   bool isAlreadyLoad = false;
-  fetchData(String path) async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    var data = await http.get(
-      Uri.parse(baseUrl + path),
-      headers: getAuthHeaders(accessToken),
-    );
 
+  fetchProductsDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> products = await DBHelperProduct.query();
     List<SingleProduct> finalData = [];
-    if (data.statusCode == 200) {
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleProduct(
-          isService: dx['is_service'] ?? false,
-          productUnit: dx["primary_unit"] ?? "Items",
-          id: dx['id'],
-          productName: dx["product_name"],
-          quantity: dx['quantity'],
-          purchasesPrice: dx['purchases_price'],
-          sellingPrice: dx['selling_price_primary'],
-          stockLevel: dx['stock_level'] ?? 0,
-          supplierName: dx['supplier_name'] ?? '',
-          supplierContact: dx['supplier_number'] ?? '',
-          thumbnail: dx['product_image'] ?? '',
-        ));
+    for (Map<String, dynamic> e in products) {
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonProduct(e));
       }
     }
-    isAlreadyLoad = true;
     customData = finalData;
-    // customData = allProductDetails();
+    isAlreadyLoad = true;
     setState(() {});
+  }
+
+  refreshDataDB() async {
+    SyncProduct syncProduct = SyncProduct();
+    await syncProduct.fetchData();
+    fetchProductsDB();
   }
 
   // For Preferences
@@ -99,7 +92,8 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   @override
   void initState() {
     super.initState();
-    fetchData("api/inventory-products/");
+    fetchProductsDB();
+    refreshDataDB();
     fetchPreference();
   }
 
@@ -207,7 +201,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                             Row(
                               children: [
                                 Text(
-                                  "Tsh. $allAddedProductPrice",
+                                  "Tsh. ${formatter.format(allAddedProductPrice)}",
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
@@ -285,7 +279,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                       isProductImage: isProductImage,
                       isProductBarcode: isProductBarcode,
                       resetData: () {
-                        fetchData("api/inventory-products/");
+                        refreshDataDB();
                       },
                     ),
                     fullscreenDialog: true,
@@ -407,7 +401,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   isProductImage: isProductImage,
                   isProductBarcode: isProductBarcode,
                   resetData: () {
-                    fetchData("api/inventory-products/");
+                    refreshDataDB();
                   },
                 ),
                 fullscreenDialog: true,
@@ -470,7 +464,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                             Row(
                               children: [
                                 Text(
-                                  'Tsh ${product.sellingPrice}',
+                                  'Tsh ${formatter.format(product.sellingPrice)}',
                                   style: const TextStyle(fontSize: 12),
                                 ),
                                 const SizedBox(
@@ -611,7 +605,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Tsh ${product.sellingPrice}',
+                                        'Tsh ${formatter.format(product.sellingPrice)}',
                                         style: const TextStyle(fontSize: 12),
                                       ),
                                       const SizedBox(

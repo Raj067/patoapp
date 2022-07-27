@@ -108,7 +108,7 @@ class _ProductsCartState extends State<ProductsCart> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Tsh: ${discount.toInt()}",
+                        "Tsh: ${formatter.format(discount.toInt())}",
                         style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -126,7 +126,7 @@ class _ProductsCartState extends State<ProductsCart> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "Tsh: ${totalAmount.toInt() - discount.toInt()}",
+                        "Tsh: ${formatter.format(totalAmount.toInt() - discount.toInt())}",
                         style: const TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -378,7 +378,7 @@ class _ProductsCartState extends State<ProductsCart> {
                   ),
                 ),
                 Text(
-                  "Tsh ${product.getTotalPrice()}",
+                  "Tsh ${formatter.format(product.getTotalPrice())}",
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -394,7 +394,7 @@ class _ProductsCartState extends State<ProductsCart> {
                   style: TextStyle(fontSize: 10),
                 ),
                 Text(
-                  "${product.addedToCart} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.getTotalPrice()}",
+                  "${product.addedToCart} ${product.productUnit} x Tsh ${formatter.format(product.sellingPrice)} = Tsh ${formatter.format(product.getTotalPrice())}",
                   style: const TextStyle(fontSize: 10),
                 ),
               ],
@@ -410,6 +410,9 @@ class _ProductsCartState extends State<ProductsCart> {
     required double discount,
     required List<Map> items,
   }) async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/cash-sales-transaction/'),
@@ -419,6 +422,7 @@ class _ProductsCartState extends State<ProductsCart> {
         'discount': discount,
         'items': items,
         'receiptNo': receiptNo,
+        'shopId': shopId,
       }),
     );
 

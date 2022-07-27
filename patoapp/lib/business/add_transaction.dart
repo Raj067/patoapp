@@ -8,6 +8,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -60,33 +61,18 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   List<SingleCustomer> finalCustomerData = [];
   // Fetching data
   fetchData() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/inventory-products/"),
-      headers: getAuthHeaders(accessToken),
-    );
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
 
+    List<Map<String, dynamic>> products = await DBHelperProduct.query();
     List<SingleProduct> finalData = [];
-    if (data.statusCode == 200) {
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleProduct(
-          isService: dx['is_service'] ?? false,
-          productUnit: dx["primary_unit"] ?? "Items",
-          id: dx['id'],
-          productName: dx["product_name"],
-          quantity: dx['quantity'],
-          purchasesPrice: dx['purchases_price'],
-          sellingPrice: dx['selling_price_primary'],
-          stockLevel: dx['stock_level'],
-          supplierName: dx['supplier_name'] ?? '',
-          supplierContact: dx['supplier_number'] ?? '',
-          thumbnail: dx['product_image'] ?? '',
-        ));
+    for (Map<String, dynamic> e in products) {
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonProduct(e));
       }
     }
-    // isLoading = true;
     allProducts = finalData;
-    // customData = allProductDetails();
     setState(() {});
   }
 
@@ -1283,6 +1269,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           !addedItemsToSales.map((e) => e.id).contains(dx.id)) {
                         addedItemsToSales.add(
                           SingleProduct(
+                            shopId: 0,
                             isService: false,
                             quantity: int.parse(quantityControllerSales.text),
                             productUnit: dx.productUnit,
@@ -1506,6 +1493,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                               .contains(dx.id)) {
                         addedItemsToPurchases.add(
                           SingleProduct(
+                            shopId: 0,
                             isService: false,
                             quantity:
                                 int.parse(quantityControllerPurchases.text),

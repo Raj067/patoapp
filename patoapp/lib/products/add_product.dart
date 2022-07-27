@@ -669,6 +669,9 @@ class _AddProductPageState extends State<AddProductPage> {
       context: context,
       builder: (context) => const ModalFit(),
     );
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     final response = await http.post(
       Uri.parse('${baseUrl}api/add-new-product/'),
@@ -686,6 +689,7 @@ class _AddProductPageState extends State<AddProductPage> {
         'supplierNumber': supplierNumber.text,
         'supplierEmail': supplierEmail.text,
         'isService': isService,
+        'shopId': shopId,
       }),
     );
 
