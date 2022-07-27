@@ -91,6 +91,18 @@ TextButtonThemeData _textButtonThemeData = TextButtonThemeData(
 OutlinedButtonThemeData _outlinedButtonTheme = OutlinedButtonThemeData(
   style: ButtonStyle(
     foregroundColor: MaterialStateProperty.all<Color>(patowavePrimary),
+    overlayColor: MaterialStateProperty.resolveWith<Color?>(
+      (Set<MaterialState> states) {
+        if (states.contains(MaterialState.hovered)) {
+          return patowavePrimary.withOpacity(0.04);
+        }
+        if (states.contains(MaterialState.focused) ||
+            states.contains(MaterialState.pressed)) {
+          return patowavePrimary.withOpacity(0.12);
+        }
+        return null; // Defer to the widget's default.
+      },
+    ),
     shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
   ),
 );

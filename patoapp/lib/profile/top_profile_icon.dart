@@ -27,6 +27,7 @@ class TopProfileIcon extends StatefulWidget {
 class _TopProfileIconState extends State<TopProfileIcon> {
   List<ProfileData> myProfileData = [];
   int profilePercent = 20;
+
   fetchProfileDB() async {
     List<Map<String, dynamic>> profile = await DBHelperProfile.query();
     List<ProfileData> finalData = [];
@@ -453,54 +454,6 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                 height: 100,
                 // width: 100,
               ),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                OutlinedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text("Change"),
-                ),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text("Upload"),
-                ),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all(
-                      const BorderSide(color: patowaveErrorRed),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text("Remove"),
-                ),
-              ],
             ),
             Container(height: 10),
           ],

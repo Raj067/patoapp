@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:signature/signature.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -77,6 +78,12 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   TextEditingController businessCategory = TextEditingController();
 
   final editShopFormKey1 = GlobalKey<FormState>();
+
+  final SignatureController _controller = SignatureController(
+    penStrokeWidth: 3,
+    penColor: patowavePrimary,
+    exportBackgroundColor: Colors.blue,
+  );
   @override
   void initState() {
     super.initState();
@@ -314,7 +321,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Container(height: 15),
+            Container(height: 10),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -322,56 +329,70 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 ),
               ),
               elevation: 0,
-              child: Container(
-                height: 100,
-                // width: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Signature(
+                  controller: _controller,
+                  // width: 300,
+                  height: 200,
+                  backgroundColor: Theme.of(context).cardColor,
+                ),
               ),
             ),
             Container(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                OutlinedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
+                // OutlinedButton(
+                //   style: ButtonStyle(
+                //     shape: MaterialStateProperty.all(
+                //       const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.all(
+                //           Radius.circular(30),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                //   onPressed: () {},
+                //   child: const Text("Change"),
+                // ),
+                Expanded(
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
                         ),
                       ),
                     ),
+                    onPressed: () {
+                      _controller.toPngBytes();
+                    },
+                    child: const Text("Save"),
                   ),
-                  onPressed: () {},
-                  child: const Text("Change"),
                 ),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
+                Container(width: 10),
+                Expanded(
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      side: MaterialStateProperty.all(
+                        const BorderSide(color: patowaveErrorRed),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
                         ),
                       ),
                     ),
+                    onPressed: () {
+                      _controller.clear();
+                    },
+                    child: const Text("Clear"),
                   ),
-                  onPressed: () {},
-                  child: const Text("Upload"),
-                ),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all(
-                      const BorderSide(color: patowaveErrorRed),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text("Remove"),
                 ),
               ],
             ),
