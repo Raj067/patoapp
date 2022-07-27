@@ -9,6 +9,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -89,6 +90,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       }
     }
     finalCustomerData = finalData;
+    setState(() {});
+  }
+
+  refreshData() async {
+    SyncCustomers syncCustomer = SyncCustomers();
+    await syncCustomer.fetchData();
+    fetchCustomersDB();
     setState(() {});
   }
 
@@ -421,7 +429,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
                                     AddNewCustomerTransaction(
-                                        refreshData: () {}),
+                                        refreshData: () async {
+                                  await refreshData();
+                                }),
                                 fullscreenDialog: true,
                               ),
                             );

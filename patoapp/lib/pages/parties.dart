@@ -10,7 +10,6 @@ import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'dart:convert';
 
 class PartiesPage extends StatefulWidget {
   const PartiesPage({Key? key}) : super(key: key);

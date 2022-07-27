@@ -184,9 +184,10 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
     );
 
     if (response.statusCode == 201) {
+      await widget.refreshData();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      widget.refreshData();
+
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // Navigator
