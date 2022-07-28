@@ -72,7 +72,9 @@ api_urls = [
     path('api/adjust-product/', adjust_product_api,
          name='adjust_product_api'),
      
-    # Invoice create_invoice_api
+    # Invoice 
     path('api/create-invoice/', create_invoice_api,
          name='create_invoice_api'),
+    path('api/all-invoices/', all_invoices_api,
+         name='all_invoices_api'),
 ]

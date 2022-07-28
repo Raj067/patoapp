@@ -20,9 +20,8 @@ class FileHandleApi {
 
   // open pdf file function
   static Future openFile(File file) async {
-    // final url = file.path;
-
-    // await OpenFile.open(url);
+    final url = file.path;
+    print(url);
   }
 }
 
@@ -31,7 +30,7 @@ class PdfInvoiceApi {
     final pdf = pw.Document();
 
     final iconImage =
-        (await rootBundle.load('assets/icon.png')).buffer.asUint8List();
+        (await rootBundle.load('assets/icon/icon.png')).buffer.asUint8List();
 
     final tableHeaders = [
       'Description',

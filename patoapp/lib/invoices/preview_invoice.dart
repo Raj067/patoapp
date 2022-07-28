@@ -1,6 +1,9 @@
 // import 'dart:typed_data';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:patoapp/invoices/api_invoice.dart';
 // import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdf/pdf.dart';
@@ -60,7 +63,40 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           ),
         ],
       ),
-      // body: PDFView(filePath: ,),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: patowavePrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              children: [
+                ElevatedButton(
+                  child: Text("hello"),
+                  onPressed: () async {
+                    PdfInvoiceApi.generate();
+                    File myFile = await PdfInvoiceApi.generate();
+                    FileHandleApi.openFile(myFile);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
         items: const <BottomNavigationBarItem>[

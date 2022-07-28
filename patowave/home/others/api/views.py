@@ -227,6 +227,13 @@ def adding_payment_customer_api(request):
 # FOR Invoices
 
 
+@api_view(['GET', 'POST'])
+def all_invoices_api(request):
+    data = [dx for dx in Invoice.objects.all() if dx.shop in get_shop(request)]
+    serializer = InvoiceSerializer(data, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def create_invoice_api(request):
     if request.method == "POST":

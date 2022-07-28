@@ -8,19 +8,35 @@ from .serializers.profile import *
 from .serializers.business import *
 from .serializers.greeting_cards import *
 
-class PaymentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Payment
-        fields = ('id', 'amount', 'is_payment_in',)
-
 
 class InvoiceSerializer(serializers.ModelSerializer):
+    shopId = SerializerMethodField()
+    customer_data = SerializerMethodField()
+    items = SerializerMethodField()
+
     class Meta:
         model = Invoice
-        fields = ('id', 'amount', 'is_payment_in',)
+        fields = ('id', 'shopId', 'amount_received',
+                  'due_date', 'total_amount', 'discount',
+                  'description', 'customer_data', 'items',
+                  )
 
+    def get_shopId(mySerializer, myModel):
+        return myModel.shop.id
 
-class PurchaseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Purchase
-        fields = ('id', 'amount', 'is_payment_in',)
+    def get_customer_data(mySerializer, myModel):
+        return myModel.customer.id
+
+    def get_items(mySerializer, myModel):
+        data = [
+            {
+                "id": i.id,
+                "product": i.product.product_name,
+                "quantity": i.quantity,
+                "price": i.price,
+                "product_unit": i.product_unit,
+                "date": i.updated_at,
+            }
+            for i in myModel.sold_items.all()
+        ]
+        return data

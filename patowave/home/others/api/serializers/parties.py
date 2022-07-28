@@ -67,10 +67,10 @@ class CustomerSerializer(serializers.ModelSerializer):
                 "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
             })
 
-        # For all Invoices
-        for dx in myModel.customer_invoice.all():
-            data.append({
-                "name": "Invoice", "description": "description",
-                "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
-            })
+        # # For all Invoices
+        # for dx in myModel.customer_invoice.all():
+        #     data.append({
+        #         "name": "Invoice", "description": "description",
+        #         "received": 0, "paid": dx.amount, "date": format_date(dx.created_at)
+        #     })
         return data

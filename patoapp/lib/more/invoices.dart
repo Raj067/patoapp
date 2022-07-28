@@ -1,10 +1,40 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:http/http.dart' as http;
 
-class MainInvoicePage extends StatelessWidget {
+class MainInvoicePage extends StatefulWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
+
+  @override
+  State<MainInvoicePage> createState() => _MainInvoicePageState();
+}
+
+class _MainInvoicePageState extends State<MainInvoicePage> {
+  fetchData() async {
+    String accessToken = await storage.read(key: 'access') ?? "";
+    var myData = await http.get(
+      Uri.parse(
+        "${baseUrl}api/all-invoices/",
+      ),
+      headers: getAuthHeaders(accessToken),
+    );
+    if (myData.statusCode == 200) {
+      for (var element in jsonDecode(myData.body)) {
+        print(element);
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
