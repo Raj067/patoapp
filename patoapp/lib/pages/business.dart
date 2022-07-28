@@ -120,23 +120,21 @@ class _BusinessPageState extends State<BusinessPage> {
         _businessButtomTopBar(),
         context,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        child: ListView(
-          children: [
-            Container(height: 5),
-            _firstRowBusinessData(context),
-            // SecondRowBusinessData(),()
-            isLoading
-                ? const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : _allFinancialData(context),
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        children: [
+          Container(height: 5),
+          _firstRowBusinessData(context),
+          // SecondRowBusinessData(),()
+          isLoading
+              ? const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : _allFinancialData(context),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

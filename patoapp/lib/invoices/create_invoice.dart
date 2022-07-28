@@ -199,34 +199,318 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
   _addSales() {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: invoiceFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+      child: Form(
+        key: invoiceFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                }
+                return null;
+              },
+              onChanged: (val) {
+                if (val != "") {
+                  receivedAmount = double.parse(val);
+                  setState(() {});
+                }
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Amount Received*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            DropdownButtonFormField2(
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null || value == "") {
                     return 'This field is required';
                   }
                   return null;
                 },
-                onChanged: (val) {
-                  if (val != "") {
-                    receivedAmount = double.parse(val);
-                    setState(() {});
-                  }
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Select Customer*',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: customData
+                    .map((item) => DropdownMenuItem<String>(
+                          value: "${item.id}",
+                          child: Text(
+                            item.fullName,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                  setState(() {
+                    selectedCustmer = value.toString();
+                  });
                 },
+                onSaved: (value) {
+                  selectedCustmer = value.toString();
+                },
+                searchController: customerController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 4,
+                    right: 8,
+                    left: 8,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          cursorColor: patowavePrimary,
+                          controller: customerController,
+                          decoration: const InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 8,
+                            ),
+                            hintText: 'Search for customer...',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  AddNewCustomerTransaction(refreshData: () {}),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                        },
+                        child: const Text("add"),
+                      )
+                    ],
+                  ),
+                ),
+                searchMatchFn: (item, searchValue) {
+                  return (item.value.toString().contains(searchValue));
+                },
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    customerController.clear();
+                  }
+                }),
+            Container(height: 15),
+            TextFormField(
+              controller: dueDate,
+              //editing controller of this TextField
+              decoration: const InputDecoration(
+                suffixIcon: Icon(
+                  Icons.calendar_month,
+                  color: patowavePrimary,
+                ),
+                label: Text(
+                  "Due Date*",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                }
+                return null;
+              },
+              readOnly: true,
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(DateTime.now().year - 5),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(DateTime.now().year + 5));
+
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  setState(() {
+                    dueDate.text =
+                        formattedDate; //set output date to TextField value.
+                  });
+                } else {}
+              },
+            ),
+            Container(height: 15),
+            addedItemsToSales.isNotEmpty
+                ? _allAddedItemsToSales(context)
+                : Container(),
+            InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => _addItemsToSale(context),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: patowavePrimary.withAlpha(100),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Add Items to sales",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                        color: patowaveBlack,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            _discount(),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Discount",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${discountAmount.toInt()}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total Amount",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${totalAmount.toInt() - discountAmount.toInt()}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Due Amount",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: patowavePrimary,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${totalAmount.toInt() - discountAmount.toInt() - receivedAmount.toInt()}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 15),
+            SizedBox(
+              // height: 180,
+              child: TextFormField(
+                cursorColor: patowavePrimary,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                minLines: 3,
+                maxLines: null,
                 decoration: const InputDecoration(
                   label: Text(
-                    "Amount Received*",
+                    "Descriptions",
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: OutlineInputBorder(
@@ -236,297 +520,8 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ),
                 ),
               ),
-              Container(height: 15),
-              DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return 'This field is required';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Select Customer*',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: customData
-                      .map((item) => DropdownMenuItem<String>(
-                            value: "${item.id}",
-                            child: Text(
-                              item.fullName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                    setState(() {
-                      selectedCustmer = value.toString();
-                    });
-                  },
-                  onSaved: (value) {
-                    selectedCustmer = value.toString();
-                  },
-                  searchController: customerController,
-                  searchInnerWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 4,
-                      right: 8,
-                      left: 8,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            cursorColor: patowavePrimary,
-                            controller: customerController,
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 8,
-                              ),
-                              hintText: 'Search for customer...',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  bottomLeft: Radius.circular(15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(15),
-                                  bottomRight: Radius.circular(15),
-                                ),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    AddNewCustomerTransaction(
-                                        refreshData: () {}),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                          },
-                          child: const Text("add"),
-                        )
-                      ],
-                    ),
-                  ),
-                  searchMatchFn: (item, searchValue) {
-                    return (item.value.toString().contains(searchValue));
-                  },
-                  //This to clear the search value when you close the menu
-                  onMenuStateChange: (isOpen) {
-                    if (!isOpen) {
-                      customerController.clear();
-                    }
-                  }),
-              Container(height: 15),
-              TextFormField(
-                controller: dueDate,
-                //editing controller of this TextField
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.calendar_month,
-                    color: patowavePrimary,
-                  ),
-                  label: Text(
-                    "Due Date*",
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'This field is required';
-                  }
-                  return null;
-                },
-                readOnly: true,
-                //set it true, so that user will not able to edit text
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(DateTime.now().year - 5),
-                      //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(DateTime.now().year + 5));
-
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    setState(() {
-                      dueDate.text =
-                          formattedDate; //set output date to TextField value.
-                    });
-                  } else {}
-                },
-              ),
-              Container(height: 15),
-              addedItemsToSales.isNotEmpty
-                  ? _allAddedItemsToSales(context)
-                  : Container(),
-              InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          _addItemsToSale(context),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: patowavePrimary.withAlpha(100),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          "Add Items to sales",
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          size: 14,
-                          color: patowaveBlack,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              _discount(),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Discount",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Tsh: ${discountAmount.toInt()}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total Amount",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Tsh: ${totalAmount.toInt() - discountAmount.toInt()}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Due Amount",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: patowavePrimary,
-                    ),
-                  ),
-                  Text(
-                    "Tsh: ${totalAmount.toInt() - discountAmount.toInt() - receivedAmount.toInt()}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Container(height: 15),
-              SizedBox(
-                // height: 180,
-                child: TextFormField(
-                  cursorColor: patowavePrimary,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  minLines: 3,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    label: Text(
-                      "Descriptions",
-                      style:
-                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

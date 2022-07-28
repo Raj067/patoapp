@@ -88,52 +88,50 @@ class _InventoryAnalysisState extends State<InventoryAnalysis> {
           ),
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            _singleCardData(
-              inventoryAnalysisData.instock,
-              "Instock",
-              inventoryAnalysisData.inventoryTurnover,
-              "Inventory Turnover",
-            ),
-            _singleCardData(
-              inventoryAnalysisData.stockin,
-              "Stock-In",
-              inventoryAnalysisData.stockout,
-              "Stock-out",
-            ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Top Selling Items'),
-                    SvgPicture.asset("assets/svg/genericSortingDesc.svg",
-                        width: 25, height: 25),
-                  ],
-                ),
+        children: [
+          Container(height: 10),
+          _singleCardData(
+            inventoryAnalysisData.instock,
+            "Instock",
+            inventoryAnalysisData.inventoryTurnover,
+            "Inventory Turnover",
+          ),
+          _singleCardData(
+            inventoryAnalysisData.stockin,
+            "Stock-In",
+            inventoryAnalysisData.stockout,
+            "Stock-out",
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
             ),
-            isAlreadyLoad
-                ? _allTopSellingProduct(context)
-                : const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+            elevation: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Top Selling Items'),
+                  SvgPicture.asset("assets/svg/genericSortingDesc.svg",
+                      width: 25, height: 25),
+                ],
+              ),
+            ),
+          ),
+          isAlreadyLoad
+              ? _allTopSellingProduct(context)
+              : const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
     );
   }

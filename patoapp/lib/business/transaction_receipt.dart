@@ -74,45 +74,70 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           ),
         ),
       ),
-      body:
-          // PdfPreview(
-          //   build: (format) => _generatePdf(format, 'hello world'),
-          // ),
-          isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(height: 10),
+                  Center(
+                    child: SizedBox(
                       width: 300,
-                      color: Colors.yellow,
-                      child: RepaintBoundary(
-                        key: globalKey,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Card(
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(0),
+                      child: Stack(
+                        children: [
+                          RepaintBoundary(
+                            key: globalKey,
+                            child: Card(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(0),
+                                ),
                               ),
+                              color: patowaveWhite,
+                              elevation: 0,
+                              child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: _myReceipt()),
                             ),
-                            elevation: 0,
-                            child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: _myReceipt()),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
-                ),
+                  Container(height: 10),
+                ],
+              ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           capturePng();
         },
         child: const Icon(Icons.share),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: patowavePrimary,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.print),
+            label: 'Print',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.download),
+            label: 'Download',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.share),
+            label: 'Share',
+          ),
+        ],
+        // currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        // onTap: _onItemTapped,
+        unselectedItemColor: Colors.white,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
@@ -120,10 +145,12 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   _myReceipt() {
     return Column(
       children: [
+        Container(height: 20),
         widget.data.isCashSale
             ? const Text(
                 "Cash Sale",
                 style: TextStyle(
+                  color: patowaveBlack,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -131,15 +158,21 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             : const Text(
                 "Transaction Receipt",
                 style: TextStyle(
+                  color: patowaveBlack,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
         Container(height: 10),
-        Text(shopName),
+        Text(
+          shopName,
+          style: const TextStyle(
+            color: patowaveBlack,
+          ),
+        ),
         Container(height: 10),
-        Divider(
-          color: Theme.of(context).primaryTextTheme.bodyLarge!.color,
+        const Divider(
+          color: patowaveBlack,
           height: 10,
           thickness: 2,
         ),
@@ -149,32 +182,72 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Address:"),
-            Text(address),
+            const Text(
+              "Address:",
+              style: TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
+            Text(
+              address,
+              style: const TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
           ],
         ),
         Container(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Tel:"),
-            Text(telphone),
+            const Text(
+              "Tel:",
+              style: TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
+            Text(
+              telphone,
+              style: const TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
           ],
         ),
         Container(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Date:"),
-            Text(widget.data.getTimeString()),
+            const Text(
+              "Date:",
+              style: TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
+            Text(
+              widget.data.getTimeString(),
+              style: const TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
           ],
         ),
         Container(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Time:"),
-            Text(DateFormat('hh:mm a').format(widget.data.date)),
+            const Text(
+              "Time:",
+              style: TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
+            Text(
+              DateFormat('hh:mm a').format(widget.data.date),
+              style: const TextStyle(
+                color: patowaveBlack,
+              ),
+            ),
           ],
         ),
         widget.data.isPaymentIn ||
@@ -188,9 +261,14 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(widget.data.isPurchases || widget.data.isExpenses
-                          ? "Bill No:"
-                          : "Receipt No:"),
+                      Text(
+                        widget.data.isPurchases || widget.data.isExpenses
+                            ? "Bill No:"
+                            : "Receipt No:",
+                        style: const TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
                       Container(width: 20),
                       Expanded(
                         child: Align(
@@ -198,6 +276,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                           child: Text(
                             widget.data.receipt,
                             textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              color: patowaveBlack,
+                            ),
                           ),
                         ),
                       ),
@@ -215,7 +296,12 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Customer:"),
+                      const Text(
+                        "Customer:",
+                        style: TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
                       Container(width: 20),
                       Expanded(
                         child: Align(
@@ -223,6 +309,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                           child: Text(
                             widget.data.getDescriptionName(),
                             textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              color: patowaveBlack,
+                            ),
                           ),
                         ),
                       ),
@@ -233,8 +322,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             : Container(),
         Container(height: 10),
         // const Text("=================================="),
-        Divider(
-          color: Theme.of(context).primaryTextTheme.bodyLarge!.color,
+        const Divider(
+          color: patowaveBlack,
           height: 10,
           thickness: 0.5,
         ),
@@ -248,10 +337,20 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(widget.data.getDescriptionDetails()),
+                        child: Text(
+                          widget.data.getDescriptionDetails(),
+                          style: const TextStyle(
+                            color: patowaveBlack,
+                          ),
+                        ),
                       ),
                       Container(width: 10),
-                      Text(formatter.format(widget.data.amount)),
+                      Text(
+                        formatter.format(widget.data.amount),
+                        style: const TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -264,7 +363,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 children: [
                   const Text(
                     "Items",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: patowaveBlack,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                   _listItemsButtomSheet(widget.data.details),
                 ],
@@ -272,8 +374,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             : Container(),
         Container(height: 10),
         // const Text("=================================="),
-        Divider(
-          color: Theme.of(context).primaryTextTheme.bodyLarge!.color,
+        const Divider(
+          color: patowaveBlack,
           height: 10,
           thickness: 0.5,
         ),
@@ -285,12 +387,20 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Expanded(
-                        child: Text("Amount"),
+                        child: Text(
+                          "Amount",
+                          style: TextStyle(
+                            color: patowaveBlack,
+                          ),
+                        ),
                       ),
                       Container(width: 10),
                       Text(
                         formatter
                             .format(widget.data.amount + widget.data.discount),
+                        style: const TextStyle(
+                          color: patowaveBlack,
+                        ),
                       ),
                     ],
                   ),
@@ -305,10 +415,20 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Expanded(
-                        child: Text("Discount"),
+                        child: Text(
+                          "Discount",
+                          style: TextStyle(
+                            color: patowaveBlack,
+                          ),
+                        ),
                       ),
                       Container(width: 10),
-                      Text(formatter.format(widget.data.discount)),
+                      Text(
+                        formatter.format(widget.data.discount),
+                        style: const TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -321,12 +441,14 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             const Text(
               "TOTAL:",
               style: TextStyle(
+                color: patowaveBlack,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               formatter.format(widget.data.amount),
               style: const TextStyle(
+                color: patowaveBlack,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -334,8 +456,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         ),
         // const Text("=================================="),
         Container(height: 10),
-        Divider(
-          color: Theme.of(context).primaryTextTheme.bodyLarge!.color,
+        const Divider(
+          color: patowaveBlack,
           height: 10,
           thickness: 0.5,
         ),
@@ -344,6 +466,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ? const Text(
                 "Thank You For Your Purchases",
                 style: TextStyle(
+                  color: patowaveBlack,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -357,12 +480,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
             version: QrVersions.auto,
             size: 200.0,
-            // embeddedImage:
-            //     const AssetImage("assets/images/qr.png"),
-            // embeddedImageStyle:
-            //     QrEmbeddedImageStyle(color: Colors.white),
+            // embeddedImage: const AssetImage("assets/images/qr.png"),
+            // embeddedImageStyle: QrEmbeddedImageStyle(color: Colors.white),
           ),
         ),
+        Container(height: 20),
       ],
     );
   }
@@ -375,19 +497,19 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           children: [
             Text(
               dx['product'],
-              style: const TextStyle(fontSize: 12),
+              style: const TextStyle(color: patowaveBlack, fontSize: 12),
             ),
             Center(
               child: Text(
-                "${dx['quantity']} ${dx['product_unit']} x ${dx['price'] / dx['quantity']}",
-                style: const TextStyle(fontSize: 12),
+                "${dx['quantity']} ${dx['product_unit']} x ${(dx['price'] / dx['quantity']).toInt()}",
+                style: const TextStyle(color: patowaveBlack, fontSize: 12),
               ),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
                 formatter.format(dx['price']),
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(color: patowaveBlack, fontSize: 12),
               ),
             ),
           ],

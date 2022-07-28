@@ -24,27 +24,29 @@ class MainInvoicePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            _invoiceHeader(),
-            TextButton(
-              onPressed: () {
-                // PreviewInvoice
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const PreviewInvoice(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-              child: const Text("sample invoice"),
-            ),
-            // const InvoiceDetails(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Column(
+            children: [
+              Container(height: 10),
+              _invoiceHeader(),
+              TextButton(
+                onPressed: () {
+                  // PreviewInvoice
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const PreviewInvoice(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                child: const Text("sample invoice"),
+              ),
+              // const InvoiceDetails(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -141,33 +143,6 @@ Widget _invoiceHeader() => Row(
                   const Text(
                     "1",
                     style: TextStyle(fontSize: 20, color: patowaveErrorRed),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: SizedBox(
-            height: 100,
-            child: Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Unpaid"),
-                  Container(
-                    height: 10,
-                  ),
-                  const Text(
-                    "1",
-                    style: TextStyle(fontSize: 20, color: patowaveWarning),
                   ),
                 ],
               ),

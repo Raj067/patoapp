@@ -114,23 +114,21 @@ class _PartiesPageState extends State<PartiesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mainTopBar(_partiesButtomTopBar(), context),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        child: ListView(
-          children: [
-            Container(height: 5),
-            _headerSection(context),
-            _searchBox(context),
-            isAlreadyLoad
-                ? _customerDetails(context)
-                : const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        children: [
+          Container(height: 5),
+          _headerSection(context),
+          _searchBox(context),
+          isAlreadyLoad
+              ? _customerDetails(context)
+              : const SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

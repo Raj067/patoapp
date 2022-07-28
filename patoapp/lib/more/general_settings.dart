@@ -28,199 +28,197 @@ class GeneralSettingsDialog extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-        child: ListView(
-          children: [
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        children: [
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const ApplicationSettings(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.app_settings_alt,
-                        color: Colors.red,
-                      ),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('Application'),
-                    ],
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const ApplicationSettings(),
+                    fullscreenDialog: true,
                   ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.app_settings_alt,
+                      color: Colors.red,
+                    ),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('Application'),
+                  ],
                 ),
               ),
             ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const TransactionSettings(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/svg/currencyExchange.svg",
-                          width: 25, height: 25),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('Transactions'),
-                    ],
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const TransactionSettings(),
+                    fullscreenDialog: true,
                   ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/svg/currencyExchange.svg",
+                        width: 25, height: 25),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('Transactions'),
+                  ],
                 ),
               ),
             ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const UserManagement(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/svg/portraitMode.svg",
-                          width: 25, height: 25),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('User Management'),
-                    ],
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const UserManagement(),
+                    fullscreenDialog: true,
                   ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/svg/portraitMode.svg",
+                        width: 25, height: 25),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('User Management'),
+                  ],
                 ),
               ),
             ),
-            // Card(
-            //   shape: const RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.all(
-            //       Radius.circular(15),
-            //     ),
-            //   ),
-            //   elevation: 0,
-            //   child: InkWell(
-            //     borderRadius: BorderRadius.circular(15),
-            //     onTap: () {},
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(10),
-            //       child: Row(
-            //         children: [
-            //           SvgPicture.asset("assets/svg/print.svg",
-            //               width: 25, height: 25),
-            //           Container(
-            //             width: 10,
-            //           ),
-            //           const Text('Print'),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Card(
-            //   shape: const RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.all(
-            //       Radius.circular(15),
-            //     ),
-            //   ),
-            //   elevation: 0,
-            //   child: InkWell(
-            //     borderRadius: BorderRadius.circular(15),
-            //     onTap: () {},
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(10),
-            //       child: Row(
-            //         children: [
-            //           SvgPicture.asset("assets/svg/organization.svg",
-            //               width: 25, height: 25),
-            //           Container(
-            //             width: 10,
-            //           ),
-            //           const Text('Taxes'),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
+          ),
+          // Card(
+          //   shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.all(
+          //       Radius.circular(15),
+          //     ),
+          //   ),
+          //   elevation: 0,
+          //   child: InkWell(
+          //     borderRadius: BorderRadius.circular(15),
+          //     onTap: () {},
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(10),
+          //       child: Row(
+          //         children: [
+          //           SvgPicture.asset("assets/svg/print.svg",
+          //               width: 25, height: 25),
+          //           Container(
+          //             width: 10,
+          //           ),
+          //           const Text('Print'),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Card(
+          //   shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.all(
+          //       Radius.circular(15),
+          //     ),
+          //   ),
+          //   elevation: 0,
+          //   child: InkWell(
+          //     borderRadius: BorderRadius.circular(15),
+          //     onTap: () {},
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(10),
+          //       child: Row(
+          //         children: [
+          //           SvgPicture.asset("assets/svg/organization.svg",
+          //               width: 25, height: 25),
+          //           Container(
+          //             width: 10,
+          //           ),
+          //           const Text('Taxes'),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              elevation: 0,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const ItemsSettings(),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/svg/dataConfiguration.svg",
-                          width: 25, height: 25),
-                      Container(
-                        width: 10,
-                      ),
-                      const Text('Items'),
-                    ],
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const ItemsSettings(),
+                    fullscreenDialog: true,
                   ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/svg/dataConfiguration.svg",
+                        width: 25, height: 25),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('Items'),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

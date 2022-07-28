@@ -40,199 +40,197 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: addSheduleFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                controller: myTitle,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Title is required';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Title*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+      body: Form(
+        key: addSheduleFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: myTitle,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Title is required';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Title*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: description,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 4,
-                maxLines: null,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Description is required';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Description*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: description,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 4,
+              maxLines: null,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Description is required';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Description*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: sheduleDate,
-                //editing controller of this TextField
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.calendar_month,
-                    color: patowavePrimary,
-                  ),
-                  label: Text(
-                    "Date of Event*",
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: sheduleDate,
+              //editing controller of this TextField
+              decoration: const InputDecoration(
+                suffixIcon: Icon(
+                  Icons.calendar_month,
+                  color: patowavePrimary,
+                ),
+                label: Text(
+                  "Date of Event*",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
                   ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'This field is required';
-                  }
-                  return null;
-                },
-                readOnly: true,
-                //set it true, so that user will not able to edit text
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(DateTime.now().year - 5),
-                      //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(DateTime.now().year + 5));
-
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    setState(() {
-                      sheduleDate.text =
-                          formattedDate; //set output date to TextField value.
-                    });
-                  } else {}
-                },
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
               ),
-              Container(height: 15),
-              Row(children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: startTime,
-                    //editing controller of this TextField
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.timelapse,
-                        color: patowavePrimary,
-                      ),
-                      label: Text(
-                        "Start Time",
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 14,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                }
+                return null;
+              },
+              readOnly: true,
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(DateTime.now().year - 5),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(DateTime.now().year + 5));
+
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  setState(() {
+                    sheduleDate.text =
+                        formattedDate; //set output date to TextField value.
+                  });
+                } else {}
+              },
+            ),
+            Container(height: 15),
+            Row(children: [
+              Expanded(
+                child: TextFormField(
+                  controller: startTime,
+                  //editing controller of this TextField
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.timelapse,
+                      color: patowavePrimary,
+                    ),
+                    label: Text(
+                      "Start Time",
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 14,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'This field is required';
-                      }
-                      return null;
-                    },
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      TimeOfDay? pickedTime = await showTimePicker(
-                          context: context, initialTime: TimeOfDay.now());
-
-                      if (pickedTime != null) {
-                        setState(() {
-                          startTime.text = pickedTime.format(context);
-                          // .toString(); //set output date to TextField value.
-                        });
-                      } else {}
-                    },
-                  ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: TextFormField(
-                    controller: endTime,
-                    //editing controller of this TextField
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.timelapse,
-                        color: patowavePrimary,
-                      ),
-                      label: Text(
-                        "End Time",
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 14,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'This field is required';
-                      }
-                      return null;
-                    },
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      TimeOfDay? pickedTime = await showTimePicker(
-                          context: context, initialTime: TimeOfDay.now());
-
-                      if (pickedTime != null) {
-                        setState(() {
-                          endTime.text = pickedTime.format(context);
-                          // .toString(); //set output date to TextField value.
-                        });
-                      } else {}
-                    },
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
+                    return null;
+                  },
+                  readOnly: true,
+                  //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    TimeOfDay? pickedTime = await showTimePicker(
+                        context: context, initialTime: TimeOfDay.now());
+
+                    if (pickedTime != null) {
+                      setState(() {
+                        startTime.text = pickedTime.format(context);
+                        // .toString(); //set output date to TextField value.
+                      });
+                    } else {}
+                  },
                 ),
-              ]),
-            ],
-          ),
+              ),
+              Container(width: 10),
+              Expanded(
+                child: TextFormField(
+                  controller: endTime,
+                  //editing controller of this TextField
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.timelapse,
+                      color: patowavePrimary,
+                    ),
+                    label: Text(
+                      "End Time",
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 14,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
+                    return null;
+                  },
+                  readOnly: true,
+                  //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    TimeOfDay? pickedTime = await showTimePicker(
+                        context: context, initialTime: TimeOfDay.now());
+
+                    if (pickedTime != null) {
+                      setState(() {
+                        endTime.text = pickedTime.format(context);
+                        // .toString(); //set output date to TextField value.
+                      });
+                    } else {}
+                  },
+                ),
+              ),
+            ]),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(
