@@ -526,6 +526,16 @@ class _TopProfileIconState extends State<TopProfileIcon> {
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                ),
+                Container(width: 10),
                 Expanded(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

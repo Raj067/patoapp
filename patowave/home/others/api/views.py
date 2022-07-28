@@ -99,7 +99,7 @@ def deleting_single_transaction_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# ==================================
+# ==================For Profile=============
 
 
 @api_view(['GET'])
@@ -125,6 +125,28 @@ def shop_profile_edit(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+def update_shop_logo(request):
+    if request.method == "POST":
+        shop = Shop.objects.get(id=int(request.data.get('shopId')))
+        shop.logo = request.data.get('file')
+        shop.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def update_shop_signature(request):
+    if request.method == "POST":
+        shop = Shop.objects.get(id=int(request.data.get('shopId')))
+        shop.signature = request.data.get('file')
+        shop.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# =============================================
 
 @api_view(['GET', 'POST'])
 def inventory_pruducts_api(request):

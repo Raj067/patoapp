@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:signature/signature.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditMyBusiness extends StatefulWidget {
   final Function refreshData;
@@ -84,6 +88,10 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
     penColor: patowavePrimary,
     exportBackgroundColor: Colors.blue,
   );
+
+  final ImagePicker _picker = ImagePicker();
+
+  Uint8List? uploadedImage;
   @override
   void initState() {
     super.initState();
@@ -186,11 +194,27 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                 child: Stack(
                   children: [
                     Positioned(
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: patowavePrimary.withAlpha(50),
-                        foregroundColor: patowavePrimary,
-                        child: const Icon(Icons.photo, size: 50),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(70),
+                        onTap: () async {
+                          XFile? image = await _picker.pickImage(
+                              source: ImageSource.gallery);
+
+                          uploadedImage = await image!.readAsBytes();
+
+                          await uploadImageFile(
+                              File(image.path), 'api/update-shop-logo/');
+                          setState(() {});
+                        },
+                        child: CircleAvatar(
+                          foregroundImage: uploadedImage == null
+                              ? null
+                              : MemoryImage(uploadedImage!),
+                          radius: 50,
+                          backgroundColor: patowavePrimary.withAlpha(50),
+                          foregroundColor: patowavePrimary,
+                          child: const Icon(Icons.photo, size: 50),
+                        ),
                       ),
                     ),
                     const Positioned(
@@ -367,8 +391,11 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      _controller.toPngBytes();
+                    onPressed: () async {
+                      Uint8List? myImage = await _controller.toPngBytes();
+                      await uploadImageBytes(
+                          myImage, 'api/update-shop-signature/');
+                      // _controller.toPngBytes();
                     },
                     child: const Text("Save"),
                   ),

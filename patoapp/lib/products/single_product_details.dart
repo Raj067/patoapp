@@ -1,12 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
@@ -27,6 +31,9 @@ class SingleProductDetails extends StatefulWidget {
 }
 
 class _SingleProductDetailsState extends State<SingleProductDetails> {
+  final ImagePicker _picker = ImagePicker();
+
+  Uint8List? uploadedImage;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,11 +102,42 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                       child: Stack(
                         children: [
                           Positioned(
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundColor: patowavePrimary.withAlpha(50),
-                              foregroundColor: patowavePrimary,
-                              child: const Icon(Icons.photo, size: 50),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(70),
+                              onTap: () async {
+                                XFile? image = await _picker.pickImage(
+                                    source: ImageSource.gallery);
+
+                                uploadedImage = await image!.readAsBytes();
+
+                                // await uploadImageFile(
+                                //     File(image.path), 'api/update-shop-logo/');
+                                setState(() {});
+                              },
+                              child: uploadedImage != null
+                                  ? Container(
+                                      // width: 30,
+                                      // height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        image: DecorationImage(
+                                          image: MemoryImage(uploadedImage!),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                                    )
+                                  : CircleAvatar(
+                                      // foregroundImage: uploadedImage == null
+                                      //     ? null
+                                      //     : MemoryImage(uploadedImage!),
+                                      radius: 50,
+                                      backgroundColor:
+                                          patowavePrimary.withAlpha(50),
+                                      foregroundColor: patowavePrimary,
+                                      child: const Icon(Icons.photo, size: 50),
+                                    ),
                             ),
                           ),
                           const Positioned(

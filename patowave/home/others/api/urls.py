@@ -19,14 +19,18 @@ api_urls = [
     # setting_account_api
     path('api/signup-user/', signup_user, name='signup_user'),
 
-    #  PROFILE
+    #  PROFILE update_shop_logo
     path('api/setting-account/', setting_account_api,
          name='setting_account_api'),
     path('api/shop-profile-details/',
          shop_profile_details, name='shop_profile_details'),
     path('api/shop-profile-edit/', shop_profile_edit,
          name='shop_profile_edit'),
-
+    path('api/update-shop-logo/', update_shop_logo,
+         name='update_shop_logo'),
+    path('api/update-shop-signature/', update_shop_signature,
+         name='update_shop_signature'),
+    #
     path('api/inventory-products/',
          inventory_pruducts_api, name='inventory_pruducts_api'),
     path('api/parties-details/',
