@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:http/http.dart' as http;
 
 class CreateNewInvoice extends StatefulWidget {
   const CreateNewInvoice({Key? key}) : super(key: key);
@@ -37,62 +42,28 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController quantityControllerSales = TextEditingController();
   final TextEditingController dueDate = TextEditingController();
-  fetchCustomer() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    // Financial data
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/parties-details/"),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (data.statusCode == 200) {
-      List<SingleCustomer> finalData = [];
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleCustomer(
-          address: dx['customer_address'],
-          email: dx['customer_email'] ?? "",
-          financialData: dx['financial_data'],
-          fullName: dx['customer_name'],
-          phoneNumber: dx['customer_number'],
-          amount: dx['effective_amount'],
-          id: dx['id'],
-          shopId: dx['shopId'],
-        ));
+  final TextEditingController invoiceDescription = TextEditingController();
+
+  fetchCustomersDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+    for (Map<String, dynamic> e in customers) {
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonCustomer(e));
       }
-      customData = finalData;
     }
+    customData = finalData;
     setState(() {});
   }
 
-  // Fetching data
-  fetchData() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    var data = await http.get(
-      Uri.parse("${baseUrl}api/inventory-products/"),
-      headers: getAuthHeaders(accessToken),
-    );
-
-    List<SingleProduct> finalData = [];
-    if (data.statusCode == 200) {
-      for (var dx in jsonDecode(data.body)) {
-        finalData.add(SingleProduct(
-          shopId: dx['shopId'],
-          isService: dx['is_service'] ?? false,
-          productUnit: dx["primary_unit"] ?? "Items",
-          id: dx['id'],
-          productName: dx["product_name"],
-          quantity: dx['quantity'],
-          purchasesPrice: dx['purchases_price'],
-          sellingPrice: dx['selling_price_primary'],
-          stockLevel: dx['stock_level'],
-          supplierName: dx['supplier_name'] ?? '',
-          supplierContact: dx['supplier_number'] ?? '',
-          thumbnail: dx['product_image'] ?? '',
-        ));
-      }
-    }
-    // isLoading = true;
-    allProducts = finalData;
-    // customData = allProductDetails();
+  refreshData() async {
+    SyncCustomers syncCustomer = SyncCustomers();
+    await syncCustomer.fetchData();
+    fetchCustomersDB();
     setState(() {});
   }
 
@@ -100,7 +71,23 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   void initState() {
     super.initState();
     fetchData();
-    fetchCustomer();
+    fetchCustomersDB();
+  }
+
+  fetchData() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> products = await DBHelperProduct.query();
+    List<SingleProduct> finalData = [];
+    for (Map<String, dynamic> e in products) {
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonProduct(e));
+      }
+    }
+    allProducts = finalData;
+    setState(() {});
   }
 
   @override
@@ -154,7 +141,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             ],
           ),
           const Divider(height: 0),
-          _addSales(),
+          _addInvoice(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -178,11 +165,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 ),
                 onPressed: () {
                   if (invoiceFormKey.currentState!.validate()) {
-                    // showPleaseWait(
-                    //   context: context,
-                    //   builder: (context) => const ModalFit(),
-                    // );
-
+                    _submitSalesCustomerData();
                   }
                 },
                 child: const Text(
@@ -197,7 +180,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     );
   }
 
-  _addSales() {
+  _addInvoice() {
     return Expanded(
       child: Form(
         key: invoiceFormKey,
@@ -241,7 +224,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 validator: (value) {
-                  if (value == null || value == "") {
+                  if (value == null || value == "" || selectedCustmer == '') {
                     return 'This field is required';
                   }
                   return null;
@@ -392,7 +375,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
                 if (pickedDate != null) {
                   String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
                   setState(() {
                     dueDate.text =
                         formattedDate; //set output date to TextField value.
@@ -455,7 +438,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ),
                 ),
                 Text(
-                  "Tsh: ${discountAmount.toInt()}",
+                  "Tsh: ${formatter.format(discountAmount.toInt())}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -473,7 +456,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ),
                 ),
                 Text(
-                  "Tsh: ${totalAmount.toInt() - discountAmount.toInt()}",
+                  "Tsh: ${formatter.format(totalAmount.toInt() - discountAmount.toInt())}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -484,15 +467,20 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Due Amount",
+                Text(
+                  "Balance Due",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: patowavePrimary,
+                    color: totalAmount.toInt() -
+                                discountAmount.toInt() -
+                                receivedAmount.toInt() >=
+                            0
+                        ? patowavePrimary
+                        : patowaveErrorRed,
                   ),
                 ),
                 Text(
-                  "Tsh: ${totalAmount.toInt() - discountAmount.toInt() - receivedAmount.toInt()}",
+                  "Tsh: ${formatter.format(totalAmount.toInt() - discountAmount.toInt() - receivedAmount.toInt())}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -503,6 +491,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             SizedBox(
               // height: 180,
               child: TextFormField(
+                controller: invoiceDescription,
                 cursorColor: patowavePrimary,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
@@ -697,7 +686,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             children: [
               Container(height: 15),
               DropdownButtonFormField2(
-                  value: selectedProductValueSales,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                   scrollbarAlwaysShow: true,
                   dropdownMaxHeight: 200,
@@ -877,8 +865,9 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                           ),
                         );
                       }
-                      setState(() {});
                     }
+                    quantityControllerSales.text = '';
+                    setState(() {});
                     Navigator.pop(context);
                   }
                 },
@@ -934,12 +923,14 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    product.productName,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      product.productName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Text(
-                    "Tsh ${product.quantity * product.sellingPrice}",
+                    "Tsh ${formatter.format(product.quantity * product.sellingPrice)}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -982,5 +973,58 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     });
 
     // allProducts
+  }
+
+  _submitSalesCustomerData() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    List<Map> items = [];
+    for (var element in addedItemsToSales) {
+      items.add({
+        "id": element.id,
+        "price": element.sellingPrice,
+        "quantity": element.quantity,
+        "description": invoiceDescription.text,
+      });
+    }
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/create-invoice/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'amount_received': receivedAmount.toInt(),
+        'total_amount': totalAmount.toInt() - discountAmount.toInt(),
+        'discount': discountAmount.toInt(),
+        'items': items,
+        'invoiceNo': invoiceNo,
+        'dueDate': dueDate.text,
+        'description':
+            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text,
+        'shopId': shopId,
+        "customer": int.parse(selectedCustmer ?? '1'),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // widget.resetData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // Navigator
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
   }
 }

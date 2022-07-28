@@ -187,6 +187,7 @@ class InvoiceSoldItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()
+    product_unit = models.CharField(max_length=100, default="Items")
 
     invoice_data = models.ForeignKey("Invoice", on_delete=models.CASCADE)
     # Registration
@@ -235,8 +236,10 @@ class Invoice(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     invoice_no = models.CharField(max_length=50, default="123")
-    amount = models.IntegerField()
-    balance_due = models.IntegerField()
+    amount_received = models.IntegerField()
+    total_amount = models.IntegerField()
+    due_date = models.CharField(max_length=50, default="123")
+
     discount = models.IntegerField(default=0)
     description = models.CharField(max_length=500)
 

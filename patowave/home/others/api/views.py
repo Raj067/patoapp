@@ -223,6 +223,50 @@ def adding_payment_customer_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+# FOR Invoices
+
+
+@api_view(['POST'])
+def create_invoice_api(request):
+    if request.method == "POST":
+        print(request.data)
+        amount_received = request.data.get('amount_received')
+        total_amount = request.data.get('total_amount')
+        discount = request.data.get('discount')
+        customer = request.data.get('customer')
+        invoiceNo = request.data.get('invoiceNo')
+        items = request.data.get('items')
+        description = request.data.get('description')
+        reg = Invoice(
+            shop=Shop.objects.get(id=request.data.get('shopId')),
+            amount_received=amount_received,
+            total_amount=total_amount,
+            discount=discount,
+            due_date=request.data.get('dueDate'),
+            invoice_no=str(invoiceNo),
+            description=description,
+            customer=Customer.objects.get(id=customer)
+        )
+        reg.save()
+        for dx in items:
+            reg.sold_items.create(
+                shop=Shop.objects.get(id=request.data.get('shopId')),
+                product=Product.objects.get(id=dx.get('id')),
+                price=dx.get('price'),
+                product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
+                quantity=dx.get('quantity'),
+                invoice_data=reg,
+            )
+            # Once transaction completed
+            # successfully, increasing the quantity of products
+            prod = Product.objects.get(id=dx.get('id'))
+            prod.quantity = prod.quantity + dx.get('quantity')
+            prod.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 # FOR TRANSACTIONS - Expenses & Purchases
 
 
