@@ -10,6 +10,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
+// import 'package:share_plus/share_plus.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -112,6 +113,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Share.share('check out my website https://example.com');
           capturePng();
         },
         child: const Icon(Icons.share),

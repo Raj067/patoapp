@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdfx/pdfx.dart';
+// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PrivacyPolicyDialog extends StatefulWidget {
   const PrivacyPolicyDialog({Key? key}) : super(key: key);
@@ -10,8 +11,8 @@ class PrivacyPolicyDialog extends StatefulWidget {
 }
 
 class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
-  // final pdfPinchController = PdfControllerPinch(
-  //   document: PdfDocument.openAsset('pdf/privacy-policy.pdf'),
+  // final pdfPinchController = PdfController(
+  //   document: PdfDocument.openAsset('assets/pdf/privacy-policy.pdf'),
   // );
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,8 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
           ),
         ),
       ),
-      // body: PdfViewPinch(
-      //   controller: pdfPinchController,
-      // ),
+      // body:
+      //     Container(child: SfPdfViewer.asset('assets/pdf/privacy-policy.pdf')),
     );
   }
 }
