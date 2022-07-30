@@ -268,171 +268,168 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     String? selectedUser;
 
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: paymentInFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: amountReceived,
-                cursorColor: patowavePrimary,
-                onChanged: (val) {
-                  setState(() {
-                    receivedAmount = val;
-                  });
-                },
+      child: Form(
+        key: paymentInFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: amountReceived,
+              cursorColor: patowavePrimary,
+              onChanged: (val) {
+                setState(() {
+                  receivedAmount = val;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Received Amount is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Received Amount",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            DropdownButtonFormField2(
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Received Amount is required';
+                  if (value == null || value == "") {
+                    return 'Please select customer name';
                   }
                   return null;
                 },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Received Amount",
+                value: selectedUser,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Select customer',
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-              Container(height: 15),
-              DropdownButtonFormField2(
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return 'Please select customer name';
-                    }
-                    return null;
-                  },
-                  value: selectedUser,
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Select customer',
-                      style:
-                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: finalCustomerData
-                      .where((element) => element.amount >= 0)
-                      .toList()
-                      .map((item) => DropdownMenuItem<String>(
-                            value: "${item.id}",
-                            child: Text(
-                              item.fullName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: finalCustomerData
+                    .where((element) => element.amount >= 0)
+                    .toList()
+                    .map((item) => DropdownMenuItem<String>(
+                          value: "${item.id}",
+                          child: Text(
+                            item.fullName,
+                            style: const TextStyle(
+                              fontSize: 14,
                             ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                    setState(() {
-                      userSelected = value.toString();
-                    });
-                  },
-                  onSaved: (value) {
-                    selectedUser = value.toString();
-                  },
-                  searchController: userController,
-                  searchInnerWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 4,
-                      right: 8,
-                      left: 8,
-                    ),
-                    child: TextFormField(
-                      controller: userController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
-                        ),
-                        hintText: 'Search for Customer..',
-                        hintStyle: const TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                  setState(() {
+                    userSelected = value.toString();
+                  });
+                },
+                onSaved: (value) {
+                  selectedUser = value.toString();
+                },
+                searchController: userController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 4,
+                    right: 8,
+                    left: 8,
+                  ),
+                  child: TextFormField(
+                    controller: userController,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      hintText: 'Search for Customer..',
+                      hintStyle: const TextStyle(fontSize: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ),
-                  searchMatchFn: (item, searchValue) {
-                    return (item.value.toString().contains(searchValue));
-                  },
-                  //This to clear the search value when you close the menu
-                  onMenuStateChange: (isOpen) {
-                    if (!isOpen) {
-                      userController.clear();
-                    }
-                  }),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total Amount",
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                searchMatchFn: (item, searchValue) {
+                  return (item.value.toString().contains(searchValue));
+                },
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    userController.clear();
+                  }
+                }),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total Amount",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    "Tsh: $receivedAmount",
-                    style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                Text(
+                  "Tsh: $receivedAmount",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-              Container(height: 20),
-              TextFormField(
-                controller: paymentInDesc,
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 3,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Note (Descriptions)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+                ),
+              ],
+            ),
+            Container(height: 20),
+            TextFormField(
+              controller: paymentInDesc,
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 3,
+              maxLines: null,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Add Note (Descriptions)",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -442,169 +439,167 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     String? selectedUser;
 
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: paymentOutFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: amountPaid,
-                cursorColor: patowavePrimary,
-                onChanged: (val) {
-                  setState(() {
-                    paidAmount = val;
-                  });
-                },
+      child: Form(
+        key: paymentOutFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: amountPaid,
+              cursorColor: patowavePrimary,
+              onChanged: (val) {
+                setState(() {
+                  paidAmount = val;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Paid Amount is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Paid Amount",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            DropdownButtonFormField2(
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Paid Amount is required';
+                  if (value == null || value == "") {
+                    return 'Please select customer name';
                   }
                   return null;
                 },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Paid Amount",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                value: selectedUser,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Select customer',
+                    style:
+                        TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-              Container(height: 15),
-              DropdownButtonFormField2(
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return 'Please select customer name';
-                    }
-                    return null;
-                  },
-                  value: selectedUser,
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Select customer',
-                      style:
-                          TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  items: finalCustomerData
-                      .where((element) => element.amount < 0)
-                      .toList()
-                      .map((item) => DropdownMenuItem<String>(
-                            value: "${item.id}",
-                            child: Text(
-                              item.fullName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: finalCustomerData
+                    .where((element) => element.amount < 0)
+                    .toList()
+                    .map((item) => DropdownMenuItem<String>(
+                          value: "${item.id}",
+                          child: Text(
+                            item.fullName,
+                            style: const TextStyle(
+                              fontSize: 14,
                             ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                    setState(() {
-                      userSelected = value.toString();
-                    });
-                  },
-                  onSaved: (value) {
-                    selectedUser = value.toString();
-                  },
-                  searchController: userController,
-                  searchInnerWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 4,
-                      right: 8,
-                      left: 8,
-                    ),
-                    child: TextFormField(
-                      controller: userController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
-                        ),
-                        hintText: 'Search for Customer..',
-                        hintStyle: const TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  //Do something when changing the item if you want.
+                  setState(() {
+                    userSelected = value.toString();
+                  });
+                },
+                onSaved: (value) {
+                  selectedUser = value.toString();
+                },
+                searchController: userController,
+                searchInnerWidget: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 4,
+                    right: 8,
+                    left: 8,
+                  ),
+                  child: TextFormField(
+                    controller: userController,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      hintText: 'Search for Customer..',
+                      hintStyle: const TextStyle(fontSize: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ),
-                  searchMatchFn: (item, searchValue) {
-                    return (item.value.toString().contains(searchValue));
-                  },
-                  //This to clear the search value when you close the menu
-                  onMenuStateChange: (isOpen) {
-                    if (!isOpen) {
-                      userController.clear();
-                    }
-                  }),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total Amount",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Tsh: $paidAmount",
-                    style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Container(height: 20),
-              TextFormField(
-                controller: paymentOutDesc,
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 3,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Note (Descriptions)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+                ),
+                searchMatchFn: (item, searchValue) {
+                  return (item.value.toString().contains(searchValue));
+                },
+                //This to clear the search value when you close the menu
+                onMenuStateChange: (isOpen) {
+                  if (!isOpen) {
+                    userController.clear();
+                  }
+                }),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total Amount",
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Tsh: $paidAmount",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(height: 20),
+            TextFormField(
+              controller: paymentOutDesc,
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 3,
+              maxLines: null,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Add Note (Descriptions)",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

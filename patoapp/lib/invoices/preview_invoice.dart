@@ -9,6 +9,8 @@ import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import 'package:url_launcher/url_launcher.dart';
+
 // ignore: must_be_immutable
 class PreviewInvoice extends StatefulWidget {
   // SingleCustomer customer;
@@ -87,9 +89,10 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 ElevatedButton(
                   child: Text("hello"),
                   onPressed: () async {
-                    PdfInvoiceApi.generate();
-                    File myFile = await PdfInvoiceApi.generate();
-                    FileHandleApi.openFile(myFile);
+                    _launchUrl();
+                    // PdfInvoiceApi.generate();
+                    // File myFile = await PdfInvoiceApi.generate();
+                    // FileHandleApi.openFile(myFile);
                   },
                 ),
               ],
@@ -121,5 +124,13 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         type: BottomNavigationBarType.fixed,
       ),
     );
+  }
+}
+
+Future<void> _launchUrl() async {
+  final Uri _url = Uri.parse('https://flutter.dev');
+
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
   }
 }

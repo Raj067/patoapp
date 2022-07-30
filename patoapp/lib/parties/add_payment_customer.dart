@@ -252,105 +252,103 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
 
   _paymentIn(SingleCustomer customer) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: receivedAmountformKey1,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: amountReceived,
-                cursorColor: patowavePrimary,
-                onChanged: (val) {
-                  setState(() {
-                    receivedAmount = val;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Amount Received is required';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Received Amount",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
+      child: Form(
+        key: receivedAmountformKey1,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: amountReceived,
+              cursorColor: patowavePrimary,
+              onChanged: (val) {
+                setState(() {
+                  receivedAmount = val;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Amount Received is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Received Amount",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-              ),
-              Container(height: 15),
-              Container(
-                decoration: BoxDecoration(
-                  color: patowaveBlack.withAlpha(30),
-                  borderRadius: const BorderRadius.all(
+                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
-                  border: Border.all(color: Colors.grey, width: 1),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                  child: Text(
-                    customer.fullName,
-                    style: const TextStyle(
-                      // color: Color.fromARGB(255, 124, 124, 124),
+              ),
+            ),
+            Container(height: 15),
+            Container(
+              decoration: BoxDecoration(
+                color: patowaveBlack.withAlpha(30),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                child: Text(
+                  customer.fullName,
+                  style: const TextStyle(
+                    // color: Color.fromARGB(255, 124, 124, 124),
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total Amount",
+                  style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                    ),
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Tsh: $receivedAmount",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(height: 20),
+            TextFormField(
+              controller: paymentInDesc,
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 3,
+              maxLines: null,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Add Note (Descriptions)",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total Amount",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Tsh: $receivedAmount",
-                    style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Container(height: 20),
-              TextFormField(
-                controller: paymentInDesc,
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 3,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Note (Descriptions)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -358,105 +356,103 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
 
   _paymentOut(SingleCustomer customer) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: paidAmountFormKey1,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: amountPaid,
-                cursorColor: patowavePrimary,
-                onChanged: (val) {
-                  setState(() {
-                    paidAmount = val;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Paid Amount is required';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Paid Amount",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
+      child: Form(
+        key: paidAmountFormKey1,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: amountPaid,
+              cursorColor: patowavePrimary,
+              onChanged: (val) {
+                setState(() {
+                  paidAmount = val;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Paid Amount is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Paid Amount",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-              ),
-              Container(height: 15),
-              Container(
-                decoration: BoxDecoration(
-                  color: patowaveBlack.withAlpha(30),
-                  borderRadius: const BorderRadius.all(
+                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
-                  border: Border.all(color: Colors.grey, width: 1),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                  child: Text(
-                    customer.fullName,
-                    style: const TextStyle(
-                      // color: Color.fromARGB(255, 124, 124, 124),
+              ),
+            ),
+            Container(height: 15),
+            Container(
+              decoration: BoxDecoration(
+                color: patowaveBlack.withAlpha(30),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                child: Text(
+                  customer.fullName,
+                  style: const TextStyle(
+                    // color: Color.fromARGB(255, 124, 124, 124),
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total Amount",
+                  style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                    ),
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Tsh: $paidAmount",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(height: 20),
+            TextFormField(
+              controller: paymentOutDesc,
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 3,
+              maxLines: null,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Add Note (Descriptions)",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total Amount",
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Tsh: $paidAmount",
-                    style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Container(height: 20),
-              TextFormField(
-                controller: paymentOutDesc,
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 3,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Add Note (Descriptions)",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

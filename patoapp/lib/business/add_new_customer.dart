@@ -47,63 +47,61 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: addCustomerTransactionFormKey,
-          child: Column(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: customerName,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Customer Name is required';
-                  }
-                  return null;
-                },
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Customer Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+      body: Form(
+        key: addCustomerTransactionFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: customerName,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Customer Name is required';
+                }
+                return null;
+              },
+              cursorColor: patowavePrimary,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Customer Name*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: phoneNumber,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Phone Number is required';
-                  }
-                  return null;
-                },
-                cursorColor: patowavePrimary,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Phone Number*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: phoneNumber,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Phone Number is required';
+                }
+                return null;
+              },
+              cursorColor: patowavePrimary,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Phone Number*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-            ],
-          ),
+            ),
+            Container(height: 15),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(

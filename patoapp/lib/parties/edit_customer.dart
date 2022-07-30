@@ -60,95 +60,93 @@ class _EditCustomerState extends State<EditCustomer> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: editCustomerFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: customerName,
-                cursorColor: patowavePrimary,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Customer Name is required';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Customer Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+      body: Form(
+        key: editCustomerFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: customerName,
+              cursorColor: patowavePrimary,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Customer Name is required';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Customer Name*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: phoneNumber,
-                cursorColor: patowavePrimary,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Phone Number is required';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Phone Number*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: phoneNumber,
+              cursorColor: patowavePrimary,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Phone Number is required';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration: const InputDecoration(
+                label: Text(
+                  "Phone Number*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: address,
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Address",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: address,
+              cursorColor: patowavePrimary,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Address",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                controller: emailAddress,
-                cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Email Address",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              controller: emailAddress,
+              cursorColor: patowavePrimary,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Email Address",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-            ],
-          ),
+            ),
+            Container(height: 15),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(

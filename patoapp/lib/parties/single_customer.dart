@@ -96,123 +96,121 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
           Container(width: 10),
         ],
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            _firstRowData(widget.customer),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              color: patowavePrimary.withAlpha(100),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15),
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Wrap(
-                        children: [
-                          Container(),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Send Payment Reminder',
-                        style: TextStyle(),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 14,
-                        color: patowaveBlack,
-                      ),
-                    ],
-                  ),
-                ),
+        children: [
+          Container(height: 10),
+          _firstRowData(widget.customer),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
             ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
+            elevation: 0,
+            color: patowavePrimary.withAlpha(100),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Wrap(
+                      children: [
+                        Container(),
+                      ],
+                    ),
+                  ),
+                );
+              },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/ringing2.svg",
-                      width: 28,
-                      height: 28,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'Send Payment Reminder',
+                      style: TextStyle(),
                     ),
-                    Container(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Reminder Automation'),
-                          Switch(
-                            activeColor: patowavePrimary,
-                            value: true,
-                            onChanged: (value) {},
-                          ),
-                        ],
-                      ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                      color: patowaveBlack,
                     ),
                   ],
                 ),
               ),
             ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
-              elevation: 0,
-              child: Column(
+            ),
+            elevation: 0,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Row(
                 children: [
+                  SvgPicture.asset(
+                    "assets/svg/ringing2.svg",
+                    width: 28,
+                    height: 28,
+                  ),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: patowavePrimary.withAlpha(50),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Note"),
-                          Container(),
-                          const Text("Received"),
-                          const Text("Paid"),
-                        ],
-                      ),
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Reminder Automation'),
+                        Switch(
+                          activeColor: patowavePrimary,
+                          value: true,
+                          onChanged: (value) {},
+                        ),
+                      ],
                     ),
                   ),
-                  _allFinancialData(),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: patowavePrimary.withAlpha(50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Note"),
+                        Container(),
+                        const Text("Received"),
+                        const Text("Paid"),
+                      ],
+                    ),
+                  ),
+                ),
+                _allFinancialData(),
+              ],
+            ),
+          )
+        ],
       ),
       persistentFooterButtons: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
