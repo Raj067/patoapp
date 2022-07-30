@@ -13,12 +13,14 @@ class InvoiceSerializer(serializers.ModelSerializer):
     shopId = SerializerMethodField()
     customer_data = SerializerMethodField()
     items = SerializerMethodField()
+    fullName = SerializerMethodField()
 
     class Meta:
         model = Invoice
         fields = ('id', 'shopId', 'amount_received',
                   'due_date', 'total_amount', 'discount',
                   'description', 'customer_data', 'items',
+                  'fullName', 'invoice_no',
                   )
 
     def get_shopId(mySerializer, myModel):
@@ -26,6 +28,9 @@ class InvoiceSerializer(serializers.ModelSerializer):
 
     def get_customer_data(mySerializer, myModel):
         return myModel.customer.id
+
+    def get_fullName(mySerializer, myModel):
+        return myModel.customer.customer_name
 
     def get_items(mySerializer, myModel):
         data = [

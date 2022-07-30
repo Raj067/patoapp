@@ -10,6 +10,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 // import 'package:share_plus/share_plus.dart';
 
 class TransactionReceipt extends StatefulWidget {
@@ -49,6 +50,13 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         : "${profile[0]['businessPhone']}";
     isLoading = false;
     setState(() {});
+  }
+
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -112,14 +120,21 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
               ),
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Share.share('check out my website https://example.com');
           capturePng();
+          // final result = await ImageGallerySaver.saveImage(
+          //     Uint8List.fromList(response.data),
+          //     // quality: 60,
+          //     name: "hello");
+          // print(result);
         },
         child: const Icon(Icons.share),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.print),

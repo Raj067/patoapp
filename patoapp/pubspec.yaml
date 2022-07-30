@@ -59,9 +59,10 @@ dependencies:
   table_calendar:
   # open_file: 3.2.1
   # share_plus: 4.0.10
-  url_launcher: 6.1.5
+  # url_launcher:
   signature: 5.1.0
   image_picker: 0.8.5+3
+  # image_gallery_saver: "^1.7.1"
   # syncfusion_flutter_pdfviewer: 20.2.40-beta
   cupertino_icons: ^1.0.2
 
