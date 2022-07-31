@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class MyHomePage1 extends StatefulWidget {
-  MyHomePage1({Key? key, required this.title}) : super(key: key);
+  const MyHomePage1({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -44,7 +44,7 @@ class _MyHomePage1State extends State<MyHomePage1> {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text("Hello Everyone"),
-        content: Text("$payload"),
+        content: Text(payload),
       ),
     );
   }
@@ -69,25 +69,25 @@ class _MyHomePage1State extends State<MyHomePage1> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton(
+          ElevatedButton(
             child: const Text("Notification with Default Sound"),
             onPressed: () {
               notificationDefaultSound();
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: const Text("Notification without Sound"),
             onPressed: () {
               notificationNoSound();
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: const Text("Notification with Custom Sound"),
             onPressed: () {
               notificationCustomSound();
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: const Text(
               "Scheduled",
             ),
@@ -165,9 +165,8 @@ class _MyHomePage1State extends State<MyHomePage1> {
   }
 
   Future<void> notificationScheduled() async {
-    int hour = 19;
-    var ogValue = hour;
-    int minute = 05;
+    int hour = DateTime.now().hour;
+    int minute = DateTime.now().minute + 1;
 
     var time = Time(hour, minute, 20);
 

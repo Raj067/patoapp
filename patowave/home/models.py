@@ -17,6 +17,10 @@ class Shedule(models.Model):
     repeat = models.CharField(max_length=15)
     remind = models.IntegerField()
 
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Shop(models.Model):
     name = models.CharField(max_length=100)

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -38,10 +37,10 @@ uploadImageFile(File imageFile, String uploadURL) async {
 }
 
 uploadImageBytes(Uint8List? imageBytes, String uploadURL) async {
-  String accessToken = await storage.read(key: 'access') ?? "";
-  // shop ID
-  String? activeShop = await storage.read(key: 'activeShop');
-  int shopId = int.parse(activeShop ?? '0');
+  // String accessToken = await storage.read(key: 'access') ?? "";
+  // // shop ID
+  // String? activeShop = await storage.read(key: 'activeShop');
+  // int shopId = int.parse(activeShop ?? '0');
 
   // // base64Encode(MemoryImage(imageBytes!).bytes);
   // var stream = MemoryImage(imageBytes!).bytes;

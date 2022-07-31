@@ -20,8 +20,8 @@ class FileHandleApi {
 
   // open pdf file function
   static Future openFile(File file) async {
-    final url = file.path;
-    print(url);
+    // final url = file.path;
+    // print(url);
   }
 }
 

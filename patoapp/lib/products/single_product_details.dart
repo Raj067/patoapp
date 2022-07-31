@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
 import 'package:image_picker/image_picker.dart';

@@ -1,9 +1,5 @@
 // import 'dart:typed_data';
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:patoapp/invoices/api_invoice.dart';
 // import 'package:patoapp/data/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdf/pdf.dart';
@@ -72,8 +68,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             child: Wrap(
                 children: List<Widget>.generate(
               6,
-              (index) => Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+              (index) => const Padding(
+                padding: EdgeInsets.only(right: 8.0),
                 child: CircleAvatar(
                   radius: 15,
                 ),
@@ -85,7 +81,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               children: [
                 ElevatedButton(
-                  child: Text("hello"),
+                  child: const Text("hello"),
                   onPressed: () async {
                     _launchUrl();
                     // PdfInvoiceApi.generate();
@@ -126,7 +122,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
 }
 
 Future<void> _launchUrl() async {
-  final Uri _url = Uri.parse('https://flutter.dev');
+  // final Uri _url = Uri.parse('https://flutter.dev');
 
   // if (!await launchUrl(_url)) {
   //   throw 'Could not launch $_url';

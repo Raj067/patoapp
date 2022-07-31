@@ -100,64 +100,59 @@ class _SingleSheduleState extends State<SingleShedule> {
             Expanded(
               child: ListView(
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        // color: Colors.white,
-                        // borderRadius: BorderRadius.only(
-                        //   topLeft: Radius.circular(30),
-                        //   topRight: Radius.circular(30),
-                        // ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            widget.shedule.title,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              widget.shedule.title,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: sheduleColors[widget.shedule.color]
+                                .withAlpha(50),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(15),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: patowavePrimary.withAlpha(50),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.alarm,
-                                    color: patowavePrimary,
-                                    size: 18,
-                                  ),
-                                  Text(
-                                    "  From: ${widget.shedule.startTime} To: ${widget.shedule.endTime}",
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          // const Divider(),
-                          Padding(
+                          child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.shedule.description,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.alarm,
+                                  color: sheduleColors[widget.shedule.color],
+                                  size: 18,
+                                ),
+                                Text(
+                                  "  From: ${widget.shedule.startTime} To: ${widget.shedule.endTime}",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: sheduleColors[widget.shedule.color],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        // const Divider(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.shedule.description,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   ElevatedButton(
@@ -168,7 +163,7 @@ class _SingleSheduleState extends State<SingleShedule> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                              MyHomePage1(title: "hello"),
+                              const MyHomePage1(title: "hello"),
                           fullscreenDialog: true,
                         ),
                       );

@@ -9,5 +9,5 @@ class SheduleProfileSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'title', 'description',
             'dateEvent', 'startTime', 'endTime',
-            'color', 'repeat', 'remind',
+            'color', 'repeat', 'remind', 'created_at',
         )

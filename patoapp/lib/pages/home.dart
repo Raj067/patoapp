@@ -16,6 +16,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
@@ -40,15 +41,18 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   double gbp = 0.8340;
 
   fetchRates() async {
-    var data = await http.get(
-      Uri.parse('https://api.exchangerate.host/latest'),
-    );
-    usd = jsonDecode(data.body)['rates']['USD'] * 1.0;
-    gbp = jsonDecode(data.body)['rates']['GBP'] * 1.0;
-    euro = jsonDecode(data.body)['rates']['EUR'] * 1.0;
-    tzs = jsonDecode(data.body)['rates']['TZS'] * 1.0;
-    setState(() {});
-    // EUR GBP TZS USD
+    try {
+      var data = await http.get(
+        Uri.parse('https://api.exchangerate.host/latest'),
+      );
+      usd = jsonDecode(data.body)['rates']['USD'] * 1.0;
+      gbp = jsonDecode(data.body)['rates']['GBP'] * 1.0;
+      euro = jsonDecode(data.body)['rates']['EUR'] * 1.0;
+      tzs = jsonDecode(data.body)['rates']['TZS'] * 1.0;
+      setState(() {});
+    } catch (e) {
+      // print(e); No internent Connection
+    }
   }
 
   refreshDataDB() async {
@@ -65,9 +69,18 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     setState(() {});
   }
 
+  bool isCurrencyDashboard = false;
+
+  fetchPreference() async {
+    var prefs = await SharedPreferences.getInstance();
+    isCurrencyDashboard = prefs.getBool('isCurrencyDashboard') ?? false;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchPreference();
     fetchShedule();
     fetchRates();
     refreshDataDB();
@@ -106,13 +119,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           Expanded(
             child: ListView(
               children: [
-                // Container(height: 10),
-                _currencyExchange(),
+                isCurrencyDashboard ? _currencyExchange() : Container(),
                 _calendarSection(),
                 _upcomingSchedule(),
-                // const Center(
-                //   child: Text("Cashflow"),
-                // ),
               ],
             ),
           ),
@@ -228,7 +237,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 2.5, 10, 2.5),
       child: Card(
-        color: patowavePrimary.withAlpha(50),
+        color: sheduleColors[shedule.color].withAlpha(50),
         elevation: 0,
         // color: Colors.white,
         shape: const RoundedRectangleBorder(
@@ -264,20 +273,20 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       shedule.startTime,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Theme.of(context).iconTheme.color,
+                        color: sheduleColors[shedule.color],
                       ),
                     ),
                     SvgPicture.asset(
                       "assets/svg/line1.svg",
                       width: 25,
                       height: 25,
-                      color: Theme.of(context).iconTheme.color,
+                      color: sheduleColors[shedule.color],
                     ),
                     Text(
                       shedule.endTime,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Theme.of(context).iconTheme.color,
+                        color: sheduleColors[shedule.color],
                       ),
                     ),
                   ],
@@ -290,11 +299,13 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       shedule.title.length > 20
                           ? shedule.title.replaceRange(20, null, '...')
                           : shedule.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
+                        color: sheduleColors[shedule.color],
                       ),
                     ),
+                    Container(height: 3),
                     Text(
                       shedule.description.length > 20
                           ? shedule.description.replaceRange(20, null, '...')
@@ -304,10 +315,10 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       ),
                     ),
                     Text(
-                      "Created at ${DateFormat('d-M-yyy').format(DateTime.parse(shedule.dateEvent))}",
+                      "Created at ${DateFormat('d-M-yyy').format(DateTime.parse(shedule.createdAt))}",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Theme.of(context).iconTheme.color,
+                        color: sheduleColors[shedule.color],
                       ),
                     ),
                   ],
@@ -318,7 +329,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       "view",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Theme.of(context).iconTheme.color,
+                        color: sheduleColors[shedule.color],
                       ),
                     ),
                   ],
@@ -526,9 +537,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            AddSheduleNew(fetchShedule: () {
-                          fetchShedule();
-                        }),
+                            AddSheduleNew(fetchShedule: refreshDataDB),
                         fullscreenDialog: true,
                       ),
                     );

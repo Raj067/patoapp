@@ -141,7 +141,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,58 +192,50 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(),
-                  Row(
-                    children: [
-                      const Text(
-                        "Tsh ",
-                        style: TextStyle(fontSize: 12, color: patowaveGreen),
-                      ),
-                      Text(
-                        "${dx.amountReceived}",
-                        style:
-                            const TextStyle(fontSize: 17, color: patowaveGreen),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
-                            ),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        // PreviewInvoice
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const PreviewInvoice(),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                      },
-                      child: const Text("VIEW DETAILS"),
+                    ),
+                    onPressed: () {
+                      // PreviewInvoice
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const PreviewInvoice(),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
+                    child: const Text("VIEW DETAILS",
+                        style: TextStyle(fontSize: 12)),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Text(
+                          "Tsh ",
+                          style: TextStyle(fontSize: 12, color: patowaveGreen),
+                        ),
+                        Text(
+                          "${dx.amountReceived}",
+                          style: const TextStyle(
+                              fontSize: 17, color: patowaveGreen),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(child: Container()),
                 ],
               ),
             ),

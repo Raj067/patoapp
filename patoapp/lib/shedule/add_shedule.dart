@@ -3,13 +3,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/controllers/shedules_controller.dart';
-import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddSheduleNew extends StatefulWidget {
@@ -22,7 +19,6 @@ class AddSheduleNew extends StatefulWidget {
 
 class _AddSheduleNewState extends State<AddSheduleNew> {
   final addSheduleFormKey = GlobalKey<FormState>();
-  final SheduleController _sheduleController = Get.put(SheduleController());
   TextEditingController myTitle = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController sheduleDate = TextEditingController();
@@ -80,6 +76,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
             ),
             Container(height: 15),
             TextFormField(
+              cursorColor: patowavePrimary,
               controller: description,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
@@ -105,6 +102,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
             ),
             Container(height: 15),
             TextFormField(
+              cursorColor: patowavePrimary,
               controller: sheduleDate,
               //editing controller of this TextField
               decoration: const InputDecoration(
@@ -155,6 +153,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
             Row(children: [
               Expanded(
                 child: TextFormField(
+                  cursorColor: patowavePrimary,
                   controller: startTime,
                   //editing controller of this TextField
                   decoration: const InputDecoration(
@@ -199,6 +198,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
               Container(width: 10),
               Expanded(
                 child: TextFormField(
+                  cursorColor: patowavePrimary,
                   controller: endTime,
                   //editing controller of this TextField
                   decoration: const InputDecoration(
@@ -427,7 +427,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       }),
     );
     if (response.statusCode == 201) {
-      // widget.refreshData();
+      await widget.fetchShedule();
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       // ignore: use_build_context_synchronously
@@ -441,26 +441,5 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       );
       // throw Exception('Failed to updated customer.');
     }
-  }
-
-  _addSheduleToDB() async {
-    // api/add-shedule/
-    Navigator.pop(context);
-    SheduleModel shedule = SheduleModel(
-      startTime: startTime.text,
-      description: description.text,
-      endTime: endTime.text,
-      dateEvent: sheduleDate.text,
-      title: myTitle.text,
-      isCompleted: 0,
-      color: selectedColor,
-      remind: remindSelected,
-      repeat: repeatSelected,
-      id: 0,
-    );
-
-    await _sheduleController.addShedule(shedule);
-    // print(value);
-    widget.fetchShedule();
   }
 }

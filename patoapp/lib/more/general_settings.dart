@@ -31,6 +31,7 @@ class GeneralSettingsDialog extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
+          Container(height: 15),
           Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
