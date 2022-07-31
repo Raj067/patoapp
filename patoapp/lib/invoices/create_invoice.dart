@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
@@ -993,38 +994,48 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/create-invoice/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount_received': receivedAmount.toInt(),
-        'total_amount': totalAmount.toInt() - discountAmount.toInt(),
-        'discount': discountAmount.toInt(),
-        'items': items,
-        'invoiceNo': invoiceNo,
-        'dueDate': dueDate.text,
-        'description':
-            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text,
-        'shopId': shopId,
-        "customer": int.parse(selectedCustmer ?? '1'),
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/create-invoice/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount_received': receivedAmount.toInt(),
+          'total_amount': totalAmount.toInt() - discountAmount.toInt(),
+          'discount': discountAmount.toInt(),
+          'items': items,
+          'invoiceNo': invoiceNo,
+          'dueDate': dueDate.text,
+          'description': invoiceDescription.text == ''
+              ? 'Invoice'
+              : invoiceDescription.text,
+          'shopId': shopId,
+          "customer": int.parse(selectedCustmer ?? '1'),
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

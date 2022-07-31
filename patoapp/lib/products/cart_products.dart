@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -414,37 +415,47 @@ class _ProductsCartState extends State<ProductsCart> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/cash-sales-transaction/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount': amount,
-        'discount': discount,
-        'items': items,
-        'receiptNo': receiptNo,
-        'shopId': shopId,
-      }),
-    );
 
-    if (response.statusCode == 201) {
-      for (var element in widget.products) {
-        if (element.addedToCart > 0) {
-          element.quantity = element.quantity - element.addedToCart;
-        }
-      }
-      widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/cash-sales-transaction/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount': amount,
+          'discount': discount,
+          'items': items,
+          'receiptNo': receiptNo,
+          'shopId': shopId,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        for (var element in widget.products) {
+          if (element.addedToCart > 0) {
+            element.quantity = element.quantity - element.addedToCart;
+          }
+        }
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -468,7 +469,9 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/adding-payment-customer/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -498,6 +501,14 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
         builder: (context) => const ModalFitError(),
       );
       // throw Exception('Failed to updated customer.');
+    }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

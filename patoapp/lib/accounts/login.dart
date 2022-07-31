@@ -7,6 +7,7 @@ import 'package:patoapp/accounts/signup.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/login_authenticate.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -218,43 +219,52 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) => const ModalFit(),
     );
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/token/'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'username': phoneNumber.text,
-        'password': password.text,
-      }),
-    );
-    if (response.statusCode == 200) {
-      // Create storage
-      Map tokens = jsonDecode(response.body);
-      // Write value
-      await storage.write(key: "refresh", value: tokens['refresh']);
-      await storage.write(key: "access", value: tokens['access']);
-      await storage.write(key: "shopName", value: "true");
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const HomePage(),
-        ),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/token/'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': phoneNumber.text,
+          'password': password.text,
+        }),
       );
-    } else if (response.statusCode == 401) {
+      if (response.statusCode == 200) {
+        // Create storage
+        Map tokens = jsonDecode(response.body);
+        // Write value
+        await storage.write(key: "refresh", value: tokens['refresh']);
+        await storage.write(key: "access", value: tokens['access']);
+        await storage.write(key: "shopName", value: "true");
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => const HomePage(),
+          ),
+        );
+      } else if (response.statusCode == 401) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showLoginAuthenticateMessage(
+          context: context,
+          builder: (context) => const ModalFitLoginAuthenticate(),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+      }
+    } catch (e) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      showLoginAuthenticateMessage(
+      showTimeOutMessage(
         context: context,
-        builder: (context) => const ModalFitLoginAuthenticate(),
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+        builder: (context) => const ModalFitTimeOut(),
       );
     }
   }

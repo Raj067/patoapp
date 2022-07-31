@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -191,7 +192,8 @@ class _SetAccountPageState extends State<SetAccountPage> {
       builder: (context) => const ModalFit(),
     );
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/setting-account/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -225,5 +227,14 @@ class _SetAccountPageState extends State<SetAccountPage> {
       );
       // throw Exception('Failed to updated customer.');
     }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+
   }
 }

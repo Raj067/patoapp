@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/funcs/misc.dart';
@@ -733,7 +734,8 @@ class _BusinessPageState extends State<BusinessPage> {
 
   _deletingTransaction(FinancialData data) async {
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/deleting-single-transaction/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -759,5 +761,14 @@ class _BusinessPageState extends State<BusinessPage> {
       );
       // throw Exception('Failed to updated customer.');
     }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+
   }
 }

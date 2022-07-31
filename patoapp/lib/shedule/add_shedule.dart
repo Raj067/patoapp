@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -412,34 +413,43 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       builder: (context) => const ModalFit(),
     );
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/add-shedule/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'title': myTitle.text,
-        'description': description.text,
-        'dateEvent': sheduleDate.text,
-        'startTime': startTime.text,
-        'endTime': endTime.text,
-        'color': selectedColor,
-        'repeat': repeatSelected,
-        'remind': remindSelected,
-      }),
-    );
-    if (response.statusCode == 201) {
-      await widget.fetchShedule();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/add-shedule/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'title': myTitle.text,
+          'description': description.text,
+          'dateEvent': sheduleDate.text,
+          'startTime': startTime.text,
+          'endTime': endTime.text,
+          'color': selectedColor,
+          'repeat': repeatSelected,
+          'remind': remindSelected,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+      if (response.statusCode == 201) {
+        await widget.fetchShedule();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

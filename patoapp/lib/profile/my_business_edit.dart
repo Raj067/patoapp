@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:signature/signature.dart';
@@ -202,8 +203,12 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
 
                           uploadedImage = await image!.readAsBytes();
 
+                          // ignore: use_build_context_synchronously
                           await uploadImageFile(
-                              File(image.path), 'api/update-shop-logo/');
+                            File(image.path),
+                            'api/update-shop-logo/',
+                            context,
+                          );
                           setState(() {});
                         },
                         child: CircleAvatar(
@@ -557,40 +562,49 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
       builder: (context) => const ModalFit(),
     );
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/shop-profile-edit/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        "id": widget.profileData.id,
-        'businessName': businessName.text,
-        'businessEmail': businessEmail.text,
-        'businessAddress': businessAddress.text,
-        'instagramName': instagramName.text,
-        'businessPhone': businessPhone.text,
-        'businessSlogan': businessSlogan.text,
-        'businessType': businessType.text,
-        'businessCategory': businessCategory.text,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      SyncProfile syncProfile = SyncProfile();
-      await syncProfile.fetchData();
-      widget.refreshData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/shop-profile-edit/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          "id": widget.profileData.id,
+          'businessName': businessName.text,
+          'businessEmail': businessEmail.text,
+          'businessAddress': businessAddress.text,
+          'instagramName': instagramName.text,
+          'businessPhone': businessPhone.text,
+          'businessSlogan': businessSlogan.text,
+          'businessType': businessType.text,
+          'businessCategory': businessCategory.text,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        SyncProfile syncProfile = SyncProfile();
+        await syncProfile.fetchData();
+        widget.refreshData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -166,37 +167,47 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
     int shopId = int.parse(activeShop ?? '0');
 
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/add-new-customer/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'customerName': customerName,
-        'phoneNumber': phoneNumber,
-        'address': address,
-        'emailAddress': emailAddress,
-        'openingBalance': openingBalance == "" ? 0 : int.parse(openingBalance),
-        'transactionDate': transactionDate,
-        'toReceive': toReceive,
-        'shopId': shopId,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      await widget.refreshData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/add-new-customer/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'customerName': customerName,
+          'phoneNumber': phoneNumber,
+          'address': address,
+          'emailAddress': emailAddress,
+          'openingBalance':
+              openingBalance == "" ? 0 : int.parse(openingBalance),
+          'transactionDate': transactionDate,
+          'toReceive': toReceive,
+          'shopId': shopId,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        await widget.refreshData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

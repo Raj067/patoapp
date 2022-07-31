@@ -7,6 +7,7 @@ import 'package:patoapp/accounts/set_account.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/signup_authenticate.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -264,42 +265,50 @@ class _SignupPageState extends State<SignupPage> {
       context: context,
       builder: (context) => const ModalFit(),
     );
-
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/signup-user/'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'username': phone.text,
-        'password': password1.text,
-      }),
-    );
-    if (response.statusCode == 201) {
-      // Create storage
-      Map tokens = jsonDecode(response.body);
-      // Write value
-      await storage.write(key: "refresh", value: tokens['refresh']);
-      await storage.write(key: "access", value: tokens['access']);
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const SetAccountPage()),
-          (Route<dynamic> route) => false);
-    } else if (response.statusCode == 500) {
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/signup-user/'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': phone.text,
+          'password': password1.text,
+        }),
+      );
+      if (response.statusCode == 201) {
+        // Create storage
+        Map tokens = jsonDecode(response.body);
+        // Write value
+        await storage.write(key: "refresh", value: tokens['refresh']);
+        await storage.write(key: "access", value: tokens['access']);
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const SetAccountPage()),
+            (Route<dynamic> route) => false);
+      } else if (response.statusCode == 500) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showAuthenticateMessage(
+          context: context,
+          builder: (context) => const ModalFitAuthenticate(),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      showAuthenticateMessage(
+      showTimeOutMessage(
         context: context,
-        builder: (context) => const ModalFitAuthenticate(),
+        builder: (context) => const ModalFitTimeOut(),
       );
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
-      );
-      // throw Exception('Failed to updated customer.');
     }
   }
 }

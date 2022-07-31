@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -169,32 +170,41 @@ class _AddNewShopState extends State<AddNewShop> {
       builder: (context) => const ModalFit(),
     );
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/setting-account/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'businessName': businessName.text,
-        'businessEmail': businessEmail.text,
-        'businessAddress': businessAddress.text,
-        'instagramName': instagramName.text,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      widget.refreshData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      await storage.write(key: "shopName", value: businessName.text);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/setting-account/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'businessName': businessName.text,
+          'businessEmail': businessEmail.text,
+          'businessAddress': businessAddress.text,
+          'instagramName': instagramName.text,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        widget.refreshData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        await storage.write(key: "shopName", value: businessName.text);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -605,41 +606,50 @@ class _EditProductState extends State<EditProduct> {
       builder: (context) => const ModalFit(),
     );
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
-      Uri.parse('${baseUrl}api/edit-product/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'productName': productName.text,
-        'purchasesPrice':
-            purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
-        'sellingPrice':
-            sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
-        'quantity': quantity.text != '' ? int.parse(quantity.text) : 0,
-        'stockLevel': stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
-        'primaryUnit': primaryUnit.text,
-        'supplierName': supplierName.text,
-        'supplierNumber': supplierNumber.text,
-        'supplierEmail': supplierEmail.text,
-        'id': widget.product.id,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/edit-product/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'productName': productName.text,
+          'purchasesPrice':
+              purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
+          'sellingPrice':
+              sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
+          'quantity': quantity.text != '' ? int.parse(quantity.text) : 0,
+          'stockLevel': stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
+          'primaryUnit': primaryUnit.text,
+          'supplierName': supplierName.text,
+          'supplierNumber': supplierNumber.text,
+          'supplierEmail': supplierEmail.text,
+          'id': widget.product.id,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
+
+      if (response.statusCode == 201) {
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
@@ -1647,7 +1648,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/purchases-transaction/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -1681,6 +1683,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
       // throw Exception('Failed to updated customer.');
     }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+
   }
 
   _submitExpensesData() async {
@@ -1692,7 +1703,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/expenses-transaction/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -1725,6 +1737,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
       // throw Exception('Failed to updated customer.');
     }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+
   }
 
   // api/cash-sales-customer-transaction/
@@ -1746,7 +1767,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    final response = await http.post(
+    try {
+          final response = await http.post(
       Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
       headers: getAuthHeaders(accessToken),
       body: jsonEncode(<String, dynamic>{
@@ -1776,5 +1798,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
       // throw Exception('Failed to updated customer.');
     }
+    } catch (e) {
+            // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+
   }
 }
