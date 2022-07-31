@@ -735,6 +735,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
       child: Card(
         elevation: 0,
         // color: Colors.white,
+        margin: const EdgeInsets.fromLTRB(3, 3, 3, 0),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(15),

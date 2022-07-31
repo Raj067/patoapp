@@ -181,367 +181,78 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   }
 
   _firstScreen() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Form(
-        key: editShopFormKey1,
-        child: ListView(
-          children: [
-            Container(height: 10),
-            Center(
-              child: SizedBox(
-                height: 100,
-                width: 100,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(70),
-                        onTap: () async {
-                          XFile? image = await _picker.pickImage(
-                              source: ImageSource.gallery);
-
-                          uploadedImage = await image!.readAsBytes();
-
-                          // ignore: use_build_context_synchronously
-                          await uploadImageFile(
-                            File(image.path),
-                            'api/update-shop-logo/',
-                            context,
-                          );
-                          setState(() {});
-                        },
-                        child: CircleAvatar(
-                          foregroundImage: uploadedImage == null
-                              ? null
-                              : MemoryImage(uploadedImage!),
-                          radius: 50,
-                          backgroundColor: patowavePrimary.withAlpha(50),
-                          foregroundColor: patowavePrimary,
-                          child: const Icon(Icons.photo, size: 50),
-                        ),
-                      ),
-                    ),
-                    const Positioned(
-                      right: 5,
-                      bottom: 5,
-                      child: Icon(
-                        Icons.add_circle,
-                        color: patowavePrimary,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(height: 10),
-            const Center(
-              child: Text(
-                "Tap to add your business logo",
-                style: TextStyle(color: patowavePrimary),
-              ),
-            ),
-            Container(height: 15),
-            TextFormField(
-              controller: businessName,
-              cursorColor: patowavePrimary,
-              validator: (value) {
-                if (value == null || value == "") {
-                  return 'Business Name is required';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                label: Text(
-                  "Business Name*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 15),
-            TextFormField(
-              controller: businessPhone,
-              cursorColor: patowavePrimary,
-              validator: (value) {
-                if (value == null || value == "") {
-                  return 'Phone Number is required';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: const InputDecoration(
-                label: Text(
-                  "Business Phone Number*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 15),
-            TextFormField(
-              cursorColor: patowavePrimary,
-              controller: businessEmail,
-              decoration: const InputDecoration(
-                label: Text(
-                  "Business Email",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 15),
-            TextFormField(
-              cursorColor: patowavePrimary,
-              controller: businessAddress,
-              validator: (value) {
-                if (value == null || value == "") {
-                  return 'Business Address is required';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                label: Text(
-                  "Business Address*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 15),
-            TextFormField(
-              cursorColor: patowavePrimary,
-              controller: instagramName,
-              decoration: const InputDecoration(
-                label: Text(
-                  "Instagram Name",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            Container(height: 15),
-            const Text(
-              "Signature",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Container(height: 10),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Signature(
-                  controller: _controller,
-                  // width: 300,
-                  height: 200,
-                  backgroundColor: Theme.of(context).cardColor,
-                ),
-              ),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // OutlinedButton(
-                //   style: ButtonStyle(
-                //     shape: MaterialStateProperty.all(
-                //       const RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.all(
-                //           Radius.circular(30),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                //   onPressed: () {},
-                //   child: const Text("Change"),
-                // ),
-                Expanded(
-                  child: OutlinedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () async {
-                      Uint8List? myImage = await _controller.toPngBytes();
-                      await uploadImageBytes(
-                          myImage, 'api/update-shop-signature/');
-                      // _controller.toPngBytes();
-                    },
-                    child: const Text("Save"),
-                  ),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: OutlinedButton(
-                    style: ButtonStyle(
-                      side: MaterialStateProperty.all(
-                        const BorderSide(color: patowaveErrorRed),
-                      ),
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      _controller.clear();
-                    },
-                    child: const Text("Clear"),
-                  ),
-                ),
-              ],
-            ),
-            Container(height: 10),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _secondScreen() {
-    return Padding(
-      padding: const EdgeInsets.all(10),
+    return Form(
+      key: editShopFormKey1,
       child: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
-          DropdownButtonFormField2(
-            value: businessTypes.contains(businessType.text)
-                ? businessType.text
-                : null,
-            selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-            scrollbarAlwaysShow: true,
-            dropdownMaxHeight: 200,
-            decoration: InputDecoration(
-              label: const Text(
-                'Business Type',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-            isExpanded: true,
-            icon: const Icon(
-              Icons.arrow_drop_down,
-            ),
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            items: businessTypes
-                .map((item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
+          Container(height: 10),
+          Center(
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(70),
+                      onTap: () async {
+                        XFile? image = await _picker.pickImage(
+                            source: ImageSource.gallery);
+
+                        uploadedImage = await image!.readAsBytes();
+
+                        // ignore: use_build_context_synchronously
+                        await uploadImageFile(
+                          File(image.path),
+                          'api/update-shop-logo/',
+                          context,
+                        );
+                        setState(() {});
+                      },
+                      child: CircleAvatar(
+                        foregroundImage: uploadedImage == null
+                            ? null
+                            : MemoryImage(uploadedImage!),
+                        radius: 50,
+                        backgroundColor: patowavePrimary.withAlpha(50),
+                        foregroundColor: patowavePrimary,
+                        child: const Icon(Icons.photo, size: 50),
                       ),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              //Do something when changing the item if you want.
-              businessType.text = value.toString();
-              setState(() {});
-            },
-            onSaved: (value) {
-              selectedBusinessType = value.toString();
-            },
+                    ),
+                  ),
+                  const Positioned(
+                    right: 5,
+                    bottom: 5,
+                    child: Icon(
+                      Icons.add_circle,
+                      color: patowavePrimary,
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-          Container(height: 15),
-          DropdownButtonFormField2(
-            value: businessCategories.contains(businessCategory.text)
-                ? businessCategory.text
-                : null,
-            selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-            scrollbarAlwaysShow: true,
-            dropdownMaxHeight: 200,
-            decoration: InputDecoration(
-              label: const Text(
-                'Business Category',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+          Container(height: 10),
+          const Center(
+            child: Text(
+              "Tap to add your business logo",
+              style: TextStyle(color: patowavePrimary),
             ),
-            isExpanded: true,
-            icon: const Icon(
-              Icons.arrow_drop_down,
-            ),
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            items: businessCategories
-                .map((item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              //Do something when changing the item if you want.
-              businessCategory.text = value.toString();
-              setState(() {});
-            },
-            onSaved: (value) {
-              selectedBusinessCategory = value.toString();
-            },
           ),
           Container(height: 15),
           TextFormField(
+            controller: businessName,
             cursorColor: patowavePrimary,
-            controller: businessSlogan,
+            validator: (value) {
+              if (value == null || value == "") {
+                return 'Business Name is required';
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               label: Text(
-                "Business Slogan",
+                "Business Name*",
                 style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
               border: OutlineInputBorder(
@@ -551,8 +262,293 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
               ),
             ),
           ),
+          Container(height: 15),
+          TextFormField(
+            controller: businessPhone,
+            cursorColor: patowavePrimary,
+            validator: (value) {
+              if (value == null || value == "") {
+                return 'Phone Number is required';
+              }
+              return null;
+            },
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: const InputDecoration(
+              label: Text(
+                "Business Phone Number*",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          Container(height: 15),
+          TextFormField(
+            cursorColor: patowavePrimary,
+            controller: businessEmail,
+            decoration: const InputDecoration(
+              label: Text(
+                "Business Email",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          Container(height: 15),
+          TextFormField(
+            cursorColor: patowavePrimary,
+            controller: businessAddress,
+            validator: (value) {
+              if (value == null || value == "") {
+                return 'Business Address is required';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              label: Text(
+                "Business Address*",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          Container(height: 15),
+          TextFormField(
+            cursorColor: patowavePrimary,
+            controller: instagramName,
+            decoration: const InputDecoration(
+              label: Text(
+                "Instagram Name",
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          Container(height: 15),
+          const Text(
+            "Signature",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(height: 10),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Signature(
+                controller: _controller,
+                // width: 300,
+                height: 200,
+                backgroundColor: Theme.of(context).cardColor,
+              ),
+            ),
+          ),
+          Container(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // OutlinedButton(
+              //   style: ButtonStyle(
+              //     shape: MaterialStateProperty.all(
+              //       const RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.all(
+              //           Radius.circular(30),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              //   onPressed: () {},
+              //   child: const Text("Change"),
+              // ),
+              Expanded(
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    Uint8List? myImage = await _controller.toPngBytes();
+                    await uploadImageBytes(
+                        myImage, 'api/update-shop-signature/');
+                    // _controller.toPngBytes();
+                  },
+                  child: const Text("Save"),
+                ),
+              ),
+              Container(width: 10),
+              Expanded(
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      const BorderSide(color: patowaveErrorRed),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    _controller.clear();
+                  },
+                  child: const Text("Clear"),
+                ),
+              ),
+            ],
+          ),
+          Container(height: 10),
         ],
       ),
+    );
+  }
+
+  _secondScreen() {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      children: [
+        DropdownButtonFormField2(
+          value: businessTypes.contains(businessType.text)
+              ? businessType.text
+              : null,
+          selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+          scrollbarAlwaysShow: true,
+          dropdownMaxHeight: 200,
+          decoration: InputDecoration(
+            label: const Text(
+              'Business Type',
+              style: TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          isExpanded: true,
+          icon: const Icon(
+            Icons.arrow_drop_down,
+          ),
+          dropdownDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          items: businessTypes
+              .map((item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            //Do something when changing the item if you want.
+            businessType.text = value.toString();
+            setState(() {});
+          },
+          onSaved: (value) {
+            selectedBusinessType = value.toString();
+          },
+        ),
+        Container(height: 15),
+        DropdownButtonFormField2(
+          value: businessCategories.contains(businessCategory.text)
+              ? businessCategory.text
+              : null,
+          selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+          scrollbarAlwaysShow: true,
+          dropdownMaxHeight: 200,
+          decoration: InputDecoration(
+            label: const Text(
+              'Business Category',
+              style: TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          isExpanded: true,
+          icon: const Icon(
+            Icons.arrow_drop_down,
+          ),
+          dropdownDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          items: businessCategories
+              .map((item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            //Do something when changing the item if you want.
+            businessCategory.text = value.toString();
+            setState(() {});
+          },
+          onSaved: (value) {
+            selectedBusinessCategory = value.toString();
+          },
+        ),
+        Container(height: 15),
+        TextFormField(
+          cursorColor: patowavePrimary,
+          controller: businessSlogan,
+          decoration: const InputDecoration(
+            label: Text(
+              "Business Slogan",
+              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

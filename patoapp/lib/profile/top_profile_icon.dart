@@ -110,354 +110,352 @@ class _TopProfileIconState extends State<TopProfileIcon> {
           ),
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ListView(
-          children: [
-            Container(height: 10),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    const Text(
-                      "My Shops",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Container(height: 10),
-                    _getAllShop(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                const Size(45, 45),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      AddNewShop(refreshData: () {
-                                    refreshDataDB();
-                                  }),
-                                  fullscreenDialog: true,
-                                ),
-                              );
-                            },
-                            child: const Text("Add new shop"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+        children: [
+          Container(height: 10),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
             ),
-
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
+            elevation: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  // Image.asset("assets/images/card.png"),
-                  SizedBox(
-                    height: 200,
-                    width: 300,
-                    // color: Colors.green,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: Image.asset("assets/images/card.png"),
-                        ),
-                        Positioned(
-                          top: 97,
-                          // left: 50,
-                          right: 26,
-                          bottom: 0,
-                          child: Text(
-                            widget.profileData.businessName.length > 13
-                                ? widget.profileData.businessName
-                                    .replaceRange(13, null, '...')
-                                : widget.profileData.businessName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveWhite,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          // top: 95,
-                          // left: 50,
-                          right: 26,
-                          bottom: 50,
-                          child: Text(
-                            widget.profileData.businessSlogan == ""
-                                ? "Customer is king"
-                                : widget.profileData.businessSlogan,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveBlack,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 60,
-                          left: 30,
-                          // right: 26,
-                          bottom: 0,
-                          child: Text(
-                            widget.profileData.businessAddress,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveWhite,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 80,
-                          left: 30,
-                          // right: 26,
-                          bottom: 0,
-                          child: Text(
-                            widget.profileData.businessPhone,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveWhite,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 100,
-                          left: 30,
-                          // right: 26,
-                          bottom: 0,
-                          child: Text(
-                            widget.profileData.businessEmail == ""
-                                ? "Email"
-                                : widget.profileData.businessEmail,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveWhite,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 120,
-                          left: 30,
-                          // right: 26,
-                          bottom: 0,
-                          child: Text(
-                            widget.profileData.instagramName == ""
-                                ? "_____"
-                                : widget.profileData.instagramName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: patowaveWhite,
-                            ),
-                          ),
-                        ),
-                      ],
+                  const Text(
+                    "My Shops",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                   Container(height: 10),
+                  _getAllShop(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(45, 45),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
                               ),
                             ),
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    AddNewShop(refreshData: () {
+                                  refreshDataDB();
+                                }),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: const Text("Add new shop"),
                         ),
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            const Icon(Icons.download, size: 18),
-                            Container(width: 10),
-                            const Text("Download"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: Column(
+              children: [
+                // Image.asset("assets/images/card.png"),
+                SizedBox(
+                  height: 200,
+                  width: 300,
+                  // color: Colors.green,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Image.asset("assets/images/card.png"),
+                      ),
+                      Positioned(
+                        top: 97,
+                        // left: 50,
+                        right: 26,
+                        bottom: 0,
+                        child: Text(
+                          widget.profileData.businessName.length > 13
+                              ? widget.profileData.businessName
+                                  .replaceRange(13, null, '...')
+                              : widget.profileData.businessName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveWhite,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        // top: 95,
+                        // left: 50,
+                        right: 26,
+                        bottom: 50,
+                        child: Text(
+                          widget.profileData.businessSlogan == ""
+                              ? "Customer is king"
+                              : widget.profileData.businessSlogan,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveBlack,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 60,
+                        left: 30,
+                        // right: 26,
+                        bottom: 0,
+                        child: Text(
+                          widget.profileData.businessAddress,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveWhite,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 80,
+                        left: 30,
+                        // right: 26,
+                        bottom: 0,
+                        child: Text(
+                          widget.profileData.businessPhone,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveWhite,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 100,
+                        left: 30,
+                        // right: 26,
+                        bottom: 0,
+                        child: Text(
+                          widget.profileData.businessEmail == ""
+                              ? "Email"
+                              : widget.profileData.businessEmail,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveWhite,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 120,
+                        left: 30,
+                        // right: 26,
+                        bottom: 0,
+                        child: Text(
+                          widget.profileData.instagramName == ""
+                              ? "_____"
+                              : widget.profileData.instagramName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: patowaveWhite,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          const Icon(Icons.download, size: 18),
+                          Container(width: 10),
+                          const Text("Download"),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          const Icon(Icons.share, size: 18),
+                          Container(width: 10),
+                          const Text("Share"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Container(height: 10),
+              ],
+            ),
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          //   child: Image.asset("assets/images/card.png"),
+          // ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        // color: Colors.yellow,
+                        // height: 200,
+                        width: MediaQuery.of(context).size.width * 0.55,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Text(
+                              "Your profile is almost complete!",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                                "Please complete your profile to fill your business card."),
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30),
-                              ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: CircularPercentIndicator(
+                          radius: 45.0,
+                          lineWidth: 5.0,
+                          animation: true,
+                          percent: profilePercent / 100,
+                          center: Text(
+                            "$profilePercent%",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
                             ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            const Icon(Icons.share, size: 18),
-                            Container(width: 10),
-                            const Text("Share"),
-                          ],
+                          circularStrokeCap: CircularStrokeCap.round,
+                          progressColor: patowavePrimary,
                         ),
                       ),
                     ],
                   ),
                   Container(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(45, 45),
+                            ),
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    EditMyBusiness(
+                                  profileData: widget.profileData,
+                                  refreshData: widget.refreshData,
+                                ),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: const Text("Edit Business Profile"),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            //   child: Image.asset("assets/images/card.png"),
-            // ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          // color: Colors.yellow,
-                          // height: 200,
-                          width: MediaQuery.of(context).size.width * 0.55,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: const [
-                              Text(
-                                "Your profile is almost complete!",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                  "Please complete your profile to fill your business card."),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: CircularPercentIndicator(
-                            radius: 45.0,
-                            lineWidth: 5.0,
-                            animation: true,
-                            percent: profilePercent / 100,
-                            center: Text(
-                              "$profilePercent%",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            circularStrokeCap: CircularStrokeCap.round,
-                            progressColor: patowavePrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                const Size(45, 45),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      EditMyBusiness(
-                                    profileData: widget.profileData,
-                                    refreshData: widget.refreshData,
-                                  ),
-                                  fullscreenDialog: true,
-                                ),
-                              );
-                            },
-                            child: const Text("Edit Business Profile"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+          ),
+          Container(height: 10),
+          const Text(
+            "Signature",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(height: 10),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
               ),
             ),
-            Container(height: 10),
-            const Text(
-              "Signature",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+            elevation: 0,
+            child: Container(
+              height: 100,
+              // width: 100,
             ),
-            Container(height: 10),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              elevation: 0,
-              child: Container(
-                height: 100,
-                // width: 100,
-              ),
-            ),
-            Container(height: 10),
-          ],
-        ),
+          ),
+          Container(height: 10),
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),

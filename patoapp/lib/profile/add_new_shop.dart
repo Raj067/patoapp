@@ -41,91 +41,89 @@ class _AddNewShopState extends State<AddNewShop> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: addShopFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              TextFormField(
-                controller: businessName,
-                cursorColor: patowavePrimary,
-                validator: (value) {
-                  if (value == null || value == "") {
-                    return 'Business Name is required';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Business Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+      body: Form(
+        key: addShopFormKey,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          children: [
+            Container(height: 15),
+            TextFormField(
+              controller: businessName,
+              cursorColor: patowavePrimary,
+              validator: (value) {
+                if (value == null || value == "") {
+                  return 'Business Name is required';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Business Name*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                controller: businessEmail,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Business Email",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: businessEmail,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Business Email",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                controller: businessAddress,
-                validator: (value) {
-                  if (value == null || value == "") {
-                    return 'Business Address is required';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Business Address*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: businessAddress,
+              validator: (value) {
+                if (value == null || value == "") {
+                  return 'Business Address is required';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                label: Text(
+                  "Business Address*",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                controller: instagramName,
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Instagram Name",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+            ),
+            Container(height: 15),
+            TextFormField(
+              cursorColor: patowavePrimary,
+              controller: instagramName,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Instagram Name",
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
                 ),
               ),
-              Container(height: 15),
-            ],
-          ),
+            ),
+            Container(height: 15),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(

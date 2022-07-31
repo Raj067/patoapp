@@ -18,6 +18,12 @@ class _ApplicationSettingsState extends State<ApplicationSettings> {
   }
 
   @override
+  void initState() {
+    fetchPreference();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

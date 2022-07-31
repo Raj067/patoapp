@@ -19,7 +19,7 @@ class PreviewInvoice extends StatefulWidget {
 }
 
 class _PreviewInvoiceState extends State<PreviewInvoice> {
-  // final List _myColors = [Colors.green, Colors.red, Colors.blue];
+  int selectedColor = 0;
   final pdf = pw.Document();
   // Future<Uint8List> _generatePdf() async {
   //   pdf.addPage(
@@ -68,10 +68,21 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             child: Wrap(
                 children: List<Widget>.generate(
               6,
-              (index) => const Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(
-                  radius: 15,
+              (index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedColor = index;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CircleAvatar(
+                    backgroundColor: sheduleColors[index],
+                    radius: 15,
+                    child: index == selectedColor
+                        ? const Icon(Icons.done, color: patowaveWhite)
+                        : const Text(''),
+                  ),
                 ),
               ),
             )),
