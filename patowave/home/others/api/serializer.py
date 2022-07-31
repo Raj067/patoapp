@@ -7,6 +7,7 @@ from .serializers.parties import *
 from .serializers.profile import *
 from .serializers.business import *
 from .serializers.greeting_cards import *
+from .serializers.shedule import *
 
 
 class InvoiceSerializer(serializers.ModelSerializer):

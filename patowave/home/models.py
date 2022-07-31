@@ -6,6 +6,18 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 
+class Shedule(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    dateEvent = models.CharField(max_length=100,)
+    startTime = models.CharField(max_length=15)
+    endTime = models.CharField(max_length=100)
+    color = models.IntegerField()
+    repeat = models.CharField(max_length=15)
+    remind = models.IntegerField()
+
+
 class Shop(models.Model):
     name = models.CharField(max_length=100)
     slogan = models.CharField(max_length=100, null=True, blank=True)

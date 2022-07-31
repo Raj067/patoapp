@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:patoapp/backend/db/db_helper.dart';
+import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 
 class SheduleController extends GetxController {
@@ -10,21 +10,14 @@ class SheduleController extends GetxController {
   var sheduleList = [];
 
   Future<int> addShedule(SheduleModel shedule) async {
-    return await DBHelper.insertDb(shedule);
+    return await DBHelperShedule.insertDb(shedule);
   }
 
-  // get all shedule in the database
-  Future<List<SheduleModel>> getShedules() async {
-    List<Map<String, dynamic>> shedules = await DBHelper.query();
-    return shedules
-        .map((e) => SheduleModel(
-            id: e['id'],
-            dateEvent: e['dateEvent'],
-            endTime: e['endTime'],
-            startTime: e['startTime'],
-            title: e['title'],
-            description: e['description'],
-            isCompleted: e['isCompleted'] ?? 0))
-        .toList();
+  Future<int> updateShedule(SheduleModel shedule) async {
+    return await DBHelperShedule.updateItem(shedule);
+  }
+
+  Future<void> deleteShedule(SheduleModel shedule) async {
+    await DBHelperShedule.deleteItem(shedule);
   }
 }

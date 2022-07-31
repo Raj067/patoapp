@@ -557,7 +557,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                 ),
                 dx.id == widget.profileData.id
                     ? const Icon(
-                        Icons.more_vert_outlined,
+                        Icons.done,
                         size: 30,
                         color: patowavePrimary,
                       )

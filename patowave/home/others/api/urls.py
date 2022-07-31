@@ -71,10 +71,16 @@ api_urls = [
          name='delete_product_api'),
     path('api/adjust-product/', adjust_product_api,
          name='adjust_product_api'),
-     
-    # Invoice 
+
+    # Invoice
     path('api/create-invoice/', create_invoice_api,
          name='create_invoice_api'),
     path('api/all-invoices/', all_invoices_api,
          name='all_invoices_api'),
+
+    # Shedule 
+    path('api/shedule-details/', shedule_details,
+         name='shedule_details'),
+    path('api/add-shedule/', add_shedule,
+         name='add_shedule'),
 ]

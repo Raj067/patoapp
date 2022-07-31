@@ -129,3 +129,11 @@ const Color patowaveBlue = Colors.blue;
 const defaultLetterSpacing = 0.03;
 
 // Color.fromARGB(55, 73, 166, 157),
+List<Color> sheduleColors = [
+  patowavePrimary,
+  patowaveWarning,
+  Colors.red,
+  Colors.blue,
+  Colors.green,
+  Colors.yellow,
+];

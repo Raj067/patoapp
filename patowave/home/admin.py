@@ -92,7 +92,7 @@ admin.site.register(Feedback,  FeedbackAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Expense)
 admin.site.register(GreetingCard)
-
+admin.site.register(Shedule)
 
 admin.site.site_header = "Patowave Admin"
 admin.site.site_title = "Patowave Admin Portal"

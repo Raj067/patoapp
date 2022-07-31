@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/backend/db/db_helper.dart';
+import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
+import 'package:patoapp/backend/sync/sync_shedule.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
@@ -18,8 +19,7 @@ import 'package:http/http.dart' as http;
 // import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainEntryHomePage extends StatefulWidget {
-  const MainEntryHomePage({Key? key})
-      : super(key: key);
+  const MainEntryHomePage({Key? key}) : super(key: key);
 
   @override
   State<MainEntryHomePage> createState() => _MainEntryHomePageState();
@@ -51,20 +51,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     // EUR GBP TZS USD
   }
 
+  refreshDataDB() async {
+    SyncShedule syncShedule = SyncShedule();
+    await syncShedule.fetchData();
+    fetchShedule();
+  }
+
   // get all shedule in the database
   fetchShedule() async {
-    List<Map<String, dynamic>> shedules = await DBHelper.query();
+    List<Map<String, dynamic>> shedules = await DBHelperShedule.query();
     _shedules = [];
-    _shedules.addAll(shedules
-        .map((e) => SheduleModel(
-            id: e['id'],
-            dateEvent: e['dateEvent'],
-            endTime: e['endTime'],
-            startTime: e['startTime'],
-            title: e['title'],
-            description: e['description'],
-            isCompleted: e['isCompleted'] ?? 0))
-        .toList());
+    _shedules.addAll(shedules.map((e) => fromJsonShedule(e)).toList());
     setState(() {});
   }
 
@@ -73,6 +70,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     super.initState();
     fetchShedule();
     fetchRates();
+    refreshDataDB();
   }
 
   _getRate({required double currency}) {
@@ -95,6 +93,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: const ProfileIcon(),
         actions: const [NotificationIcon(), SizedBox(width: 20)],
@@ -194,7 +193,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         elevation: 0,
-        color: patowavePrimary.withAlpha(50),
+        // color: patowavePrimary.withAlpha(50),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(15),
@@ -220,28 +219,12 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   _allShedules() {
     List<Widget> data = [];
     for (SheduleModel dx in _shedules) {
-      data.add(_singleShedule(
-        shedule: dx,
-        id: dx.id ?? 0,
-        title: dx.title,
-        description: dx.description,
-        dateEvent: dx.dateEvent,
-        startTime: dx.startTime,
-        endTime: dx.endTime,
-      ));
+      data.add(_singleShedule(shedule: dx));
     }
     return Column(children: data);
   }
 
-  _singleShedule({
-    required SheduleModel shedule,
-    required int id,
-    required String title,
-    required String description,
-    required String dateEvent,
-    required String startTime,
-    required String endTime,
-  }) {
+  _singleShedule({required SheduleModel shedule}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 2.5, 10, 2.5),
       child: Card(
@@ -278,7 +261,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      startTime,
+                      shedule.startTime,
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
@@ -291,7 +274,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       color: Theme.of(context).iconTheme.color,
                     ),
                     Text(
-                      endTime,
+                      shedule.endTime,
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
@@ -304,24 +287,24 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title.length > 20
-                          ? title.replaceRange(20, null, '...')
-                          : title,
+                      shedule.title.length > 20
+                          ? shedule.title.replaceRange(20, null, '...')
+                          : shedule.title,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      description.length > 20
-                          ? description.replaceRange(20, null, '...')
-                          : description,
+                      shedule.description.length > 20
+                          ? shedule.description.replaceRange(20, null, '...')
+                          : shedule.description,
                       style: const TextStyle(
                         fontSize: 12,
                       ),
                     ),
                     Text(
-                      "Created at $dateEvent",
+                      "Created at ${DateFormat('d-M-yyy').format(DateTime.parse(shedule.dateEvent))}",
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).iconTheme.color,
@@ -520,7 +503,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 children: [
                   _singleDay(),
                   _singleDay(),
-                  _singleDayActive(),
+                  _singleDayActive(DateTime.now()),
                   _singleDay(),
                   _singleDay()
                 ],
@@ -608,7 +591,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     );
   }
 
-  _singleDayActive() {
+  _singleDayActive(DateTime day) {
     return Expanded(
       child: SizedBox(
         height: 75,
@@ -627,15 +610,15 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Tue",
-                  style: TextStyle(fontSize: 12),
+                  DateFormat('EEE').format(day),
+                  style: const TextStyle(fontSize: 12),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  "14",
-                  style: TextStyle(fontSize: 14),
+                  "${day.day}",
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
@@ -672,7 +655,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           children: [
             Row(children: [
               const Text(
-                '27°',
+                '27°C',
                 style: TextStyle(
                   color: patowaveWhite,
                   fontSize: 35,

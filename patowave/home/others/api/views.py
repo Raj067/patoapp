@@ -99,6 +99,41 @@ def deleting_single_transaction_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# ========= Shedule=======================
+
+
+@api_view(['GET'])
+def shedule_details(request, *args, **kwargs):
+    data = [i for i in Shedule.objects.all() if i.user == request.user]
+    serializer = SheduleProfileSerializer(data, many=True)
+    return Response(serializer.data)
+
+
+'''
+{'title': 'ghh', 'description': 'jjhgvbvx gfdd', 
+'dateEvent': 'Friday of 22 Jan, 2010', 'startTime': '08:05',
+'endTime': '06:06', 'color': 0, 'repeat': 'Daily', 'remind': 5}
+'''
+
+
+@api_view(['POST'])
+def add_shedule(request):
+    if request.method == "POST":
+        shedule = Shedule(
+            user=request.user,
+            title=request.data.get('title'),
+            description=request.data.get('description'),
+            dateEvent=request.data.get('dateEvent'),
+            startTime=request.data.get('startTime'),
+            endTime=request.data.get('endTime'),
+            color=request.data.get('color'),
+            repeat=request.data.get('repeat'),
+            remind=request.data.get('remind'),
+        )
+        shedule.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 # ==================For Profile=============
 
 

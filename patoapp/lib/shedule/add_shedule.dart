@@ -1,6 +1,13 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/shedules_controller.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -21,7 +28,11 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
   TextEditingController sheduleDate = TextEditingController();
   TextEditingController startTime = TextEditingController();
   TextEditingController endTime = TextEditingController();
-
+  int remindSelected = 0;
+  String repeatSelected = 'None';
+  List<int> remind = [0, 5, 10, 15, 30];
+  List<String> repeat = ['None', 'Daily', 'Weekly', 'Monthly'];
+  int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +159,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                   //editing controller of this TextField
                   decoration: const InputDecoration(
                     suffixIcon: Icon(
-                      Icons.timelapse,
+                      Icons.alarm,
                       color: patowavePrimary,
                     ),
                     label: Text(
@@ -192,7 +203,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                   //editing controller of this TextField
                   decoration: const InputDecoration(
                     suffixIcon: Icon(
-                      Icons.timelapse,
+                      Icons.alarm,
                       color: patowavePrimary,
                     ),
                     label: Text(
@@ -230,6 +241,132 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                 ),
               ),
             ]),
+            Container(height: 15),
+            DropdownButtonFormField2(
+              selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+              scrollbarAlwaysShow: true,
+              dropdownMaxHeight: 200,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return 'This field is required';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                label: const Text(
+                  'Repeat',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              isExpanded: true,
+              icon: const Icon(
+                Icons.arrow_drop_down,
+              ),
+              dropdownDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              items: repeat
+                  .map((item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                //Do something when changing the item if you want.
+                repeatSelected = value.toString();
+                setState(() {});
+              },
+              onSaved: (value) {},
+            ),
+            Container(height: 15),
+            DropdownButtonFormField2(
+              selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+              scrollbarAlwaysShow: true,
+              dropdownMaxHeight: 200,
+              validator: (value) {
+                if (value == null || value == '') {
+                  return 'This field is required';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                label: const Text(
+                  'Remind',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              isExpanded: true,
+              icon: const Icon(
+                Icons.arrow_drop_down,
+              ),
+              dropdownDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              items: remind
+                  .map((item) => DropdownMenuItem<String>(
+                        value: '$item',
+                        child: Text(
+                          "$item minutes early",
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                //Do something when changing the item if you want.
+                remindSelected = int.parse(value.toString());
+
+                setState(() {});
+              },
+              onSaved: (value) {},
+            ),
+            Container(height: 15),
+            const Text('Color'),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Wrap(
+                  children: List<Widget>.generate(
+                6,
+                (index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedColor = index;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: CircleAvatar(
+                      backgroundColor: sheduleColors[index],
+                      radius: 15,
+                      child: index == selectedColor
+                          ? const Icon(Icons.done, color: patowaveWhite)
+                          : const Text(''),
+                    ),
+                  ),
+                ),
+              )),
+            ),
+            Container(height: 15),
           ],
         ),
       ),
@@ -255,7 +392,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (addSheduleFormKey.currentState!.validate()) {
-                    _addSheduleToDB();
+                    _submitShedule(context);
                   }
                 },
                 child: const Text(
@@ -269,7 +406,45 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
     );
   }
 
+  _submitShedule(BuildContext context) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/add-shedule/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'title': myTitle.text,
+        'description': description.text,
+        'dateEvent': sheduleDate.text,
+        'startTime': startTime.text,
+        'endTime': endTime.text,
+        'color': selectedColor,
+        'repeat': repeatSelected,
+        'remind': remindSelected,
+      }),
+    );
+    if (response.statusCode == 201) {
+      // widget.refreshData();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
+    }
+  }
+
   _addSheduleToDB() async {
+    // api/add-shedule/
     Navigator.pop(context);
     SheduleModel shedule = SheduleModel(
       startTime: startTime.text,
@@ -278,6 +453,10 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       dateEvent: sheduleDate.text,
       title: myTitle.text,
       isCompleted: 0,
+      color: selectedColor,
+      remind: remindSelected,
+      repeat: repeatSelected,
+      id: 0,
     );
 
     await _sheduleController.addShedule(shedule);

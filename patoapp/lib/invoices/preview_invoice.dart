@@ -9,7 +9,7 @@ import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class PreviewInvoice extends StatefulWidget {
@@ -69,18 +69,16 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         children: [
           Padding(
             padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: patowavePrimary,
-                  ),
+            child: Wrap(
+                children: List<Widget>.generate(
+              6,
+              (index) => Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  radius: 15,
                 ),
-              ],
-            ),
+              ),
+            )),
           ),
           Expanded(
             child: ListView(
@@ -130,7 +128,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
 Future<void> _launchUrl() async {
   final Uri _url = Uri.parse('https://flutter.dev');
 
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
+  // if (!await launchUrl(_url)) {
+  //   throw 'Could not launch $_url';
+  // }
 }

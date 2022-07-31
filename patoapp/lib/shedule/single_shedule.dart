@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/backend/models/shedules.dart';
+import 'package:patoapp/shedule/sample.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class SingleShedule extends StatefulWidget {
   final Function fetchShedule;
@@ -16,13 +16,26 @@ class SingleShedule extends StatefulWidget {
 }
 
 class _SingleSheduleState extends State<SingleShedule> {
+  DateTime eventDay = DateTime.now();
+  @override
+  void initState() {
+    eventDay = DateTime.parse(widget.shedule.dateEvent);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Shedule',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Theme.of(context).primaryColor,
+        centerTitle: true,
+        title: Text(
+          DateFormat('MMMM').format(eventDay),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: patowaveWhite,
+            fontSize: 18,
+          ),
         ),
         leading: IconButton(
           onPressed: () {
@@ -34,147 +47,236 @@ class _SingleSheduleState extends State<SingleShedule> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height > 510
-              ? MediaQuery.of(context).size.height
-              : 510,
-          color: patowavePrimary,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                height: 260,
-                // color: Colors.blue,
-                child: TableCalendar(
-                  firstDay: DateTime.utc(2010, 1, 1),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: DateTime.now(),
-                  rowHeight: 30.0,
-                  // calendarFormat: CalendarFormat.week,
-                  // shouldFillViewport: true,
-                  // calendarStyle: const CalendarStyle(
-                  //   todayDecoration: BoxDecoration(
-                  //       color: Colors.yellow, shape: BoxShape.rectangle),
-                  //   // cellPadding: EdgeInsets.all(1),
-                  // ),
-                  headerStyle: const HeaderStyle(
-                    titleCentered: true,
-                    formatButtonVisible: false,
-                  ),
-                  // headerVisible:false,
-                ),
-              ),
-              Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                  height: 250,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
+      body: Container(
+        color: Theme.of(context).cardColor,
+        child: Column(
+          children: [
+            Container(
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            widget.shedule.title,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                        _singleDay(
+                          DateTime(
+                            eventDay.year,
+                            eventDay.month,
+                            eventDay.day - 2,
                           ),
                         ),
-                        const Divider(),
-                        Row(
-                          children: [
-                            Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: patowavePrimary.withAlpha(50),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Start: ${widget.shedule.startTime}",
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SvgPicture.asset(
-                                    "assets/svg/line1.svg",
-                                    width: 25,
-                                    height: 60,
-                                    color: Theme.of(context).iconTheme.color,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: patowavePrimary.withAlpha(50),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "End: ${widget.shedule.endTime}",
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  widget.shedule.description,
-                                ),
-                              ),
-                            )
-                          ],
+                        _singleDay(
+                          DateTime(
+                            eventDay.year,
+                            eventDay.month,
+                            eventDay.day - 1,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  // MaterialStateProperty<Color?>? backgroundColor,
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(45, 45),
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  _sheduleCompleted(context);
-                                },
-                                child: const Text(
-                                  "Shedule Completed",
-                                ),
-                              ),
-                            ),
-                          ],
+                        _singleDayActive(eventDay),
+                        _singleDay(
+                          DateTime(
+                            eventDay.year,
+                            eventDay.month,
+                            eventDay.day + 1,
+                          ),
                         ),
+                        _singleDay(
+                          DateTime(
+                            eventDay.year,
+                            eventDay.month,
+                            eventDay.day + 2,
+                          ),
+                        )
                       ],
                     ),
-                  )),
+                    Container(
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        // color: Colors.white,
+                        // borderRadius: BorderRadius.only(
+                        //   topLeft: Radius.circular(30),
+                        //   topRight: Radius.circular(30),
+                        // ),
+                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              widget.shedule.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: patowavePrimary.withAlpha(50),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.alarm,
+                                    color: patowavePrimary,
+                                    size: 18,
+                                  ),
+                                  Text(
+                                    "  From: ${widget.shedule.startTime} To: ${widget.shedule.endTime}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // const Divider(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.shedule.description,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: const Text('hello'),
+                    onPressed: () async {
+                      // MyHomePage1
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              MyHomePage1(title: "hello"),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        // MaterialStateProperty<Color?>? backgroundColor,
+                        minimumSize: MaterialStateProperty.all(
+                          const Size(45, 45),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        _sheduleCompleted(context);
+                      },
+                      child: const Text(
+                        "Shedule Completed",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _singleDay(DateTime day) {
+    return Expanded(
+      child: SizedBox(
+        height: 75,
+        child: Card(
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+            side: BorderSide(color: patowaveWhite, width: 0.7),
+          ),
+          color: patowavePrimary.withAlpha(50),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                DateFormat('EEE').format(day),
+                style: const TextStyle(fontSize: 12, color: patowaveWhite),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${day.day}",
+                style: const TextStyle(fontSize: 14, color: patowaveWhite),
+              ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _singleDayActive(DateTime day) {
+    return Expanded(
+      child: SizedBox(
+        height: 75,
+        child: Card(
+          // color: Colors.white,
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          // color: patowavePrimary.withAlpha(50),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(15),
+            onTap: () {},
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  DateFormat('EEE').format(day),
+                  style: const TextStyle(fontSize: 12),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "${day.day}",
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
           ),
         ),
       ),
