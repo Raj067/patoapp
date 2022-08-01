@@ -33,7 +33,11 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
       if (dx['shopId'] == shopId) {
-        finalData.add(fromJsonBusiness(dx));
+        DateTime date = DateTime.parse(dx['date']);
+        if (date.isAfter(pickedRangeDate.start) &&
+            date.isBefore(pickedRangeDate.end)) {
+          finalData.add(fromJsonBusiness(dx));
+        }
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
@@ -116,7 +120,7 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
 
   _searchBox(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: Card(
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         elevation: 0,
@@ -134,23 +138,21 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
             DateTimeRange? pickedDate = await showDateRangePicker(
               context: context,
               firstDate: DateTime(DateTime.now().year - 1),
-              lastDate: DateTime(DateTime.now().year + 5),
+              lastDate: DateTime(DateTime.now().year + 1),
               currentDate: DateTime.now(),
               confirmText: "SELECT",
               saveText: "SELECT",
               helpText: "Select Transaction Date Range",
-              initialDateRange: DateTimeRange(
-                start: DateTime(
-                  DateTime.now().year,
-                  DateTime.now().month,
-                  DateTime.now().day - 3,
-                ),
-                end: DateTime.now(),
-              ),
+              initialDateRange: pickedRangeDate,
+              // builder: (context, theme) {
+              //   Theme.of(context).primaryColor = patowavePrimary;
+              //   DateTime
+              // },
             );
             if (pickedDate != null) {
               setState(() {
                 pickedRangeDate = pickedDate;
+                fetchBusinessDB();
               });
             } else {}
           },
