@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                     height: 20,
                   ),
-            label: 'Business',
+            label: 'Cashbook',
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 2

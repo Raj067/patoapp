@@ -581,26 +581,54 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               ),
               Container(height: 15),
-              TextFormField(
-                cursorColor: patowavePrimary,
-                controller: primaryUnit,
+              DropdownButtonFormField2(
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Service unit is required';
+                  if (value == null || value == "") {
+                    return 'Please select Service Unit';
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
-                  label: Text(
-                    "Service Unit*",
+                // value: selectedPrimaryUnit,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                scrollbarAlwaysShow: true,
+                dropdownMaxHeight: 200,
+                decoration: InputDecoration(
+                  label: const Text(
+                    'Service Unit*',
                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
                   ),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: serviceUnit
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    primaryUnit.text = value.toString();
+                  });
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  selectedValue = value.toString();
+                },
               ),
               Container(height: 15),
               TextFormField(

@@ -559,36 +559,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   _addExpenses() {
-    List<String> expenses = [
-      "Purchase",
-      "Carriage Inward",
-      "Royalties charge",
-      "Sales Commission",
-      "Unloading Charge",
-      "Rent",
-      "Food",
-      "Breakfast",
-      "Printing",
-      "Repair and Maintenance",
-      "Equipment",
-      "Fuel",
-      "Utilities",
-      "Training",
-      "Insurance",
-      "Advertisement",
-      "Payroll",
-      "Commission",
-      "Electricity",
-      "Taxes",
-      "License fee",
-      "Packaging material",
-      "Furniture and fitting",
-      "Loans and advances",
-      "Service fee",
-      "Software subscription",
-      "Transport",
-      "Others",
-    ];
     return Expanded(
       child: Form(
         key: expensesTransactionFormKey,

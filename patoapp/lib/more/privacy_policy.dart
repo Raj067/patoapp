@@ -33,7 +33,7 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
         ),
       ),
       // body:
-      //     Container(child: SfPdfViewer.asset('assets/pdf/privacy-policy.pdf')),
+      //     Container(child: SfPdfViewer.asset('pdf/privacy-policy.pdf')),
     );
   }
 }

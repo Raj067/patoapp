@@ -6,7 +6,6 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/funcs/misc.dart';
 import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';
@@ -74,23 +73,7 @@ class _BusinessPageState extends State<BusinessPage> {
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
       if (dx['shopId'] == shopId) {
-        finalData.add(FinancialData(
-          date: DateTime.parse(dx['date']),
-          isCashSale: intTobool(dx['isCashSale']),
-          isPaymentIn: intTobool(dx['isPaymentIn']),
-          isExpenses: intTobool(dx['isExpenses']),
-          isPaymentOut: intTobool(dx['isPaymentOut']),
-          isPurchases: intTobool(dx['isPurchases']),
-          isInvoice: intTobool(dx['isInvoice']),
-          name: dx['name'] ?? "",
-          description: dx['description'] ?? "",
-          details: jsonDecode(dx['details']),
-          amount: dx['amount'],
-          receipt: "${dx['receipt']}",
-          discount: dx['discount'],
-          id: dx['id'],
-          shopId: dx['shopId'],
-        ));
+        finalData.add(fromJsonBusiness(dx));
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
@@ -538,11 +521,11 @@ class _BusinessPageState extends State<BusinessPage> {
                     style: const TextStyle(fontSize: 12),
                   ),
                   Text(
-                    DateFormat('EEE, M/d/y').format(data.date),
+                    DateFormat('EEE, d/M/y').format(data.date),
                     style:
                         const TextStyle(fontSize: 12, color: patowaveWarning),
                   ),
-                  // DateFormat('EEE, M/d/y').format(pickedDate)
+                  // DateFormat('EEE, d/M/y').format(pickedDate)
                 ],
               ),
             ),
@@ -689,7 +672,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                   ),
                                 ),
                                 Text(
-                                  DateFormat('EEE, M/d/y')
+                                  DateFormat('EEE, d/M/y')
                                       .format(pickedRangeDate.start),
                                   style: const TextStyle(
                                     fontSize: 11,
@@ -707,7 +690,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                   ),
                                 ),
                                 Text(
-                                  DateFormat('EEE, M/d/y')
+                                  DateFormat('EEE, d/M/y')
                                       .format(pickedRangeDate.end),
                                   style: const TextStyle(
                                     fontSize: 11,
@@ -735,40 +718,39 @@ class _BusinessPageState extends State<BusinessPage> {
   _deletingTransaction(FinancialData data) async {
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/deleting-single-transaction/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'transaction': data.getTransactionType(),
-        'id': data.getTransactionID(),
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      setState(() {
-        data.deleteTransaction();
-      });
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/deleting-single-transaction/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'transaction': data.getTransactionType(),
+          'id': data.getTransactionID(),
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        setState(() {
+          data.deleteTransaction();
+        });
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),
       );
     }
-
   }
 }

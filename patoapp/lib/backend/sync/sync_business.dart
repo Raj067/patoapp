@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/funcs/misc.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 
 class SyncBusiness {
@@ -50,25 +49,7 @@ class SyncBusiness {
         //  == Deleting the data that is no longer stored in the database.
         List<Map<String, dynamic>> business = await DBHelperBusiness.query();
         List<FinancialData> localDb = [];
-        localDb.addAll(business
-            .map((dx) => FinancialData(
-                  date: DateTime.parse(dx['date']),
-                  isCashSale: intTobool(dx['isCashSale']),
-                  isPaymentIn: intTobool(dx['isPaymentIn']),
-                  isExpenses: intTobool(dx['isExpenses']),
-                  isPaymentOut: intTobool(dx['isPaymentOut']),
-                  isPurchases: intTobool(dx['isPurchases']),
-                  isInvoice: intTobool(dx['isInvoice']),
-                  name: dx['name'] ?? "",
-                  description: dx['description'] ?? "",
-                  details: jsonDecode(dx['details']),
-                  amount: dx['amount'],
-                  receipt: "${dx['receipt']}",
-                  discount: dx['discount'],
-                  id: dx['id'],
-                  shopId: dx['shopId'],
-                ))
-            .toList());
+        localDb.addAll(business.map((dx) => fromJsonBusiness(dx)).toList());
         List<dynamic> serverDb =
             jsonDecode(data.body).map((e) => e['id']).toList();
         for (FinancialData dx in localDb) {

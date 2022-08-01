@@ -6,6 +6,7 @@ import 'package:patoapp/backend/sync/sync_invoice.dart';
 import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class MainInvoicePage extends StatefulWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class MainInvoicePage extends StatefulWidget {
 
 class _MainInvoicePageState extends State<MainInvoicePage> {
   List<SingleInvoice> myCustomData = [];
-  int outstandings = 0;
+  int outstanding = 0;
   int overdue = 0;
   fetchInvoiceDB() async {
     // shop ID
@@ -123,7 +124,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
   _invoices() {
     List<Widget> data = [];
     for (SingleInvoice dx in myCustomData) {
-      outstandings += 1;
+      outstanding += 1;
       overdue += 1;
       data.add(Card(
         shape: const RoundedRectangleBorder(
@@ -246,64 +247,96 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
     return Column(children: data);
   }
 
-  _invoiceHeader() => Row(
-        children: [
-          Expanded(
-            child: SizedBox(
-              height: 100,
-              child: Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
+  _invoiceHeader() => Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        elevation: 0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Text("Total unpaid invoice Tsh 79,000"),
+            ),
+            LinearPercentIndicator(
+              percent: 0.67,
+              backgroundColor: patowaveErrorRed,
+              progressColor: patowaveWarning,
+              lineHeight: 10,
+              animation: true,
+              barRadius: const Radius.circular(5),
+              curve: Curves.easeInCirc,
+            ),
+            Container(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Table(
+                border: TableBorder(
+                  top: BorderSide(
+                    color: Colors.grey.withAlpha(100),
+                    width: 0.5,
+                  ),
+                  verticalInside: BorderSide(
+                    color: Colors.grey.withAlpha(100),
+                    width: 0.5,
                   ),
                 ),
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Outstanding"),
-                    Container(
-                      height: 10,
+                children: [
+                  TableRow(children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Outstanding",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: patowaveWarning,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            "Tsh: $outstanding",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "$outstandings",
-                      style:
-                          const TextStyle(fontSize: 20, color: patowaveGreen),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Overdue",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: patowaveErrorRed,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            "Tsh: $overdue",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ]),
+                ],
               ),
             ),
-          ),
-          Expanded(
-            child: SizedBox(
-              height: 100,
-              child: Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Overdue"),
-                    Container(
-                      height: 10,
-                    ),
-                    Text(
-                      "$overdue",
-                      style: const TextStyle(
-                          fontSize: 20, color: patowaveErrorRed),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       );
 }

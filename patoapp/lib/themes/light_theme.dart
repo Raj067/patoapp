@@ -19,8 +19,13 @@ ThemeData patowaveLightTheme() {
     inputDecorationTheme: _inputDecorationTheme,
     checkboxTheme: _checkboxTheme,
     appBarTheme: _appBarTheme,
+    // cardTheme:_cardTheme,
   );
 }
+
+// CardTheme _cardTheme = const CardTheme(
+//   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+// );
 
 AppBarTheme _appBarTheme = const AppBarTheme(elevation: 0);
 

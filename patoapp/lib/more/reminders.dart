@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -108,29 +110,49 @@ class _ReminderDialogState extends State<ReminderDialog> {
             padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Text("Reminder Message"),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextFormField(
-              minLines:
-                  6, // any number you need (It works as the rows for the textarea)
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              decoration: const InputDecoration(
-                label: Text(
-                  "Descriptions",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
               ),
+              elevation: 0,
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Text("""
+Habari <CUSTOMER_NAME>, unakumbushwa kuja kulipa deni lako <SHOP_NAME> - <CUSTOMER_PHONE> kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+<LINK>
+            
+<SHOP_NAME>
+Powered by Patowave""", style: TextStyle()),
+              ),
             ),
-          )
-          // const Center(
-          //   child: Text("Reminders"),
-          // ),
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: TextFormField(
+          //     minLines:
+          //         6, // any number you need (It works as the rows for the textarea)
+          //     keyboardType: TextInputType.multiline,
+          //     maxLines: null,
+          //     decoration: const InputDecoration(
+          //       label: Text(
+          //         "Descriptions",
+          //         style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+          //       ),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(15),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
+          // // const Center(
+          // //   child: Text("Reminders"),
+          // // ),
         ],
       ),
     );

@@ -121,7 +121,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // Share.share('check out my website https://example.com');
+          // await Share.share('check out my website https://example.com');
           capturePng();
           // final result = await ImageGallerySaver.saveImage(
           //     Uint8List.fromList(response.data),

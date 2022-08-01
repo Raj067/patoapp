@@ -164,6 +164,26 @@ class FinancialData {
   }
 }
 
+FinancialData fromJsonBusiness(Map<String, dynamic> dx) {
+  return FinancialData(
+    date: DateTime.parse(dx['date']),
+    isCashSale: intTobool(dx['isCashSale']),
+    isPaymentIn: intTobool(dx['isPaymentIn']),
+    isExpenses: intTobool(dx['isExpenses']),
+    isPaymentOut: intTobool(dx['isPaymentOut']),
+    isPurchases: intTobool(dx['isPurchases']),
+    isInvoice: intTobool(dx['isInvoice']),
+    name: dx['name'] ?? "",
+    description: dx['description'] ?? "",
+    details: jsonDecode(dx['details']),
+    amount: dx['amount'],
+    receipt: "${dx['receipt']}",
+    discount: dx['discount'],
+    id: dx['id'],
+    shopId: dx['shopId'],
+  );
+}
+
 class BusinessGeneral {
   int salesWeek;
   int expensesWeek;
