@@ -8,8 +8,6 @@ api_urls = [
          name='greeting_cards'),
     path('api/top-selling-items/', top_selling_items,
          name='top_selling_items'),
-    path('api/general-parties-details/', general_parties_details,
-         name='general_parties_details'),
 
     path('api/general-inventory-analysis/', general_inventory_analysis,
          name='general_inventory_analysis'),
@@ -44,8 +42,6 @@ api_urls = [
          adding_payment_customer_api, name='adding_payment_customer_api'),
 
     # BUSINESS deleting_single_transaction_api
-    path('api/general-business-details/', general_business_details,
-         name='general_business_data'),
     path('api/business-financial-transactions/', business_financial_transactions,
          name='business_financial_transactions'),
     path('api/deleting-single-transaction/', deleting_single_transaction_api,
@@ -78,7 +74,7 @@ api_urls = [
     path('api/all-invoices/', all_invoices_api,
          name='all_invoices_api'),
 
-    # Shedule 
+    # Shedule
     path('api/shedule-details/', shedule_details,
          name='shedule_details'),
     path('api/add-shedule/', add_shedule,

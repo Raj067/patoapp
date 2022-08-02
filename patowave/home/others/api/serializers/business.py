@@ -1,16 +1,6 @@
 from home.models import *
 
 
-def general_business_data(request, shop):
-    # data should be return as int -- > rounded
-    data = {
-        "sales_week": 1000, "expenses_week": 8900,
-        "sales_month": 1000, "expenses_month": 8900,
-        "profit_month": 1000, "profit_week": 8900,
-    }
-    return data
-
-
 def business_financial_data(request, shop):
     data = []
     for dx in Payment.objects.all():
@@ -86,9 +76,38 @@ def business_financial_data(request, shop):
                 ]
             })
 
-    # for dx in Invoice.objects.all():
-    #     if dx.shop in shop:
-    #         data.append([dx.updated_at, 0, dx.amount])
+    for dx in Invoice.objects.all():
+        if dx.shop in shop:
+            data.append({
+                "id": f"invoice-{dx.id}",
+                "shopId": dx.shop.id,
+                "date": dx.updated_at,
+                "description": dx.description,
+                "name": dx.customer.customer_name,
+                "amount": dx.amount_received,
+                "discount": 0,
+                "isCashSale": False,
+                "isExpenses": False,
+                "isPaymentIn": False,
+                "isPaymentOut": False,
+                "isInvoice": True,
+                "isPurchases": False,
+                "receipt": dx.invoice_no,
+                "details": [{
+                    "total_amount": dx.total_amount,
+                    "due_date": dx.due_date,
+                    "data": [{
+                        "id": i.id,
+                        "product": i.product.product_name,
+                        "quantity": i.quantity,
+                        "price": i.price,
+                        "product_unit": i.product_unit,
+                        "date": i.updated_at,
+                    }
+                        for i in dx.sold_items.all()
+                    ]}]
+            })
+
     for dx in CashSale.objects.all():
         if dx.shop in shop:
             data.append({

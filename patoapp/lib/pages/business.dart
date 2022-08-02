@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +28,7 @@ class BusinessPage extends StatefulWidget {
 
 class _BusinessPageState extends State<BusinessPage> {
   String dropdownValue = 'This Month';
-  bool isWeek = true;
+  List dropDownList = ['This Month', 'This Week'];
   DateTimeRange pickedRangeDate = DateTimeRange(
     start: DateTime(
       DateTime.now().year,
@@ -96,7 +97,7 @@ class _BusinessPageState extends State<BusinessPage> {
     expensesMonth = 0;
     profitMonth = 0;
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
+      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
         DateTime date = DateTime.parse(dx['date']);
         fetchHeaderData(date: date, data: fromJsonBusiness(dx));
         if (date.isAfter(pickedRangeDate.start) &&
@@ -170,55 +171,58 @@ class _BusinessPageState extends State<BusinessPage> {
 
   PreferredSizeWidget _businessButtomTopBar() => PreferredSize(
         preferredSize: const Size.fromHeight(48.0),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 12, 5),
-                    padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                    height: 28,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: patowaveGreen400,
-                      ),
-                      color: Theme.of(context).chipTheme.backgroundColor,
+              padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
+              child: SizedBox(
+                height: 30,
+                width: 120,
+                child: DropdownButtonFormField2(
+                  value: dropdownValue,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 100,
+                  buttonHeight: 30,
+                  buttonWidth: 50,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Theme.of(context).chipTheme.backgroundColor,
+                    contentPadding: const EdgeInsets.all(5),
+                    enabled: false,
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: DropdownButton<String>(
-                      value: dropdownValue,
-                      alignment: AlignmentDirectional.topStart,
-                      underline: Container(
-                        height: 0,
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_drop_down_rounded,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                          dropdownValue == 'This Month'
-                              ? isWeek = false
-                              : isWeek = true;
-                        });
-                      },
-                      items: <String>['This Month', 'This Week']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  )
-                ],
+                  ),
+                  isExpanded: false,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: dropDownList
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      dropdownValue = value.toString();
+                    });
+                    //Do something when changing the item if you want.
+                  },
+                  onSaved: (value) {
+                    // selectedValue = value.toString();
+                  },
+                ),
               ),
             ),
           ],
@@ -252,7 +256,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
+                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -280,7 +284,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
+                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
                             style: const TextStyle(
                               color: patowaveErrorRed,
                               fontSize: 16,
@@ -302,7 +306,7 @@ class _BusinessPageState extends State<BusinessPage> {
                   children: [
                     const Text("Profit"),
                     Text(
-                      "Tsh ${isWeek ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
+                      "Tsh ${dropdownValue == 'This Week' ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   ],
@@ -669,6 +673,7 @@ class _BusinessPageState extends State<BusinessPage> {
           if (pickedDate != null) {
             setState(() {
               pickedRangeDate = pickedDate;
+              fetchBusinessDB();
             });
           } else {}
         },

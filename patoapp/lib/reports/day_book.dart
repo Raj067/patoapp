@@ -15,14 +15,7 @@ class DayBookReports extends StatefulWidget {
 
 class _DayBookReportsState extends State<DayBookReports> {
   DateTime selectedDate = DateTime.now();
-  DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day - 7,
-    ),
-    end: DateTime.now(),
-  );
+
   List<FinancialData> allFinancialData = [];
   bool isLoading = true;
   fetchBusinessDB() async {
@@ -33,16 +26,26 @@ class _DayBookReportsState extends State<DayBookReports> {
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
+      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
         DateTime date = DateTime.parse(dx['date']);
-        if (date == selectedDate) {
+        DateTime d1 = DateTime(
+          date.year,
+          date.month,
+          date.day,
+        );
+        DateTime d2 = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+        );
+
+        if (d1 == d2) {
           finalData.add(fromJsonBusiness(dx));
         }
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
-    isLoading = false;
     setState(() {});
   }
 
@@ -135,19 +138,18 @@ class _DayBookReportsState extends State<DayBookReports> {
             topRight: Radius.circular(15),
           ),
           onTap: () async {
-            DateTimeRange? pickedDate = await showDateRangePicker(
-              context: context,
-              firstDate: DateTime(DateTime.now().year - 1),
-              lastDate: DateTime(DateTime.now().year + 1),
-              currentDate: DateTime.now(),
-              confirmText: "SELECT",
-              saveText: "SELECT",
-              helpText: "Select Transaction Date Range",
-              initialDateRange: pickedRangeDate,
-            );
+            DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: selectedDate,
+                firstDate: DateTime(DateTime.now().year - 3),
+                //DateTime.now() - not to allow to choose before today.
+                lastDate: DateTime(DateTime.now().year + 1),
+                initialDatePickerMode: DatePickerMode.day,
+                helpText: "Select Due Date");
+
             if (pickedDate != null) {
               setState(() {
-                pickedRangeDate = pickedDate;
+                selectedDate = pickedDate;
                 fetchBusinessDB();
               });
             } else {}
@@ -161,20 +163,7 @@ class _DayBookReportsState extends State<DayBookReports> {
                 Row(
                   children: [
                     Text(
-                      DateFormat('EEE, d/M/y').format(pickedRangeDate.start),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: patowaveWarning,
-                      ),
-                    ),
-                    const Text(
-                      " to ",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('EEE, d/M/y').format(pickedRangeDate.end),
+                      DateFormat('EEE, d/M/y').format(selectedDate),
                       style: const TextStyle(
                         fontSize: 14,
                         color: patowaveWarning,

@@ -352,7 +352,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       style: const TextStyle(fontSize: 12),
                     ),
                     Text(
-                      date,
+                      DateFormat('d MMMM, yyy').format((DateTime.parse(date))),
                       style: const TextStyle(
                         fontSize: 12,
                         color: patowaveWarning,

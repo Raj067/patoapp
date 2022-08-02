@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/reports/debt_reports.dart';
+import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
@@ -34,7 +32,35 @@ class _PartiesPageState extends State<PartiesPage> {
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
-  // get all Customers in the database
+  fetchCustomerHeader(SingleCustomer data) {
+    for (Map dx in data.financialData) {
+      DateTime date = DateTime.parse(dx['date']);
+
+      // for monthly
+      if (date.isAfter(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month - 1,
+          DateTime.now().day,
+        ),
+      )) {
+        customersDebtMonth += dx['paid'];
+        totalDebtMonth += dx['received'];
+      }
+      // for Weekly
+      if (date.isAfter(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day - 7,
+        ),
+      )) {
+        customersDebtWeek += dx['paid'];
+        totalDebtWeek += dx['received'];
+      }
+    }
+  }
+
   fetchCustomersDB() async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
@@ -46,35 +72,8 @@ class _PartiesPageState extends State<PartiesPage> {
     totalDebtWeek = 0;
     customersDebtMonth = 0;
     customersDebtWeek = 0;
-    print(customers);
     for (Map<String, dynamic> e in customers) {
-      for (var dx in jsonDecode(e['financialData'])) {
-        print(dx);
-        DateTime date = DateTime.parse(dx['date']);
-        // for monthly
-        if (date.isAfter(
-          DateTime(
-            DateTime.now().year,
-            DateTime.now().month - 1,
-            DateTime.now().day,
-          ),
-        )) {
-          customersDebtMonth += dx['paid'];
-          customersDebtWeek += dx['paid'];
-        }
-        // for Weekly
-        if (date.isAfter(
-          DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day - 7,
-          ),
-        )) {
-          totalDebtMonth += dx['received'];
-          totalDebtWeek += dx['received'];
-        }
-      }
-
+      fetchCustomerHeader(fromJsonCustomer(e));
       if (e['shopId'] == shopId) {
         finalData.add(fromJsonCustomer(e));
       }
@@ -407,7 +406,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             "Tsh ${isWeek ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ]),
@@ -427,7 +426,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             "Tsh ${isWeek ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ]),
@@ -443,7 +442,7 @@ class _PartiesPageState extends State<PartiesPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const DebtReports(),
+                    builder: (BuildContext context) => const MainReportsPage(),
                     fullscreenDialog: true,
                   ),
                 );

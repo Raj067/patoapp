@@ -66,18 +66,7 @@ def general_inventory_analysis(request, *args, **kwargs):
     return Response(data)
 
 
-@api_view(['GET'])
-def general_parties_details(request, *args, **kwargs):
-    data = general_parties_data(request, get_shop(request))
-    return Response(data)
-
 #  =============FOR BUSINESS ==========
-
-
-@api_view(['GET'])
-def general_business_details(request, *args, **kwargs):
-    data = general_business_data(request, get_shop(request))
-    return Response(data)
 
 
 @api_view(['GET'])
@@ -107,13 +96,6 @@ def shedule_details(request, *args, **kwargs):
     data = [i for i in Shedule.objects.all() if i.user == request.user]
     serializer = SheduleProfileSerializer(data, many=True)
     return Response(serializer.data)
-
-
-'''
-{'title': 'ghh', 'description': 'jjhgvbvx gfdd', 
-'dateEvent': 'Friday of 22 Jan, 2010', 'startTime': '08:05',
-'endTime': '06:06', 'color': 0, 'repeat': 'Daily', 'remind': 5}
-'''
 
 
 @api_view(['POST'])
@@ -272,7 +254,7 @@ def all_invoices_api(request):
 @api_view(['POST'])
 def create_invoice_api(request):
     if request.method == "POST":
-        print(request.data)
+        # print(request.data)
         amount_received = request.data.get('amount_received')
         total_amount = request.data.get('total_amount')
         discount = request.data.get('discount')
