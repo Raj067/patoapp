@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -114,7 +113,7 @@ class _InventorySummaryState extends State<InventorySummary> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Total Amount"),
+                    const Text("Total Value"),
                     Text("Tsh ${formatter.format(totalAmount)}"),
                   ],
                 ),

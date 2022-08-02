@@ -4,6 +4,7 @@ import 'package:patoapp/generalSettings/application.dart';
 import 'package:patoapp/generalSettings/items.dart';
 import 'package:patoapp/generalSettings/transaction.dart';
 import 'package:patoapp/generalSettings/user_management.dart';
+import 'package:patoapp/more/reminders.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class GeneralSettingsDialog extends StatelessWidget {
@@ -214,6 +215,39 @@ class GeneralSettingsDialog extends StatelessWidget {
                       width: 10,
                     ),
                     const Text('Items'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const ReminderDialog(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/svg/ringing2.svg",
+                        width: 25, height: 25),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('Reminder Automation'),
                   ],
                 ),
               ),

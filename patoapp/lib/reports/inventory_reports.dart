@@ -18,32 +18,56 @@ class _InventoryReportsState extends State<InventoryReports> {
     start: DateTime(
       DateTime.now().year,
       DateTime.now().month,
-      DateTime.now().day - 7,
+      DateTime.now().day - 30,
     ),
     end: DateTime.now(),
   );
-  List<FinancialData> allFinancialData = [];
-  bool isLoading = true;
+  List<Map> myData = [];
+  double stockIn = 0;
+  double stockOut = 0;
   fetchBusinessDB() async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
 
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
-    List<FinancialData> finalData = [];
+    stockIn = 0;
+    stockOut = 0;
+    myData = [];
     for (Map<String, dynamic> dx in business) {
       if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
             date.isBefore(pickedRangeDate.end)) {
-          finalData.add(fromJsonBusiness(dx));
+          findingAllData(fromJsonBusiness(dx));
         }
       }
     }
-    finalData.sort((b, a) => a.date.compareTo(b.date));
-    allFinancialData = finalData;
-    isLoading = false;
     setState(() {});
+  }
+
+  findingAllData(FinancialData data) {
+    for (var dx in data.details) {
+      if (dx['product'] != null) {
+        data.isPurchases
+            ? stockIn += dx['quantity']
+            : stockOut += dx['quantity'];
+        if (myData.map((e) => e['name']).toList().contains(dx['product'])) {
+          data.isPurchases
+              ? myData.firstWhere((element) =>
+                  element['name'] == dx['product'])['stockIn'] += dx['quantity']
+              : myData.firstWhere((element) =>
+                      element['name'] == dx['product'])['stockOut'] +=
+                  dx['quantity'];
+        } else {
+          myData.add({
+            'name': dx['product'],
+            'stockIn': data.isPurchases ? dx['quantity'] : 0,
+            'stockOut': data.isCashSale || data.isInvoice ? dx['quantity'] : 0,
+          });
+        }
+      }
+    }
   }
 
   @override
@@ -88,8 +112,9 @@ class _InventoryReportsState extends State<InventoryReports> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text("Details"),
-                    Text("Amount "),
+                    Text("Name"),
+                    Text("Stock-In"),
+                    Text("Stock-Out"),
                   ],
                 ),
               ),
@@ -101,14 +126,53 @@ class _InventoryReportsState extends State<InventoryReports> {
               child: Card(
                 elevation: 0,
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                ),
+                // shape: const RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.only(
+                //     bottomLeft: Radius.circular(15),
+                //     bottomRight: Radius.circular(15),
+                //   ),
+                // ),
                 child: ListView(
                   children: _allFinancialData(context),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: patowavePrimary.withAlpha(100),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Total Stock-In",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text("${stockIn.toInt()} items"),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "Total Stock-Out",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text("${stockOut.toInt()} items"),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -195,48 +259,26 @@ class _InventoryReportsState extends State<InventoryReports> {
     );
   }
 
-  Widget _singleFinancialData(BuildContext context, FinancialData data) {
+  Widget _singleFinancialData(BuildContext context, Map data) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data.getDescriptionName(),
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  data.getDescriptionDetails(),
-                  style: const TextStyle(fontSize: 12),
-                ),
-                Text(
-                  DateFormat('EEE, d/M/y').format(data.date),
-                  style: const TextStyle(fontSize: 12, color: patowaveWarning),
-                ),
-                // DateFormat('EEE, d/M/y').format(pickedDate)
-              ],
+            child: Text(data['name']),
+          ),
+          Expanded(
+            child: Text(
+              "${data['stockIn']}",
+              textAlign: TextAlign.center,
             ),
           ),
-          Container(width: 20),
-          data.isIncome()
-              ? Text(
-                  "Tsh ${formatter.format(data.amount)}",
-                  style: const TextStyle(
-                    color: patowaveGreen,
-                  ),
-                )
-              : Text(
-                  "Tsh ${formatter.format(data.amount)}",
-                  style: const TextStyle(
-                    color: patowaveErrorRed,
-                  ),
-                ),
+          Expanded(
+              child: Text(
+            "${data['stockOut']}",
+            textAlign: TextAlign.right,
+          )),
         ],
       ),
     );
@@ -244,11 +286,9 @@ class _InventoryReportsState extends State<InventoryReports> {
 
   List<Widget> _allFinancialData(BuildContext context) {
     List<Widget> data = [];
-    for (var element in allFinancialData) {
-      if (!element.isDeleted) {
-        data.add(_singleFinancialData(context, element));
-        data.add(const Divider(height: 0));
-      }
+    for (var element in myData) {
+      data.add(_singleFinancialData(context, element));
+      data.add(const Divider(height: 0));
     }
     return data;
   }

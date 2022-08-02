@@ -46,7 +46,7 @@ class MorePage extends StatelessWidget {
                           context,
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) =>
-                                const InventoryAnalysis(),
+                                const GeneralSettingsDialog(),
                             fullscreenDialog: true,
                           ),
                         );
@@ -55,7 +55,7 @@ class MorePage extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: Row(
                           children: [
-                            SvgPicture.asset("assets/svg/viewDetails.svg",
+                            SvgPicture.asset("assets/svg/settings.svg",
                                 width: 25, height: 25),
                             Container(
                               width: 10,
@@ -65,11 +65,11 @@ class MorePage extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: const [
-                                  Text('Inventory Analysis'),
+                                  Text('General Settings'),
                                   Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -106,101 +106,8 @@ class MorePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  child: Text(
-                    'Settings',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-              ),
-              Card(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                elevation: 0,
-                child: Column(
-                  children: [
-                    InkWell(
-                      borderRadius: BorderRadius.circular(15),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const GeneralSettingsDialog(),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/svg/settings.svg",
-                                width: 25, height: 25),
-                            Container(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('General Settings'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Divider(
-                      height: 0,
-                    ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(15),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const ReminderDialog(),
-                            fullscreenDialog: true,
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/svg/ringing2.svg",
-                                width: 25, height: 25),
-                            Container(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Reminder Automation'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              Container(
+                height: 10,
               ),
               const Align(
                 alignment: Alignment.centerLeft,
