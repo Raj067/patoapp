@@ -17,10 +17,6 @@ ThemeData patowaveDarkTheme() {
     appBarTheme: _appBarTheme,
     checkboxTheme: _checkboxTheme,
     progressIndicatorTheme: _progressIndicatorTheme,
-    // colorScheme: const ColorScheme.dark(
-    //   primary: patowavePrimary,
-    //   brightness: Brightness.light,
-    // ),
   );
 }
 

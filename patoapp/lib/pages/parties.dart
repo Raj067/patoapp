@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/reports/debt_reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
@@ -19,12 +20,10 @@ class PartiesPage extends StatefulWidget {
 }
 
 class _PartiesPageState extends State<PartiesPage> {
-  CustomersGeneral customersGeneral = CustomersGeneral(
-    totalDebtMonth: 0,
-    totalDebtWeek: 0,
-    customersDebtMonth: 0,
-    customersDebtWeek: 0,
-  );
+  double totalDebtMonth = 0;
+  double totalDebtWeek = 0;
+  double customersDebtMonth = 0;
+  double customersDebtWeek = 0;
   String dropdownValue = 'This Month';
   bool isWeek = true;
   bool isAlreadyLoad = false;
@@ -34,50 +33,6 @@ class _PartiesPageState extends State<PartiesPage> {
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
-  // fetchData() async {
-  //   String accessToken = await storage.read(key: 'access') ?? "";
-  //   // Data for general analysis
-  //   var generalData = await http.get(
-  //     Uri.parse(
-  //       "${baseUrl}api/general-parties-details/",
-  //     ),
-  //     headers: getAuthHeaders(accessToken),
-  //   );
-  //   if (generalData.statusCode == 200) {
-  //     customersGeneral = CustomersGeneral(
-  //       totalDebtMonth: jsonDecode(generalData.body)['total_debt_month'],
-  //       totalDebtWeek: jsonDecode(generalData.body)['total_debt_week'],
-  //       customersDebtMonth:
-  //           jsonDecode(generalData.body)['total_customer_debt_month'],
-  //       customersDebtWeek:
-  //           jsonDecode(generalData.body)['total_customer_debt_week'],
-  //     );
-  //     setState(() {});
-  //   }
-
-  //   // Financial data
-  //   var data = await http.get(
-  //     Uri.parse("${baseUrl}api/parties-details/"),
-  //     headers: getAuthHeaders(accessToken),
-  //   );
-  //   if (data.statusCode == 200) {
-  //     List<SingleCustomer> finalData = [];
-  //     for (var dx in jsonDecode(data.body)) {
-  //       finalData.add(SingleCustomer(
-  //         address: dx['customer_address'],
-  //         email: dx['customer_email'] ?? "",
-  //         financialData: dx['financial_data'],
-  //         fullName: dx['customer_name'],
-  //         phoneNumber: dx['customer_number'],
-  //         amount: dx['effective_amount'],
-  //         id: dx['id'],
-  //       ));
-  //     }
-  //     customData = finalData;
-  //     isAlreadyLoad = true;
-  //     setState(() {});
-  //   }
-  // }
 
   // get all Customers in the database
   fetchCustomersDB() async {
@@ -87,7 +42,39 @@ class _PartiesPageState extends State<PartiesPage> {
 
     List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
     List<SingleCustomer> finalData = [];
+    totalDebtMonth = 0;
+    totalDebtWeek = 0;
+    customersDebtMonth = 0;
+    customersDebtWeek = 0;
+    print(customers);
     for (Map<String, dynamic> e in customers) {
+      for (var dx in jsonDecode(e['financialData'])) {
+        print(dx);
+        DateTime date = DateTime.parse(dx['date']);
+        // for monthly
+        if (date.isAfter(
+          DateTime(
+            DateTime.now().year,
+            DateTime.now().month - 1,
+            DateTime.now().day,
+          ),
+        )) {
+          customersDebtMonth += dx['paid'];
+          customersDebtWeek += dx['paid'];
+        }
+        // for Weekly
+        if (date.isAfter(
+          DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day - 7,
+          ),
+        )) {
+          totalDebtMonth += dx['received'];
+          totalDebtWeek += dx['received'];
+        }
+      }
+
       if (e['shopId'] == shopId) {
         finalData.add(fromJsonCustomer(e));
       }
@@ -417,7 +404,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(customersGeneral.totalDebtWeek) : formatter.format(customersGeneral.totalDebtMonth)}",
+                            "Tsh ${isWeek ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 18,
@@ -437,7 +424,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(customersGeneral.customersDebtWeek) : formatter.format(customersGeneral.customersDebtMonth)}",
+                            "Tsh ${isWeek ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 18,

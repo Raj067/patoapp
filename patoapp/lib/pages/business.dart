@@ -29,39 +29,57 @@ class _BusinessPageState extends State<BusinessPage> {
   String dropdownValue = 'This Month';
   bool isWeek = true;
   DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime.now(),
+    start: DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day - 30,
+    ),
     end: DateTime.now(),
   );
-  bool isDateFilter = false;
-  BusinessGeneral businessGeneral = BusinessGeneral(
-    salesMonth: 0,
-    salesWeek: 0,
-    profitMonth: 0,
-    profitWeek: 0,
-    expensesMonth: 0,
-    expensesWeek: 0,
-  );
+  double salesWeek = 0;
+  double expensesWeek = 0;
+  double profitWeek = 0;
+  double salesMonth = 0;
+  double expensesMonth = 0;
+  double profitMonth = 0;
 
   List<FinancialData> allFinancialData = [];
   bool isLoading = true;
 
-  fetchData() async {
-    String accessToken = await storage.read(key: 'access') ?? "";
-    // Data for general analysis
-    var generalData = await http.get(
-      Uri.parse("${baseUrl}api/general-business-details/"),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (generalData.statusCode == 200) {
-      businessGeneral = BusinessGeneral(
-        salesMonth: jsonDecode(generalData.body)['sales_month'],
-        salesWeek: jsonDecode(generalData.body)['sales_week'],
-        profitMonth: jsonDecode(generalData.body)['profit_month'],
-        profitWeek: jsonDecode(generalData.body)['profit_week'],
-        expensesMonth: jsonDecode(generalData.body)['expenses_month'],
-        expensesWeek: jsonDecode(generalData.body)['expenses_week'],
-      );
+  fetchHeaderData({required DateTime date, required FinancialData data}) {
+    // for monthly
+    if (date.isAfter(
+      DateTime(
+        DateTime.now().year,
+        DateTime.now().month - 1,
+        DateTime.now().day,
+      ),
+    )) {
+      if (data.isIncome()) {
+        salesMonth += data.amount;
+      }
+      if (!data.isIncome()) {
+        expensesMonth += data.amount;
+      }
+      profitMonth = salesMonth - expensesMonth;
     }
+    // for Weekly
+    if (date.isAfter(
+      DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day - 7,
+      ),
+    )) {
+      if (data.isIncome()) {
+        salesWeek += data.amount;
+      }
+      if (!data.isIncome()) {
+        expensesWeek += data.amount;
+      }
+      profitWeek = salesWeek - expensesWeek;
+    }
+    setState(() {});
   }
 
   fetchBusinessDB() async {
@@ -71,14 +89,26 @@ class _BusinessPageState extends State<BusinessPage> {
 
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
+    salesWeek = 0;
+    expensesWeek = 0;
+    profitWeek = 0;
+    salesMonth = 0;
+    expensesMonth = 0;
+    profitMonth = 0;
     for (Map<String, dynamic> dx in business) {
       if (dx['shopId'] == shopId) {
-        finalData.add(fromJsonBusiness(dx));
+        DateTime date = DateTime.parse(dx['date']);
+        fetchHeaderData(date: date, data: fromJsonBusiness(dx));
+        if (date.isAfter(pickedRangeDate.start) &&
+            date.isBefore(pickedRangeDate.end)) {
+          finalData.add(fromJsonBusiness(dx));
+        }
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
     isLoading = false;
+    // profitMonth = profitMonth;
     setState(() {});
   }
 
@@ -222,7 +252,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(businessGeneral.salesWeek) : formatter.format(businessGeneral.salesMonth)}",
+                            "Tsh ${isWeek ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -250,7 +280,7 @@ class _BusinessPageState extends State<BusinessPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(businessGeneral.expensesWeek) : formatter.format(businessGeneral.expensesMonth)}",
+                            "Tsh ${isWeek ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
                             style: const TextStyle(
                               color: patowaveErrorRed,
                               fontSize: 16,
@@ -272,7 +302,7 @@ class _BusinessPageState extends State<BusinessPage> {
                   children: [
                     const Text("Profit"),
                     Text(
-                      "Tsh ${isWeek ? formatter.format(businessGeneral.profitWeek) : formatter.format(businessGeneral.profitMonth)}",
+                      "Tsh ${isWeek ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
                       style: const TextStyle(color: patowaveGreen),
                     ),
                   ],
@@ -634,19 +664,11 @@ class _BusinessPageState extends State<BusinessPage> {
             confirmText: "SELECT",
             saveText: "SELECT",
             helpText: "Select Transaction Date Range",
-            initialDateRange: DateTimeRange(
-              start: DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day - 3,
-              ),
-              end: DateTime.now(),
-            ),
+            initialDateRange: pickedRangeDate,
           );
           if (pickedDate != null) {
             setState(() {
               pickedRangeDate = pickedDate;
-              isDateFilter = true;
             });
           } else {}
         },
@@ -659,54 +681,36 @@ class _BusinessPageState extends State<BusinessPage> {
                 children: [
                   const Icon(Icons.search),
                   Container(width: 10),
-                  !isDateFilter
-                      ? const Text("Search Transaction")
-                      : Column(
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  "Transactions from ",
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('EEE, d/M/y')
-                                      .format(pickedRangeDate.start),
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: patowaveWarning,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  " to ",
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('EEE, d/M/y')
-                                      .format(pickedRangeDate.end),
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: patowaveWarning,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                  Row(
+                    children: [
+                      Text(
+                        DateFormat('EEE, d/M/y').format(pickedRangeDate.start),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: patowaveWarning,
                         ),
+                      ),
+                      const Text(
+                        " to ",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        DateFormat('EEE, d/M/y').format(pickedRangeDate.end),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: patowaveWarning,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               SvgPicture.asset(
                 "assets/svg/calendar.svg",
-                height: 33,
-                width: 33,
+                height: 25,
+                width: 25,
               ),
             ],
           ),

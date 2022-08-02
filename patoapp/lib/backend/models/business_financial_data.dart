@@ -184,20 +184,3 @@ FinancialData fromJsonBusiness(Map<String, dynamic> dx) {
   );
 }
 
-class BusinessGeneral {
-  int salesWeek;
-  int expensesWeek;
-  int profitWeek;
-  int salesMonth;
-  int expensesMonth;
-  int profitMonth;
-
-  BusinessGeneral({
-    required this.salesWeek,
-    required this.expensesWeek,
-    required this.profitWeek,
-    required this.salesMonth,
-    required this.expensesMonth,
-    required this.profitMonth,
-  });
-}

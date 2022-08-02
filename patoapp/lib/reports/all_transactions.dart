@@ -144,10 +144,6 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
               saveText: "SELECT",
               helpText: "Select Transaction Date Range",
               initialDateRange: pickedRangeDate,
-              // builder: (context, theme) {
-              //   Theme.of(context).primaryColor = patowavePrimary;
-              //   DateTime
-              // },
             );
             if (pickedDate != null) {
               setState(() {
@@ -161,34 +157,28 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const Icon(Icons.search),
                 Row(
                   children: [
-                    const Icon(Icons.search),
-                    Container(width: 10),
-                    Row(
-                      children: [
-                        Text(
-                          DateFormat('EEE, d/M/y')
-                              .format(pickedRangeDate.start),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: patowaveWarning,
-                          ),
-                        ),
-                        const Text(
-                          " to ",
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          DateFormat('EEE, d/M/y').format(pickedRangeDate.end),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: patowaveWarning,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      DateFormat('EEE, d/M/y').format(pickedRangeDate.start),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: patowaveWarning,
+                      ),
+                    ),
+                    const Text(
+                      " to ",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      DateFormat('EEE, d/M/y').format(pickedRangeDate.end),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: patowaveWarning,
+                      ),
                     ),
                   ],
                 ),
