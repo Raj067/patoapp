@@ -3,7 +3,6 @@ import 'package:patoapp/reports/all_transactions.dart';
 import 'package:patoapp/reports/balance_sheet.dart';
 import 'package:patoapp/reports/cashflow.dart';
 import 'package:patoapp/reports/day_book.dart';
-import 'package:patoapp/reports/debt_reports.dart';
 import 'package:patoapp/reports/expenses_reports.dart';
 import 'package:patoapp/reports/inventory_reports.dart';
 import 'package:patoapp/reports/inventory_summary.dart';
@@ -69,36 +68,37 @@ class MainReportsPage extends StatelessWidget {
               ),
             ),
           ),
-          Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            elevation: 0,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(15),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const DebtReports(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Debt Reports'),
-                    Icon(Icons.arrow_forward_ios, size: 14),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Card(
+          //   shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.all(
+          //       Radius.circular(15),
+          //     ),
+          //   ),
+          //   elevation: 0,
+          //   child: InkWell(
+          //     borderRadius: BorderRadius.circular(15),
+          //     onTap: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute<void>(
+          //           builder: (BuildContext context) => const DebtReports(),
+          //           fullscreenDialog: true,
+          //         ),
+          //       );
+          //     },
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(15),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: const [
+          //           Text('Debt Reports'),
+          //           Icon(Icons.arrow_forward_ios, size: 14),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
           Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
