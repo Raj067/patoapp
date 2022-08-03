@@ -19,11 +19,17 @@ class _CashFlowReportsState extends State<CashFlowReports> {
     start: DateTime(
       DateTime.now().year,
       DateTime.now().month,
-      DateTime.now().day - 7,
+      DateTime.now().day - 30,
     ),
     end: DateTime.now(),
   );
-  ProfitAndLoss profitAndLoss = ProfitAndLoss(data: []);
+  ProfitAndLoss profitAndLoss = ProfitAndLoss(
+    data: [],
+    pickedRangeDate: DateTimeRange(
+      start: DateTime.now(),
+      end: DateTime.now(),
+    ),
+  );
   fetchBusinessDB() async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
@@ -33,15 +39,12 @@ class _CashFlowReportsState extends State<CashFlowReports> {
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
       if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
-        DateTime date = DateTime.parse(dx['date']);
-        if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end)) {
-          finalData.add(fromJsonBusiness(dx));
-        }
+        finalData.add(fromJsonBusiness(dx));
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
-    profitAndLoss = ProfitAndLoss(data: finalData);
+    profitAndLoss =
+        ProfitAndLoss(data: finalData, pickedRangeDate: pickedRangeDate);
     setState(() {});
   }
 
@@ -262,30 +265,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Closing Inventory',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            Container(width: 20),
-            Text(
-              "Tsh ${formatter.format(profitAndLoss.closingInventory())}",
-            )
-          ],
-        ),
-      ),
+      profitAndLoss.allMoneyIn(),
       Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(
@@ -318,30 +298,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Cost of Goods Sold',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            Container(width: 20),
-            Text(
-              "Tsh ${formatter.format(10000)}",
-            )
-          ],
-        ),
-      ),
+      profitAndLoss.allMoneyOut(),
       Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(

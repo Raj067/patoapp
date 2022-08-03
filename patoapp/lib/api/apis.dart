@@ -102,3 +102,38 @@ List<String> expenses = [
   "Other direct expenses",
   "Other indirect expenses",
 ];
+List<String> directExpenses = [
+  "purchase",
+  "purchases",
+  "carriage inward",
+  "royalties charge",
+  "sales commission",
+  "unloading charge",
+  "other direct expenses",
+].map((e) => e.toLowerCase()).toList();
+
+List<String> inDirectExpenses = [
+  "Rent",
+  "Food",
+  "Breakfast",
+  "Printing",
+  "Repair and Maintenance",
+  "Equipment",
+  "Fuel",
+  "Utilities",
+  "Training",
+  "Insurance",
+  "Advertisement",
+  "Payroll",
+  "Commission",
+  "Electricity",
+  "Taxes",
+  "License fee",
+  "Packaging material",
+  "Furniture and fitting",
+  "Loans and advances",
+  "Service fee",
+  "Software subscription",
+  "Transport",
+  "Other indirect expenses",
+].map((e) => e.toLowerCase()).toList();

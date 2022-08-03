@@ -48,7 +48,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   String? selectedProductValueSales;
   String? selectedProductValuePurchases;
   String? selectedCustmer;
-  String expensesCategory = 'Purchases';
+  String expensesCategory = 'Other indirect expenses';
   final TextEditingController customerController = TextEditingController();
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController quantityControllerSales = TextEditingController();
@@ -1619,49 +1619,49 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/purchases-transaction/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount_paid':
-            totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
-        'total_amount': totalPurchasesAmount,
-        'items': items,
-        'billNo': billNo,
-        "shopId": shopId,
-        'description': expensesDescription.text == ""
-            ? "Purchases"
-            : expensesDescription.text,
-        "customer":
-            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/purchases-transaction/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount_paid':
+              totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
+          'total_amount': totalPurchasesAmount,
+          'items': items,
+          'billNo': billNo,
+          "shopId": shopId,
+          'description': expensesDescription.text == ""
+              ? "Purchases"
+              : expensesDescription.text,
+          "customer": selectedCustmer != null
+              ? int.parse(selectedCustmer ?? '1')
+              : null,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),
       );
     }
-
   }
 
   _submitExpensesData() async {
@@ -1674,48 +1674,50 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/expenses-transaction/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount_paid':
-            totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
-        'category': expensesCategory,
-        'description': expensesDescription.text == ""
-            ? "Expenses"
-            : expensesDescription.text,
-        'billNo': billNo,
-        "shopId": shopId,
-        "customer":
-            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/expenses-transaction/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount_paid':
+              totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
+          'category': expensesCategory == ''
+              ? 'Other indirect expenses'
+              : expensesCategory,
+          'description': expensesDescription.text == ""
+              ? "Expenses"
+              : expensesDescription.text,
+          'billNo': billNo,
+          "shopId": shopId,
+          "customer": selectedCustmer != null
+              ? int.parse(selectedCustmer ?? '1')
+              : null,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),
       );
     }
-
   }
 
   // api/cash-sales-customer-transaction/
@@ -1738,44 +1740,44 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount': totalAmount - discountAmount,
-        'discount': discountAmount,
-        'items': items,
-        'receiptNo': receiptNo,
-        'shopId': shopId,
-        "customer":
-            selectedCustmer != null ? int.parse(selectedCustmer ?? '1') : null,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      widget.resetData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/cash-sales-customer-transaction/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount': totalAmount - discountAmount,
+          'discount': discountAmount,
+          'items': items,
+          'receiptNo': receiptNo,
+          'shopId': shopId,
+          "customer": selectedCustmer != null
+              ? int.parse(selectedCustmer ?? '1')
+              : null,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),
       );
     }
-
   }
 }

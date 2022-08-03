@@ -32,7 +32,7 @@ def business_financial_data(request, shop):
                 "shopId": dx.shop.id,
                 "date": dx.updated_at,
                 "description": dx.description,
-                "name": "Expenses",
+                "name": dx.expenses_category if dx.expenses_category else 'Other indirect expenses',
                 "amount": dx.amount,
                 "discount": 0,
                 "isCashSale": False,
@@ -44,7 +44,7 @@ def business_financial_data(request, shop):
                 "receipt": dx.bill_no,
                 "details": [{
                         "id": dx.id,
-                }]
+                        }]
             })
 
     for dx in Purchase.objects.all():

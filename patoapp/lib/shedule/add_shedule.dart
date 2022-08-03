@@ -8,6 +8,8 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_shedule.dart';
+import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class AddSheduleNew extends StatefulWidget {
@@ -393,6 +395,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (addSheduleFormKey.currentState!.validate()) {
+                    _reSetAllShedule();
                     _submitShedule(context);
                   }
                 },
@@ -405,6 +408,13 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
         ),
       ),
     );
+  }
+
+  _reSetAllShedule() async {
+    List<Map<String, dynamic>> shedules = await DBHelperShedule.query();
+    for (var e in shedules) {
+      fromJsonShedule(e);
+    }
   }
 
   _submitShedule(BuildContext context) async {
