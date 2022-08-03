@@ -59,11 +59,35 @@ class ProfitAndLoss {
   }
 
   double openingCashInHand() {
-    return 0;
+    double val1 = 0;
+    double val2 = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isBefore(pickedRangeDate.start)) {
+        if (dx.isCashSale && dx.isPaymentIn && dx.isInvoice) {
+          val1 += dx.amount;
+        } else {
+          val2 += dx.amount;
+        }
+      }
+    }
+    return val1 - val2;
   }
 
   double closingCashInHand() {
-    return 0;
+    double val1 = 0;
+    double val2 = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isBefore(pickedRangeDate.end)) {
+        if (dx.isCashSale && dx.isPaymentIn && dx.isInvoice) {
+          val1 += dx.amount;
+        } else {
+          val2 += dx.amount;
+        }
+      }
+    }
+    return val1 - val2;
   }
 
   double totalDirectExpenses() {
@@ -172,6 +196,34 @@ class ProfitAndLoss {
       }
     }
     return Column(children: myData);
+  }
+
+  double totalMoneyIn() {
+    double val = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isAfter(pickedRangeDate.start) &&
+          date.isBefore(pickedRangeDate.end)) {
+        if (dx.isCashSale || dx.isPaymentIn || dx.isInvoice) {
+          val += dx.amount;
+        }
+      }
+    }
+    return val;
+  }
+
+  double totalMoneyOut() {
+    double val = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isAfter(pickedRangeDate.start) &&
+          date.isBefore(pickedRangeDate.end)) {
+        if (dx.isExpenses || dx.isPaymentOut || dx.isPurchases) {
+          val += dx.amount;
+        }
+      }
+    }
+    return val;
   }
 
   Widget allMoneyIn() {

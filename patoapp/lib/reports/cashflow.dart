@@ -285,7 +285,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
             ),
             Container(width: 20),
             Text(
-              "Tsh ${formatter.format(profitAndLoss.costGoodsSold())}",
+              "Tsh ${formatter.format(profitAndLoss.totalMoneyIn())}",
               style: const TextStyle(color: patowaveGreen),
             )
           ],
@@ -318,7 +318,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
             ),
             Container(width: 20),
             Text(
-              "Tsh ${formatter.format(10000)}",
+              "Tsh ${formatter.format(profitAndLoss.totalMoneyOut())}",
               style: const TextStyle(
                 color: patowaveErrorRed,
               ),
