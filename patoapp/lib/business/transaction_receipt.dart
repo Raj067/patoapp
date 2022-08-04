@@ -1,8 +1,10 @@
 // ignore: file_names
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
 // import 'package:image_gallery_saver/image_gallery_saver.dart';
-// import 'package:share_plus/share_plus.dart';
+import 'package:image_downloader/image_downloader.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -52,11 +55,21 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     setState(() {});
   }
 
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index) async {
+    if (index == 0) {}
+    if (index == 1) {
+      // // var imageId = await ImageDownloader.downloadImage(url);
+      // var imageId = await ImageDownloader.downloadImage(url);
+      // var path = await ImageDownloader.findPath(imageId!);
+      // await ImageDownloader.open(path!);
+    }
+    if (index == 2) {
+      final bytes = await capturePng();
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/receipt.png');
+      await file.writeAsBytes(bytes);
+      await Share.shareFiles([file.path], text: 'Receipt', subject: 'Receipt');
+    }
   }
 
   @override
@@ -119,21 +132,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // await Share.share('check out my website https://example.com');
-          capturePng();
-          // final result = await ImageGallerySaver.saveImage(
-          //     Uint8List.fromList(response.data),
-          //     // quality: 60,
-          //     name: "hello");
-          // print(result);
-        },
-        child: const Icon(Icons.share),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
-        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -149,9 +149,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             label: 'Share',
           ),
         ],
-        // currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
-        // onTap: _onItemTapped,
         unselectedItemColor: Colors.white,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,

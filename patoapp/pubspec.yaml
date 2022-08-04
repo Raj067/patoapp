@@ -64,9 +64,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_native_timezone:
   rxdart:
-  device_info: 2.0.3
-  # url_launcher: ^6.1.5
-  # share_plus: ^4.0.10
+  # device_info: 2.0.3
+  url_launcher: ^6.1.5
+  share_plus: ^4.0.10
+  image_downloader: ^0.31.0
 
 flutter_icons:
   android: "launcher_icon"

@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
@@ -8,7 +13,9 @@ import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/profile/add_new_shop.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'dart:ui' as ui;
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:share_plus/share_plus.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class TopProfileIcon extends StatefulWidget {
@@ -25,6 +32,7 @@ class TopProfileIcon extends StatefulWidget {
 }
 
 class _TopProfileIconState extends State<TopProfileIcon> {
+  final GlobalKey globalKey = GlobalKey();
   List<ProfileData> myProfileData = [];
   int profilePercent = 20;
 
@@ -82,6 +90,16 @@ class _TopProfileIconState extends State<TopProfileIcon> {
       profilePercent += 10;
     }
     setState(() {});
+  }
+
+  Future<Uint8List> capturePng() async {
+    final RenderRepaintBoundary boundary =
+        globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    final ui.Image image = await boundary.toImage();
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+    return pngBytes;
   }
 
   @override
@@ -182,113 +200,116 @@ class _TopProfileIconState extends State<TopProfileIcon> {
             child: Column(
               children: [
                 // Image.asset("assets/images/card.png"),
-                SizedBox(
-                  height: 200,
-                  width: 300,
-                  // color: Colors.green,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Image.asset("assets/images/card.png"),
-                      ),
-                      Positioned(
-                        top: 97,
-                        // left: 50,
-                        right: 26,
-                        bottom: 0,
-                        child: Text(
-                          widget.profileData.businessName.length > 13
-                              ? widget.profileData.businessName
-                                  .replaceRange(13, null, '...')
-                              : widget.profileData.businessName,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveWhite,
+                RepaintBoundary(
+                  key: globalKey,
+                  child: SizedBox(
+                    height: 200,
+                    width: 300,
+                    // color: Colors.green,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Image.asset("assets/images/card.png"),
+                        ),
+                        Positioned(
+                          top: 97,
+                          // left: 50,
+                          right: 26,
+                          bottom: 0,
+                          child: Text(
+                            widget.profileData.businessName.length > 13
+                                ? widget.profileData.businessName
+                                    .replaceRange(13, null, '...')
+                                : widget.profileData.businessName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        // top: 95,
-                        // left: 50,
-                        right: 26,
-                        bottom: 50,
-                        child: Text(
-                          widget.profileData.businessSlogan == ""
-                              ? "Customer is king"
-                              : widget.profileData.businessSlogan,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveBlack,
+                        Positioned(
+                          // top: 95,
+                          // left: 50,
+                          right: 26,
+                          bottom: 50,
+                          child: Text(
+                            widget.profileData.businessSlogan == ""
+                                ? "Customer is king"
+                                : widget.profileData.businessSlogan,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveBlack,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 60,
-                        left: 30,
-                        // right: 26,
-                        bottom: 0,
-                        child: Text(
-                          widget.profileData.businessAddress,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveWhite,
+                        Positioned(
+                          top: 60,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            widget.profileData.businessAddress,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 80,
-                        left: 30,
-                        // right: 26,
-                        bottom: 0,
-                        child: Text(
-                          widget.profileData.businessPhone,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveWhite,
+                        Positioned(
+                          top: 80,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            widget.profileData.businessPhone,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 100,
-                        left: 30,
-                        // right: 26,
-                        bottom: 0,
-                        child: Text(
-                          widget.profileData.businessEmail == ""
-                              ? "Email"
-                              : widget.profileData.businessEmail,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveWhite,
+                        Positioned(
+                          top: 100,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            widget.profileData.businessEmail == ""
+                                ? "Email"
+                                : widget.profileData.businessEmail,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 120,
-                        left: 30,
-                        // right: 26,
-                        bottom: 0,
-                        child: Text(
-                          widget.profileData.instagramName == ""
-                              ? "_____"
-                              : widget.profileData.instagramName,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: patowaveWhite,
+                        Positioned(
+                          top: 120,
+                          left: 30,
+                          // right: 26,
+                          bottom: 0,
+                          child: Text(
+                            widget.profileData.instagramName == ""
+                                ? "_____"
+                                : widget.profileData.instagramName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: patowaveWhite,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Container(height: 10),
@@ -324,7 +345,19 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final bytes = await capturePng();
+                        final dir = await getApplicationDocumentsDirectory();
+                        final file = File('${dir.path}/card.png');
+                        await file.writeAsBytes(bytes);
+                        await Share.shareFiles(
+                          [file.path],
+                          text:
+                              '${widget.profileData.businessName} Business Card',
+                          subject:
+                              '${widget.profileData.businessName} Business Card',
+                        );
+                      },
                       child: Row(
                         children: [
                           const Icon(Icons.share, size: 18),
