@@ -304,9 +304,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 ],
               )
             : Container(),
-        widget.data.isPaymentIn ||
-                widget.data.isPaymentOut ||
-                widget.data.isExpenses
+        widget.data.isPaymentIn || widget.data.isPaymentOut
+            // ||
+            // widget.data.isExpenses
             ? Column(
                 children: [
                   Container(height: 10),
