@@ -182,8 +182,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 child: DropdownButtonFormField2(
                   value: dropdownValue,
                   selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 100,
+                  dropdownOverButton: true,
                   buttonHeight: 30,
                   buttonWidth: 50,
                   decoration: InputDecoration(
@@ -194,6 +193,7 @@ class _BusinessPageState extends State<BusinessPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
+                    focusedBorder: InputBorder.none,
                   ),
                   isExpanded: false,
                   icon: const Icon(

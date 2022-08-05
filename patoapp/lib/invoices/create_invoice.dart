@@ -11,6 +11,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
+import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -394,7 +395,11 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => _addItemsToSale(context),
+                    builder: (BuildContext context) => AddItemsToSale(
+                      allProducts: allProducts,
+                      addedItemsToSales: addedItemsToSales,
+                      addItems: _addItemsToSale,
+                    ),
                     fullscreenDialog: true,
                   ),
                 );
@@ -515,6 +520,11 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
         ),
       ),
     );
+  }
+
+  _addItemsToSale(SingleProduct dx) {
+    addedItemsToSales.add(dx);
+    setState(() {});
   }
 
   _discount() {
@@ -659,227 +669,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
         const Divider(height: 0),
         Container(height: 15),
       ],
-    );
-  }
-
-  _addItemsToSale(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Add Item to sale',
-          style: TextStyle(color: Colors.white),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: patowaveWhite,
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Form(
-          key: addItemToSalesFormKey,
-          child: ListView(
-            children: [
-              Container(height: 15),
-              DropdownButtonFormField2(
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  scrollbarAlwaysShow: true,
-                  dropdownMaxHeight: 200,
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return 'Please select item';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    label: const Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: allProducts
-                      .map((item) => DropdownMenuItem<String>(
-                            value: "${item.id}",
-                            child: Text(
-                              item.productName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    //Do something when changing the item if you want.
-                    setState(() {
-                      selectedProductValueSales = value.toString();
-                    });
-                  },
-                  onSaved: (value) {
-                    selectedProductValueSales = value.toString();
-                  },
-                  searchController: textEditingController,
-                  searchInnerWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 4,
-                      right: 8,
-                      left: 8,
-                    ),
-                    child: TextFormField(
-                      cursorColor: patowavePrimary,
-                      controller: textEditingController,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
-                        ),
-                        hintText: 'Search for an item...',
-                        hintStyle: const TextStyle(fontSize: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                  searchMatchFn: (item, searchValue) {
-                    return (item.value.toString().contains(searchValue));
-                  },
-                  //This to clear the search value when you close the menu
-                  onMenuStateChange: (isOpen) {
-                    if (!isOpen) {
-                      textEditingController.clear();
-                    }
-                  }),
-              Container(height: 15),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: quantityControllerSales,
-                      cursorColor: patowavePrimary,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quantity is required';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                        label: Text(
-                          "Quantity*",
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(width: 10),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: patowaveBlack.withAlpha(30),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                        border: Border.all(color: Colors.grey, width: 1),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                        child: Text(
-                          selectedUnit,
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(height: 15),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(
-                    const Size(45, 45),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  if (addItemToSalesFormKey.currentState!.validate()) {
-                    for (SingleProduct dx in allProducts) {
-                      if ("${dx.id}" == selectedProductValueSales &&
-                          !addedItemsToSales.map((e) => e.id).contains(dx.id)) {
-                        addedItemsToSales.add(
-                          SingleProduct(
-                            shopId: 0,
-                            isService: false,
-                            quantity: int.parse(quantityControllerSales.text),
-                            productUnit: dx.productUnit,
-                            productName: dx.productName,
-                            id: dx.id,
-                            sellingPrice: dx.sellingPrice,
-                            purchasesPrice: dx.purchasesPrice,
-                          ),
-                        );
-                      }
-                    }
-                    quantityControllerSales.text = '';
-                    setState(() {});
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text(
-                  "Add Item",
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

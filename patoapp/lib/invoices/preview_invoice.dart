@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
+import 'package:pdfx/pdfx.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
@@ -20,6 +20,9 @@ class PreviewInvoice extends StatefulWidget {
 
 class _PreviewInvoiceState extends State<PreviewInvoice> {
   int selectedColor = 0;
+  final pdfPinchController = PdfControllerPinch(
+    document: PdfDocument.openData(pw.Document().save()),
+  );
   final pdf = pw.Document();
   // Future<Uint8List> _generatePdf() async {
   //   pdf.addPage(
@@ -91,6 +94,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               children: [
+                PdfViewPinch(
+                  controller: pdfPinchController,
+                ),
                 ElevatedButton(
                   child: const Text("hello"),
                   onPressed: () async {

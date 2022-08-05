@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
@@ -23,7 +24,7 @@ class _PartiesPageState extends State<PartiesPage> {
   double customersDebtMonth = 0;
   double customersDebtWeek = 0;
   String dropdownValue = 'This Month';
-  bool isWeek = true;
+  List dropDownList = ['This Month', 'This Week'];
   bool isAlreadyLoad = false;
 
   // For searching contacts
@@ -73,8 +74,8 @@ class _PartiesPageState extends State<PartiesPage> {
     customersDebtMonth = 0;
     customersDebtWeek = 0;
     for (Map<String, dynamic> e in customers) {
-      fetchCustomerHeader(fromJsonCustomer(e));
       if (e['shopId'] == shopId) {
+        fetchCustomerHeader(fromJsonCustomer(e));
         finalData.add(fromJsonCustomer(e));
       }
     }
@@ -403,7 +404,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
+                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -423,7 +424,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${isWeek ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
+                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 16,
@@ -480,55 +481,58 @@ class _PartiesPageState extends State<PartiesPage> {
   _partiesButtomTopBar() {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48.0),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 12, 5),
-                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                  height: 28,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: patowaveGreen400,
-                    ),
-                    color: Theme.of(context).chipTheme.backgroundColor,
+            padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
+            child: SizedBox(
+              height: 30,
+              width: 120,
+              child: DropdownButtonFormField2(
+                value: dropdownValue,
+                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                dropdownOverButton: true,
+                buttonHeight: 30,
+                buttonWidth: 50,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Theme.of(context).chipTheme.backgroundColor,
+                  contentPadding: const EdgeInsets.all(5),
+                  enabled: false,
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    alignment: AlignmentDirectional.topStart,
-                    underline: Container(
-                      height: 0,
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_drop_down_rounded,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                        dropdownValue == 'This Month'
-                            ? isWeek = false
-                            : isWeek = true;
-                      });
-                    },
-                    items: <String>['This Month', 'This Week']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                )
-              ],
+                  focusedBorder: InputBorder.none,
+                ),
+                isExpanded: false,
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                ),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                items: dropDownList
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    dropdownValue = value.toString();
+                  });
+                  //Do something when changing the item if you want.
+                },
+                onSaved: (value) {
+                  // selectedValue = value.toString();
+                },
+              ),
             ),
           ),
         ],

@@ -11,6 +11,7 @@ import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/more/overview.dart';
 import 'package:patoapp/shedule/add_shedule.dart';
+import 'package:patoapp/shedule/all_shedules.dart';
 import 'package:patoapp/shedule/single_shedule.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,7 +40,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   double tzs = 2331.0;
   double euro = 0.9796;
   double gbp = 0.8340;
-
   fetchRates() async {
     try {
       var data = await http.get(
@@ -230,6 +230,43 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     for (SheduleModel dx in _shedules) {
       data.add(_singleShedule(shedule: dx));
     }
+    data.add(
+      Padding(
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(45, 45),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const AllShedules(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                child: const Text(
+                  "View All Shedule",
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
     return Column(children: data);
   }
 
@@ -512,11 +549,35 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
               Row(
                 children: [
-                  _singleDay(),
-                  _singleDay(),
+                  _singleDay(
+                    DateTime(
+                      DateTime.now().year,
+                      DateTime.now().month,
+                      DateTime.now().day - 2,
+                    ),
+                  ),
+                  _singleDay(
+                    DateTime(
+                      DateTime.now().year,
+                      DateTime.now().month,
+                      DateTime.now().day - 1,
+                    ),
+                  ),
                   _singleDayActive(DateTime.now()),
-                  _singleDay(),
-                  _singleDay()
+                  _singleDay(
+                    DateTime(
+                      DateTime.now().year,
+                      DateTime.now().month,
+                      DateTime.now().day + 1,
+                    ),
+                  ),
+                  _singleDay(
+                    DateTime(
+                      DateTime.now().year,
+                      DateTime.now().month,
+                      DateTime.now().day + 2,
+                    ),
+                  )
                 ],
               ),
               Container(
@@ -563,7 +624,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     );
   }
 
-  _singleDay() {
+  _singleDay(DateTime day) {
     return Expanded(
       child: SizedBox(
         height: 75,
@@ -576,24 +637,20 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             side: BorderSide(color: patowaveWhite, width: 0.7),
           ),
           color: patowavePrimary.withAlpha(50),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(15),
-            onTap: () {},
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "Mon",
-                  style: TextStyle(fontSize: 12, color: patowaveWhite),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "13",
-                  style: TextStyle(fontSize: 14, color: patowaveWhite),
-                ),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                DateFormat('EEE').format(day),
+                style: const TextStyle(fontSize: 12, color: patowaveWhite),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${day.day}",
+                style: const TextStyle(fontSize: 14, color: patowaveWhite),
+              ),
+            ],
           ),
         ),
       ),
@@ -837,7 +894,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 ),
               ),
             ),
-
             Expanded(
               child: SizedBox(
                 height: 80,
@@ -873,7 +929,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          "Inventory",
+                          "Products",
                           style: TextStyle(fontSize: 10),
                         ),
                       ],
@@ -882,7 +938,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 ),
               ),
             ),
-
             Expanded(
               child: SizedBox(
                 height: 80,
@@ -927,55 +982,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 ),
               ),
             ),
-
-            // Container(
-            //   height: 65,
-            //   width: 60,
-            //   child: const Card(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //     ),
-            //     color: Colors.lightGreen,
-            //   ),
-            // ),
-            // Container(
-            //   height: 65,
-            //   width: 60,
-            //   child: const Card(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //     ),
-            //     color: Colors.black,
-            //   ),
-            // ),
-            // Container(
-            //   height: 65,
-            //   width: 60,
-            //   child: const Card(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //     ),
-            //     color: Colors.blue,
-            //   ),
-            // ),
-            // Container(
-            //   height: 65,
-            //   width: 60,
-            //   child: const Card(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //     ),
-            //     color: Colors.orange,
-            //   ),
-            // ),
           ],
         ),
       ),

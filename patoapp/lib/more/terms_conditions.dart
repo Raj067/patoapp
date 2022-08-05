@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:pdfx/pdfx.dart';
+import 'package:pdfx/pdfx.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -10,9 +10,9 @@ class TermsConditionsDialog extends StatefulWidget {
 }
 
 class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
-  // final pdfPinchController = PdfControllerPinch(
-  //   document: PdfDocument.openAsset('pdf/terms.pdf'),
-  // );
+  final pdfPinchController = PdfControllerPinch(
+    document: PdfDocument.openAsset('assets/pdfb/terms.pdf'),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
           ),
         ),
       ),
-      // body: PdfViewPinch(
-      //   controller: pdfPinchController,
-      // ),
+      body: PdfViewPinch(
+        controller: pdfPinchController,
+      ),
     );
   }
 }

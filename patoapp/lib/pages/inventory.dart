@@ -18,7 +18,7 @@ class InventoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Inventory',
+          'Products & Services',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
