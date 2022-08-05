@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SingleCustomerPage extends StatefulWidget {
   final String? restorationId;
@@ -113,12 +116,53 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
               borderRadius: BorderRadius.circular(15),
               onTap: () {
                 showModalBottomSheet(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                  ),
                   context: context,
                   builder: (context) => Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(0),
                     child: Wrap(
                       children: [
-                        Container(),
+                        InkWell(
+                          onTap: () {
+                            _sendSMS();
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.sms,
+                              color: patowavePrimary,
+                            ),
+                            title: Text('SMS'),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _sendWhatsApp();
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.whatsapp,
+                              color: patowavePrimary,
+                            ),
+                            title: Text('WhatsApp'),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _sendEmail();
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.email,
+                              color: patowavePrimary,
+                            ),
+                            title: Text('Email'),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -290,6 +334,84 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
         ]),
       ],
     );
+  }
+
+  _sendSMS() async {
+    String businessName = await _getBusinessName();
+    final Uri smsLaunchUri = Uri(
+      scheme: 'sms',
+      path: widget.customer.phoneNumber,
+      queryParameters: <String, String>{
+        'body': Uri.encodeComponent("""
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+<LINK>
+
+$businessName
+Powered by Patowave"""),
+      },
+    );
+    launchUrl(smsLaunchUri);
+  }
+
+  Future<String> _getBusinessName() async {
+    String businessName = '';
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+    for (var dx in profile) {
+      if (dx['id'] == shopId) {
+        businessName = fromJsonProfile(dx).businessName;
+      }
+    }
+    return businessName;
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  _sendEmail() async {
+    String businessName = await _getBusinessName();
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: widget.customer.email,
+      query: encodeQueryParameters(<String, String>{
+        'subject': """
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+<LINK>
+
+$businessName
+Powered by Patowave""",
+      }),
+    );
+
+    launchUrl(emailLaunchUri);
+  }
+
+  _sendWhatsApp() async {
+    String businessName = await _getBusinessName();
+    var whatsapp = widget.customer.phoneNumber;
+    String message = """
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+<LINK>
+
+$businessName
+Powered by Patowave""";
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=$whatsapp&text=$message");
+    if (await canLaunchUrl(whatsappAndroid)) {
+      await launchUrl(whatsappAndroid);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("WhatsApp is not installed on the device"),
+        ),
+      );
+    }
   }
 
   _allFinancialData() {

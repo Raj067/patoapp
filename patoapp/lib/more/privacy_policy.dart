@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:pdfx/pdfx.dart';
-// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PrivacyPolicyDialog extends StatefulWidget {
   const PrivacyPolicyDialog({Key? key}) : super(key: key);
@@ -32,8 +32,11 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
           ),
         ),
       ),
-      // body:
-      //     Container(child: SfPdfViewer.asset('pdf/privacy-policy.pdf')),
+      body: Container(
+        child: SfPdfViewer.asset('assets/pdf/privacy-policy.pdf'),
+        // .network(
+        //     'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf'),
+      ),
     );
   }
-}
+} 

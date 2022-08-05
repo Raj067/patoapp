@@ -40,3 +40,19 @@ class ProfileData {
     };
   }
 }
+
+ProfileData fromJsonProfile(Map<String, dynamic> profile) {
+  return ProfileData(
+    instagramName: profile['instagramName'],
+    businessSignature: profile['businessSignature'],
+    businessSlogan: profile['businessSlogan'],
+    businessLogo: profile['businessLogo'],
+    businessCategory: profile['businessCategory'],
+    businessType: profile['businessType'],
+    businessEmail: profile['businessEmail'],
+    businessPhone: "${profile['businessPhone']}",
+    businessAddress: profile['businessAddress'],
+    businessName: profile['businessName'],
+    id: profile['id'],
+  );
+}

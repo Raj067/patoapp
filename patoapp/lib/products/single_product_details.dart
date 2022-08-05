@@ -11,7 +11,8 @@ import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SingleProductDetails extends StatefulWidget {
   const SingleProductDetails({
@@ -308,7 +309,11 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                                 radius: 10,
                                 borderRadius: BorderRadius.circular(10),
                                 onTap: () {
-                                  // _makePhoneCall(widget.product.supplierContact);
+                                  final Uri phoneLaunchUri = Uri(
+                                    scheme: 'tel',
+                                    path: widget.product.supplierContact,
+                                  );
+                                  launchUrl(phoneLaunchUri);
                                 },
                                 child: const Icon(Icons.phone,
                                     color: patowaveGreen),
@@ -338,7 +343,12 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                Share.share("""
+Product Name: ${widget.product.productName}
+Selling Price: Tsh ${widget.product.sellingPrice}
+""", subject: '${widget.product.productName} details');
+              },
               child: const Text(
                 "Share",
                 // style: TextStyle(fontSize: 14),

@@ -12,7 +12,6 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -56,12 +55,22 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   }
 
   void _onItemTapped(int index) async {
-    if (index == 0) {}
+    if (index == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Coming Soon"),
+        ),
+      );
+    }
     if (index == 1) {
-      // // var imageId = await ImageDownloader.downloadImage(url);
+      final bytes = await capturePng();
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/receipt.png');
+      await file.writeAsBytes(bytes);
       // var imageId = await ImageDownloader.downloadImage(url);
+      // var imageId = await ImageDownloader.downloadImage(dir.path);
       // var path = await ImageDownloader.findPath(imageId!);
-      // await ImageDownloader.open(path!);
+      await ImageDownloader.open(file.path);
     }
     if (index == 2) {
       final bytes = await capturePng();

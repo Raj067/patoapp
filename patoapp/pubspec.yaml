@@ -68,6 +68,7 @@ dependencies:
   url_launcher: ^6.1.5
   share_plus: ^4.0.10
   image_downloader: ^0.31.0
+  syncfusion_flutter_pdfviewer: ^20.2.40-beta
 
 flutter_icons:
   android: "launcher_icon"
