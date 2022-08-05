@@ -212,7 +212,9 @@ class _EditProductState extends State<EditProduct> {
                   }
                   return null;
                 },
-                value: selectedPrimaryUnit,
+                value: primaryUnits.contains(widget.product.productUnit)
+                    ? widget.product.productUnit
+                    : null,
                 selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,

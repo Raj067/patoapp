@@ -66,7 +66,7 @@ def business_financial_data(request, shop):
                 "receipt": dx.bill_no,
                 "details": [{
                         "id": i.id,
-                        "product": i.product.product_name,
+                        "product": i.product_name,
                         "quantity": i.quantity,
                         "price": i.price,
                         "product_unit": i.product_unit,
@@ -98,7 +98,7 @@ def business_financial_data(request, shop):
                     "due_date": dx.due_date,
                     "data": [{
                         "id": i.id,
-                        "product": i.product.product_name,
+                        "product": i.product_name,
                         "quantity": i.quantity,
                         "price": i.price,
                         "product_unit": i.product_unit,
@@ -127,7 +127,7 @@ def business_financial_data(request, shop):
                 "receipt": dx.receipt_no,
                 "details": [{
                     "id": i.id,
-                    "product": i.product.product_name,
+                    "product": i.product_name,
                     "quantity": i.quantity,
                     "price": i.price,
                     "product_unit": i.product_unit,
@@ -153,7 +153,7 @@ def business_financial_data(request, shop):
                 "receipt": dx.receipt_no,
                 "details": [{
                     "id": i.id,
-                    "product": i.product.product_name,
+                    "product": i.product_name,
                     "quantity": i.quantity,
                     "price": i.price,
                     "product_unit": i.product_unit,

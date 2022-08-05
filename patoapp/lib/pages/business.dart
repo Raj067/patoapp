@@ -157,7 +157,10 @@ class _BusinessPageState extends State<BusinessPage> {
             context,
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
-                resetData: refreshDataDB,
+                resetData: () async {
+                  await refreshDataDB();
+                  setState(() {});
+                },
               ),
               fullscreenDialog: true,
             ),

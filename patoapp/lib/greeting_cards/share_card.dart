@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:share_plus/share_plus.dart';
+import 'package:share_plus/share_plus.dart';
 
-class ShareGreetingCard extends StatelessWidget {
+class ShareGreetingCard extends StatefulWidget {
   final SingleGreetingCard myCard;
   const ShareGreetingCard({Key? key, required this.myCard}) : super(key: key);
+
+  @override
+  State<ShareGreetingCard> createState() => _ShareGreetingCardState();
+}
+
+class _ShareGreetingCardState extends State<ShareGreetingCard> {
+  TextEditingController textMessage = TextEditingController();
+  @override
+  void initState() {
+    textMessage.text = widget.myCard.description;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +55,12 @@ class ShareGreetingCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.network(
-                      "$imageBaseUrl${myCard.greetingCard}",
+                      "$imageBaseUrl${widget.myCard.greetingCard}",
                     ),
                     Container(height: 15),
                     SizedBox(
                       child: TextFormField(
-                        initialValue: myCard.description,
+                        controller: textMessage,
                         keyboardType: TextInputType.multiline,
                         textInputAction: TextInputAction.newline,
                         minLines: 6,
@@ -116,7 +129,11 @@ class ShareGreetingCard extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                // Share.share('text', subject: 'subject');
+                String? imageId = await ImageDownloader.downloadImage(
+                    '$imageBaseUrl${widget.myCard.greetingCard}');
+                var path = await ImageDownloader.findPath(imageId!);
+                await Share.shareFiles([path!],
+                    text: 'Receipt', subject: 'Receipt');
               },
               child: const Text(
                 "Send",

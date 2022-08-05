@@ -1207,9 +1207,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
+        await widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        widget.resetData();
+
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // Navigator
@@ -1263,9 +1264,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
+        await widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // Navigator
@@ -1324,9 +1325,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
+        await widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // Navigator

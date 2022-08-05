@@ -276,8 +276,8 @@ def create_invoice_api(request):
         for dx in items:
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
-                product=Product.objects.get(id=dx.get('id')),
-                price=dx.get('price'),
+                product_name=Product.objects.get(id=dx.get('id')).product_name,
+                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 invoice_data=reg,
@@ -319,8 +319,8 @@ def purchases_transaction_api(request):
         for dx in items:
             reg.purchased_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
-                product=Product.objects.get(id=dx.get('id')),
-                price=dx.get('price'),
+                product_name=Product.objects.get(id=dx.get('id')).product_name,
+                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 purchases_data=reg,
@@ -382,8 +382,8 @@ def cash_sales_transaction_api(request):
         for dx in items:
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
-                product=Product.objects.get(id=dx.get('id')),
-                price=dx.get('price'),
+                product_name=Product.objects.get(id=dx.get('id')).product_name,
+                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_data=reg,
@@ -418,8 +418,8 @@ def cash_sales_customer_transaction_api(request):
         for dx in items:
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
-                product=Product.objects.get(id=dx.get('id')),
-                price=dx.get('price'),
+                product_name=Product.objects.get(id=dx.get('id')).product_name,
+                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_customer=reg,

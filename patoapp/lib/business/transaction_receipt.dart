@@ -525,14 +525,14 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
             ),
             Center(
               child: Text(
-                "${dx['quantity']} ${dx['product_unit']} x ${(dx['price'] / dx['quantity']).toInt()}",
+                "${dx['quantity']} ${dx['product_unit']} x ${(dx['price']).toInt()}",
                 style: const TextStyle(color: patowaveBlack, fontSize: 12),
               ),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                formatter.format(dx['price']),
+                formatter.format(dx['price'] * dx['quantity']),
                 style: const TextStyle(color: patowaveBlack, fontSize: 12),
               ),
             ),
