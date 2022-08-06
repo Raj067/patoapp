@@ -11,7 +11,9 @@ class ProfitAndLoss {
     required this.pickedRangeDate,
   });
   double startingInventory() {
-    return 0;
+    // for temporaly
+
+    return closingInventory() - purchases();
   }
 
   double closingInventory() {
@@ -47,7 +49,17 @@ class ProfitAndLoss {
   }
 
   double salesRevenue() {
-    return 0;
+    double val1 = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isAfter(pickedRangeDate.start) &&
+          date.isBefore(pickedRangeDate.end)) {
+        if (dx.isCashSale || dx.isPaymentIn || dx.isInvoice) {
+          val1 += dx.amount;
+        }
+      }
+    }
+    return val1;
   }
 
   double grossProfit() {
@@ -64,7 +76,7 @@ class ProfitAndLoss {
     for (FinancialData dx in data) {
       DateTime date = dx.date;
       if (date.isBefore(pickedRangeDate.start)) {
-        if (dx.isCashSale && dx.isPaymentIn && dx.isInvoice) {
+        if (dx.isCashSale || dx.isPaymentIn || dx.isInvoice) {
           val1 += dx.amount;
         } else {
           val2 += dx.amount;
@@ -80,7 +92,7 @@ class ProfitAndLoss {
     for (FinancialData dx in data) {
       DateTime date = dx.date;
       if (date.isBefore(pickedRangeDate.end)) {
-        if (dx.isCashSale && dx.isPaymentIn && dx.isInvoice) {
+        if (dx.isCashSale || dx.isPaymentIn || dx.isInvoice) {
           val1 += dx.amount;
         } else {
           val2 += dx.amount;
@@ -224,6 +236,23 @@ class ProfitAndLoss {
       }
     }
     return val;
+  }
+
+  double accountReceivableBalanceSheet() {
+    double val = 0;
+
+    return val;
+  }
+
+  double accountPayableBalanceSheet() {
+    double val = 0;
+
+    return val;
+  }
+
+  double totalAssetBalanceSheet() {
+    // pluss the inventory in hand
+    return accountReceivableBalanceSheet() + closingCashInHand();
   }
 
   Widget allMoneyIn() {

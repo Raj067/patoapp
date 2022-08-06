@@ -86,22 +86,22 @@ class _ItemsSettingsState extends State<ItemsSettings> {
             ),
           ),
           const Divider(height: 0),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Remind payment due"),
-                Switch(
-                  activeTrackColor: patowaveGreen400,
-                  activeColor: patowavePrimary,
-                  value: true,
-                  onChanged: (val) {},
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 0),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text("Remind payment due"),
+          //       Switch(
+          //         activeTrackColor: patowaveGreen400,
+          //         activeColor: patowavePrimary,
+          //         value: true,
+          //         onChanged: (val) {},
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const Divider(height: 0),
         ],
       ),
     );

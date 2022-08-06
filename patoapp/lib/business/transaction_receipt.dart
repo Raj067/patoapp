@@ -458,6 +458,33 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                 ],
               )
             : Container(),
+        widget.data.isPurchases
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          "Balance Due",
+                          style: TextStyle(
+                            color: patowaveBlack,
+                          ),
+                        ),
+                      ),
+                      Container(width: 10),
+                      Text(
+                        formatter.format(widget.data.discount),
+                        style: const TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
         Container(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

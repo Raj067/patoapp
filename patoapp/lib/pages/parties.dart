@@ -400,7 +400,7 @@ class _PartiesPageState extends State<PartiesPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Text(
-                            "My total debt",
+                            "To be received",
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
@@ -420,7 +420,7 @@ class _PartiesPageState extends State<PartiesPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Text(
-                            "Total customer debt",
+                            "To be paid",
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(

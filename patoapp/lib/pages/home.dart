@@ -227,8 +227,15 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
 
   _allShedules() {
     List<Widget> data = [];
+
     for (SheduleModel dx in _shedules) {
-      data.add(_singleShedule(shedule: dx));
+      DateTime eventDay = DateTime.parse(dx.dateEvent);
+      eventDay = DateTime(eventDay.year, eventDay.month, eventDay.day);
+      DateTime nowDay = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      if (eventDay == nowDay || dx.repeat.toLowerCase() == 'daily') {
+        data.add(_singleShedule(shedule: dx));
+      }
     }
     data.add(
       Padding(

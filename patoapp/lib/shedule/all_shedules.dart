@@ -64,7 +64,7 @@ class _AllShedulesState extends State<AllShedules> {
     for (SheduleModel dx in _shedules) {
       data.add(_singleShedule(shedule: dx));
     }
-    return Column(children: data);
+    return ListView(children: data);
   }
 
   _singleShedule({required SheduleModel shedule}) {
