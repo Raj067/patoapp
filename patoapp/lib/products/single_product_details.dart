@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
 import 'package:image_picker/image_picker.dart';
@@ -110,24 +113,41 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
 
                                 uploadedImage = await image!.readAsBytes();
 
-                                // await uploadImageFile(
-                                //     File(image.path), 'api/update-shop-logo/');
+                                // ignore: use_build_context_synchronously
+                                await uploadImageFile(
+                                  File(image.path),
+                                  'api/update-product-thumbnail/${widget.product.id}/',
+                                  context,
+                                );
                                 setState(() {});
                               },
-                              child: uploadedImage != null
-                                  ? Container(
-                                      // width: 30,
-                                      // height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: DecorationImage(
-                                          image: MemoryImage(uploadedImage!),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
-                                    )
+                              child: widget.product.thumbnail != ""
+                                  ? uploadedImage != null
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).cardColor,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            image: DecorationImage(
+                                              image:
+                                                  MemoryImage(uploadedImage!),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).cardColor,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            image: DecorationImage(
+                                              image: CachedNetworkImageProvider(
+                                                widget.product.thumbnail,
+                                              ),
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        )
                                   : CircleAvatar(
                                       // foregroundImage: uploadedImage == null
                                       //     ? null

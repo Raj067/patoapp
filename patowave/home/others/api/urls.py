@@ -58,7 +58,7 @@ api_urls = [
     path('api/expenses-transaction/', expenses_transaction_api,
          name='expenses_transaction_api'),
 
-    # Product adjust_product_api
+    # Product
     path('api/add-new-product/', add_new_product_api,
          name='add_new_product_api'),
     path('api/edit-product/', edit_product_api,
@@ -67,6 +67,8 @@ api_urls = [
          name='delete_product_api'),
     path('api/adjust-product/', adjust_product_api,
          name='adjust_product_api'),
+    path('api/update-product-thumbnail/<int:product>/', update_product_thumbnail,
+         name='update_product_thumbnail'),
 
     # Invoice
     path('api/create-invoice/', create_invoice_api,

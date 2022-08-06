@@ -19,11 +19,20 @@ class SyncProfile {
       );
       if (data.statusCode == 200) {
         for (var dx in jsonDecode(data.body)) {
+          String signature = '';
+          if (dx['signature'] != 'null' && dx['signature'] != null) {
+            signature = '$imageBaseUrl${dx['signature']}';
+          }
+          String imgUrl = '';
+          if (dx['logo'] != 'null' && dx['logo'] != null) {
+            imgUrl = '$imageBaseUrl${dx['logo']}';
+          }
+
           ProfileData myData = ProfileData(
             instagramName: dx['instagram_name'] ?? "",
-            businessSignature: "",
+            businessSignature: signature,
             businessSlogan: dx['slogan'] ?? "",
-            businessLogo: "",
+            businessLogo: imgUrl,
             businessCategory: dx['business_category'] ?? "",
             businessType: dx['business_type'] ?? "",
             businessEmail: dx['email'] ?? "",
@@ -45,21 +54,7 @@ class SyncProfile {
         //  == Deleting the data that is no longer stored in the database.
         List<Map<String, dynamic>> profile = await DBHelperProfile.query();
         List<ProfileData> localDb = [];
-        localDb.addAll(profile
-            .map((dx) => ProfileData(
-                  instagramName: dx['instagramName'],
-                  businessSignature: dx['businessSignature'],
-                  businessSlogan: dx['businessSlogan'],
-                  businessLogo: dx['businessLogo'],
-                  businessCategory: dx['businessCategory'],
-                  businessType: dx['businessType'],
-                  businessEmail: dx['businessEmail'],
-                  businessPhone: "${dx['businessPhone']}",
-                  businessAddress: dx['businessAddress'],
-                  businessName: dx['businessName'],
-                  id: dx['id'],
-                ))
-            .toList());
+        localDb.addAll(profile.map((dx) => fromJsonProfile(dx)).toList());
         List<dynamic> serverDb =
             jsonDecode(data.body).map((e) => e['id']).toList();
         for (ProfileData dx in localDb) {

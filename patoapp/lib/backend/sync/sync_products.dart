@@ -18,6 +18,10 @@ class SyncProduct {
       );
       if (data.statusCode == 200) {
         for (var dx in jsonDecode(data.body)) {
+          String thumbnail = '';
+          if (dx['product_image'] != 'null' && dx['product_image'] != null) {
+            thumbnail = '$imageBaseUrl${dx['product_image']}';
+          }
           SingleProduct myData = SingleProduct(
             shopId: dx["shopId"],
             isService: dx['is_service'] ?? false,
@@ -30,7 +34,7 @@ class SyncProduct {
             stockLevel: dx['stock_level'] ?? 0,
             supplierName: dx['supplier_name'] ?? '',
             supplierContact: dx['supplier_number'] ?? '',
-            thumbnail: dx['product_image'] ?? '',
+            thumbnail: thumbnail,
           );
           // Add data to the database
           try {

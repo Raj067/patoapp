@@ -37,7 +37,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         data = [
             {
                 "id": i.id,
-                "product": i.product.product_name,
+                "product": i.product_name,
                 "quantity": i.quantity,
                 "price": i.price,
                 "product_unit": i.product_unit,

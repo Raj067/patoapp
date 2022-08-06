@@ -11,7 +11,7 @@ class TermsConditionsDialog extends StatefulWidget {
 
 class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
   final pdfPinchController = PdfControllerPinch(
-    document: PdfDocument.openAsset('assets/pdfb/terms.pdf'),
+    document: PdfDocument.openAsset('pdf/terms.pdf'),
   );
 
   @override

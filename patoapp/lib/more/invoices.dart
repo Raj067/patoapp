@@ -72,6 +72,31 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
           child: Column(
             children: [
               Container(height: 10),
+               OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      // PreviewInvoice
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const PreviewInvoice(),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
+                    child: const Text("VIEW DETAILS",
+                        style: TextStyle(fontSize: 12)),
+                  ),
+                  
               _invoiceHeader(),
               _invoices(),
             ],

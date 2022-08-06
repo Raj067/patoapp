@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/greeting_cards/share_card.dart';
@@ -20,48 +22,57 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
   bool isLoading = true;
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
-    var cardData = await http.get(
-      Uri.parse(
-        "${baseUrl}api/greeting-cards/",
-      ),
-      headers: getAuthHeaders(accessToken),
-    );
-    if (cardData.statusCode == 200) {
-      List<SingleGreetingCard> newDataThankYou = [];
-      List<SingleGreetingCard> newDataOffers = [];
-      List<SingleGreetingCard> newDataGoodMorning = [];
-      for (var element in jsonDecode(cardData.body)) {
-        if (element['card_category'] == 'thank-you') {
-          newDataThankYou.add(SingleGreetingCard(
-            cardCategory: element['card_category'],
-            greetingCard: element['greeting_card'],
-            description: element['default_text'],
-            id: element['id'],
-          ));
+    try {
+      var cardData = await http.get(
+        Uri.parse(
+          "${baseUrl}api/greeting-cards/",
+        ),
+        headers: getAuthHeaders(accessToken),
+      );
+      if (cardData.statusCode == 200) {
+        List<SingleGreetingCard> newDataThankYou = [];
+        List<SingleGreetingCard> newDataOffers = [];
+        List<SingleGreetingCard> newDataGoodMorning = [];
+        for (var element in jsonDecode(cardData.body)) {
+          if (element['card_category'] == 'thank-you') {
+            newDataThankYou.add(SingleGreetingCard(
+              cardCategory: element['card_category'],
+              greetingCard: element['greeting_card'],
+              description: element['default_text'],
+              id: element['id'],
+            ));
+          }
+          if (element['card_category'] == 'offers') {
+            newDataOffers.add(SingleGreetingCard(
+              cardCategory: element['card_category'],
+              greetingCard: element['greeting_card'],
+              description: element['default_text'],
+              id: element['id'],
+            ));
+          }
+          if (element['card_category'] == 'good-morning') {
+            newDataGoodMorning.add(SingleGreetingCard(
+              cardCategory: element['card_category'],
+              greetingCard: element['greeting_card'],
+              description: element['default_text'],
+              id: element['id'],
+            ));
+          }
         }
-        if (element['card_category'] == 'offers') {
-          newDataOffers.add(SingleGreetingCard(
-            cardCategory: element['card_category'],
-            greetingCard: element['greeting_card'],
-            description: element['default_text'],
-            id: element['id'],
-          ));
-        }
-        if (element['card_category'] == 'good-morning') {
-          newDataGoodMorning.add(SingleGreetingCard(
-            cardCategory: element['card_category'],
-            greetingCard: element['greeting_card'],
-            description: element['default_text'],
-            id: element['id'],
-          ));
-        }
+        thankYouData = newDataThankYou;
+        offersData = newDataOffers;
+        goodMorningData = newDataGoodMorning;
+        isLoading = false;
       }
-      thankYouData = newDataThankYou;
-      offersData = newDataOffers;
-      goodMorningData = newDataGoodMorning;
-      isLoading = false;
+      setState(() {});
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No internent connection"),
+        ),
+      );
     }
-    setState(() {});
   }
 
   @override
@@ -213,21 +224,24 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Image.network(
-                "$imageBaseUrl$cardImage",
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
+              CachedNetworkImage(
+                imageUrl: "$imageBaseUrl$cardImage",
               ),
+              // Image.network(
+              //   "$imageBaseUrl$cardImage",
+              //   loadingBuilder: (BuildContext context, Widget child,
+              //       ImageChunkEvent? loadingProgress) {
+              //     if (loadingProgress == null) return child;
+              //     return Center(
+              //       child: CircularProgressIndicator(
+              //         value: loadingProgress.expectedTotalBytes != null
+              //             ? loadingProgress.cumulativeBytesLoaded /
+              //                 loadingProgress.expectedTotalBytes!
+              //             : null,
+              //       ),
+              //     );
+              //   },
+              // ),
               Container(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +256,17 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var imageId = await ImageDownloader.downloadImage(
+                        "$imageBaseUrl$cardImage",
+                        destination: AndroidDestinationType.custom(
+                          directory: 'PatoWave/logo/',
+                          inPublicDir: true,
+                        ),
+                      );
+                      var path = await ImageDownloader.findPath(imageId!);
+                      ImageDownloader.open(path!);
+                    },
                     child: Row(
                       children: [
                         const Icon(Icons.download, size: 18),

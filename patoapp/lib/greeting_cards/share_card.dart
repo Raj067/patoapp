@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:patoapp/api/apis.dart';
@@ -54,8 +55,8 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    Image.network(
-                      "$imageBaseUrl${widget.myCard.greetingCard}",
+                    CachedNetworkImage(
+                      imageUrl: "$imageBaseUrl${widget.myCard.greetingCard}",
                     ),
                     Container(height: 15),
                     SizedBox(
@@ -129,11 +130,9 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                 ),
               ),
               onPressed: () async {
-                String? imageId = await ImageDownloader.downloadImage(
-                    '$imageBaseUrl${widget.myCard.greetingCard}');
-                var path = await ImageDownloader.findPath(imageId!);
-                await Share.shareFiles([path!],
-                    text: 'Receipt', subject: 'Receipt');
+                await Share.share(
+                    '$imageBaseUrl${widget.myCard.greetingCard} ${textMessage.text}',
+                    subject: textMessage.text);
               },
               child: const Text(
                 "Send",

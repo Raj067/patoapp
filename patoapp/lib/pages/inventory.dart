@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/api/apis.dart';
@@ -432,8 +433,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
 
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image: NetworkImage(
-                                    "$imageBaseUrl${product.thumbnail}"),
+                                image: CachedNetworkImageProvider(
+                                  product.thumbnail,
+                                ),
                                 fit: BoxFit.fill,
                               ),
                             ),

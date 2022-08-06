@@ -277,7 +277,8 @@ def create_invoice_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
-                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
+                price=Product.objects.get(
+                    id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 invoice_data=reg,
@@ -320,7 +321,8 @@ def purchases_transaction_api(request):
             reg.purchased_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
-                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
+                price=Product.objects.get(
+                    id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 purchases_data=reg,
@@ -383,7 +385,8 @@ def cash_sales_transaction_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
-                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
+                price=Product.objects.get(
+                    id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_data=reg,
@@ -419,7 +422,8 @@ def cash_sales_customer_transaction_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
-                price= Product.objects.get(id=dx.get('id')).selling_price_primary,
+                price=Product.objects.get(
+                    id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_customer=reg,
@@ -434,6 +438,16 @@ def cash_sales_customer_transaction_api(request):
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # For products
+
+
+@api_view(['POST'])
+def update_product_thumbnail(request, product):
+    if request.method == "POST":
+        product = Product.objects.get(id=product)
+        product.product_image = request.data.get('file')
+        product.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

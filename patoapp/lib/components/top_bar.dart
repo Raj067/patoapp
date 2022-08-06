@@ -1,5 +1,6 @@
 // ignore: file_names
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
@@ -105,12 +106,13 @@ class _ProfileIconState extends State<ProfileIcon> {
   @override
   Widget build(BuildContext context) {
     return ActionChip(
-      // backgroundColor: const Color.fromARGB(255, 151, 186, 180),
-      avatar: const CircleAvatar(
-          // backgroundColor: patoWhite,
-          // foregroundColor: patoBlack,
-          // child: Icon(Icons.add_shopping_cart_rounded),
-          ),
+      avatar: profileData.businessLogo != ''
+          ? CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                profileData.businessLogo,
+              ),
+            )
+          : const CircleAvatar(),
       label: Text(profileData.businessName),
       onPressed: () {
         Navigator.push(

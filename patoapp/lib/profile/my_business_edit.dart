@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
@@ -87,7 +89,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   final SignatureController _controller = SignatureController(
     penStrokeWidth: 3,
     penColor: patowavePrimary,
-    exportBackgroundColor: Colors.blue,
+    exportBackgroundColor: patowaveWhite,
   );
 
   final ImagePicker _picker = ImagePicker();
@@ -210,15 +212,39 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                         );
                         setState(() {});
                       },
-                      child: CircleAvatar(
-                        foregroundImage: uploadedImage == null
-                            ? null
-                            : MemoryImage(uploadedImage!),
-                        radius: 50,
-                        backgroundColor: patowavePrimary.withAlpha(50),
-                        foregroundColor: patowavePrimary,
-                        child: const Icon(Icons.photo, size: 50),
-                      ),
+                      child: widget.profileData.businessLogo == ""
+                          ? CircleAvatar(
+                              foregroundImage: uploadedImage == null
+                                  ? null
+                                  : MemoryImage(uploadedImage!),
+                              radius: 50,
+                              backgroundColor: patowavePrimary.withAlpha(50),
+                              foregroundColor: patowavePrimary,
+                              child: const Icon(Icons.photo, size: 50),
+                            )
+                          : uploadedImage == null
+                              ? Container(
+                                  width: 200,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                        widget.profileData.businessLogo,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  // child: Image.asset("assets/img.jpg", fit: BoxFit.fill),
+                                )
+                              : CircleAvatar(
+                                  foregroundImage: MemoryImage(uploadedImage!),
+                                  radius: 50,
+                                  backgroundColor:
+                                      patowavePrimary.withAlpha(50),
+                                  foregroundColor: patowavePrimary,
+                                  child: const Icon(Icons.photo, size: 50),
+                                ),
                     ),
                   ),
                   const Positioned(
@@ -397,9 +423,16 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                   ),
                   onPressed: () async {
                     Uint8List? myImage = await _controller.toPngBytes();
-                    await uploadImageBytes(
-                        myImage, 'api/update-shop-signature/');
-                    // _controller.toPngBytes();
+                    final dir = await getApplicationDocumentsDirectory();
+                    final file = File('${dir.path}/signature.png');
+                    await file.writeAsBytes(myImage!);
+                    // ignore: use_build_context_synchronously
+                    await uploadImageFile(
+                      File(file.path),
+                      'api/update-shop-signature/',
+                      context,
+                    );
+                    _controller.clear();
                   },
                   child: const Text("Save"),
                 ),

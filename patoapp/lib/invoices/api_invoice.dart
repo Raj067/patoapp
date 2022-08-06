@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -26,7 +27,7 @@ class FileHandleApi {
 }
 
 class PdfInvoiceApi {
-  static Future<File> generate() async {
+  static Future<Uint8List> generate() async {
     final pdf = pw.Document();
 
     final iconImage =
@@ -94,75 +95,75 @@ class PdfInvoiceApi {
 
     pdf.addPage(
       pw.MultiPage(
-        // header: (context) {
-        //   return pw.Text(
-        //     'Flutter Approach',
-        //     style: pw.TextStyle(
-        //       fontWeight: pw.FontWeight.bold,
-        //       fontSize: 15.0,
-        //     ),
-        //   );
-        // },
+        header: (context) {
+          return pw.Text(
+            'Flutter Approach',
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 15.0,
+            ),
+          );
+        },
         build: (context) {
           return [
-            pw.Row(
-              children: [
-                pw.Image(
-                  pw.MemoryImage(iconImage),
-                  height: 72,
-                  width: 72,
-                ),
-                pw.SizedBox(width: 1 * PdfPageFormat.mm),
-                pw.Column(
-                  mainAxisSize: pw.MainAxisSize.min,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      'INVOICE',
-                      style: pw.TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: pw.FontWeight.bold,
-                      ),
-                    ),
-                    pw.Text(
-                      'Flutter Approach',
-                      style: const pw.TextStyle(
-                        fontSize: 15.0,
-                        color: PdfColors.grey700,
-                      ),
-                    ),
-                  ],
-                ),
-                pw.Spacer(),
-                pw.Column(
-                  mainAxisSize: pw.MainAxisSize.min,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      'John Doe',
-                      style: pw.TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: pw.FontWeight.bold,
-                      ),
-                    ),
-                    pw.Text(
-                      'john@gmail.com',
-                    ),
-                    pw.Text(
-                      DateTime.now().toString(),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            pw.SizedBox(height: 1 * PdfPageFormat.mm),
-            pw.Divider(),
-            pw.SizedBox(height: 1 * PdfPageFormat.mm),
-            pw.Text(
-              'Dear John,\nLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error',
-              textAlign: pw.TextAlign.justify,
-            ),
-            pw.SizedBox(height: 5 * PdfPageFormat.mm),
+            // pw.Row(
+            //   children: [
+            //     pw.Image(
+            //       pw.MemoryImage(iconImage),
+            //       height: 72,
+            //       width: 72,
+            //     ),
+            //     pw.SizedBox(width: 1 * PdfPageFormat.mm),
+            //     pw.Column(
+            //       mainAxisSize: pw.MainAxisSize.min,
+            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
+            //       children: [
+            //         pw.Text(
+            //           'INVOICE',
+            //           style: pw.TextStyle(
+            //             fontSize: 17.0,
+            //             fontWeight: pw.FontWeight.bold,
+            //           ),
+            //         ),
+            //         pw.Text(
+            //           'Flutter Approach',
+            //           style: const pw.TextStyle(
+            //             fontSize: 15.0,
+            //             color: PdfColors.grey700,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //     pw.Spacer(),
+            //     pw.Column(
+            //       mainAxisSize: pw.MainAxisSize.min,
+            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
+            //       children: [
+            //         pw.Text(
+            //           'John Doe',
+            //           style: pw.TextStyle(
+            //             fontSize: 15.5,
+            //             fontWeight: pw.FontWeight.bold,
+            //           ),
+            //         ),
+            //         pw.Text(
+            //           'john@gmail.com',
+            //         ),
+            //         pw.Text(
+            //           DateTime.now().toString(),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+            // pw.SizedBox(height: 1 * PdfPageFormat.mm),
+            // pw.Divider(),
+            // pw.SizedBox(height: 1 * PdfPageFormat.mm),
+            // pw.Text(
+            //   'Dear John,\nLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error',
+            //   textAlign: pw.TextAlign.justify,
+            // ),
+            // pw.SizedBox(height: 5 * PdfPageFormat.mm),
 
             ///
             /// PDF Table Create
@@ -269,7 +270,7 @@ class PdfInvoiceApi {
               pw.Divider(),
               pw.SizedBox(height: 2 * PdfPageFormat.mm),
               pw.Text(
-                'Flutter Approach',
+                'Powered by PatoWave',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 1 * PdfPageFormat.mm),
@@ -277,24 +278,10 @@ class PdfInvoiceApi {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'Address: ',
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                    'Email: info@patowave.com, ',
                   ),
                   pw.Text(
-                    'Merul Badda, Anandanagor, Dhaka 1212',
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 1 * PdfPageFormat.mm),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
-                children: [
-                  pw.Text(
-                    'Email: ',
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  ),
-                  pw.Text(
-                    'flutterapproach@gmail.com',
+                    'Website: www.patowave.com',
                   ),
                 ],
               ),
@@ -304,6 +291,6 @@ class PdfInvoiceApi {
       ),
     );
 
-    return FileHandleApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
+    return pdf.save();
   }
 }
