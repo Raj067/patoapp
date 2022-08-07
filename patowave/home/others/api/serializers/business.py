@@ -95,7 +95,7 @@ def business_financial_data(request, shop):
                 "receipt": dx.invoice_no,
                 "details": [{
                     "total_amount": dx.total_amount,
-                    "due_date": dx.due_date,
+                    "due_date": dx.date_due,
                     "data": [{
                         "id": i.id,
                         "product": i.product_name,

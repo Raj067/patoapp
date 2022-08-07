@@ -10,7 +10,7 @@ class DBHelperInvoice {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}dbs_invoices.db';
+      String path = '${await getDatabasesPath()}my_invoice.db';
       _db =
           await openDatabase(path, version: _version, onCreate: (db, version) {
         // print("-------------- Creating invoice database ------------");
@@ -18,6 +18,7 @@ class DBHelperInvoice {
             "id INTEGER PRIMARY KEY, shopId INTEGER, customerId INTEGER, "
             "discount INTEGER, amountReceived INTEGER, invoiceNo STRING, "
             "dueDate STRING, description STRING, items TEXT, fullName STRING, "
+            "totalAmount INTEGER,"
             "createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)");
       });
     } catch (e) {

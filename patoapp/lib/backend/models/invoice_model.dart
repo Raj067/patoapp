@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class SingleInvoice {
   int amountReceived;
+    int totalAmount;
   int discount;
   List items;
   String invoiceNo;
@@ -14,6 +15,7 @@ class SingleInvoice {
 
   SingleInvoice({
     required this.amountReceived,
+    required this.totalAmount,
     required this.discount,
     required this.id,
     required this.shopId,
@@ -31,6 +33,7 @@ class SingleInvoice {
       'customerId': customerId,
       'fullName': fullName,
       'amountReceived': amountReceived,
+      'totalAmount':totalAmount,
       'discount': discount,
       'dueDate': dueDate,
       'items': jsonEncode(items),
@@ -47,6 +50,7 @@ SingleInvoice fromJsonInvoice(Map<String, dynamic> e) {
     customerId: e['customerId'],
     fullName: e['fullName'],
     amountReceived: e['amountReceived'],
+    totalAmount: e['totalAmount'],
     discount: e['discount'],
     dueDate: "${e['dueDate']}",
     items: jsonDecode(e['items']),

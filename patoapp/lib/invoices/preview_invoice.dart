@@ -1,22 +1,20 @@
-// import 'dart:typed_data';
+import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:patoapp/invoices/api_invoice.dart';
-// import 'package:patoapp/data/customer_list.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdfx/pdfx.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
-// ignore: must_be_immutable
 class PreviewInvoice extends StatefulWidget {
-  // SingleCustomer customer;
+  final SingleInvoice invoice;
   const PreviewInvoice({
     Key? key,
-    // required this.customer,
+    required this.invoice,
   }) : super(key: key);
   @override
   State<PreviewInvoice> createState() => _PreviewInvoiceState();
@@ -454,6 +452,52 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
       ),
+      persistentFooterButtons: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                    'Due in ${DateFormat('EEE d MMMM, yyy').format(DateTime.parse(widget.invoice.dueDate))}'),
+              ],
+            ),
+          ),
+          Container(width: 10),
+          ElevatedButton(
+            style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(
+                const Size(35, 35),
+              ),
+              shape: MaterialStateProperty.all(
+                const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+            onPressed: () async {
+              final bytes = await _generatePdf();
+              final dir = await getApplicationDocumentsDirectory();
+              final file = File('${dir.path}/invoices.pdf');
+              await file.writeAsBytes(bytes);
+              await Share.shareFiles([file.path],
+                  text: 'Invoice', subject: 'Invoice');
+            },
+            child: const Text(
+              "Share",
+            ),
+          ),
+        ]),
+      ],
     );
   }
 }

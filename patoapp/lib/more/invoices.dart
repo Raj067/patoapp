@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_invoices.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
@@ -19,6 +20,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
   List<SingleInvoice> myCustomData = [];
   int outstanding = 0;
   int overdue = 0;
+  double totalOutstanding = 0;
+  double totalOverdue = 0;
+  double totalUnpaidInvoice = 0;
   fetchInvoiceDB() async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
@@ -72,31 +76,6 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
           child: Column(
             children: [
               Container(height: 10),
-               OutlinedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      // PreviewInvoice
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const PreviewInvoice(),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
-                    child: const Text("VIEW DETAILS",
-                        style: TextStyle(fontSize: 12)),
-                  ),
-                  
               _invoiceHeader(),
               _invoices(),
             ],
@@ -149,8 +128,18 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
   _invoices() {
     List<Widget> data = [];
     for (SingleInvoice dx in myCustomData) {
-      outstanding += 1;
-      overdue += 1;
+      DateTime dueDate = DateTime.parse(dx.dueDate);
+      bool isOutStanding = dueDate.isBefore(DateTime.now()) ? true : false;
+
+      if (isOutStanding) {
+        outstanding += 1;
+        totalOutstanding += dx.totalAmount - dx.amountReceived;
+      } else {
+        overdue += 1;
+        totalOverdue += dx.totalAmount - dx.amountReceived;
+      }
+      totalUnpaidInvoice += dx.totalAmount - dx.amountReceived;
+
       data.add(Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -173,7 +162,8 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dx.dueDate,
+                        DateFormat('d-MMM-yyy')
+                            .format(DateTime.parse(dx.dueDate)),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -198,20 +188,24 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: patowaveWarning.withAlpha(50),
+                    color: isOutStanding
+                        ? patowaveWarning.withAlpha(50)
+                        : patowaveErrorRed.withAlpha(50),
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'ISSUED',
+                      isOutStanding ? 'Outstanding' : 'Overdue',
                       style: TextStyle(
-                          color: patowaveWarning,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                        color:
+                            isOutStanding ? patowaveWarning : patowaveErrorRed,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -238,26 +232,40 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                              const PreviewInvoice(),
+                              PreviewInvoice(invoice: dx),
                           fullscreenDialog: true,
                         ),
                       );
                     },
-                    child: const Text("VIEW DETAILS",
-                        style: TextStyle(fontSize: 12)),
+                    child: Text("VIEW DETAILS",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isOutStanding
+                              ? patowaveWarning
+                              : patowaveErrorRed,
+                        )),
                   ),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Text(
+                        Text(
                           "Tsh ",
-                          style: TextStyle(fontSize: 12, color: patowaveGreen),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: isOutStanding
+                                ? patowaveWarning
+                                : patowaveErrorRed,
+                          ),
                         ),
                         Text(
-                          "${dx.amountReceived}",
-                          style: const TextStyle(
-                              fontSize: 17, color: patowaveGreen),
+                          formatter.format(dx.totalAmount - dx.amountReceived),
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: isOutStanding
+                                ? patowaveWarning
+                                : patowaveErrorRed,
+                          ),
                         ),
                       ],
                     ),
@@ -282,16 +290,17 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Text("Total unpaid invoice Tsh 79,000"),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Text(
+                  "Total unpaid invoice Tsh ${formatter.format(totalUnpaidInvoice)}"),
             ),
             LinearPercentIndicator(
-              percent: 0.67,
+              percent: outstanding / (outstanding + overdue),
               backgroundColor: patowaveErrorRed,
               progressColor: patowaveWarning,
               lineHeight: 10,
-              animation: true,
+              // animation: true,
               barRadius: const Radius.circular(5),
               curve: Curves.easeInCirc,
             ),
@@ -326,7 +335,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                             ),
                           ),
                           Text(
-                            "Tsh: $outstanding",
+                            "Tsh: ${formatter.format(totalOutstanding)}",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -348,7 +357,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                             ),
                           ),
                           Text(
-                            "Tsh: $overdue",
+                            "Tsh: ${formatter.format(totalOverdue)}",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,

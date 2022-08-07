@@ -8,6 +8,7 @@ from accounts.models import CustomUser
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
+import datetime
 
 
 @api_view(['GET', 'POST'])
@@ -267,11 +268,12 @@ def create_invoice_api(request):
             amount_received=amount_received,
             total_amount=total_amount,
             discount=discount,
-            due_date=request.data.get('dueDate'),
+            date_due=request.data.get('dueDate'),
             invoice_no=str(invoiceNo),
             description=description,
             customer=Customer.objects.get(id=customer)
         )
+        # datetime.date.
         reg.save()
         for dx in items:
             reg.sold_items.create(

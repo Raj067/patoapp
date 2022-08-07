@@ -377,7 +377,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
                 if (pickedDate != null) {
                   String formattedDate =
-                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
                   setState(() {
                     dueDate.text =
                         formattedDate; //set output date to TextField value.
