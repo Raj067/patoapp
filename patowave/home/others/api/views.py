@@ -279,6 +279,7 @@ def create_invoice_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
+                product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -294,6 +295,28 @@ def create_invoice_api(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+def delete_invoice_api(request):
+    if request.method == "POST":
+        my_id = request.data.get('id')
+        # Deleting Invoice means reverse all the
+        # activities done in creating the invoice
+        invoice = Invoice.objects.get(id=my_id)
+        for dx in InvoiceSoldItem.objects.all():
+            if dx.invoice_data == invoice:
+                # Once transaction completed
+                # successfully, decreasing the quantity of products
+                try:
+                    prod = Product.objects.get(id=dx.product_id)
+                    prod.quantity = prod.quantity - dx.quantity
+                    prod.save()
+                except:
+                    pass
+                dx.delete()
+        invoice.delete()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 # FOR TRANSACTIONS - Expenses & Purchases
 
 
@@ -323,6 +346,7 @@ def purchases_transaction_api(request):
             reg.purchased_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
+                product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -387,6 +411,7 @@ def cash_sales_transaction_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
+                product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
@@ -424,6 +449,7 @@ def cash_sales_customer_transaction_api(request):
             reg.sold_items.create(
                 shop=Shop.objects.get(id=request.data.get('shopId')),
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
+                product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,

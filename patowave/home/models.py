@@ -153,6 +153,7 @@ class CashSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     # product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
+    product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100,)
@@ -169,6 +170,7 @@ class CashSoldItem(models.Model):
 class CashSoldItemCustomer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
+    product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100,)
@@ -186,6 +188,7 @@ class CashSoldItemCustomer(models.Model):
 class PurchasedItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
+    product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100, default="Items")
@@ -202,6 +205,7 @@ class PurchasedItem(models.Model):
 class InvoiceSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
+    product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
     product_unit = models.CharField(max_length=100, default="Items")

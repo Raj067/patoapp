@@ -19,7 +19,8 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
 
 class CreateNewInvoice extends StatefulWidget {
-  const CreateNewInvoice({Key? key}) : super(key: key);
+  final Function resetData;
+  const CreateNewInvoice({Key? key, required this.resetData}) : super(key: key);
 
   @override
   State<CreateNewInvoice> createState() => _CreateNewInvoiceState();
@@ -803,6 +804,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
       );
 
       if (response.statusCode == 201) {
+        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // widget.resetData();

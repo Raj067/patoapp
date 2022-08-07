@@ -107,8 +107,11 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const CreateNewInvoice(),
+                      builder: (BuildContext context) => CreateNewInvoice(
+                        resetData: () {
+                          refreshDataDB();
+                        },
+                      ),
                       fullscreenDialog: true,
                     ),
                   );
@@ -127,9 +130,14 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
 
   _invoices() {
     List<Widget> data = [];
+    totalOutstanding = 0;
+    totalOverdue = 0;
+    totalUnpaidInvoice = 0;
+    outstanding = 0;
+    overdue = 0;
     for (SingleInvoice dx in myCustomData) {
       DateTime dueDate = DateTime.parse(dx.dueDate);
-      bool isOutStanding = dueDate.isBefore(DateTime.now()) ? true : false;
+      bool isOutStanding = dueDate.isBefore(DateTime.now()) ? false : true;
 
       if (isOutStanding) {
         outstanding += 1;
@@ -231,8 +239,12 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              PreviewInvoice(invoice: dx),
+                          builder: (BuildContext context) => PreviewInvoice(
+                            invoice: dx,
+                            resetData: () {
+                              refreshDataDB();
+                            },
+                          ),
                           fullscreenDialog: true,
                         ),
                       );

@@ -1,20 +1,28 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdfx/pdfx.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
+  final Function resetData;
   const PreviewInvoice({
     Key? key,
     required this.invoice,
+    required this.resetData,
   }) : super(key: key);
   @override
   State<PreviewInvoice> createState() => _PreviewInvoiceState();
@@ -395,6 +403,57 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     return pdf.save();
   }
 
+  void _onItemTapped(int index) async {
+    if (index == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Coming Soon"),
+        ),
+      );
+    }
+    if (index == 1) {}
+    if (index == 2) {
+      // api/delete-invoices/
+      String accessToken = await storage.read(key: 'access') ?? "";
+      showPleaseWait(
+        context: context,
+        builder: (context) => const ModalFit(),
+      );
+      try {
+        final response = await http.post(
+          Uri.parse('${baseUrl}api/delete-invoices/'),
+          headers: getAuthHeaders(accessToken),
+          body: jsonEncode(<String, dynamic>{
+            'id': widget.invoice.id,
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          await widget.resetData();
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+        } else {
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          showErrorMessage(
+            context: context,
+            builder: (context) => const ModalFitError(),
+          );
+          // throw Exception('Failed to updated customer.');
+        }
+      } catch (e) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showTimeOutMessage(
+          context: context,
+          builder: (context) => const ModalFitTimeOut(),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -445,9 +504,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             label: 'Delete',
           ),
         ],
-        // currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
-        // onTap: _onItemTapped,
+        onTap: _onItemTapped,
         unselectedItemColor: Colors.white,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
