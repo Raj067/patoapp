@@ -1,20 +1,20 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdfx/pdfx.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
+import 'package:printing/printing.dart';
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
@@ -29,12 +29,6 @@ class PreviewInvoice extends StatefulWidget {
 }
 
 class _PreviewInvoiceState extends State<PreviewInvoice> {
-  int selectedColor = 0;
-  final pdfPinchController = PdfControllerPinch(
-    document: PdfDocument.openData(pw.Document().save()),
-  );
-  final pdf = pw.Document();
-
   final tableHeaders = [
     'Item',
     'Price',
@@ -42,67 +36,37 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     'Total',
   ];
 
-  final tableData = [
-    [
-      'Coffee',
-      '7',
-      '\$ 5',
-      '\$ 35',
-    ],
-    [
-      'Blue Berries',
-      '5',
-      '\$ 10',
-      '\$ 50',
-    ],
-    [
-      'Water',
-      '1',
-      '\$ 3',
-      '1.5 %',
-    ],
-    [
-      'Apple',
-      '6',
-      '\$ 8',
-      '\$ 48',
-    ],
-    [
-      'Lunch',
-      '3',
-      '\$ 90',
-      '12 %',
-    ],
-    [
-      'Drinks',
-      '2',
-      '\$ 15',
-      '\$ 30',
-    ],
-    [
-      'Lemon',
-      '4',
-      '\$ 7',
-      '\$ 28',
-    ],
-  ];
-  // final iconImage =
-  //     (await rootBundle.load('assets/icon/icon.png')).buffer.asUint8List();
+  List<List> tableData = [];
+  ProfileData? myProfile;
+  int profilePercent = 20;
+
+  fetchProfileDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+    myProfile = fromJsonProfile(
+      profile.firstWhere((element) => element['shopId'] == shopId),
+    );
+    setState(() {});
+  }
 
   Future<Uint8List> _generatePdf() async {
+    final pdf = pw.Document();
     p.PdfColor selectedColorInvoice = p.PdfColor.fromHex('33796FFF');
 
     pdf.addPage(
       pw.MultiPage(
-        header: (context) {
-          return pw.Text(
-            'Flutter Approach',
-            style: pw.TextStyle(
-              fontWeight: pw.FontWeight.bold,
-              fontSize: 15.0,
-            ),
-          );
-        },
+        // header: (context) {
+        //   return pw.Text(
+        //     myProfile!.businessName,
+        //     style: pw.TextStyle(
+        //       fontWeight: pw.FontWeight.bold,
+        //       fontSize: 15.0,
+        //     ),
+        //   );
+        // },
         build: (context) {
           return [
             pw.Row(
@@ -118,14 +82,14 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text(
-                      'INVOICE',
+                      myProfile!.businessName,
                       style: pw.TextStyle(
-                        fontSize: 17.0,
+                        fontSize: 16.0,
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
                     pw.Text(
-                      'Flutter Approach',
+                      myProfile!.businessSlogan,
                       style: const pw.TextStyle(
                         fontSize: 15.0,
                         color: p.PdfColors.grey700,
@@ -139,17 +103,21 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text(
-                      'John Doe',
+                      myProfile!.businessName,
                       style: pw.TextStyle(
                         fontSize: 15.5,
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
                     pw.Text(
-                      'john@gmail.com',
+                      myProfile!.businessAddress,
+                    ),
+                    pw.Text(myProfile!.businessPhone),
+                    pw.Text(
+                      myProfile!.businessEmail,
                     ),
                     pw.Text(
-                      DateTime.now().toString(),
+                      DateFormat('d-MMM-yyy').format(DateTime.now()),
                     ),
                   ],
                 ),
@@ -193,7 +161,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
-                    pw.Text('Anitha Lucas'),
+                    pw.Text(widget.invoice.fullName),
                     pw.Text('Dar es salaam'),
                     pw.Text('0679190720'),
                     pw.Text('sample@patowave.com'),
@@ -405,13 +373,12 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
 
   void _onItemTapped(int index) async {
     if (index == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Coming Soon"),
-        ),
-      );
+      await Printing.layoutPdf(
+          onLayout: (p.PdfPageFormat format) async => await _generatePdf());
     }
-    if (index == 1) {}
+    if (index == 1) {
+      print(widget.invoice.items);
+    }
     if (index == 2) {
       // api/delete-invoices/
       String accessToken = await storage.read(key: 'access') ?? "";
@@ -455,11 +422,25 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   }
 
   @override
+  void initState() {
+    fetchProfileDB();
+    tableData = widget.invoice.items
+        .map((e) => [
+              e['product'],
+              "Tsh ${e['price']}",
+              "${e['quantity']} ${e['product_unit']}",
+              "Tsh ${e['price'] * e['quantity']}",
+            ])
+        .toList();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // title: const Text(
-        //   'Feedback',
+        //   'Invoice',
         //   style: TextStyle(color: Colors.white),
         // ),
         leading: IconButton(
@@ -488,6 +469,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           document: PdfDocument.openData(_generatePdf()),
         ),
       ),
+      // body: PdfPreview(
+      //   build: (format) => _generatePdf(),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
         items: const <BottomNavigationBarItem>[
@@ -543,12 +527,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               ),
             ),
             onPressed: () async {
-              final bytes = await _generatePdf();
-              final dir = await getExternalStorageDirectory();
-              final file = File('${dir!.path}/invoices.pdf');
-              await file.writeAsBytes(bytes);
-              await Share.shareFiles([file.path],
-                  text: 'Invoice', subject: 'Invoice');
+              await Printing.sharePdf(
+                  bytes: await _generatePdf(),
+                  filename: 'invoice-${widget.invoice.invoiceNo}.pdf');
             },
             child: const Text(
               "Share",

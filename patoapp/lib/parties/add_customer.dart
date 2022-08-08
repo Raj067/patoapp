@@ -12,7 +12,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:permission_handler/permission_handler.dart';
 // import 'package:toggle_switch/toggle_switch.dart';
-// import 'package:contacts_service/contacts_service.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   final Function refreshData;
@@ -33,11 +33,16 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   TextEditingController openingBalance = TextEditingController();
   bool toReceive = false;
   TextEditingController dateInput = TextEditingController();
+  List<Contact> contacts = [];
+  fetchContacts() async {
+    contacts = await ContactsService.getContacts(withThumbnails: false);
+  }
 
   @override
   void initState() {
     dateInput.text = DateFormat('yyyy-MM-dd')
         .format(DateTime.now()); //set the initial value of text field
+    fetchContacts();
     super.initState();
   }
 
@@ -67,16 +72,14 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
             Container(height: 10),
             InkWell(
               borderRadius: BorderRadius.circular(15),
-              onTap: () async {
-                // if (await Permission.contacts.request().isGranted) {
-                //   // Either the permission was already granted before or the user just granted it.
-                //   List<Contact> contacts = await ContactsService.getContacts(
-                //       withThumbnails: false);
-                //   print(contacts);
-                // }
-                // List<Contact> contacts =
-                //     await ContactsService.getContacts(withThumbnails: false);
-                // print(contacts);
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => _selectContact(context),
+                    fullscreenDialog: true,
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -408,6 +411,67 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _selectContact(BuildContext context) {
+    List<Widget> data = [];
+
+    for (Contact dx in contacts) {
+      String phone = dx.phones![0].value ?? '-';
+      String name = dx.displayName!;
+      data.add(Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        elevation: 0,
+        child: ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          onTap: () {
+            customerName.text = name;
+            phoneNumber.text = phone;
+
+            Navigator.pop(context);
+          },
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          leading: CircleAvatar(
+            backgroundColor: patowaveGreen400,
+            foregroundColor: patowaveWhite,
+            child: Text(name.toUpperCase()[0]),
+          ),
+          title: Text(name),
+          subtitle: Text(phone),
+        ),
+      ));
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Select Contact',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        children: [
+          Column(children: data),
+        ],
       ),
     );
   }

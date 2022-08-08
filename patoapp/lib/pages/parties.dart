@@ -187,6 +187,7 @@ class _PartiesPageState extends State<PartiesPage> {
             foregroundColor: patowaveWhite,
             child: Text(customer.fullName.toUpperCase()[0]),
           ),
+          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           onTap: () {
             Navigator.push(
               context,

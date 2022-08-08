@@ -532,11 +532,10 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         Container(height: 10),
         Center(
           child: QrImageView(
-            data:
-                "${widget.data.date}-${widget.data.amount}-${widget.data.details}",
+            data: "${widget.data.date}-${widget.data.id}",
             version: QrVersions.auto,
             size: 200.0,
-            // embeddedImage: const AssetImage("assets/images/qr.png"),
+            embeddedImage: const AssetImage("assets/images/qrImage.png"),
             // embeddedImageStyle: QrEmbeddedImageStyle(color: Colors.white),
           ),
         ),

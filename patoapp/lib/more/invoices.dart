@@ -50,6 +50,8 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
     super.initState();
     fetchInvoiceDB();
     refreshDataDB();
+    outstanding = 1;
+    overdue = 1;
   }
 
   @override
@@ -312,7 +314,6 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
               backgroundColor: patowaveErrorRed,
               progressColor: patowaveWarning,
               lineHeight: 10,
-              // animation: true,
               barRadius: const Radius.circular(5),
               curve: Curves.easeInCirc,
             ),
