@@ -14,6 +14,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
 import 'package:image_downloader/image_downloader.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:path/path.dart' as pt;
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -28,7 +29,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   Future<Uint8List> capturePng() async {
     final RenderRepaintBoundary boundary =
         globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage();
+    final ui.Image image = await boundary.toImage(pixelRatio: 5);
     final ByteData? byteData =
         await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -64,12 +65,16 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     }
     if (index == 1) {
       final bytes = await capturePng();
-      final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/receipt.png');
+      final dir = await getExternalStorageDirectory();
+      String myPath = pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+      myPath = '$myPath/PatoWave/receipt';
+      Directory('$myPath/').create();
+      final file = File('$myPath/receipt-${widget.data.receipt}.png');
       await file.writeAsBytes(bytes);
       // var imageId = await ImageDownloader.downloadImage(url);
       // var imageId = await ImageDownloader.downloadImage(dir.path);
       // var path = await ImageDownloader.findPath(imageId!);
+      // ImageDownloader. ;
       await ImageDownloader.open(file.path);
     }
     if (index == 2) {

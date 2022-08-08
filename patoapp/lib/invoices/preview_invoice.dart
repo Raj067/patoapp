@@ -544,8 +544,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             ),
             onPressed: () async {
               final bytes = await _generatePdf();
-              final dir = await getApplicationDocumentsDirectory();
-              final file = File('${dir.path}/invoices.pdf');
+              final dir = await getExternalStorageDirectory();
+              final file = File('${dir!.path}/invoices.pdf');
               await file.writeAsBytes(bytes);
               await Share.shareFiles([file.path],
                   text: 'Invoice', subject: 'Invoice');
