@@ -10,5 +10,20 @@
     "upcomingSchedule":"Upcoming Schedule",
     "view":"view",
     "viewAllSchedule":"View All Schedule",
-    "schedules":"Achedule"
+    "schedules":"Achedule",
+    "invoices":"Invoices",
+    "reports":"Repots",
+    "greetings":"Greetings",
+    "whatsapp":"WhatsApp",
+    "generalSettings":"General Settings",
+    "termsAndConditins":"Terms & Conditions",
+    "privacyPolicy":"Privacy Policy",
+    "feedback":"Feedback",
+    "ratePatowave":"Rate PatoWave",
+    "tutorials":"Tutorials",
+    "information":"Information",
+    "home":"Home",
+    "cashBook":"Cashbook",
+    "contacts":"Contacts",
+    "more":"More"
 }

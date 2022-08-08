@@ -11,6 +11,7 @@ import 'package:patoapp/more/terms_conditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../components/top_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -62,9 +63,12 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('General Settings'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .generalSettings,
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -91,9 +95,11 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Tutorials'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.tutorials,
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -107,12 +113,12 @@ class MorePage extends StatelessWidget {
               Container(
                 height: 10,
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: Text(
-                    'Informations',
+                    AppLocalizations.of(context)!.information,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16),
                   ),
@@ -152,9 +158,12 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Terms & Conditions'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .termsAndConditins,
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -190,9 +199,11 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Privacy Policy'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.privacyPolicy,
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -228,9 +239,11 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Feedback'),
-                                  Icon(Icons.arrow_forward_ios, size: 14),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.feedback,
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 14),
                                 ],
                               ),
                             ),
@@ -257,8 +270,10 @@ class MorePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text('Rate Patowave'),
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.ratePatowave,
+                                  ),
                                   // Icon(Icons.arrow_forward_ios,
                                   //     color: Colors.black38, size: 14),
                                 ],
@@ -319,9 +334,9 @@ class FirstRowData extends StatelessWidget {
                     SvgPicture.asset("assets/svg/files.svg",
                         width: 35, height: 35),
                     const SizedBox(height: 10),
-                    const Text(
-                      "Invoices",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.invoices,
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
@@ -362,8 +377,8 @@ class FirstRowData extends StatelessWidget {
                     SvgPicture.asset("assets/svg/positiveDynamic.svg",
                         width: 35, height: 35),
                     const SizedBox(height: 10),
-                    const Text(
-                      "Reports",
+                    Text(
+                      AppLocalizations.of(context)!.reports,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -405,12 +420,12 @@ class FirstRowData extends StatelessWidget {
                     SvgPicture.asset("assets/svg/whatsapp.svg",
                         width: 35, height: 35),
                     const SizedBox(height: 10),
-                    const Text(
-                      "WhatsApp",
-                      style: TextStyle(fontSize: 12),
+                    Text(
+                      AppLocalizations.of(context)!.whatsapp,
+                      style: const TextStyle(fontSize: 12),
                     ),
-                    const Text(
-                      "Greetings",
+                    Text(
+                      AppLocalizations.of(context)!.greetings,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],

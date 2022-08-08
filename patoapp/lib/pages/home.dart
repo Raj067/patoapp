@@ -203,11 +203,14 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           ),
         ),
         child: Column(children: [
-          const Padding(
-            padding: EdgeInsets.all(15),
+          Padding(
+            padding: const EdgeInsets.all(15),
             child: Text(
-              "Upcoming Schedule",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              AppLocalizations.of(context)!.upcomingSchedule,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
           _allShedules(),
@@ -601,7 +604,10 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.addSchedule,
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),

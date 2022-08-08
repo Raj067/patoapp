@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ReminderDialog extends StatefulWidget {
   const ReminderDialog({Key? key}) : super(key: key);

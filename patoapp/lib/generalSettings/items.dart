@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemsSettings extends StatefulWidget {
   const ItemsSettings({Key? key}) : super(key: key);

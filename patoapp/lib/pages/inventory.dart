@@ -10,7 +10,6 @@ import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({Key? key}) : super(key: key);

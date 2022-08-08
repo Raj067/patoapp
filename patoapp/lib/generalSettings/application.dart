@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/main.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApplicationSettings extends StatefulWidget {

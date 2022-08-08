@@ -40,8 +40,6 @@ void main() {
       String? shopName = await storage.read(key: 'shopName');
       bool isLogin = accessToken == null ? false : true;
       bool isShopProfile = shopName == null ? false : true;
-      print(box.read('languageCode'));
-      print('============================================================');
 
       await DBHelperShedule.initDb();
       await DBHelperCustomer.initDb();

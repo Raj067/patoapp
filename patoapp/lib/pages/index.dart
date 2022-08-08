@@ -7,6 +7,7 @@ import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                     height: 20,
                   ),
-            label: 'Home',
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 1
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                     height: 20,
                   ),
-            label: 'Cashbook',
+            label: AppLocalizations.of(context)!.cashBook,
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 2
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                     color: Theme.of(context).iconTheme.color,
                     size: 20,
                   ),
-            label: 'Contacts',
+            label: AppLocalizations.of(context)!.contacts,
           ),
           BottomNavigationBarItem(
             icon: _selectedIndex == 3
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                     height: 20,
                   ),
-            label: 'More',
+            label: AppLocalizations.of(context)!.more,
           ),
         ],
         currentIndex: _selectedIndex,
