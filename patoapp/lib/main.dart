@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
@@ -17,6 +17,8 @@ import 'package:patoapp/themes/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patoapp/accounts/set_account.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -67,7 +69,7 @@ void main() {
 //   });
 // }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool isLogin;
   final bool isShopProfile;
   const MyApp({
@@ -75,19 +77,71 @@ class MyApp extends StatelessWidget {
     required this.isLogin,
     required this.isShopProfile,
   }) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+  static of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  void setLocale(Locale value) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString('languageCode', value.languageCode);
+    setState(() {
+      _locale = value;
+    });
+  }
+
+  _fetchLocale() async {
+    var prefs = await SharedPreferences.getInstance();
+    String languageCode = prefs.getString('languageCode') ?? 'en';
+    _locale = Locale(languageCode, '');
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    _fetchLocale();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: "PatoWave",
       theme: themeNotifier.getTheme(),
-      home: isLogin
-          ? isShopProfile
+      home: widget.isLogin
+          ? widget.isShopProfile
               ? const HomePage()
               : const SetAccountPage()
           : const WelcomePage(),
       darkTheme: patowaveDarkTheme(),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English, no country code
+        Locale('sw', ''), // Swahili, no country code
+      ],
+      locale: _locale,
+      localeResolutionCallback: (locale, supportedLocales) {
+        for (var supportedLocaleLanguage in supportedLocales) {
+          if (supportedLocaleLanguage.languageCode == locale!.languageCode &&
+              supportedLocaleLanguage.countryCode == locale.countryCode) {
+            return supportedLocaleLanguage;
+          }
+        }
+        return supportedLocales.first;
+      },
     );
   }
 }

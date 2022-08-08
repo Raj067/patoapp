@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/main.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApplicationSettings extends StatefulWidget {
   const ApplicationSettings({Key? key}) : super(key: key);
@@ -62,6 +64,18 @@ class _ApplicationSettingsState extends State<ApplicationSettings> {
                 ),
               ],
             ),
+          ),
+
+          Text(AppLocalizations.of(context)!.helloWorld),
+          TextButton(
+            child: const Text("Set locale to English"),
+            onPressed: () =>
+                MyApp.of(context).setLocale(const Locale('en', '')),
+          ),
+          TextButton(
+            child: const Text("Set locale to Swahili"),
+            onPressed: () =>
+                MyApp.of(context).setLocale(const Locale('sw', '')),
           ),
           // const Divider(height: 0),
           // Padding(

@@ -29,7 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
   fl_chart: 0.51.0
   flutter_svg: 1.1.0
   flutter_launcher_icons: 0.9.3
@@ -99,6 +100,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true # Add this line
 
   # To add assets to your application, add an assets section, like this:
   assets:
