@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/backend/sync/sync_shedule.dart';
@@ -17,8 +18,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -36,6 +36,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     'EURO',
     'GBP',
   ];
+  Locale localeName = Locale(box.read('languageCode') ?? 'en', '');
   double usd = 1.0;
   double tzs = 2331.0;
   double euro = 0.9796;
@@ -69,18 +70,11 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     setState(() {});
   }
 
-  bool isCurrencyDashboard = false;
-
-  fetchPreference() async {
-    var prefs = await SharedPreferences.getInstance();
-    isCurrencyDashboard = prefs.getBool('isCurrencyDashboard') ?? false;
-    setState(() {});
-  }
+  bool isCurrencyDashboard = box.read('isCurrencyDashboard') ?? false;
 
   @override
   void initState() {
     super.initState();
-    fetchPreference();
     fetchShedule();
     fetchRates();
     refreshDataDB();
@@ -265,8 +259,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     ),
                   );
                 },
-                child: const Text(
-                  "View All Shedule",
+                child: Text(
+                  AppLocalizations.of(context)!.viewAllSchedule,
                 ),
               ),
             ),
@@ -370,7 +364,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 Column(
                   children: [
                     Text(
-                      "view",
+                      AppLocalizations.of(context)!.view,
                       style: TextStyle(
                         fontSize: 12,
                         color: sheduleColors[shedule.color],
@@ -518,20 +512,23 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  FaIcon(
+                children: [
+                  const FaIcon(
                     FontAwesomeIcons.angleLeft,
                     size: 18,
                     color: patowaveWhite,
                   ),
                   Text(
-                    "January",
-                    style: TextStyle(
+                    DateFormat(
+                      'MMMM',
+                      Intl.canonicalizedLocale(localeName.toString()),
+                    ).format(DateTime.now()),
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: patowaveWhite,
                     ),
                   ),
-                  FaIcon(
+                  const FaIcon(
                     FontAwesomeIcons.angleRight,
                     size: 18,
                     color: patowaveWhite,
@@ -541,19 +538,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               Container(
                 height: 15,
               ),
-              // DatePicker(
-              //   DateTime.now(),
-              //   initialSelectedDate: DateTime.now(),
-              //   selectionColor: Colors.black,
-              //   selectedTextColor: Colors.white,
-              //   onDateChange: (date) {
-              //     // New date selected
-              //     setState(() {
-              //       // _selectedValue = date;
-              //     });
-              //   },
-              // ),
-
               Row(
                 children: [
                   _singleDay(
@@ -614,9 +598,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          "Add Schedule",
+                          AppLocalizations.of(context)!.addSchedule,
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -740,7 +724,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    DateFormat('EEEE, d MMMM').format(DateTime.now()),
+                    DateFormat('EEEE, d MMMM',
+                            Intl.canonicalizedLocale(localeName.toString()))
+                        .format(DateTime.now()),
                     style: const TextStyle(
                       color: patowaveWhite,
                       fontSize: 12,
@@ -836,17 +822,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         // FaIcon(FontAwesomeIcons.house),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
                           child: FaIcon(FontAwesomeIcons.newspaper),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
-                          "Transaction",
-                          style: TextStyle(fontSize: 10),
+                          AppLocalizations.of(context)!.transactions,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ),
@@ -881,19 +867,19 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         // FaIcon(FontAwesomeIcons.idBadge),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
                           child: FaIcon(
                             FontAwesomeIcons.moneyBills,
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
-                          "Payments",
-                          style: TextStyle(fontSize: 10),
+                          AppLocalizations.of(context)!.payments,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ),
@@ -927,17 +913,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         // FaIcon(FontAwesomeIcons.boxArchive),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
                           child: FaIcon(FontAwesomeIcons.boxArchive),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
-                          "Products",
-                          style: TextStyle(fontSize: 10),
+                          AppLocalizations.of(context)!.products,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ),
@@ -971,17 +957,17 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         // FaIcon(FontAwesomeIcons.chartSimple),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundColor: patowavePrimary,
                           foregroundColor: patowaveWhite,
                           child: FaIcon(FontAwesomeIcons.chartSimple),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
-                          "Overview",
-                          style: TextStyle(fontSize: 10),
+                          AppLocalizations.of(context)!.overview,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ),

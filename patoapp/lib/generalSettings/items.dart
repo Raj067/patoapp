@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,19 +11,12 @@ class ItemsSettings extends StatefulWidget {
 }
 
 class _ItemsSettingsState extends State<ItemsSettings> {
-  bool isProductImage = false;
-  bool isProductBarcode = false;
-  fetchPreference() async {
-    var prefs = await SharedPreferences.getInstance();
-    isProductImage = prefs.getBool('isProductImage') ?? false;
-    isProductBarcode = prefs.getBool('isProductBarcode') ?? false;
-    setState(() {});
-  }
+  bool isProductImage = box.read('isProductImage') ?? false;
+  bool isProductBarcode = box.read('isProductBarcode') ?? false;
 
   @override
   void initState() {
     super.initState();
-    fetchPreference();
   }
 
   @override
@@ -56,10 +50,10 @@ class _ItemsSettingsState extends State<ItemsSettings> {
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
                   value: isProductImage,
-                  onChanged: (val) async {
-                    var prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('isProductImage', val);
-                    fetchPreference();
+                  onChanged: (val) {
+                    box.write('isProductImage', val);
+                    isProductImage = box.read('isProductImage') ?? false;
+                    setState(() {});
                   },
                 ),
               ],
@@ -76,10 +70,10 @@ class _ItemsSettingsState extends State<ItemsSettings> {
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
                   value: isProductBarcode,
-                  onChanged: (val) async {
-                    var prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('isProductBarcode', val);
-                    fetchPreference();
+                  onChanged: (val) {
+                    box.write('isProductBarcode', val);
+                    isProductBarcode = box.read('isProductBarcode') ?? false;
+                    setState(() {});
                   },
                 ),
               ],

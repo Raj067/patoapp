@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/main.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,16 +13,10 @@ class ApplicationSettings extends StatefulWidget {
 }
 
 class _ApplicationSettingsState extends State<ApplicationSettings> {
-  bool isCurrencyDashboard = false;
-  fetchPreference() async {
-    var prefs = await SharedPreferences.getInstance();
-    isCurrencyDashboard = prefs.getBool('isCurrencyDashboard') ?? false;
-    setState(() {});
-  }
+  bool isCurrencyDashboard = box.read('isCurrencyDashboard') ?? false;
 
   @override
   void initState() {
-    fetchPreference();
     super.initState();
   }
 
@@ -56,10 +51,11 @@ class _ApplicationSettingsState extends State<ApplicationSettings> {
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
                   value: isCurrencyDashboard,
-                  onChanged: (val) async {
-                    var prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('isCurrencyDashboard', val);
-                    fetchPreference();
+                  onChanged: (val) {
+                    box.write('isCurrencyDashboard', val);
+                    isCurrencyDashboard =
+                        box.read('isCurrencyDashboard') ?? false;
+                    setState(() {});
                   },
                 ),
               ],

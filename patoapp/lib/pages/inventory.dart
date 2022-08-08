@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/backend/sync/sync_products.dart';
@@ -81,21 +82,14 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
   }
 
   // For Preferences
-  bool isProductImage = false;
-  bool isProductBarcode = false;
-  fetchPreference() async {
-    var prefs = await SharedPreferences.getInstance();
-    isProductImage = prefs.getBool('isProductImage') ?? false;
-    isProductBarcode = prefs.getBool('isProductBarcode') ?? false;
-    setState(() {});
-  }
+  bool isProductImage = box.read('isProductImage') ?? false;
+  bool isProductBarcode = box.read('isProductBarcode') ?? false;
 
   @override
   void initState() {
     super.initState();
     fetchProductsDB();
     refreshDataDB();
-    fetchPreference();
   }
 
   @override

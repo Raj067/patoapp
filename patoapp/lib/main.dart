@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
@@ -39,6 +40,9 @@ void main() {
       String? shopName = await storage.read(key: 'shopName');
       bool isLogin = accessToken == null ? false : true;
       bool isShopProfile = shopName == null ? false : true;
+      print(box.read('languageCode'));
+      print('============================================================');
+
       await DBHelperShedule.initDb();
       await DBHelperCustomer.initDb();
       await DBHelperBusiness.initDb();
@@ -86,26 +90,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale;
+  Locale _locale = Locale(box.read('languageCode') ?? 'en', '');
 
-  void setLocale(Locale value) async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString('languageCode', value.languageCode);
+  void setLocale(Locale value) {
+    box.write('languageCode', value.languageCode);
     setState(() {
       _locale = value;
     });
   }
 
-  _fetchLocale() async {
-    var prefs = await SharedPreferences.getInstance();
-    String languageCode = prefs.getString('languageCode') ?? 'en';
-    _locale = Locale(languageCode, '');
-    setState(() {});
-  }
-
   @override
   void initState() {
-    _fetchLocale();
+    _locale = Locale(box.read('languageCode') ?? 'en', '');
     super.initState();
   }
 

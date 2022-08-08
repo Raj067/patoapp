@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,21 +11,12 @@ class ReminderDialog extends StatefulWidget {
 }
 
 class _ReminderDialogState extends State<ReminderDialog> {
-  bool selfPaymentReminder = false;
-
-  bool automaticReminder = false;
-
-  fetchPreference() async {
-    var prefs = await SharedPreferences.getInstance();
-    selfPaymentReminder = prefs.getBool('selfPaymentReminder') ?? true;
-    automaticReminder = prefs.getBool('automaticReminder') ?? true;
-    setState(() {});
-  }
+  bool selfPaymentReminder = box.read('selfPaymentReminder') ?? false;
+  bool automaticReminder = box.read('automaticReminder') ?? false;
 
   @override
   void initState() {
     super.initState();
-    fetchPreference();
   }
 
   @override
@@ -58,10 +50,11 @@ class _ReminderDialogState extends State<ReminderDialog> {
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
                   value: selfPaymentReminder,
-                  onChanged: (val) async {
-                    var prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('selfPaymentReminder', val);
-                    fetchPreference();
+                  onChanged: (val) {
+                    box.write('selfPaymentReminder', val);
+                    selfPaymentReminder =
+                        box.read('selfPaymentReminder') ?? false;
+                    setState(() {});
                   },
                 ),
               ],
@@ -78,10 +71,10 @@ class _ReminderDialogState extends State<ReminderDialog> {
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
                   value: automaticReminder,
-                  onChanged: (val) async {
-                    var prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('automaticReminder', val);
-                    fetchPreference();
+                  onChanged: (val) {
+                    box.write('automaticReminder', val);
+                    automaticReminder = box.read('automaticReminder') ?? false;
+                    setState(() {});
                   },
                 ),
               ],

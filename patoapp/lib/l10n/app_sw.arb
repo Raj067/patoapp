@@ -1,3 +1,14 @@
 {
-    "helloWorld": "Hujambo"
+    "helloWorld": "Hujambo",
+
+    "transactions":"Miamala",
+    "transaction":"Muamala",
+    "payments":"Malipo",
+    "products":"Orodha",
+    "overview":"Muhtasari",
+    "addSchedule":"Ongeza Ratiba",
+    "upcomingSchedule":"Ratiba zinazofuata",
+    "view":"view",
+    "viewAllSchedule":"Ratiba Zote",
+    "schedules":"Ratiba"
 }
