@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/backend/models/shedules.dart';
-import 'package:patoapp/shedule/sample.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class SingleShedule extends StatefulWidget {
@@ -30,7 +29,7 @@ class _SingleSheduleState extends State<SingleShedule> {
         backgroundColor: patowavePrimary,
         centerTitle: true,
         title: Text(
-          DateFormat('MMMM').format(eventDay),
+          "${DateFormat('MMMM').format(eventDay)} ${DateFormat('yyy').format(eventDay)}",
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: patowaveWhite,
@@ -144,6 +143,91 @@ class _SingleSheduleState extends State<SingleShedule> {
                             ),
                           ),
                         ),
+                        Container(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: sheduleColors[widget.shedule.color]
+                                    .withAlpha(50),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.repeat,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      " Repeat: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            sheduleColors[widget.shedule.color],
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.shedule.repeat,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color:
+                                            sheduleColors[widget.shedule.color],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: sheduleColors[widget.shedule.color]
+                                    .withAlpha(50),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.alarm_on,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      " Remind: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            sheduleColors[widget.shedule.color],
+                                      ),
+                                    ),
+                                    Text(
+                                      "${widget.shedule.remind} minutes early",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color:
+                                            sheduleColors[widget.shedule.color],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
                         // const Divider(),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -155,20 +239,6 @@ class _SingleSheduleState extends State<SingleShedule> {
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    child: const Text('hello'),
-                    onPressed: () async {
-                      // MyHomePage1
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const MyHomePage1(title: "hello"),
-                          fullscreenDialog: true,
-                        ),
-                      );
-                    },
-                  ),
                 ],
               ),
             ),
@@ -176,6 +246,32 @@ class _SingleSheduleState extends State<SingleShedule> {
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        // MaterialStateProperty<Color?>? backgroundColor,
+                        backgroundColor:
+                            MaterialStateProperty.all(patowaveErrorRed),
+                        minimumSize: MaterialStateProperty.all(
+                          const Size(45, 45),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        _sheduleCompleted(context);
+                      },
+                      child: const Text(
+                        "Cancel",
+                      ),
+                    ),
+                  ),
+                  Container(width: 10),
                   Expanded(
                     child: ElevatedButton(
                       style: ButtonStyle(
@@ -195,7 +291,7 @@ class _SingleSheduleState extends State<SingleShedule> {
                         _sheduleCompleted(context);
                       },
                       child: const Text(
-                        "Shedule Completed",
+                        "Completed",
                       ),
                     ),
                   ),

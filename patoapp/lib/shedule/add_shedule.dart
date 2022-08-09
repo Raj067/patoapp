@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,10 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_shedule.dart';
-import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/themes/light_theme.dart';
+
+// ignore: depend_on_referenced_packages
+import 'package:timezone/timezone.dart' as tz;
 
 class AddSheduleNew extends StatefulWidget {
   final Function fetchShedule;
@@ -28,10 +30,39 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
   TextEditingController startTime = TextEditingController();
   TextEditingController endTime = TextEditingController();
   int remindSelected = 0;
-  String repeatSelected = 'None';
+  String repeatSelected = 'Once';
   List<int> remind = [0, 5, 10, 15, 30];
-  List<String> repeat = ['None', 'Daily', 'Weekly', 'Monthly'];
+  List<String> repeat = ['Once', 'Daily', 'Weekly'];
   int selectedColor = 0;
+
+  FlutterLocalNotificationsPlugin? flutterNotificationPlugin;
+  Future onSelectNotification(String payload) async {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Hello Everyone"),
+        content: Text(payload),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/launcher_icon');
+
+    var initializationSettingsIOS = const IOSInitializationSettings();
+
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+
+    flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
+
+    flutterNotificationPlugin!.initialize(initializationSettings,
+        onSelectNotification: (val) => onSelectNotification);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -395,7 +426,7 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (addSheduleFormKey.currentState!.validate()) {
-                    _reSetAllShedule();
+                    // _reSetAllShedule();
                     _submitShedule(context);
                   }
                 },
@@ -410,12 +441,97 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
     );
   }
 
-  _reSetAllShedule() async {
-    List<Map<String, dynamic>> shedules = await DBHelperShedule.query();
-    for (var e in shedules) {
-      fromJsonShedule(e);
-    }
+  Future notificationDefaultSound({
+    required int id,
+    required String title,
+    required String description,
+  }) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      "$id",
+      'Shedule',
+      channelDescription: 'Description',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
+
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    flutterNotificationPlugin?.show(
+        id, title, description, platformChannelSpecifics,
+        payload: 'Default Sound');
   }
+
+  Future<void> _scheduledNotification({
+    required int id,
+    required String title,
+    required String description,
+  }) async {
+    DateTime recent = DateTime.parse("${sheduleDate.text} ${startTime.text}");
+    // tz.;
+    final scheduledDate = tz.TZDateTime(
+        tz.getLocation('Africa/Nairobi'),
+        recent.year,
+        recent.month,
+        recent.day,
+        recent.hour,
+        recent.minute - remindSelected,
+        recent.second);
+    await flutterNotificationPlugin?.zonedSchedule(
+      id,
+      title,
+      description,
+      scheduledDate,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'daily notification channel id',
+          'daily notification channel name',
+          channelDescription: 'daily notification description',
+        ),
+      ),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: repeatSelected.toLowerCase() == 'once'
+          ? null
+          : repeatSelected.toLowerCase() == 'daily'
+              ? DateTimeComponents.time
+              : DateTimeComponents.dayOfWeekAndTime,
+    );
+  }
+
+  // Future<void> _deleteNotificationChannel() async {
+  //   const String channelId = 'your channel id 2';
+  //   await flutterNotificationPlugin
+  //       ?.resolvePlatformSpecificImplementation<
+  //           AndroidFlutterLocalNotificationsPlugin>()
+  //       ?.deleteNotificationChannel(channelId);
+
+  //   await showDialog<void>(
+  //     context: context,
+  //     builder: (BuildContext context) => AlertDialog(
+  //       content: const Text('Channel with id $channelId deleted'),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // _reSetAllShedule() async {
+  //   List<Map<String, dynamic>> shedules = await DBHelperShedule.query();
+  //   for (var e in shedules) {
+  //     fromJsonShedule(e);
+  //   }
+  // }
 
   _submitShedule(BuildContext context) async {
     showPleaseWait(
@@ -439,6 +555,18 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
         }),
       );
       if (response.statusCode == 201) {
+        // Setting shedule
+        // if time is not future, hence pass
+        try {
+          _scheduledNotification(
+              id: jsonDecode(response.body)['id'],
+              title: myTitle.text,
+              description: description.text);
+        } catch (e) {
+          //
+        }
+
+        // end of making shedule
         await widget.fetchShedule();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

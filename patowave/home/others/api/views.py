@@ -114,7 +114,7 @@ def add_shedule(request):
             remind=request.data.get('remind'),
         )
         shedule.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={"id": shedule.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # ==================For Profile=============
