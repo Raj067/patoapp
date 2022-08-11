@@ -77,6 +77,9 @@ api_urls = [
          name='all_invoices_api'),
     path('api/delete-invoices/', delete_invoice_api,
          name='delete_invoice_api'),
+    path('api/edit-invoice/', edit_invoice_api,
+         name='edit_invoice_api'),
+
     # Shedule
     path('api/shedule-details/', shedule_details,
          name='shedule_details'),

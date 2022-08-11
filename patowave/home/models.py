@@ -298,6 +298,9 @@ class Feedback(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.TextField()
+    name = models.CharField(max_length=500)
+    phone_number = models.CharField(max_length=50)
+    business_name = models.CharField(max_length=500)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

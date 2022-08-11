@@ -193,48 +193,50 @@ class _SetAccountPageState extends State<SetAccountPage> {
     );
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/setting-account/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'businessName': businessName.text,
-        'businessEmail': businessEmail.text,
-        'businessAddress': businessAddress.text,
-        'instagramName': instagramName.text,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      await storage.write(key: "shopName", value: businessName.text);
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
-          (Route<dynamic> route) => false);
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute<void>(
-      //     builder: (BuildContext context) => const HomePage(),
-      //   ),
-      // );
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/setting-account/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'businessName': businessName.text,
+          'businessEmail': businessEmail.text,
+          'businessAddress': businessAddress.text,
+          'instagramName': instagramName.text,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        await storage.write(
+            key: "activeShop", value: "${jsonDecode(response.body)['id']}");
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        await storage.write(key: "shopName", value: businessName.text);
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (Route<dynamic> route) => false);
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => const HomePage(),
+          ),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),
       );
     }
-
   }
 }

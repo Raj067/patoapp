@@ -1,40 +1,39 @@
-import 'dart:convert';
-import 'dart:math';
-import 'package:dropdown_button2/dropdown_button2.dart';
+// import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:patoapp/animations/error.dart';
-import 'package:patoapp/animations/please_wait.dart';
-import 'package:patoapp/animations/time_out.dart';
+// import 'package:patoapp/animations/error.dart';
+// import 'package:patoapp/animations/please_wait.dart';
+// import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
-import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
-class CreateNewInvoice extends StatefulWidget {
+class EditInvoice extends StatefulWidget {
   final Function resetData;
-  const CreateNewInvoice({Key? key, required this.resetData}) : super(key: key);
+  final SingleInvoice invoice;
+  const EditInvoice({
+    Key? key,
+    required this.resetData,
+    required this.invoice,
+  }) : super(key: key);
 
   @override
-  State<CreateNewInvoice> createState() => _CreateNewInvoiceState();
+  State<EditInvoice> createState() => _EditInvoiceState();
 }
 
-class _CreateNewInvoiceState extends State<CreateNewInvoice> {
-  int invoiceNo = Random().nextInt(10000);
+class _EditInvoiceState extends State<EditInvoice> {
+  String invoiceNo = '';
   double totalAmount = 0;
   double discountAmount = 0;
   double receivedAmount = 0;
-  String? selectedCustmer;
-  String? selectedProductValueSales;
-  bool isLoading = false;
-  String selectedUnit = "Items";
 
   List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
@@ -82,9 +81,32 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
   @override
   void initState() {
-    super.initState();
     fetchData();
     fetchCustomersDB();
+    // initialize data
+
+    for (var e in widget.invoice.items) {
+      _addItemsToSale(
+        SingleProduct(
+          shopId: 0,
+          isService: false,
+          quantity: e['quantity'],
+          productUnit: e['product_unit'],
+          productName: e['product'],
+          id: e['id'],
+          sellingPrice: e['price'],
+          purchasesPrice: 0,
+        ),
+      );
+    }
+    dueDate.text =
+        DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.invoice.dueDate));
+    discountAmount = widget.invoice.discount.toDouble();
+    receivedAmount = widget.invoice.amountReceived.toDouble();
+    invoiceNo = widget.invoice.invoiceNo;
+    customerController.text = widget.invoice.fullName;
+    setState(() {});
+    super.initState();
   }
 
   fetchData() async {
@@ -96,7 +118,17 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     List<SingleProduct> finalData = [];
     for (Map<String, dynamic> e in products) {
       if (e['shopId'] == shopId) {
-        finalData.add(fromJsonProduct(e));
+        SingleProduct req = fromJsonProduct(e);
+        //  start --------------
+        for (var e in widget.invoice.items) {
+          // increment the quantity of the
+          // products to the available quantity
+          if (req.id != e['id']) {
+            req.quantity = req.quantity + e['quantity'] as int;
+          }
+        }
+        // end ---------------------
+        finalData.add(req);
       }
     }
     allProducts = finalData;
@@ -108,7 +140,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Create Invoice',
+          'Edit Invoice',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -178,11 +210,11 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 ),
                 onPressed: () {
                   if (invoiceFormKey.currentState!.validate()) {
-                    _submitSalesCustomerData();
+                    // _submitSalesCustomerData();
                   }
                 },
                 child: const Text(
-                  "Save Invoice",
+                  "Edit Invoice",
                   style: TextStyle(color: patowaveWhite),
                 ),
               ),
@@ -202,6 +234,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           children: [
             Container(height: 15),
             TextFormField(
+              initialValue: "${receivedAmount.toInt()}",
               cursorColor: patowavePrimary,
               keyboardType: TextInputType.number,
               inputFormatters: [
@@ -232,122 +265,25 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
               ),
             ),
             Container(height: 15),
-            DropdownButtonFormField2(
-                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                scrollbarAlwaysShow: true,
-                dropdownMaxHeight: 200,
-                validator: (value) {
-                  if (value == null || value == "" || selectedCustmer == '') {
-                    return 'This field is required';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  label: const Text(
-                    'Select Customer*',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+            Container(
+              decoration: BoxDecoration(
+                color: patowaveBlack.withAlpha(30),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                child: Text(
+                  widget.invoice.fullName,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
                   ),
                 ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                ),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                items: customData
-                    .map((item) => DropdownMenuItem<String>(
-                          value: "${item.id}",
-                          child: Text(
-                            item.fullName,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  //Do something when changing the item if you want.
-                  setState(() {
-                    selectedCustmer = value.toString();
-                  });
-                },
-                onSaved: (value) {
-                  selectedCustmer = value.toString();
-                },
-                searchController: customerController,
-                searchInnerWidget: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 4,
-                    right: 8,
-                    left: 8,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          cursorColor: patowavePrimary,
-                          controller: customerController,
-                          decoration: const InputDecoration(
-                            isDense: true,
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText: 'Search for customer...',
-                            hintStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(15),
-                                bottomRight: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  AddNewCustomerTransaction(refreshData: () {}),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                        },
-                        child: const Text("add"),
-                      )
-                    ],
-                  ),
-                ),
-                searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
-                },
-                //This to clear the search value when you close the menu
-                onMenuStateChange: (isOpen) {
-                  if (!isOpen) {
-                    customerController.clear();
-                  }
-                }),
+              ),
+            ),
             Container(height: 15),
             TextFormField(
               controller: dueDate,
@@ -776,67 +712,69 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     // allProducts
   }
 
-  _submitSalesCustomerData() async {
-    showPleaseWait(
-      context: context,
-      builder: (context) => const ModalFit(),
-    );
-    List<Map> items = [];
-    for (var element in addedItemsToSales) {
-      items.add({
-        "id": element.id,
-        "price": element.sellingPrice,
-        "quantity": element.quantity,
-        "description": invoiceDescription.text,
-      });
-    }
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-    String accessToken = await storage.read(key: 'access') ?? "";
-    try {
-      final response = await http.post(
-        Uri.parse('${baseUrl}api/create-invoice/'),
-        headers: getAuthHeaders(accessToken),
-        body: jsonEncode(<String, dynamic>{
-          'amount_received': receivedAmount.toInt(),
-          'total_amount': totalAmount.toInt() - discountAmount.toInt(),
-          'discount': discountAmount.toInt(),
-          'items': items,
-          'invoiceNo': invoiceNo,
-          'dueDate': dueDate.text,
-          'description': invoiceDescription.text == ''
-              ? 'Invoice'
-              : invoiceDescription.text,
-          'shopId': shopId,
-          "customer": int.parse(selectedCustmer ?? '1'),
-        }),
-      );
+  // _submitSalesCustomerData() async {
+  //   showPleaseWait(
+  //     context: context,
+  //     builder: (context) => const ModalFit(),
+  //   );
+  //   List<Map> items = [];
+  //   for (var element in addedItemsToSales) {
+  //     items.add({
+  //       "id": element.id,
+  //       "price": element.sellingPrice,
+  //       "quantity": element.quantity,
+  //       "description": invoiceDescription.text,
+  //     });
+  //   }
+  //   // shop ID
+  //   String? activeShop = await storage.read(key: 'activeShop');
+  //   int shopId = int.parse(activeShop ?? '0');
+  //   String accessToken = await storage.read(key: 'access') ?? "";
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('${baseUrl}api/edit-invoice/'),
+  //       headers: getAuthHeaders(accessToken),
+  //       body: jsonEncode(<String, dynamic>{
+  //         'amount_received': receivedAmount.toInt(),
+  //         'total_amount': totalAmount.toInt() - discountAmount.toInt(),
+  //         'discount': discountAmount.toInt(),
+  //         'items': widget.invoice.items,
+  //         'final_items': items,
+  //         'invoiceNo': invoiceNo,
+  //         'dueDate': dueDate.text,
+  //         'description': invoiceDescription.text == ''
+  //             ? 'Invoice'
+  //             : invoiceDescription.text,
+  //         'invoiceId': widget.invoice.id,
+  //         'shopId': shopId,
+  //       }),
+  //     );
 
-      if (response.statusCode == 201) {
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
-      } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        showErrorMessage(
-          context: context,
-          builder: (context) => const ModalFitError(),
-        );
-        // throw Exception('Failed to updated customer.');
-      }
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showTimeOutMessage(
-        context: context,
-        builder: (context) => const ModalFitTimeOut(),
-      );
-    }
-  }
+  //     if (response.statusCode == 201) {
+  //       widget.resetData();
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       // widget.resetData();
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       // Navigator
+  //     } else {
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       showErrorMessage(
+  //         context: context,
+  //         builder: (context) => const ModalFitError(),
+  //       );
+  //       // throw Exception('Failed to updated customer.');
+  //     }
+  //   } catch (e) {
+  //     // ignore: use_build_context_synchronously
+  //     Navigator.pop(context);
+  //     showTimeOutMessage(
+  //       context: context,
+  //       builder: (context) => const ModalFitTimeOut(),
+  //     );
+  //   }
+  // }
+
 }

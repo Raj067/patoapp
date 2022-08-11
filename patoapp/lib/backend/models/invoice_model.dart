@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class SingleInvoice {
   int amountReceived;
-    int totalAmount;
+  int totalAmount;
   int discount;
   List items;
   String invoiceNo;
@@ -33,7 +33,7 @@ class SingleInvoice {
       'customerId': customerId,
       'fullName': fullName,
       'amountReceived': amountReceived,
-      'totalAmount':totalAmount,
+      'totalAmount': totalAmount,
       'discount': discount,
       'dueDate': dueDate,
       'items': jsonEncode(items),

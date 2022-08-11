@@ -27,12 +27,19 @@ class _EditCustomerState extends State<EditCustomer> {
 
   // Controllers for form
   TextEditingController customerName = TextEditingController();
-
   TextEditingController phoneNumber = TextEditingController();
-
   TextEditingController address = TextEditingController(text: "");
-
   TextEditingController emailAddress = TextEditingController(text: "");
+
+  @override
+  void dispose() {
+    customerName.dispose();
+    phoneNumber.dispose();
+    address.dispose();
+    emailAddress.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();

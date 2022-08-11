@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
+// import 'dart:io';
 import 'dart:typed_data';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_downloader/image_downloader.dart';
+// import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
@@ -14,13 +12,14 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/invoices/edit_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdfx/pdfx.dart';
 import 'package:http/http.dart' as http;
 import 'package:printing/printing.dart';
-import 'package:path/path.dart' as pt;
+// import 'package:path/path.dart' as pt;
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
@@ -430,7 +429,17 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           onLayout: (p.PdfPageFormat format) async => await _generatePdf());
     }
     if (index == 1) {
-      print(widget.invoice.items);
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => EditInvoice(
+            invoice: widget.invoice,
+            resetData: () {},
+          ),
+          fullscreenDialog: true,
+        ),
+      );
     }
     if (index == 2) {
       // api/delete-invoices/
@@ -596,19 +605,15 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               ),
             ),
             onPressed: () async {
-              final bytes = await _generatePdf();
-              final dir = await getExternalStorageDirectory();
-              String myPath =
-                  pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-              myPath = '$myPath/PatoWave/invoice';
-              Directory('$myPath/').create();
-              final file = File('$myPath/invoice.pdf');
-              await file.writeAsBytes(bytes);
-              // var imageId = await ImageDownloader.downloadImage(url);
-              // var imageId = await ImageDownloader.downloadImage(dir.path);
-              // var path = await ImageDownloader.findPath(imageId!);
-              // ImageDownloader. ;
-              await ImageDownloader.open(file.path);
+              // final bytes = await _generatePdf();
+              // final dir = await getExternalStorageDirectory();
+              // String myPath =
+              //     pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+              // myPath = '$myPath/PatoWave/invoice';
+              // Directory('$myPath/').create();
+              // final file = File('$myPath/invoice.pdf');
+              // await file.writeAsBytes(bytes);
+              // await ImageDownloader.open(file.path);
             },
             child: const Text(
               "Pay Now",

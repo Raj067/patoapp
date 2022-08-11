@@ -31,6 +31,12 @@ class SingleCustomerPage extends StatefulWidget {
 class _SingleCustomerPageState extends State<SingleCustomerPage> {
   TextEditingController dateInput = TextEditingController();
   @override
+  void dispose() {
+    dateInput.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

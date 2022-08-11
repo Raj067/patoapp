@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 import datetime
+import random
 
 
 @api_view(['GET', 'POST'])
@@ -51,7 +52,7 @@ def setting_account_api(request):
             user=request.user,
         )
         shop_user.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'id': shop.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -207,6 +208,7 @@ def add_new_customer_api(request):
                 is_payment_in=request.data.get("toReceive"),
                 description="Opening Balance",
                 amount=request.data.get("openingBalance"),
+                receipt_no=str(random.randint(1000, 99999)),
             )
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -253,6 +255,62 @@ def all_invoices_api(request):
 
 
 @api_view(['POST'])
+def edit_invoice_api(request):
+    if request.method == "POST":
+        # print(request.data)
+        invoice = Invoice.objects.get(id=request.data.get('invoiceId'))
+        invoice.amount_received = request.data.get('amount_received')
+        invoice.total_amount = request.data.get('total_amount')
+        invoice.discount = request.data.get('discount')
+        invoice.date_due = request.data.get('dueDate'),
+        invoice.invoice_no = str(request.data.get('invoiceNo'))
+        invoice.description = request.data.get('description')
+
+        # ---- Once Invoice is edited, the initial
+        # quantity is returned to inventory and
+        # the new ones are taken from inventory
+
+        # # 1st == Deleting the initials items and returning the
+        # quantity to the inventory
+        for dx in InvoiceSoldItem.objects.all():
+            if dx.invoice_data == invoice:
+                # Once transaction completed
+                # successfully, increasing the
+                # quantity of products in the inventory
+                try:
+                    prod = Product.objects.get(id=dx.product_id)
+                    prod.quantity = prod.quantity + dx.quantity
+                    prod.save()
+                except:
+                    pass
+                dx.delete()
+        # # 2nd  == adding new items to invoice
+        # and removing them from the inventory
+
+        for dx in request.data.get('final_items'):
+            invoice.sold_items.create(
+                shop=Shop.objects.get(id=request.data.get('shopId')),
+                product_name=Product.objects.get(
+                    id=dx['id']).product_name,
+                product_id=dx['id'],
+                price=Product.objects.get(
+                    id=dx['id']).selling_price_primary,
+                product_unit=Product.objects.get(id=dx['id']).primary_unit,
+                quantity=dx['quantity'],
+                invoice_data=invoice,
+            )
+            # Once transaction completed
+            # successfully, decreasing the quantity of products
+            # from the inventory
+            prod = Product.objects.get(id=dx['id'])
+            prod.quantity = prod.quantity - dx['quantity']
+            prod.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
 def create_invoice_api(request):
     if request.method == "POST":
         # print(request.data)
@@ -287,9 +345,9 @@ def create_invoice_api(request):
                 invoice_data=reg,
             )
             # Once transaction completed
-            # successfully, increasing the quantity of products
+            # successfully, decreasing the quantity of products
             prod = Product.objects.get(id=dx.get('id'))
-            prod.quantity = prod.quantity + dx.get('quantity')
+            prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
 
         return Response(status=status.HTTP_201_CREATED)
@@ -306,10 +364,10 @@ def delete_invoice_api(request):
         for dx in InvoiceSoldItem.objects.all():
             if dx.invoice_data == invoice:
                 # Once transaction completed
-                # successfully, decreasing the quantity of products
+                # successfully, increasing the quantity of products
                 try:
                     prod = Product.objects.get(id=dx.product_id)
-                    prod.quantity = prod.quantity - dx.quantity
+                    prod.quantity = prod.quantity + dx.quantity
                     prod.save()
                 except:
                     pass

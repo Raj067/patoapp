@@ -55,6 +55,16 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   }
 
   @override
+  void dispose() {
+    amountReceived.dispose();
+    amountPaid.dispose();
+    paymentInDesc.dispose();
+    paymentOutDesc.dispose();
+    userController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     fetchCustomersDB();

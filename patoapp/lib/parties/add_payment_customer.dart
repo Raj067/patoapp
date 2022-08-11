@@ -39,6 +39,14 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   TextEditingController amountPaid = TextEditingController();
   TextEditingController paymentInDesc = TextEditingController(text: "");
   TextEditingController paymentOutDesc = TextEditingController(text: "");
+  @override
+  void dispose() {
+    amountReceived.dispose();
+    amountPaid.dispose();
+    paymentInDesc.dispose();
+    paymentOutDesc.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -318,14 +326,12 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 const Text(
                   "Total Amount",
                   style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Tsh: $receivedAmount",
                   style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -422,14 +428,12 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                 const Text(
                   "Total Amount",
                   style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Tsh: $paidAmount",
                   style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -471,39 +475,39 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
     String accessToken = await storage.read(key: 'access') ?? "";
 
     try {
-          final response = await http.post(
-      Uri.parse('${baseUrl}api/adding-payment-customer/'),
-      headers: getAuthHeaders(accessToken),
-      body: jsonEncode(<String, dynamic>{
-        'amount': amount,
-        'description': description,
-        'isPaymentIn': isPaymentIn,
-        'id': id,
-        "receiptNo": receiptNo,
-        'shopId': shopId,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      await widget.refreshData();
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      // Refresh page
-      // Navigator
-    } else {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showErrorMessage(
-        context: context,
-        builder: (context) => const ModalFitError(),
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/adding-payment-customer/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount': amount,
+          'description': description,
+          'isPaymentIn': isPaymentIn,
+          'id': id,
+          "receiptNo": receiptNo,
+          'shopId': shopId,
+        }),
       );
-      // throw Exception('Failed to updated customer.');
-    }
+
+      if (response.statusCode == 201) {
+        await widget.refreshData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Refresh page
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
     } catch (e) {
-            // ignore: use_build_context_synchronously
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
       showTimeOutMessage(
         context: context,

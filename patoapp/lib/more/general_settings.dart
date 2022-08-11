@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patoapp/generalSettings/application.dart';
 import 'package:patoapp/generalSettings/items.dart';
+import 'package:patoapp/generalSettings/language.dart';
 import 'package:patoapp/generalSettings/transaction.dart';
 import 'package:patoapp/generalSettings/user_management.dart';
 import 'package:patoapp/more/reminders.dart';
@@ -64,6 +65,42 @@ class GeneralSettingsDialog extends StatelessWidget {
                       width: 10,
                     ),
                     const Text('Application'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const LanguageSettings(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.language,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: 10,
+                    ),
+                    const Text('Language'),
                   ],
                 ),
               ),

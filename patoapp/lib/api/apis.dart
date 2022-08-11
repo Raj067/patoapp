@@ -66,7 +66,6 @@ final List<String> serviceUnit = [
   "Per Day",
   "Per Week",
   "Per Month",
-  "Per Day",
   "Per Night",
   "Per Unit",
 ];

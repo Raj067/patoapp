@@ -39,6 +39,17 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   }
 
   @override
+  void dispose() {
+    customerName.dispose();
+    phoneNumber.dispose();
+    address.dispose();
+    emailAddress.dispose();
+    openingBalance.dispose();
+    dateInput.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     dateInput.text = DateFormat('yyyy-MM-dd')
         .format(DateTime.now()); //set the initial value of text field
