@@ -1,4 +1,4 @@
-package com.example.patoapp
+package com.patowave.patoapp
 
 import io.flutter.embedding.android.FlutterActivity
 
