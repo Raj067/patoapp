@@ -9,6 +9,7 @@ import 'package:patoapp/backend/sync/sync_products.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -236,10 +237,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
               child: TextFormField(
                 controller: searchController,
                 cursorColor: patowavePrimary,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                   border: InputBorder.none,
-                  hintText: 'Search item',
+                  hintText: AppLocalizations.of(context)!.searchItem,
                   prefixIcon: Icon(Icons.search),
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -466,7 +467,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                   width: 10,
                                 ),
                                 Text(
-                                  'Qty: ${product.quantity}',
+                                  '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontStyle: FontStyle.italic,
@@ -562,7 +563,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
           scrollable: true,
           contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
           // backgroundColor: patoBackgroundColor,
-          title: const Text('Add to cart'),
+          title: Text(AppLocalizations.of(context)!.addToCart),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -607,7 +608,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                         width: 10,
                                       ),
                                       Text(
-                                        'Qty: ${product.quantity}',
+                                        '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontStyle: FontStyle.italic,
@@ -658,9 +659,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                       .compareToCart(int.parse(controller.text))
                                   ? patowaveErrorRed
                                   : patowavePrimary),
-                          prefixIcon: const Padding(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
-                            child: Text("Qty:"),
+                            child:
+                                Text("${AppLocalizations.of(context)!.qty}:"),
                           ),
                           suffixIcon: const Icon(
                             Icons.add_shopping_cart_rounded,
@@ -692,7 +694,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                     ),
                   ),
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
               ),
               Container(width: 10),
@@ -721,8 +723,8 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                       }
                     });
                   },
-                  child: const Text(
-                    "Add",
+                  child: Text(
+                    AppLocalizations.of(context)!.add,
                     style: TextStyle(color: patowaveWhite),
                   ),
                 ),

@@ -14,6 +14,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
 import 'package:image_downloader/image_downloader.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:path/path.dart' as pt;
 
 class TransactionReceipt extends StatefulWidget {
@@ -96,8 +97,8 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Transaction Receipt',
+        title: Text(
+          AppLocalizations.of(context)!.transactionReceipt,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -149,18 +150,18 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
         onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.print),
-            label: 'Print',
+            label: AppLocalizations.of(context)!.print,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.download),
-            label: 'Download',
+            label: AppLocalizations.of(context)!.download,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.share),
-            label: 'Share',
+            label: AppLocalizations.of(context)!.share,
           ),
         ],
         selectedItemColor: Colors.white,

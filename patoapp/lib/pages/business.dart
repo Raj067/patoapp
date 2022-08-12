@@ -386,8 +386,8 @@ class _BusinessPageState extends State<BusinessPage> {
               padding: const EdgeInsets.all(20),
               child: Wrap(
                 children: [
-                  const Text(
-                    "Transaction Details:",
+                  Text(
+                    AppLocalizations.of(context)!.transactionDetails,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Container(height: 10),
@@ -430,8 +430,8 @@ class _BusinessPageState extends State<BusinessPage> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Items",
+                            Text(
+                              AppLocalizations.of(context)!.items,
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             ),
@@ -448,8 +448,8 @@ class _BusinessPageState extends State<BusinessPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Date",
+                          Text(
+                            AppLocalizations.of(context)!.date,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Container(height: 4),
@@ -460,7 +460,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         ],
                       ),
                       Text(
-                        "Time: ${DateFormat('hh:mm a').format(data.date)}",
+                        "${AppLocalizations.of(context)!.time}: ${DateFormat('hh:mm a').format(data.date)}",
                       ),
                     ],
                   ),
@@ -497,7 +497,8 @@ class _BusinessPageState extends State<BusinessPage> {
                               ),
                             ),
                           ),
-                          child: const Text("Delete"),
+                          child: Text(
+                              AppLocalizations.of(context)!.delete),
                         ),
                       ),
                       // Container(width: 10),
@@ -628,9 +629,9 @@ class _BusinessPageState extends State<BusinessPage> {
           padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Details"),
-              Text("Amount "),
+            children: [
+              Text(AppLocalizations.of(context)!.details),
+              Text(AppLocalizations.of(context)!.amount),
             ],
           ),
         ),

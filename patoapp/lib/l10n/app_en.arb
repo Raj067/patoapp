@@ -51,5 +51,20 @@
     "purchasesReports":"Purchases Reports",
     "inventoryReports":"Inventory Reports",
     "inventorySummary":"Inventory Summary",
-    "allTransactions":"All Transactions"
+    "allTransactions":"All Transactions",
+    "transactionDetails":"Transaction Details",
+    "items":"Items",
+    "date":"Date",
+    "time":"Time",
+    "transactionReceipt":"Transaction Receipt",
+    "details":"Details",
+    "amount":"Amount",
+    "print":"Print",
+    "download":"Download",
+    "share":"Share",
+    "delete":"Delete",
+    "add":"Add",
+    "cancel":"Cancel",
+    "save":"Save",
+    "addToCart":"Add To Cart"
 }
