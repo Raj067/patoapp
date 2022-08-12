@@ -5,6 +5,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpensesReports extends StatefulWidget {
   const ExpensesReports({Key? key}) : super(key: key);
@@ -58,8 +59,8 @@ class _ExpensesReportsState extends State<ExpensesReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Expenses Report',
+        title: Text(
+          AppLocalizations.of(context)!.expensesReports,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

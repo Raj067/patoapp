@@ -5,6 +5,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InventoryReports extends StatefulWidget {
   const InventoryReports({Key? key}) : super(key: key);
@@ -80,8 +81,7 @@ class _InventoryReportsState extends State<InventoryReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Inventory report',
+        title: Text(AppLocalizations.of(context)!.inventoryReports,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

@@ -6,6 +6,7 @@ import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfitLossReports extends StatefulWidget {
   const ProfitLossReports({Key? key}) : super(key: key);
@@ -58,8 +59,8 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Profit and Loss',
+        title: Text(
+          AppLocalizations.of(context)!.profitAndLoss,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

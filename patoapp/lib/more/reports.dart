@@ -10,6 +10,7 @@ import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/reports/purchases_reports.dart';
 import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainReportsPage extends StatelessWidget {
   const MainReportsPage({Key? key}) : super(key: key);
@@ -60,8 +61,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Profit and Loss'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.profitAndLoss),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -121,8 +122,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Cashflow'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.cashflow),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -151,8 +152,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Balance sheet'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.balanceSheet),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -181,8 +182,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Daybook'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.dayBook),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -211,8 +212,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Expenses Reports'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.expensesReports),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -241,8 +242,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Sales Reports'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.salesReports),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -271,8 +272,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Purchases Reports'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.purchasesReports),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -301,8 +302,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Inventory Reports'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.inventoryReports),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -331,8 +332,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Inventory Summary'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.inventorySummary),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
@@ -362,8 +363,8 @@ class MainReportsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('All Transactions'),
+                  children: [
+                    Text(AppLocalizations.of(context)!.allTransactions),
                     Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),

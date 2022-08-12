@@ -63,7 +63,7 @@ dependencies:
   # image_gallery_saver: "^1.7.1"
   # syncfusion_flutter_pdfviewer: 20.2.40-beta
   cupertino_icons: ^1.0.2
-  flutter_native_timezone:
+  # flutter_native_timezone:
   rxdart:
   # device_info: 2.0.3
   url_launcher: ^6.1.5

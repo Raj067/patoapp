@@ -6,6 +6,7 @@ import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CashFlowReports extends StatefulWidget {
   const CashFlowReports({Key? key}) : super(key: key);
@@ -58,8 +59,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cashflow',
+        title: Text(AppLocalizations.of(context)!.cashflow,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

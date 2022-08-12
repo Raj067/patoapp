@@ -3,6 +3,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InventorySummary extends StatefulWidget {
   const InventorySummary({Key? key}) : super(key: key);
@@ -41,8 +42,7 @@ class _InventorySummaryState extends State<InventorySummary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Inventory Summary',
+        title: Text(AppLocalizations.of(context)!.inventorySummary,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

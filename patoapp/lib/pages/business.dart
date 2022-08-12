@@ -16,6 +16,7 @@ import 'package:patoapp/business/add_transaction.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({
@@ -167,7 +168,7 @@ class _BusinessPageState extends State<BusinessPage> {
           );
         },
         // icon: const Icon(Icons.add),
-        label: const Text('Add Transaction'),
+        label: Text(AppLocalizations.of(context)!.addTransaction),
       ),
     );
   }
@@ -254,8 +255,8 @@ class _BusinessPageState extends State<BusinessPage> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text(
-                            "Sales",
+                          Text(
+                            AppLocalizations.of(context)!.sales,
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
@@ -282,8 +283,8 @@ class _BusinessPageState extends State<BusinessPage> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text(
-                            "Expenses",
+                          Text(
+                            AppLocalizations.of(context)!.expenses,
                             style: TextStyle(fontSize: 18),
                           ),
                           Text(
@@ -307,7 +308,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Profit"),
+                    Text(AppLocalizations.of(context)!.profit),
                     Text(
                       "Tsh ${dropdownValue == 'This Week' ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
                       style: const TextStyle(color: patowaveGreen),
@@ -339,8 +340,8 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           const Icon(Icons.file_copy, color: patowaveBlue),
                           Container(width: 10),
-                          const Text(
-                            "Financial Reports",
+                          Text(
+                            AppLocalizations.of(context)!.financialReports,
                             style: TextStyle(color: patowaveBlue),
                           ),
                         ],

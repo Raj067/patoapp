@@ -8,6 +8,7 @@ import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BalanceSheet extends StatefulWidget {
   const BalanceSheet({Key? key}) : super(key: key);
@@ -77,8 +78,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Balancesheet',
+        title: Text(AppLocalizations.of(context)!.balanceSheet,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
