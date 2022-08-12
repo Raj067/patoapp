@@ -8,6 +8,7 @@ import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainInvoicePage extends StatefulWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
@@ -58,9 +59,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Invoices',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.invoices,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -118,9 +119,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                     ),
                   );
                 },
-                child: const Text(
-                  "Create New Invoice",
-                  style: TextStyle(color: patowaveWhite),
+                child: Text(
+                  AppLocalizations.of(context)!.createNewInvoice,
+                  style: const TextStyle(color: patowaveWhite),
                 ),
               ),
             ),
@@ -180,7 +181,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                         ),
                       ),
                       Text(
-                        "Invoice #${dx.invoiceNo}",
+                        "${AppLocalizations.of(context)!.invoices} #${dx.invoiceNo}",
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -209,7 +210,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      isOutStanding ? 'Outstanding' : 'Overdue',
+                      isOutStanding
+                          ? AppLocalizations.of(context)!.outstanding
+                          : AppLocalizations.of(context)!.overdue,
                       style: TextStyle(
                         color:
                             isOutStanding ? patowaveWarning : patowaveErrorRed,
@@ -307,7 +310,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Text(
-                  "Total unpaid invoice Tsh ${formatter.format(totalUnpaidInvoice)}"),
+                  "${AppLocalizations.of(context)!.totalUnpaidInvoice} Tsh ${formatter.format(totalUnpaidInvoice)}"),
             ),
             LinearPercentIndicator(
               percent: outstanding / (outstanding + overdue),
@@ -339,9 +342,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Column(
                         children: [
-                          const Text(
-                            "Outstanding",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.outstanding,
+                            style: const TextStyle(
                               fontSize: 16,
                               color: patowaveWarning,
                               fontWeight: FontWeight.w300,
@@ -361,9 +364,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Column(
                         children: [
-                          const Text(
-                            "Overdue",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.overdue,
+                            style: const TextStyle(
                               fontSize: 16,
                               color: patowaveErrorRed,
                               fontWeight: FontWeight.w300,

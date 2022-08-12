@@ -66,5 +66,11 @@
     "add":"Add",
     "cancel":"Cancel",
     "save":"Save",
-    "addToCart":"Add To Cart"
+    "addToCart":"Add To Cart",
+    "edit":"Edit",
+    "outstanding":"Outstanding",
+    "overdue":"Overdue",
+    "createNewInvoice":"Create New Invoice",
+    "totalUnpaidInvoice": "Total unpaid invoice",
+    "closed":"Closed"
 }

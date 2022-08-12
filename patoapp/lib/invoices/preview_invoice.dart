@@ -20,6 +20,7 @@ import 'package:pdfx/pdfx.dart';
 import 'package:http/http.dart' as http;
 import 'package:printing/printing.dart';
 // import 'package:path/path.dart' as pt;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
@@ -548,22 +549,22 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
       // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.print),
-            label: 'Print',
+            label: AppLocalizations.of(context)!.print,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.edit),
-            label: 'Edit',
+            label: AppLocalizations.of(context)!.edit,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.delete),
-            label: 'Delete',
+            label: AppLocalizations.of(context)!.delete,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.share),
-            label: 'Share',
+            label: AppLocalizations.of(context)!.share,
           ),
         ],
         selectedItemColor: Colors.white,
