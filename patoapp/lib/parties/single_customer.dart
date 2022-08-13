@@ -12,6 +12,7 @@ import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SingleCustomerPage extends StatefulWidget {
   final String? restorationId;
@@ -178,9 +179,9 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      'Send Payment Reminder',
+                      AppLocalizations.of(context)!.sendPaymentReminder,
                       style: TextStyle(),
                     ),
                     Icon(
@@ -216,7 +217,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Reminder Automation'),
+                        Text(AppLocalizations.of(context)!.reminderAoutomation),
                         Switch(
                           activeColor: patowavePrimary,
                           value: true,
@@ -248,10 +249,10 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Note"),
+                        Text(AppLocalizations.of(context)!.note),
                         Container(),
-                        const Text("Received"),
-                        const Text("Paid"),
+                        Text(AppLocalizations.of(context)!.received),
+                        Text(AppLocalizations.of(context)!.paid),
                       ],
                     ),
                   ),
@@ -296,8 +297,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   ),
                 );
               },
-              child: const Text(
-                "Payment Out",
+              child: Text(
+                AppLocalizations.of(context)!.paymentOut,
               ),
             ),
           ),
@@ -332,8 +333,8 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   ),
                 );
               },
-              child: const Text(
-                "Payment In",
+              child: Text(
+                AppLocalizations.of(context)!.paymentIn,
               ),
             ),
           ),
@@ -547,9 +548,9 @@ Powered by Patowave""";
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Debt Balance"),
+                            Text(AppLocalizations.of(context)!.debtBalance),
                             Text(
-                              "To ${customer.isToReceive() ? "receive" : "give"}",
+                              "${customer.isToReceive() ? AppLocalizations.of(context)!.toReceive : AppLocalizations.of(context)!.toGive}",
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
@@ -606,11 +607,12 @@ Powered by Patowave""";
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Set payment date"),
+                              Text(
+                                  AppLocalizations.of(context)!.setPaymentDate),
                               Row(
                                 children: [
-                                  const Text(
-                                    "Due date",
+                                  Text(
+                                    AppLocalizations.of(context)!.dueDate,
                                     style: TextStyle(
                                       fontSize: 12,
                                     ),

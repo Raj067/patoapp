@@ -63,7 +63,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.profitAndLoss),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -124,7 +124,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.cashflow),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -154,7 +154,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.balanceSheet),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -184,7 +184,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.dayBook),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -214,7 +214,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.expensesReports),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -244,7 +244,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.salesReports),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -274,7 +274,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.purchasesReports),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -304,7 +304,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.inventoryReports),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -334,7 +334,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.inventorySummary),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),
@@ -365,7 +365,7 @@ class MainReportsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(AppLocalizations.of(context)!.allTransactions),
-                    Icon(Icons.arrow_forward_ios, size: 14),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
                   ],
                 ),
               ),

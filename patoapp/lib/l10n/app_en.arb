@@ -72,5 +72,18 @@
     "overdue":"Overdue",
     "createNewInvoice":"Create New Invoice",
     "totalUnpaidInvoice": "Total unpaid invoice",
-    "closed":"Closed"
+    "closed":"Closed",
+    "debtBalance":"Debt Balance",
+    "toGive":"To Give",
+    "toReceive":"To Receive",
+    "setPaymentDate":"Set payment date",
+    "dueDate":"Due date",
+    "sendPaymentReminder":"Send Payment Reminder",
+    "reminderAoutomation":"Reminder Automation",
+    "note":"Note",
+    "received":"Received",
+    "paid":"Paid",
+    "paymentIn":"Payment In",
+    "paymentOut":"Payment Out",
+    "addCustomer":"Add Customer"
 }
