@@ -90,10 +90,15 @@ class _SignupPageState extends State<SignupPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
+                          } else if (!value.startsWith('0')) {
+                            return 'Phone number should start with 0';
+                          } else if (value.length != 10) {
+                            return 'Invalid phone number';
                           }
                           return null;
                         },
                         decoration: const InputDecoration(
+                          icon: Text('+255'),
                           label: Text(
                             "Phone Number",
                             style: TextStyle(

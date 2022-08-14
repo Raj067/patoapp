@@ -238,10 +238,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                 controller: searchController,
                 cursorColor: patowavePrimary,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   border: InputBorder.none,
                   hintText: AppLocalizations.of(context)!.searchItem,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   alignLabelWithHint: true,
@@ -660,7 +660,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                   ? patowaveErrorRed
                                   : patowavePrimary),
                           prefixIcon: Padding(
-                            padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+                            padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
                             child:
                                 Text("${AppLocalizations.of(context)!.qty}:"),
                           ),
@@ -725,7 +725,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   },
                   child: Text(
                     AppLocalizations.of(context)!.add,
-                    style: TextStyle(color: patowaveWhite),
+                    style: const TextStyle(color: patowaveWhite),
                   ),
                 ),
               )

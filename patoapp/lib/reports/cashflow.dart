@@ -60,7 +60,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.cashflow,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

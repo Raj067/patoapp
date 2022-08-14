@@ -257,7 +257,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.sales,
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                           Text(
                             "Tsh ${dropdownValue == 'This Week' ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
@@ -285,7 +285,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.expenses,
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                           Text(
                             "Tsh ${dropdownValue == 'This Week' ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
@@ -342,7 +342,7 @@ class _BusinessPageState extends State<BusinessPage> {
                           Container(width: 10),
                           Text(
                             AppLocalizations.of(context)!.financialReports,
-                            style: TextStyle(color: patowaveBlue),
+                            style: const TextStyle(color: patowaveBlue),
                           ),
                         ],
                       ),
@@ -388,7 +388,8 @@ class _BusinessPageState extends State<BusinessPage> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.transactionDetails,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Container(height: 10),
                   Row(
@@ -432,7 +433,7 @@ class _BusinessPageState extends State<BusinessPage> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.items,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                             _listItemsButtomSheet(data.details),
@@ -450,7 +451,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.date,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Container(height: 4),
                           Text(
@@ -497,8 +498,7 @@ class _BusinessPageState extends State<BusinessPage> {
                               ),
                             ),
                           ),
-                          child: Text(
-                              AppLocalizations.of(context)!.delete),
+                          child: Text(AppLocalizations.of(context)!.delete),
                         ),
                       ),
                       // Container(width: 10),

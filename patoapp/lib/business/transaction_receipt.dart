@@ -99,7 +99,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.transactionReceipt,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -152,15 +152,15 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.print),
+            icon: const Icon(Icons.print),
             label: AppLocalizations.of(context)!.print,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.download),
+            icon: const Icon(Icons.download),
             label: AppLocalizations.of(context)!.download,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             label: AppLocalizations.of(context)!.share,
           ),
         ],

@@ -7,6 +7,7 @@ import 'package:patoapp/generalSettings/transaction.dart';
 import 'package:patoapp/generalSettings/user_management.dart';
 import 'package:patoapp/more/reminders.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GeneralSettingsDialog extends StatelessWidget {
   const GeneralSettingsDialog({Key? key}) : super(key: key);
@@ -15,9 +16,9 @@ class GeneralSettingsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'General Settings',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.generalSettings,
+          style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -64,7 +65,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('Application'),
+                    Text(AppLocalizations.of(context)!.application),
                   ],
                 ),
               ),
@@ -83,8 +84,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) =>
-                        const LanguageSettings(),
+                    builder: (BuildContext context) => const LanguageSettings(),
                     fullscreenDialog: true,
                   ),
                 );
@@ -100,7 +100,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('Language'),
+                    Text(AppLocalizations.of(context)!.language)
                   ],
                 ),
               ),
@@ -134,7 +134,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('Transactions'),
+                    Text(AppLocalizations.of(context)!.transactions),
                   ],
                 ),
               ),
@@ -167,7 +167,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('User Management'),
+                    Text(AppLocalizations.of(context)!.userManagement)
                   ],
                 ),
               ),
@@ -251,7 +251,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('Items'),
+                    Text(AppLocalizations.of(context)!.items),
                   ],
                 ),
               ),
@@ -284,7 +284,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                     Container(
                       width: 10,
                     ),
-                    const Text('Reminder Automation'),
+                    Text(AppLocalizations.of(context)!.reminderAoutomation),
                   ],
                 ),
               ),

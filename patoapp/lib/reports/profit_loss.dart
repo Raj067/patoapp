@@ -61,7 +61,7 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.profitAndLoss,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

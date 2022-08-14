@@ -42,8 +42,9 @@ class _InventorySummaryState extends State<InventorySummary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.inventorySummary,
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.inventorySummary,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

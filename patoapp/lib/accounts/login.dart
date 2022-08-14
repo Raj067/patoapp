@@ -98,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                                 fontStyle: FontStyle.italic, fontSize: 14),
                           ),
+                          icon: Text('+255'),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(15),

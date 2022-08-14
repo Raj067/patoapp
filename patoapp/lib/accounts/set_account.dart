@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:patoapp/accounts/language_account.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/pages/index.dart';
+// import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class SetAccountPage extends StatefulWidget {
@@ -211,14 +212,20 @@ class _SetAccountPageState extends State<SetAccountPage> {
         Navigator.pop(context);
         await storage.write(key: "shopName", value: businessName.text);
         // ignore: use_build_context_synchronously
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const HomePage()),
-            (Route<dynamic> route) => false);
+        // Navigator.pushAndRemoveUntil(
+        //     context,
+        //     MaterialPageRoute<void>(
+        //       builder: (BuildContext context) => const LanguageAccount(),
+        //       fullscreenDialog: true,
+        //     ),
+        //     (route) => false);
+
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => const HomePage(),
+            builder: (BuildContext context) => const LanguageAccount(),
+            fullscreenDialog: true,
           ),
         );
       } else {

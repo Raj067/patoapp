@@ -61,7 +61,7 @@ class _ExpensesReportsState extends State<ExpensesReports> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.expensesReports,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

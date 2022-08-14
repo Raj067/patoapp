@@ -62,7 +62,7 @@ class _SalesReportsState extends State<SalesReports> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.salesReports,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

@@ -62,7 +62,7 @@ class _DayBookReportsState extends State<DayBookReports> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.dayBook,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

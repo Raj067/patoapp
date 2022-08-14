@@ -85,5 +85,12 @@
     "paid":"Paid",
     "paymentIn":"Payment In",
     "paymentOut":"Payment Out",
-    "addCustomer":"Add Customer"
+    "addCustomer":"Add Customer",
+    "language":"Language",
+    "application":"Application",
+    "userManagement":"User Management",
+    "languageSettings":"Language Settings",
+    "applicationSettings":"Application Settings",
+    "itemsSettings":"Items Settings",
+    "transactionSettings":"Transactions Settings"
 }

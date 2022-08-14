@@ -182,9 +182,9 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.sendPaymentReminder,
-                      style: TextStyle(),
+                      style: const TextStyle(),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios,
                       size: 14,
                       color: patowaveBlack,
@@ -550,7 +550,7 @@ Powered by Patowave""";
                           children: [
                             Text(AppLocalizations.of(context)!.debtBalance),
                             Text(
-                              "${customer.isToReceive() ? AppLocalizations.of(context)!.toReceive : AppLocalizations.of(context)!.toGive}",
+                              customer.isToReceive() ? AppLocalizations.of(context)!.toReceive : AppLocalizations.of(context)!.toGive,
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
@@ -613,7 +613,7 @@ Powered by Patowave""";
                                 children: [
                                   Text(
                                     AppLocalizations.of(context)!.dueDate,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     ),
                                   ),

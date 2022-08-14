@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApplicationSettings extends StatefulWidget {
   const ApplicationSettings({Key? key}) : super(key: key);
@@ -21,9 +22,9 @@ class _ApplicationSettingsState extends State<ApplicationSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Application Settings',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.applicationSettings,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

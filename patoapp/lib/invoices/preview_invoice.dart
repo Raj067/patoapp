@@ -551,19 +551,19 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         backgroundColor: patowavePrimary,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.print),
+            icon: const Icon(Icons.print),
             label: AppLocalizations.of(context)!.print,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             label: AppLocalizations.of(context)!.edit,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
             label: AppLocalizations.of(context)!.delete,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             label: AppLocalizations.of(context)!.share,
           ),
         ],

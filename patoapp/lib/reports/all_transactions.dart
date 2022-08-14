@@ -58,7 +58,7 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.allTransactions,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

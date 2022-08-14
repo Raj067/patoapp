@@ -78,8 +78,9 @@ class _BalanceSheetState extends State<BalanceSheet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.balanceSheet,
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.balanceSheet,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

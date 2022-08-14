@@ -82,7 +82,7 @@ class _InventoryReportsState extends State<InventoryReports> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.inventoryReports,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
