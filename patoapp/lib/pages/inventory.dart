@@ -19,8 +19,8 @@ class InventoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Products & Services',
+        title: Text(
+          AppLocalizations.of(context)!.productService,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -188,7 +188,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Total Items: $addedItemsToCart',
+                              '${AppLocalizations.of(context)!.totalItems}: $addedItemsToCart',
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
@@ -471,10 +471,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontStyle: FontStyle.italic,
-                                    color: product.isStockLevelReached()
-                                        ? patowaveWarning
-                                        : product.quantity == 0
-                                            ? patowaveErrorRed
+                                    color: product.quantity <= 0
+                                        ? patowaveErrorRed
+                                        : product.isStockLevelReached()
+                                            ? patowaveWarning
                                             : patowavePrimary,
                                   ),
                                 ),
@@ -612,10 +612,10 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontStyle: FontStyle.italic,
-                                          color: product.isStockLevelReached()
-                                              ? patowaveWarning
-                                              : product.quantity == 0
-                                                  ? patowaveErrorRed
+                                          color: product.quantity <= 0
+                                              ? patowaveErrorRed
+                                              : product.isStockLevelReached()
+                                                  ? patowaveWarning
                                                   : patowavePrimary,
                                         ),
                                       ),
@@ -653,7 +653,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                             ),
                           ),
                           helperText:
-                              "*Maximum quantity is ${product.availableQuantity()}",
+                              "*${AppLocalizations.of(context)!.maximumQuantity} ${product.availableQuantity()}",
                           helperStyle: TextStyle(
                               color: product
                                       .compareToCart(int.parse(controller.text))

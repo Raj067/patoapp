@@ -19,8 +19,8 @@ class MainReportsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Reports',
+        title: Text(
+          AppLocalizations.of(context)!.reports,
           style: TextStyle(color: Colors.white),
         ),
         // centerTitle: true,

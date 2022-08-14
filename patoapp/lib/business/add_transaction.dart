@@ -1067,7 +1067,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     List<Widget> data = [];
     double val = 0;
     for (SingleProduct dx in addedItemsToPurchases) {
-      val += dx.quantity * dx.sellingPrice;
+      val += dx.quantity * dx.purchasesPrice;
       data.add(_singleSelectedProduct(context, dx, isSales: false));
       data.add(Container(height: 10));
     }
@@ -1112,7 +1112,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     ),
                   ),
                   Text(
-                    "Tsh ${product.quantity * product.sellingPrice}",
+                    isSales
+                        ? "Tsh ${product.quantity * product.purchasesPrice}"
+                        : "Tsh ${product.quantity * product.purchasesPrice}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -1128,7 +1130,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     style: TextStyle(fontSize: 10),
                   ),
                   Text(
-                    "${product.quantity} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.quantity * product.sellingPrice}",
+                    isSales
+                        ? "${product.quantity} ${product.productUnit} x Tsh ${product.sellingPrice} = Tsh ${product.quantity * product.sellingPrice}"
+                        : "${product.quantity} ${product.productUnit} x Tsh ${product.purchasesPrice} = Tsh ${product.quantity * product.purchasesPrice}",
                     style: const TextStyle(fontSize: 10),
                   ),
                 ],

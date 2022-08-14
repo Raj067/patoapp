@@ -521,7 +521,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         Container(height: 10),
         widget.data.isCashSale
             ? const Text(
-                "Thanks For Your Purchases",
+                "Thanks For Your Purchase",
                 style: TextStyle(
                   color: patowaveBlack,
                   fontWeight: FontWeight.bold,

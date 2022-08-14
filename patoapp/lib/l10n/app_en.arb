@@ -10,7 +10,7 @@
     "viewAllSchedule":"View All Schedule",
     "schedules":"Achedule",
     "invoices":"Invoices",
-    "reports":"Repots",
+    "reports":"Reports",
     "greetings":"Greetings",
     "whatsapp":"WhatsApp",
     "generalSettings":"General Settings",
@@ -114,5 +114,13 @@
     "toBePaid":"To be paid",
     "toBeReceived":"To be received",
     "editCustomer":"Edit Customer",
-    "selectLanguage":"Select Language"
+    "selectLanguage":"Select Language",
+    "debtReports":"Debt Reports",
+    "searchCustomer":"Search Customer",
+    "addPayment":"Add Payment",
+    "thisWeek":"This Week",
+    "thisMonth":"This Month",
+    "totalItems":"Total Items",
+    "maximumQuantity":"Maximum quantity is",
+    "productService":"Products & Services"
 }

@@ -32,7 +32,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add Item to sale',
+          'Add Item to puchases',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

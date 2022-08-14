@@ -10,6 +10,7 @@ import 'package:patoapp/parties/add_customer.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/parties/single_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PartiesPage extends StatefulWidget {
   const PartiesPage({Key? key}) : super(key: key);
@@ -129,7 +130,7 @@ class _PartiesPageState extends State<PartiesPage> {
             ),
           );
         },
-        label: const Text('Add Payment'),
+        label: Text(AppLocalizations.of(context)!.addPayment),
       ),
     );
   }
@@ -224,9 +225,9 @@ class _PartiesPageState extends State<PartiesPage> {
               Text(
                 customer.isToReceive()
                     ? customer.getAmount() > 0
-                        ? "Receive"
+                        ? AppLocalizations.of(context)!.toReceive
                         : ""
-                    : "Give",
+                    : AppLocalizations.of(context)!.toGive,
                 style: const TextStyle(fontSize: 10),
               ),
             ],
@@ -256,10 +257,10 @@ class _PartiesPageState extends State<PartiesPage> {
                     onChanged: (val) {
                       _onSearchChange(val);
                     },
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(10, 7, 10, 0),
                       border: InputBorder.none,
-                      hintText: 'Search Contact',
+                      hintText: AppLocalizations.of(context)!.searchCustomer,
                       prefixIcon: Icon(Icons.search),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -400,12 +401,12 @@ class _PartiesPageState extends State<PartiesPage> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text(
-                            "To be received",
+                          Text(
+                            AppLocalizations.of(context)!.toBeReceived,
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
+                            "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -420,12 +421,12 @@ class _PartiesPageState extends State<PartiesPage> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text(
-                            "To be paid",
+                          Text(
+                            AppLocalizations.of(context)!.toBePaid,
                             style: TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
+                            "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 16,
@@ -460,8 +461,8 @@ class _PartiesPageState extends State<PartiesPage> {
                         children: [
                           const Icon(Icons.file_copy, color: patowaveBlue),
                           Container(width: 10),
-                          const Text(
-                            "Debt Reports",
+                          Text(
+                            AppLocalizations.of(context)!.debtReports,
                             style: TextStyle(color: patowaveBlue),
                           ),
                         ],
