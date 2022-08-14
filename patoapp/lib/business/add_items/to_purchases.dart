@@ -32,9 +32,9 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Item to puchases',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addItemsToPurchases,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -59,14 +59,14 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                 dropdownMaxHeight: 200,
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select item';
+                    return AppLocalizations.of(context)!.pleaseSelectItem;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select Item',
-                    style: TextStyle(
+                  label: Text(
+                    AppLocalizations.of(context)!.selectItem,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.italic,
                     ),
@@ -149,17 +149,18 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Quantity is required';
+                  return AppLocalizations.of(context)!.quantityRequired;
                 }
 
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Quantity*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.quantity}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -235,9 +236,7 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text(
-                  "Add Item",
-                ),
+                child: Text(AppLocalizations.of(context)!.addItem),
               ),
             ),
           ],

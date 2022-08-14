@@ -9,8 +9,6 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class EditCustomer extends StatefulWidget {
   final Function refreshData;
@@ -82,7 +80,7 @@ class _EditCustomerState extends State<EditCustomer> {
               cursorColor: patowavePrimary,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Customer Name is required';
+                  return AppLocalizations.of(context)!.customerNameRequired;
                 }
                 return null;
               },
@@ -105,7 +103,7 @@ class _EditCustomerState extends State<EditCustomer> {
               cursorColor: patowavePrimary,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Phone Number is required';
+                  return AppLocalizations.of(context)!.phoneNumberRequired;
                 }
                 return null;
               },

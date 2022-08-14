@@ -258,10 +258,10 @@ class _PartiesPageState extends State<PartiesPage> {
                       _onSearchChange(val);
                     },
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(10, 7, 10, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(10, 7, 10, 0),
                       border: InputBorder.none,
                       hintText: AppLocalizations.of(context)!.searchCustomer,
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       // suffixIcon: InkWell(
@@ -403,7 +403,7 @@ class _PartiesPageState extends State<PartiesPage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.toBeReceived,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           Text(
                             "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
@@ -423,7 +423,7 @@ class _PartiesPageState extends State<PartiesPage> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.toBePaid,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           Text(
                             "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
@@ -463,7 +463,7 @@ class _PartiesPageState extends State<PartiesPage> {
                           Container(width: 10),
                           Text(
                             AppLocalizations.of(context)!.debtReports,
-                            style: TextStyle(color: patowaveBlue),
+                            style: const TextStyle(color: patowaveBlue),
                           ),
                         ],
                       ),

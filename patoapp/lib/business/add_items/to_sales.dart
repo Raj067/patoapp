@@ -5,7 +5,6 @@ import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class AddItemsToSale extends StatefulWidget {
   final List<SingleProduct> allProducts;
   final List<SingleProduct> addedItemsToSales;
@@ -32,9 +31,9 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Item to sale',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addItemsToSales,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -59,14 +58,14 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                 dropdownMaxHeight: 200,
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select item';
+                    return AppLocalizations.of(context)!.pleaseSelectItem;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select Item',
-                    style: TextStyle(
+                  label: Text(
+                    AppLocalizations.of(context)!.selectItem,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.italic,
                     ),
@@ -149,19 +148,20 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Quantity is required';
+                  return AppLocalizations.of(context)!.quantityRequired;
                 }
                 if (int.parse(value) > selectedProduct!.quantity) {
-                  return 'Quantity available is ${selectedProduct!.quantity}';
+                  return '${AppLocalizations.of(context)!.quantityAvailable} ${selectedProduct!.quantity}';
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Quantity*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.quantity}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -236,9 +236,7 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text(
-                  "Add Item",
-                ),
+                child: Text(AppLocalizations.of(context)!.addItem),
               ),
             ),
           ],

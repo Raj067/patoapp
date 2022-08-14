@@ -21,7 +21,7 @@ class MainReportsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.reports,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         // centerTitle: true,
         leading: IconButton(

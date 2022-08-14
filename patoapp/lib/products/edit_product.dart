@@ -171,8 +171,8 @@ class _EditProductState extends State<EditProduct> {
                         fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(15),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
                   ),
                 ),
@@ -196,7 +196,7 @@ class _EditProductState extends State<EditProduct> {
                             ),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                const Radius.circular(15),
+                                Radius.circular(15),
                               ),
                             ),
                           ),
@@ -282,7 +282,7 @@ class _EditProductState extends State<EditProduct> {
                         fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
                   ),
@@ -411,7 +411,7 @@ class _EditProductState extends State<EditProduct> {
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
                             border: const OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
+                              borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
                             ),
@@ -449,8 +449,8 @@ class _EditProductState extends State<EditProduct> {
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
                             border: const OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(15),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
                               ),
                             ),
                           ),
@@ -492,8 +492,8 @@ class _EditProductState extends State<EditProduct> {
                         fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   border: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(15),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
                   ),
                 ),

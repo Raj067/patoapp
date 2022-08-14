@@ -294,7 +294,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Received Amount is required';
+                  return AppLocalizations.of(context)!.amountReceivedRequired;
                 }
                 return null;
               },
@@ -302,13 +302,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Received Amount",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.amountReceived,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                border: OutlineInputBorder(
+                contentPadding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -319,7 +320,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select customer name';
+                    return AppLocalizations.of(context)!.pleaseSelectCustomer;
                   }
                   return null;
                 },
@@ -328,9 +329,10 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select customer',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  label: Text(
+                    AppLocalizations.of(context)!.selectCustomer,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
@@ -382,7 +384,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                         horizontal: 10,
                         vertical: 8,
                       ),
-                      hintText: 'Search for Customer..',
+                      hintText:
+                          '${AppLocalizations.of(context)!.searchCustomer}..',
                       hintStyle: const TextStyle(fontSize: 12),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -403,9 +406,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Total Amount",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.totalAmount,
+                  style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
                   ),
@@ -427,12 +430,13 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               textInputAction: TextInputAction.newline,
               minLines: 3,
               maxLines: null,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Add Note (Descriptions)",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.addNote,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -465,7 +469,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Paid Amount is required';
+                  return AppLocalizations.of(context)!.amountPaidRequired;
                 }
                 return null;
               },
@@ -473,13 +477,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Paid Amount",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.amountPaid,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                border: OutlineInputBorder(
+                contentPadding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -490,7 +495,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select customer name';
+                    return AppLocalizations.of(context)!.pleaseSelectCustomer;
                   }
                   return null;
                 },
@@ -499,9 +504,10 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select customer',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  label: Text(
+                    AppLocalizations.of(context)!.selectCustomer,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
@@ -553,7 +559,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                         horizontal: 10,
                         vertical: 8,
                       ),
-                      hintText: 'Search for Customer..',
+                      hintText:
+                          '${AppLocalizations.of(context)!.searchCustomer}..',
                       hintStyle: const TextStyle(fontSize: 12),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -574,9 +581,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Total Amount",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.totalAmount,
+                  style: const TextStyle(
                       fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -594,12 +601,13 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               textInputAction: TextInputAction.newline,
               minLines: 3,
               maxLines: null,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Add Note (Descriptions)",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.addNote,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),

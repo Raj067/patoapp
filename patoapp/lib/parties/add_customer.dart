@@ -149,7 +149,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               controller: customerName,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Customer Name is required';
+                  return AppLocalizations.of(context)!.customerNameRequired;
                 }
                 return null;
               },
@@ -172,7 +172,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               controller: phoneNumber,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Phone Number is required';
+                  return AppLocalizations.of(context)!.phoneNumberRequired;
                 }
                 return null;
               },
@@ -469,9 +469,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Select Contact',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.selectContact,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

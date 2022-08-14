@@ -118,7 +118,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.addTransaction,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -305,7 +305,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'This field is required';
+                  return AppLocalizations.of(context)!.amountReceivedRequired;
                 }
                 if (value !=
                     "${totalAmount.toInt() - discountAmount.toInt()}") {
@@ -316,9 +316,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               decoration: InputDecoration(
                 label: Text(
                   "${AppLocalizations.of(context)!.amountReceived}*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -332,14 +333,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 dropdownMaxHeight: 200,
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'This field is required';
+                    return AppLocalizations.of(context)!.selectCustomer;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
                   label: Text(
                     '${AppLocalizations.of(context)!.selectCustomer}*',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.italic,
                     ),
@@ -392,14 +393,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                           controller: customerController,
                           decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                               horizontal: 10,
                               vertical: 8,
                             ),
                             hintText:
                                 '${AppLocalizations.of(context)!.searchCustomer}...',
-                            hintStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
+                            hintStyle: const TextStyle(fontSize: 12),
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15),
                                 bottomLeft: Radius.circular(15),
@@ -479,11 +480,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.addItemsToSales,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 14,
                       ),
@@ -499,7 +500,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.discount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -517,7 +518,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.totalAmount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -542,9 +543,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 decoration: InputDecoration(
                   label: Text(
                     AppLocalizations.of(context)!.description,
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -590,16 +592,17 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'This field is required';
+                  return AppLocalizations.of(context)!.amountPaidRequired;
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Amount Paid*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.amountPaid}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -607,9 +610,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ),
             ),
             Container(height: 15),
-            const Text(
-              "Other Informations:",
-              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+            Text(
+              AppLocalizations.of(context)!.otherInformation,
+              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
             ),
             Container(height: 10),
             addedItemsToPurchases.isNotEmpty
@@ -641,14 +644,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        "Add Items to Purchases",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.addItemsToPurchases,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 14,
                       ),
@@ -667,11 +670,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       ),
                       border: Border.all(color: Colors.grey, width: 1),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                       child: Text(
-                        "Purchases",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.purchases,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 14,
                         ),
@@ -683,9 +686,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     scrollbarAlwaysShow: true,
                     dropdownMaxHeight: 200,
                     decoration: InputDecoration(
-                      label: const Text(
-                        'Expenses Category',
-                        style: TextStyle(
+                      label: Text(
+                        AppLocalizations.of(context)!.expensesCategory,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontStyle: FontStyle.italic,
                         ),
@@ -764,9 +767,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               dropdownMaxHeight: 200,
 
               decoration: InputDecoration(
-                label: const Text(
-                  'Add Contact',
-                  style: TextStyle(
+                label: Text(
+                  AppLocalizations.of(context)!.addContact,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontStyle: FontStyle.italic,
                   ),
@@ -842,9 +845,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Total Amount",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.totalAmount,
+                  style: const TextStyle(
                       fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -888,12 +891,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               textInputAction: TextInputAction.newline,
               minLines: 3,
               maxLines: null,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Descriptions",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.description,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
