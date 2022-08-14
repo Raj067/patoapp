@@ -148,5 +148,12 @@
     "salesPriceRequired":"Sales Price is required",
     "purchasesPriceRequired":"Purchases price is required",
     "itemCode":"Item Code",
-    "editProduct":"Edit Product"
+    "editProduct":"Edit Product",
+    "cashSales":"Cash Sales",
+    "receipt":"Receipt",
+    "amountReceived":"Amount Received",
+    "selectCustomer":"Select Customer",
+    "addItemsToSales":"Add Items to sales",
+    "discount":"Discount",
+    "totalAmount":"Total Amount"
 }

@@ -159,8 +159,8 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   child: Center(
                     child: Text(
                       _value == 1
-                          ? "Receipt No $receiptNo"
-                          : "Receipt No $receiptNo",
+                          ? "${AppLocalizations.of(context)!.receipt} No: $receiptNo"
+                          : "${AppLocalizations.of(context)!.receipt} No: $receiptNo",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),

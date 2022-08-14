@@ -148,5 +148,12 @@
     "salesPriceRequired":"Bei ya mauzo ni lazima",
     "purchasesPriceRequired":"Bei ya manunuzi ni lazima",
     "itemCode":"Namba ya bidhaa",
-    "editProduct":"Hariri Bidhaa"
+    "editProduct":"Hariri Bidhaa",
+    "cashSales":"Mauzo",
+    "receipt":"Risiti",
+    "amountReceived":"Kiasi kilichopokewa",
+    "selectCustomer":"Chagua Mteja",
+    "addItemsToSales":"Ongeza bidhaa kwenye mauzo",
+    "discount":"Punguzo",
+    "totalAmount":"Jumla"
 }
