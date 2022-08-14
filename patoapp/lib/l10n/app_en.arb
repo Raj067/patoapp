@@ -105,5 +105,15 @@
     "goodMorning":"Good Morning",
     "textMessage":"Text Message",
     "shareCard":"Share Card",
-    "send":"Send"
+    "send":"Send",
+    "importCustomer":"Import Customer",
+    "fromContacts":"From Contacts",
+    "customerName":"Cusomer Name",
+    "phoneNumber":"Phone Number",
+    "address":"Address",
+    "emailAddress":"Email Address",
+    "openingBalance":"Opening Balance",
+    "toBePaid":"To be paid",
+    "toBeReceived":"To be received",
+    "editCustomer":"Edit Customer"
 }

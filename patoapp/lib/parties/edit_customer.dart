@@ -7,6 +7,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
 class EditCustomer extends StatefulWidget {
@@ -54,9 +55,9 @@ class _EditCustomerState extends State<EditCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Customer',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.editCustomer,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -83,12 +84,13 @@ class _EditCustomerState extends State<EditCustomer> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Customer Name*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.customerName}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -109,12 +111,13 @@ class _EditCustomerState extends State<EditCustomer> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Phone Number*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.phoneNumber}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -125,12 +128,13 @@ class _EditCustomerState extends State<EditCustomer> {
             TextFormField(
               controller: address,
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Address",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.address,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -141,12 +145,13 @@ class _EditCustomerState extends State<EditCustomer> {
             TextFormField(
               controller: emailAddress,
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Email Address",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.emailAddress,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -194,9 +199,9 @@ class _EditCustomerState extends State<EditCustomer> {
                     );
                   }
                 },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 16),
+                child: Text(
+                  AppLocalizations.of(context)!.save,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ),

@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:permission_handler/permission_handler.dart';
 // import 'package:toggle_switch/toggle_switch.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   final Function refreshData;
@@ -61,9 +62,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Customer',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addCustomer,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -114,17 +115,17 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                           Container(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
-                                'Import Customer',
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.importCustomer,
+                                style: const TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                'From Contacts',
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.fromContacts,
+                                style: const TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontSize: 12,
                                 ),
@@ -153,12 +154,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                 return null;
               },
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Customer Name*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.customerName}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -179,12 +181,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Phone Number*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.phoneNumber}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -195,12 +198,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
             TextFormField(
               controller: address,
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Address",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.address,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -211,12 +215,13 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
             TextFormField(
               controller: emailAddress,
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Email Address",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.emailAddress,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -242,9 +247,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                           _openingBalanceToolTip(context);
                         },
                       ),
-                      label: const Text(
-                        "Opening Balance",
-                        style: TextStyle(
+                      label: Text(
+                        AppLocalizations.of(context)!.openingBalance,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 14,
                         ),
@@ -262,15 +267,15 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                   child: TextFormField(
                     controller: dateInput,
                     //editing controller of this TextField
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       label: Text(
-                        "Date",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.date,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 14,
                         ),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(15),
                         ),
@@ -333,7 +338,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "To receive",
+                            AppLocalizations.of(context)!.toBeReceived,
                             style: TextStyle(
                               color: toReceive ? patowaveWhite : patowaveBlack,
                             ),
@@ -362,7 +367,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "To be paid",
+                            AppLocalizations.of(context)!.toBePaid,
                             style: TextStyle(
                               color: !toReceive ? patowaveWhite : patowaveBlack,
                             ),
@@ -414,9 +419,9 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
                     );
                   }
                 },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 16),
+                child: Text(
+                  AppLocalizations.of(context)!.save,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ),

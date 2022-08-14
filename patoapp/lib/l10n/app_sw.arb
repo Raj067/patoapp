@@ -105,5 +105,15 @@
     "goodMorning":"Asubuhi Njema",
     "textMessage":"Ujumbe",
     "shareCard":"Shirikisha Kadi",
-    "send":"Tuma"
+    "send":"Tuma",
+    "importCustomer":"Ingiza Mteja",
+    "fromContacts":"Kutoka kwenye namba za simu",
+    "customerName":"Jina la mteja",
+    "phoneNumber":"Nambari ya simu",
+    "address":"Makazi",
+    "emailAddress":"Barua Pepe",
+    "openingBalance":"Salio funguzi",
+    "toBePaid":"Ninadaiwa",
+    "toBeReceived":"Ninadai",
+    "editCustomer":"Hariri Mteja"
 }
