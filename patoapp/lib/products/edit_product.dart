@@ -10,6 +10,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProduct extends StatefulWidget {
   final SingleProduct product;
@@ -78,9 +79,9 @@ class _EditProductState extends State<EditProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Edit Product',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.editProduct,
+          style: const TextStyle(color: Colors.white),
         ),
         // centerTitle: true,
         leading: IconButton(
@@ -136,9 +137,7 @@ class _EditProductState extends State<EditProduct> {
                     }
                   }
                 },
-                child: const Text(
-                  "Edit Item",
-                ),
+                child: Text(AppLocalizations.of(context)!.editProduct),
               ),
             ),
           ],
@@ -161,18 +160,19 @@ class _EditProductState extends State<EditProduct> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Item name is required';
+                    return AppLocalizations.of(context)!.itemNameIsRequired;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Item Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.itemName}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+                  border: const OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(15),
                     ),
                   ),
                 ),
@@ -188,15 +188,15 @@ class _EditProductState extends State<EditProduct> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Item Code",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.itemCode,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(15),
+                                const Radius.circular(15),
                               ),
                             ),
                           ),
@@ -208,7 +208,7 @@ class _EditProductState extends State<EditProduct> {
               DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select Unit';
+                    return AppLocalizations.of(context)!.pleaseSelectUnit;
                   }
                   return null;
                 },
@@ -219,9 +219,10 @@ class _EditProductState extends State<EditProduct> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select Unit*',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  label: Text(
+                    '${AppLocalizations.of(context)!.selectUnit}*',
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
@@ -255,9 +256,10 @@ class _EditProductState extends State<EditProduct> {
                 },
               ),
               Container(height: 20),
-              const Text(
-                "Pricing & Other Details",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              Text(
+                AppLocalizations.of(context)!.pricingOtherDetails,
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
               Container(height: 15),
               TextFormField(
@@ -265,7 +267,7 @@ class _EditProductState extends State<EditProduct> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Sales Price is required';
+                    return AppLocalizations.of(context)!.salesPriceRequired;
                   }
                   return null;
                 },
@@ -273,13 +275,14 @@ class _EditProductState extends State<EditProduct> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Sales Price*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.salesPrice}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
+                  border: const OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                   ),
@@ -291,7 +294,7 @@ class _EditProductState extends State<EditProduct> {
                 cursorColor: patowavePrimary,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Purchases Price is required';
+                    return AppLocalizations.of(context)!.purchasesPriceRequired;
                   }
                   return null;
                 },
@@ -299,12 +302,13 @@ class _EditProductState extends State<EditProduct> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Purchases Price*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.purchasesPrice}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -332,9 +336,9 @@ class _EditProductState extends State<EditProduct> {
                             );
                           },
                         ),
-                        label: const Text(
-                          "Quantity",
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.quantity,
+                          style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
                         border: const OutlineInputBorder(
@@ -362,9 +366,9 @@ class _EditProductState extends State<EditProduct> {
                             _stockLevelToolTip(context);
                           },
                         ),
-                        label: const Text(
-                          "Stock Level",
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.stockLevel,
+                          style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
                         border: const OutlineInputBorder(
@@ -379,9 +383,10 @@ class _EditProductState extends State<EditProduct> {
               ),
               Container(height: 15),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text(
-                  "Supplier Contact",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                Text(
+                  AppLocalizations.of(context)!.supplierContact,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
                 Switch(
                     activeColor: patowavePrimary,
@@ -399,14 +404,14 @@ class _EditProductState extends State<EditProduct> {
                         TextFormField(
                           controller: supplierName,
                           cursorColor: patowavePrimary,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Name",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.supplierName,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
+                            border: const OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(15),
                               ),
                             ),
@@ -420,13 +425,13 @@ class _EditProductState extends State<EditProduct> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Phone Number",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.phoneNumber,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
@@ -437,15 +442,15 @@ class _EditProductState extends State<EditProduct> {
                         TextFormField(
                           controller: supplierEmail,
                           cursorColor: patowavePrimary,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Email",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.email,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
+                            border: const OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                const Radius.circular(15),
                               ),
                             ),
                           ),
@@ -476,18 +481,19 @@ class _EditProductState extends State<EditProduct> {
                 controller: productName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Service Name is required';
+                    return AppLocalizations.of(context)!.serviceNameIsRequired;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Service Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.serviceName}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+                  border: const OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(15),
                     ),
                   ),
                 ),
@@ -498,7 +504,8 @@ class _EditProductState extends State<EditProduct> {
                 controller: sellingPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Service charge is required';
+                    return AppLocalizations.of(context)!
+                        .serviceChargeIsRequired;
                   }
                   return null;
                 },
@@ -506,12 +513,13 @@ class _EditProductState extends State<EditProduct> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Service Charge*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.serviceCharge}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -524,16 +532,18 @@ class _EditProductState extends State<EditProduct> {
                 controller: primaryUnit,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Service unit is required';
+                    return AppLocalizations.of(context)!
+                        .pleaseSelectServiceUnit;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Service Unit*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.serviceUnit}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -544,12 +554,13 @@ class _EditProductState extends State<EditProduct> {
               TextFormField(
                 cursorColor: patowavePrimary,
                 controller: supplierName,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Description",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    AppLocalizations.of(context)!.description,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),

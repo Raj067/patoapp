@@ -12,6 +12,7 @@ import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPaymentDialog extends StatefulWidget {
   final Function refreshData;
@@ -74,9 +75,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Payments',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.payments,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -121,7 +122,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                           Container(
                             width: 5,
                           ),
-                          const Text("Payment in"),
+                          Text(AppLocalizations.of(context)!.paymentIn),
                         ],
                       ),
                     ),
@@ -153,7 +154,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                           Container(
                             width: 5,
                           ),
-                          const Text("Payment out"),
+                          Text(AppLocalizations.of(context)!.paymentOut),
                           Container(
                             width: 10,
                           ),
@@ -188,7 +189,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -264,9 +265,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     }
                   }
                 },
-                child: const Text(
-                  "Add Payment",
-                ),
+                child: Text(AppLocalizations.of(context)!.addPayment),
               ),
             ),
           ],

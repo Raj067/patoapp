@@ -9,6 +9,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddProductPage extends StatefulWidget {
   final bool isProductImage;
@@ -62,9 +63,9 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Item',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addItem,
+          style: const TextStyle(color: Colors.white),
         ),
         // centerTitle: true,
         leading: IconButton(
@@ -76,14 +77,14 @@ class _AddProductPageState extends State<AddProductPage> {
             color: patowaveWhite,
           ),
         ),
-        actions: widget.isProductImage
-            ? [
-                IconButton(
-                  icon: const Icon(Icons.add_a_photo),
-                  onPressed: () {},
-                ),
-              ]
-            : [],
+        // actions: widget.isProductImage
+        //     ? [
+        //         IconButton(
+        //           icon: const Icon(Icons.add_a_photo),
+        //           onPressed: () {},
+        //         ),
+        //       ]
+        //     : [],
       ),
       body: Column(
         children: [
@@ -116,7 +117,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(
                           width: 5,
                         ),
-                        const Text("Product"),
+                        Text(AppLocalizations.of(context)!.product),
                       ],
                     ),
                   ),
@@ -148,7 +149,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         Container(
                           width: 5,
                         ),
-                        const Text("Service"),
+                        Text(AppLocalizations.of(context)!.service),
                         Container(
                           width: 10,
                         ),
@@ -199,9 +200,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     }
                   }
                 },
-                child: const Text(
-                  "Add Item",
-                ),
+                child: Text(AppLocalizations.of(context)!.addItem),
               ),
             ),
           ],
@@ -224,16 +223,17 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: productName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Item name is required';
+                    return AppLocalizations.of(context)!.itemNameIsRequired;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Item Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.itemName}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -250,13 +250,13 @@ class _AddProductPageState extends State<AddProductPage> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Item Code",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.itemCode,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
@@ -270,7 +270,7 @@ class _AddProductPageState extends State<AddProductPage> {
               DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select Unit';
+                    return AppLocalizations.of(context)!.pleaseSelectUnit;
                   }
                   return null;
                 },
@@ -279,9 +279,10 @@ class _AddProductPageState extends State<AddProductPage> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select Unit*',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  label: Text(
+                    '${AppLocalizations.of(context)!.selectUnit}*',
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
@@ -317,9 +318,10 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
               ),
               Container(height: 20),
-              const Text(
-                "Pricing & Other Details",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              Text(
+                AppLocalizations.of(context)!.pricingOtherDetails,
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
               Container(height: 15),
               TextFormField(
@@ -327,7 +329,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: sellingPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Sales Price is required';
+                    return AppLocalizations.of(context)!.salesPriceRequired;
                   }
                   return null;
                 },
@@ -335,12 +337,13 @@ class _AddProductPageState extends State<AddProductPage> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Sales Price*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.salesPrice}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -353,7 +356,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: purchasesPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Purchases Price is required';
+                    return AppLocalizations.of(context)!.purchasesPriceRequired;
                   }
                   return null;
                 },
@@ -361,12 +364,13 @@ class _AddProductPageState extends State<AddProductPage> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Purchases Price*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.purchasesPrice}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -394,9 +398,9 @@ class _AddProductPageState extends State<AddProductPage> {
                             );
                           },
                         ),
-                        label: const Text(
-                          "Quantity",
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.quantity,
+                          style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
                         border: const OutlineInputBorder(
@@ -424,9 +428,9 @@ class _AddProductPageState extends State<AddProductPage> {
                             _stockLevelToolTip(context);
                           },
                         ),
-                        label: const Text(
-                          "Stock Level",
-                          style: TextStyle(
+                        label: Text(
+                          AppLocalizations.of(context)!.stockLevel,
+                          style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
                         border: const OutlineInputBorder(
@@ -441,9 +445,10 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               Container(height: 15),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text(
-                  "Supplier Contact",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                Text(
+                  AppLocalizations.of(context)!.supplierContact,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
                 Switch(
                     activeColor: patowavePrimary,
@@ -461,13 +466,13 @@ class _AddProductPageState extends State<AddProductPage> {
                         TextFormField(
                           cursorColor: patowavePrimary,
                           controller: supplierName,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Name",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.supplierName,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
@@ -482,13 +487,13 @@ class _AddProductPageState extends State<AddProductPage> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Phone Number",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.phoneNumber,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
@@ -499,13 +504,13 @@ class _AddProductPageState extends State<AddProductPage> {
                         TextFormField(
                           cursorColor: patowavePrimary,
                           controller: supplierEmail,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             label: Text(
-                              "Email",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.email,
+                              style: const TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 14),
                             ),
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               ),
@@ -538,16 +543,17 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: productName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Service Name is required';
+                    return AppLocalizations.of(context)!.serviceNameIsRequired;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Service Name*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.serviceName}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -560,7 +566,8 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: sellingPrice,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Service charge is required';
+                    return AppLocalizations.of(context)!
+                        .serviceChargeIsRequired;
                   }
                   return null;
                 },
@@ -568,12 +575,13 @@ class _AddProductPageState extends State<AddProductPage> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Service Charge*",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    "${AppLocalizations.of(context)!.serviceCharge}*",
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),
@@ -584,7 +592,8 @@ class _AddProductPageState extends State<AddProductPage> {
               DropdownButtonFormField2(
                 validator: (value) {
                   if (value == null || value == "") {
-                    return 'Please select Service Unit';
+                    return AppLocalizations.of(context)!
+                        .pleaseSelectServiceUnit;
                   }
                   return null;
                 },
@@ -593,9 +602,10 @@ class _AddProductPageState extends State<AddProductPage> {
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Service Unit*',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  label: Text(
+                    '${AppLocalizations.of(context)!.serviceUnit}*',
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
                   contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   border: OutlineInputBorder(
@@ -634,12 +644,13 @@ class _AddProductPageState extends State<AddProductPage> {
               TextFormField(
                 cursorColor: patowavePrimary,
                 controller: supplierName,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Description",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    AppLocalizations.of(context)!.description,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),

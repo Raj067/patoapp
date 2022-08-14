@@ -10,6 +10,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPaymentCustomerDialog extends StatefulWidget {
   final SingleCustomer customer;
@@ -58,8 +59,8 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Payments',
+        title: Text(
+          AppLocalizations.of(context)!.payments,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -103,7 +104,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                         Container(
                           width: 5,
                         ),
-                        const Text("Payment in"),
+                        Text(AppLocalizations.of(context)!.paymentIn),
                       ],
                     ),
                   ),
@@ -135,7 +136,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                         Container(
                           width: 5,
                         ),
-                        const Text("Payment out"),
+                        Text(AppLocalizations.of(context)!.paymentOut),
                         Container(
                           width: 10,
                         ),
@@ -166,10 +167,10 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -248,9 +249,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                     }
                   }
                 },
-                child: const Text(
-                  "Add Payment",
-                ),
+                child: Text(AppLocalizations.of(context)!.addPayment),
               ),
             ),
           ],
