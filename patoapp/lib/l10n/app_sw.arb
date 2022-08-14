@@ -1,6 +1,4 @@
 {
-    "helloWorld": "Hujambo",
-
     "transactions":"Miamala",
     "transaction":"Muamala",
     "payments":"Malipo",
@@ -115,5 +113,6 @@
     "openingBalance":"Salio funguzi",
     "toBePaid":"Ninadaiwa",
     "toBeReceived":"Ninadai",
-    "editCustomer":"Hariri Mteja"
+    "editCustomer":"Hariri Mteja",
+    "selectLanguage":"Chagua Lugha"
 }

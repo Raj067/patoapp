@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patoapp/main.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -76,30 +77,32 @@ class _LanguageAccountState extends State<LanguageAccount> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
-                style: ButtonStyle(
-                  // MaterialStateProperty<Color?>? backgroundColor,
-                  backgroundColor: MaterialStateProperty.all(patowavePrimary),
-                  elevation: MaterialStateProperty.all(0),
-                  minimumSize: MaterialStateProperty.all(
-                    const Size(45, 45),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
+              style: ButtonStyle(
+                // MaterialStateProperty<Color?>? backgroundColor,
+                backgroundColor: MaterialStateProperty.all(patowavePrimary),
+                elevation: MaterialStateProperty.all(0),
+                minimumSize: MaterialStateProperty.all(
+                  const Size(45, 45),
+                ),
+                shape: MaterialStateProperty.all(
+                  const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const HomePage(),
-                    ),
-                  );
-                },
-                child: const Text('English')),
+              ),
+              onPressed: () {
+                MyApp.of(context).setLocale(const Locale('en', ''));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const HomePage(),
+                  ),
+                );
+              },
+              child: const Text('English'),
+            ),
             Container(height: 10),
             ElevatedButton(
                 style: ButtonStyle(
@@ -118,6 +121,7 @@ class _LanguageAccountState extends State<LanguageAccount> {
                   ),
                 ),
                 onPressed: () {
+                  MyApp.of(context).setLocale(const Locale('sw', ''));
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute<void>(

@@ -1,6 +1,4 @@
 {
-    "helloWorld": "Hello World!",
-
     "transactions":"Transactions",
     "transaction":"Transaction",
     "payments":"Payments",
@@ -115,5 +113,6 @@
     "openingBalance":"Opening Balance",
     "toBePaid":"To be paid",
     "toBeReceived":"To be received",
-    "editCustomer":"Edit Customer"
+    "editCustomer":"Edit Customer",
+    "selectLanguage":"Select Language"
 }
