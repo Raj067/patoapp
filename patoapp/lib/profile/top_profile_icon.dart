@@ -13,6 +13,7 @@ import 'package:patoapp/profile/my_business_edit.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:ui' as ui;
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TopProfileIcon extends StatefulWidget {
   final Function refreshData;
@@ -96,9 +97,9 @@ class _TopProfileIconState extends State<TopProfileIcon> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'My Business',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.myBusiness,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -125,9 +126,9 @@ class _TopProfileIconState extends State<TopProfileIcon> {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  const Text(
-                    "My Shops",
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.myShops,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -162,7 +163,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                               ),
                             );
                           },
-                          child: const Text("Add new shop"),
+                          child: Text(AppLocalizations.of(context)!.addNewShop),
                         ),
                       ),
                     ],
@@ -375,15 +376,16 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                         width: MediaQuery.of(context).size.width * 0.55,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
+                          children: [
                             Text(
-                              "Your profile is almost complete!",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!
+                                  .yourProfileIsAlmostComplete,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                                "Please complete your profile to fill your business card."),
+                            Text(AppLocalizations.of(context)!
+                                .pleaseCompleteYourProfile),
                           ],
                         ),
                       ),
@@ -437,7 +439,8 @@ class _TopProfileIconState extends State<TopProfileIcon> {
                               ),
                             );
                           },
-                          child: const Text("Edit Business Profile"),
+                          child: Text(AppLocalizations.of(context)!
+                              .editBusinessProfile),
                         ),
                       ),
                     ],
@@ -447,9 +450,9 @@ class _TopProfileIconState extends State<TopProfileIcon> {
             ),
           ),
           Container(height: 10),
-          const Text(
-            "Signature",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.signature,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),

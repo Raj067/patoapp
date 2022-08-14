@@ -44,7 +44,7 @@ class _ApplicationSettingsState extends State<ApplicationSettings> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Show currency dashboard"),
+                Text(AppLocalizations.of(context)!.showCurrencyDashboard),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReminderDialog extends StatefulWidget {
   const ReminderDialog({Key? key}) : super(key: key);
@@ -22,9 +23,9 @@ class _ReminderDialogState extends State<ReminderDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Reminder Automation',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.reminderAoutomation,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -44,7 +45,7 @@ class _ReminderDialogState extends State<ReminderDialog> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Self payment reminder"),
+                Text(AppLocalizations.of(context)!.selfPaymentReminder),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
@@ -65,7 +66,7 @@ class _ReminderDialogState extends State<ReminderDialog> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Automatic Reminder"),
+                Text(AppLocalizations.of(context)!.automaticReminder),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
@@ -96,9 +97,9 @@ class _ReminderDialogState extends State<ReminderDialog> {
           //   ),
           // ),
           // const Divider(height: 0),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: Text("Reminder Message"),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            child: Text(AppLocalizations.of(context)!.reminderMessage),
           ),
           const Padding(
             padding: EdgeInsets.all(10),

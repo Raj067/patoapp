@@ -45,7 +45,7 @@ class _ItemsSettingsState extends State<ItemsSettings> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Product Image"),
+                Text(AppLocalizations.of(context)!.productImage),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,
@@ -65,7 +65,7 @@ class _ItemsSettingsState extends State<ItemsSettings> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Product Barcode"),
+                 Text(AppLocalizations.of(context)!.productBarcode),
                 Switch(
                   activeTrackColor: patowaveGreen400,
                   activeColor: patowavePrimary,

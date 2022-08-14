@@ -4,6 +4,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShareGreetingCard extends StatefulWidget {
   final SingleGreetingCard myCard;
@@ -25,9 +26,9 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Share card',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.shareCard,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -65,13 +66,13 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                         textInputAction: TextInputAction.newline,
                         minLines: 6,
                         maxLines: null,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           label: Text(
-                            "Text Message",
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.textMessage,
+                            style: const TextStyle(
                                 fontStyle: FontStyle.italic, fontSize: 14),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(15),
                             ),
@@ -108,8 +109,8 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                "Cancel",
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
               ),
             ),
           ),
@@ -133,8 +134,8 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                     '$imageBaseUrl${widget.myCard.greetingCard} ${textMessage.text}',
                     subject: textMessage.text);
               },
-              child: const Text(
-                "Send",
+              child: Text(
+                AppLocalizations.of(context)!.send,
               ),
             ),
           ),

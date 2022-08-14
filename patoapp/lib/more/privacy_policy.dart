@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdfx/pdfx.dart';
 // import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrivacyPolicyDialog extends StatefulWidget {
   const PrivacyPolicyDialog({Key? key}) : super(key: key);
@@ -18,9 +19,9 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Privacy Policy',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.privacyPolicy,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

@@ -6,6 +6,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/greeting_cards/share_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
 class MainGreetingsCards extends StatefulWidget {
@@ -88,9 +89,9 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Greeting Cards',
-            style: TextStyle(color: Colors.white),
+          title: Text(
+            AppLocalizations.of(context)!.greetingCards,
+            style: const TextStyle(color: Colors.white),
           ),
           leading: IconButton(
             onPressed: () {
@@ -101,18 +102,12 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
               color: patowaveWhite,
             ),
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
             tabs: <Widget>[
-              Tab(
-                text: "Thank You",
-              ),
-              Tab(
-                text: "Offers",
-              ),
-              Tab(
-                text: "Good Morning",
-              ),
+              Tab(text: AppLocalizations.of(context)!.thankYou),
+              Tab(text: AppLocalizations.of(context)!.offers),
+              Tab(text: AppLocalizations.of(context)!.goodMorning),
             ],
           ),
         ),
@@ -260,7 +255,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       var imageId = await ImageDownloader.downloadImage(
                         "$imageBaseUrl$cardImage",
                         destination: AndroidDestinationType.custom(
-                          directory: 'PatoWave/logo/',
+                          directory: 'PatoWave/Cards/',
                           inPublicDir: true,
                         ),
                       );
@@ -271,7 +266,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       children: [
                         const Icon(Icons.download, size: 18),
                         Container(width: 10),
-                        const Text("Download"),
+                        Text(AppLocalizations.of(context)!.download),
                       ],
                     ),
                   ),
@@ -299,7 +294,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       children: [
                         const Icon(Icons.share, size: 18),
                         Container(width: 10),
-                        const Text("Share"),
+                        Text(AppLocalizations.of(context)!.share),
                       ],
                     ),
                   ),

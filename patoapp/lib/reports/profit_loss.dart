@@ -383,10 +383,21 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Gross Profit',
-                    style: TextStyle(fontSize: 14, color: patowaveGreen),
+                    profitAndLoss.grossProfit() > 0
+                        ? 'Gross Profit'
+                        : profitAndLoss.grossProfit() < 0
+                            ? "Gross Loss"
+                            : "Break-Even",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: profitAndLoss.grossProfit() > 0
+                          ? patowaveGreen
+                          : profitAndLoss.grossProfit() < 0
+                              ? patowaveErrorRed
+                              : Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
                   ),
                 ],
               ),
@@ -394,7 +405,13 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
             Container(width: 20),
             Text(
               "Tsh ${formatter.format(profitAndLoss.grossProfit())}",
-              style: const TextStyle(color: patowaveGreen),
+              style: TextStyle(
+                color: profitAndLoss.grossProfit() > 0
+                    ? patowaveGreen
+                    : profitAndLoss.grossProfit() < 0
+                        ? patowaveErrorRed
+                        : Theme.of(context).textTheme.bodyLarge?.color,
+              ),
             )
           ],
         ),

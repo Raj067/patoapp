@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TermsConditionsDialog extends StatefulWidget {
   const TermsConditionsDialog({Key? key}) : super(key: key);
@@ -18,9 +19,9 @@ class _TermsConditionsDialogState extends State<TermsConditionsDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Terms and Conditions',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.termsAndConditins,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
