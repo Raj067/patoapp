@@ -6,9 +6,9 @@ import 'package:patoapp/more/feedback.dart';
 import 'package:patoapp/more/general_settings.dart';
 import 'package:patoapp/more/greetings.dart';
 import 'package:patoapp/more/invoices.dart';
-import 'package:patoapp/more/privacy_policy.dart';
+// import 'package:patoapp/more/privacy_policy.dart';
 import 'package:patoapp/more/reports.dart';
-import 'package:patoapp/more/terms_conditions.dart';
+// import 'package:patoapp/more/terms_conditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 

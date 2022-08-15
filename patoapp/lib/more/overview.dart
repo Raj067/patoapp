@@ -123,75 +123,75 @@ class _OverviewDialogState extends State<OverviewDialog> {
     );
   }
 
-  _barChartOverview() {
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const BarChartSample2(),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Your next month looks critical",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "You will probably increase earning by Tsh 80,000 you need for your daily operations",
-              // maxLines: 10,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: patowavePrimary.withAlpha(50),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Forcasted Income",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text("March, 01 - 20, 2022"),
-                        ]),
-                    const Text(
-                      "Tsh 780,000",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // _barChartOverview() {
+  //   return Card(
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.all(
+  //         Radius.circular(15),
+  //       ),
+  //     ),
+  //     elevation: 0,
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(10),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           const BarChartSample2(),
+  //           const SizedBox(
+  //             height: 20,
+  //           ),
+  //           const Text(
+  //             "Your next month looks critical",
+  //             style: TextStyle(fontWeight: FontWeight.bold),
+  //           ),
+  //           const Text(
+  //             "You will probably increase earning by Tsh 80,000 you need for your daily operations",
+  //             // maxLines: 10,
+  //           ),
+  //           const SizedBox(
+  //             height: 12,
+  //           ),
+  //           Container(
+  //             decoration: BoxDecoration(
+  //               color: patowavePrimary.withAlpha(50),
+  //               borderRadius: const BorderRadius.all(
+  //                 Radius.circular(15),
+  //               ),
+  //             ),
+  //             child: Padding(
+  //               padding: const EdgeInsets.all(10),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: const [
+  //                         Text(
+  //                           "Forcasted Income",
+  //                           style: TextStyle(fontWeight: FontWeight.bold),
+  //                         ),
+  //                         SizedBox(
+  //                           height: 4,
+  //                         ),
+  //                         Text("March, 01 - 20, 2022"),
+  //                       ]),
+  //                   const Text(
+  //                     "Tsh 780,000",
+  //                     style:
+  //                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //           const SizedBox(
+  //             height: 12,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _firstRow(BuildContext context) {
     return Row(
@@ -314,369 +314,369 @@ class _OverviewDialogState extends State<OverviewDialog> {
   }
 }
 
-Widget _expenses() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Expenses",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Total Expenses"),
-                Text("TZS 390,000"),
-              ],
-            ),
-            const PieChartSample2(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: const [
-            //     Text("Unpaid Invoices"),
-            //     Text("TZS 120,000"),
-            //   ],
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: const [
-            //     Text("Overdue Invoices"),
-            //     Text("TZS 80,000"),
-            //   ],
-            // ),
-            // const Divider(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: const [
-            //     Text("Balance"),
-            //     Text("TZS 120,000"),
-            //   ],
-            // )
-          ],
-        ),
-      ),
-    );
+// Widget _expenses() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Expenses",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Total Expenses"),
+//                 Text("TZS 390,000"),
+//               ],
+//             ),
+//             const PieChartSample2(),
+//             // Row(
+//             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             //   children: const [
+//             //     Text("Unpaid Invoices"),
+//             //     Text("TZS 120,000"),
+//             //   ],
+//             // ),
+//             // Row(
+//             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             //   children: const [
+//             //     Text("Overdue Invoices"),
+//             //     Text("TZS 80,000"),
+//             //   ],
+//             // ),
+//             // const Divider(),
+//             // Row(
+//             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             //   children: const [
+//             //     Text("Balance"),
+//             //     Text("TZS 120,000"),
+//             //   ],
+//             // )
+//           ],
+//         ),
+//       ),
+//     );
 
-Widget _invoices() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Invoices",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Paid Invoices"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Unpaid Invoices"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Overdue Invoices"),
-                Text("TZS 80,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Balance"),
-                Text("TZS 120,000"),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+// Widget _invoices() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Invoices",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Paid Invoices"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Unpaid Invoices"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Overdue Invoices"),
+//                 Text("TZS 80,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Balance"),
+//                 Text("TZS 120,000"),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
 
-Widget _payable() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Payables",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("To Customers"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("To Suppliers"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Balance"),
-                Text("TZS 120,000"),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+// Widget _payable() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Payables",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("To Customers"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("To Suppliers"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Balance"),
+//                 Text("TZS 120,000"),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
 
-Widget _receivable() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Receivable",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("From Customers"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("From Suppliers"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Balance"),
-                Text("TZS 120,000"),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+// Widget _receivable() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Receivable",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("From Customers"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("From Suppliers"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Balance"),
+//                 Text("TZS 120,000"),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
 
-Widget _profitLoss() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Profit & Loss",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Sales"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("COGS"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Gross Profit"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Expenses"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Netprofit"),
-                Text("TZS 120,000"),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+// Widget _profitLoss() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Profit & Loss",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Sales"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("COGS"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Gross Profit"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Expenses"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Netprofit"),
+//                 Text("TZS 120,000"),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
 
-Widget _balanceSheet() => Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
-        ),
-      ),
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Balance Sheet",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 5),
-            const Text(
-              "Balance Sheet as at 07-06-2022",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-            ),
-            Container(height: 10),
-            const Text(
-              "Assets",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Current Asset"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Receivable"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Fixed Assets"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Assets",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "TZS 120,000",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Container(height: 10),
-            const Text(
-              "Liabilities",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Container(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Loan"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Payable"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Profit & Loss"),
-                Text("TZS 120,000"),
-              ],
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total Liabilities",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "TZS 120,000",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+// Widget _balanceSheet() => Card(
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.all(
+//           Radius.circular(15),
+//         ),
+//       ),
+//       elevation: 0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(15),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Text(
+//               "Balance Sheet",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 5),
+//             const Text(
+//               "Balance Sheet as at 07-06-2022",
+//               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+//             ),
+//             Container(height: 10),
+//             const Text(
+//               "Assets",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Current Asset"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Receivable"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Fixed Assets"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text(
+//                   "Total Assets",
+//                   style: TextStyle(fontWeight: FontWeight.bold),
+//                 ),
+//                 Text(
+//                   "TZS 120,000",
+//                   style: TextStyle(fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             ),
+//             Container(height: 10),
+//             const Text(
+//               "Liabilities",
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//             Container(height: 10),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Loan"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Payable"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text("Profit & Loss"),
+//                 Text("TZS 120,000"),
+//               ],
+//             ),
+//             const Divider(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: const [
+//                 Text(
+//                   "Total Liabilities",
+//                   style: TextStyle(fontWeight: FontWeight.bold),
+//                 ),
+//                 Text(
+//                   "TZS 120,000",
+//                   style: TextStyle(fontWeight: FontWeight.bold),
+//                 ),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
 
 class BarChartSample2 extends StatefulWidget {
   const BarChartSample2({Key? key}) : super(key: key);

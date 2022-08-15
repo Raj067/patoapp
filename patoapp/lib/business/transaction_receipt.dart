@@ -545,7 +545,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     );
   }
 
-  _listItemsButtomSheet(List data, {bool isPurchases = false}) {
+  _listItemsButtomSheet(List data) {
     List<TableRow> fData = [];
     for (var dx in data) {
       fData.add(

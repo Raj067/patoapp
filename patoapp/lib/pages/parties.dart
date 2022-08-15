@@ -1,4 +1,4 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
+// import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
@@ -72,7 +72,7 @@ class _PartiesPageState extends State<PartiesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        // backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: const ProfileIcon(),
         actions: const [NotificationIcon(), SizedBox(width: 20)],
@@ -456,10 +456,10 @@ class _PartiesPageState extends State<PartiesPage> {
     );
   }
 
-  _partiesButtomTopBar() {
-    return PreferredSize(
-        preferredSize: const Size.fromHeight(48.0), child: ProfileIcon());
-  }
+  // _partiesButtomTopBar() {
+  //   return PreferredSize(
+  //       preferredSize: const Size.fromHeight(48.0), child: ProfileIcon());
+  // }
 
   _reArrangeDataAlphabetically() {
     customData.sort(

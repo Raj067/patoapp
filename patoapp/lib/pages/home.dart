@@ -718,7 +718,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           children: [
             Row(children: [
               const Text(
-                '27°C',
+                '26°C',
                 style: TextStyle(
                   color: patowaveWhite,
                   fontSize: 35,
@@ -744,7 +744,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
               ),
               Container(width: 15),
               const FaIcon(
-                FontAwesomeIcons.cloudRain,
+                FontAwesomeIcons.cloudSun,
                 color: patowaveWhite,
                 size: 30,
               ),
