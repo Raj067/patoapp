@@ -12,7 +12,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/invoices/edit_invoice.dart';
@@ -46,6 +48,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
 
   List<List> tableData = [];
   ProfileData? myProfile;
+  SingleCustomer? myCustomer;
   int profilePercent = 20;
 
   double subTotal = 0;
@@ -64,6 +67,15 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     myProfile = fromJsonProfile(
       profile.firstWhere((element) => element['id'] == shopId),
     );
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+
+    for (Map<String, dynamic> e in customers) {
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonCustomer(e));
+      }
+    }
+    myCustomer = finalData.firstWhere((e) => e.id == widget.invoice.customerId);
     setState(() {});
   }
 
@@ -207,9 +219,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       ),
                     ),
                     pw.Text(widget.invoice.fullName),
-                    pw.Text('Dar es salaam'),
-                    pw.Text('0679190720'),
-                    pw.Text('sample@patowave.com'),
+                    pw.Text(myCustomer==null?"":myCustomer!.address),
+                    pw.Text(myCustomer == null ? "" : myCustomer!.phoneNumber),
+                    pw.Text(myCustomer==null?"":myCustomer!.email),
                   ],
                 ),
                 pw.Spacer(),
@@ -637,9 +649,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       ),
                     ),
                     Text(widget.invoice.fullName),
-                    const Text('Dar es salaam'),
-                    const Text('0679190720'),
-                    const Text('sample@patowave.com'),
+                    Text(myCustomer==null?"":myCustomer!.address),
+                    Text(myCustomer==null?"":myCustomer!.phoneNumber),
+                    Text(myCustomer == null ? "" : myCustomer!.email),
                   ],
                 ),
               ),
