@@ -1123,7 +1123,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                   Text(
                     isSales
-                        ? "Tsh ${product.quantity * product.purchasesPrice}"
+                        ? "Tsh ${product.quantity * product.sellingPrice}"
                         : "Tsh ${product.quantity * product.purchasesPrice}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
