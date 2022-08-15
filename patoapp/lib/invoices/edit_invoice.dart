@@ -1,10 +1,12 @@
 // import 'dart:convert';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-// import 'package:patoapp/animations/error.dart';
-// import 'package:patoapp/animations/please_wait.dart';
-// import 'package:patoapp/animations/time_out.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
@@ -14,7 +16,7 @@ import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
 class EditInvoice extends StatefulWidget {
   final Function resetData;
@@ -93,7 +95,7 @@ class _EditInvoiceState extends State<EditInvoice> {
           quantity: e['quantity'],
           productUnit: e['product_unit'],
           productName: e['product'],
-          id: e['id'],
+          id: e['productId'],
           sellingPrice: e['price'],
           purchasesPrice: 0,
         ),
@@ -210,7 +212,7 @@ class _EditInvoiceState extends State<EditInvoice> {
                 ),
                 onPressed: () {
                   if (invoiceFormKey.currentState!.validate()) {
-                    // _submitSalesCustomerData();
+                    _submitSalesCustomerData();
                   }
                 },
                 child: const Text(
@@ -712,69 +714,70 @@ class _EditInvoiceState extends State<EditInvoice> {
     // allProducts
   }
 
-  // _submitSalesCustomerData() async {
-  //   showPleaseWait(
-  //     context: context,
-  //     builder: (context) => const ModalFit(),
-  //   );
-  //   List<Map> items = [];
-  //   for (var element in addedItemsToSales) {
-  //     items.add({
-  //       "id": element.id,
-  //       "price": element.sellingPrice,
-  //       "quantity": element.quantity,
-  //       "description": invoiceDescription.text,
-  //     });
-  //   }
-  //   // shop ID
-  //   String? activeShop = await storage.read(key: 'activeShop');
-  //   int shopId = int.parse(activeShop ?? '0');
-  //   String accessToken = await storage.read(key: 'access') ?? "";
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('${baseUrl}api/edit-invoice/'),
-  //       headers: getAuthHeaders(accessToken),
-  //       body: jsonEncode(<String, dynamic>{
-  //         'amount_received': receivedAmount.toInt(),
-  //         'total_amount': totalAmount.toInt() - discountAmount.toInt(),
-  //         'discount': discountAmount.toInt(),
-  //         'items': widget.invoice.items,
-  //         'final_items': items,
-  //         'invoiceNo': invoiceNo,
-  //         'dueDate': dueDate.text,
-  //         'description': invoiceDescription.text == ''
-  //             ? 'Invoice'
-  //             : invoiceDescription.text,
-  //         'invoiceId': widget.invoice.id,
-  //         'shopId': shopId,
-  //       }),
-  //     );
+  _submitSalesCustomerData() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    List<Map> items = [];
+    for (var element in addedItemsToSales) {
+      items.add({
+        "id": element.id,
+        "price": element.sellingPrice,
+        "quantity": element.quantity,
+        "description": invoiceDescription.text,
+      });
+    }
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+    String accessToken = await storage.read(key: 'access') ?? "";
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/edit-invoice/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount_received': receivedAmount.toInt(),
+          'total_amount': totalAmount.toInt() - discountAmount.toInt(),
+          'discount': discountAmount.toInt(),
+          'items': widget.invoice.items,
+          'final_items': items,
+          'invoiceNo': invoiceNo,
+          'dueDate': dueDate.text,
+          'description': invoiceDescription.text == ''
+              ? 'Invoice'
+              : invoiceDescription.text,
+          'invoiceId': widget.invoice.id,
+          'shopId': shopId,
+        }),
+      );
 
-  //     if (response.statusCode == 201) {
-  //       widget.resetData();
-  //       // ignore: use_build_context_synchronously
-  //       Navigator.pop(context);
-  //       // widget.resetData();
-  //       // ignore: use_build_context_synchronously
-  //       Navigator.pop(context);
-  //       // Navigator
-  //     } else {
-  //       // ignore: use_build_context_synchronously
-  //       Navigator.pop(context);
-  //       showErrorMessage(
-  //         context: context,
-  //         builder: (context) => const ModalFitError(),
-  //       );
-  //       // throw Exception('Failed to updated customer.');
-  //     }
-  //   } catch (e) {
-  //     // ignore: use_build_context_synchronously
-  //     Navigator.pop(context);
-  //     showTimeOutMessage(
-  //       context: context,
-  //       builder: (context) => const ModalFitTimeOut(),
-  //     );
-  //   }
-  // }
-
+      if (response.statusCode == 201) {
+        widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // widget.resetData();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // Navigator
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
+  }
 }

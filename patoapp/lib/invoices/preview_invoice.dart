@@ -439,7 +439,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         MaterialPageRoute<void>(
           builder: (BuildContext context) => EditInvoice(
             invoice: widget.invoice,
-            resetData: () {},
+            resetData: () {
+              widget.resetData();
+            },
           ),
           fullscreenDialog: true,
         ),
@@ -571,7 +573,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         ),
         actions: [
           IconButton(
-            onPressed: (){},icon: const Icon(
+            onPressed: () {},
+            icon: const Icon(
               Icons.settings,
               color: patowaveWhite,
             ),
