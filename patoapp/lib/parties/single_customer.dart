@@ -1,13 +1,14 @@
-// ignore: file_names
-// ignore_for_file: use_build_context_synchronously
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -31,6 +32,7 @@ class SingleCustomerPage extends StatefulWidget {
 
 class _SingleCustomerPageState extends State<SingleCustomerPage> {
   TextEditingController dateInput = TextEditingController();
+  int receiptNo = Random().nextInt(10000);
   @override
   void dispose() {
     dateInput.dispose();
@@ -251,13 +253,12 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       children: [
                         Text(AppLocalizations.of(context)!.note),
                         Container(),
-                        Text(AppLocalizations.of(context)!.received),
-                        Text(AppLocalizations.of(context)!.paid),
+                        Text(AppLocalizations.of(context)!.amount),
                       ],
                     ),
                   ),
                 ),
-                _allFinancialData(),
+                _allFinancialData(context),
               ],
             ),
           )
@@ -421,97 +422,345 @@ Powered by Patowave""";
     }
   }
 
-  _allFinancialData() {
-    List<TableRow> data = [];
+  _allFinancialData(BuildContext context) {
+    List<Widget> data = [];
     for (var dx in widget.customer.financialData) {
-      data.add(_singleFinancialData(
-        date: dx['date'],
-        description: dx['description'],
-        received: dx['received'],
-        paid: dx['paid'],
-      ));
-      // data.add(
-      //   const Divider(height: 0, indent: 10, endIndent: 10),
-      // );
-    }
-    return Table(
-      children: data,
-      border: TableBorder(
-        horizontalInside: BorderSide(
-          width: 1,
-          color: Theme.of(context).dividerColor,
+      data.add(
+        _singleFinancialData2(
+          context,
+          FinancialData(
+            date: DateTime.parse(dx['date']),
+            isCashSale: false,
+            isPaymentIn: dx['received'] == 0 ? false : true,
+            isExpenses: false,
+            isPaymentOut: dx['received'] == 0 ? true : false,
+            isPurchases: false,
+            isInvoice: false,
+            name: widget.customer.fullName,
+            description: dx['description'],
+            details: [],
+            amount: dx['received'] != 0 ? dx['received'] : dx['paid'],
+            receipt: 'Receipt $receiptNo',
+            discount: 0,
+            id: '0',
+            shopId: 0,
+          ),
         ),
-      ),
-      // Map<int, TableColumnWidth>? columnWidths,
-      columnWidths: const {
-        0: FractionColumnWidth(0.50),
-        1: FractionColumnWidth(0.25),
-        2: FractionColumnWidth(0.25),
-      },
+      );
+      data.add(const Divider(height: 0, indent: 10, endIndent: 10));
+    }
+    return Column(
+      children: data,
     );
   }
 
-  TableRow _singleFinancialData({
-    required String description,
-    required String date,
-    required int received,
-    required int paid,
-  }) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-          child: Row(
-            children: [
-              received == 0
-                  ? const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: patowaveErrorRed,
-                    )
-                  : const Icon(
-                      Icons.keyboard_arrow_up,
+  // _allFinancialData2() {
+  //   List<TableRow> data = [];
+  //   for (var dx in widget.customer.financialData) {
+  //     data.add(_singleFinancialData(
+  //       date: dx['date'],
+  //       description: dx['description'],
+  //       received: dx['received'],
+  //       paid: dx['paid'],
+  //     ));
+  //     // data.add(
+  //     //   const Divider(height: 0, indent: 10, endIndent: 10),
+  //     // );
+  //   }
+  //   return Table(
+  //     children: data,
+  //     border: TableBorder(
+  //       horizontalInside: BorderSide(
+  //         width: 1,
+  //         color: Theme.of(context).dividerColor,
+  //       ),
+  //     ),
+  //     // Map<int, TableColumnWidth>? columnWidths,
+  //     columnWidths: const {
+  //       0: FractionColumnWidth(0.50),
+  //       1: FractionColumnWidth(0.25),
+  //       2: FractionColumnWidth(0.25),
+  //     },
+  //   );
+  // }
+
+  Widget _singleFinancialData2(BuildContext context, FinancialData data) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => TransactionReceipt(data: data),
+            fullscreenDialog: true,
+          ),
+        );
+      },
+      onLongPress: () {
+        showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          context: context,
+          builder: (context) {
+            // Using Wrap makes the bottom sheet height the height of the content.
+            // Otherwise, the height will be half the height of the screen.
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Wrap(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.transactionDetails,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Text(
+                            //   data.getDescriptionName(),
+                            //   style:
+                            //       const TextStyle(fontWeight: FontWeight.bold),
+                            // ),
+                            // Container(height: 4),
+                            Text(
+                              data.getDescriptionDetails(),
+                              style: const TextStyle(fontSize: 12),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(width: 10),
+                      Text(
+                        "Tsh. ${formatter.format(data.amount)}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: data.isIncome()
+                              ? patowaveGreen
+                              : patowaveErrorRed,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.date,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Container(height: 4),
+                          Text(
+                            data.getTimeString(),
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                      Text(
+                        "${AppLocalizations.of(context)!.time}: ${DateFormat('hh:mm a').format(data.date)}",
+                      ),
+                    ],
+                  ),
+                  Container(height: 30),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Expanded(
+                  //       child: ElevatedButton(
+                  //         onPressed: () {
+                  //           showPleaseWait(
+                  //             context: context,
+                  //             builder: (context) => const ModalFit(),
+                  //           );
+                  //           _deletingTransaction(data);
+
+                  //           // setState(() {
+                  //           //   data.deleteTransaction();
+                  //           // });
+                  //           // Navigator.pop(context);
+                  //         },
+                  //         style: ButtonStyle(
+                  //           // MaterialStateProperty<Color?>? backgroundColor,
+                  //           backgroundColor:
+                  //               MaterialStateProperty.all(patowaveErrorRed),
+                  //           minimumSize: MaterialStateProperty.all(
+                  //             const Size(45, 45),
+                  //           ),
+                  //           shape: MaterialStateProperty.all(
+                  //             const RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.all(
+                  //                 Radius.circular(30),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         child: Text(AppLocalizations.of(context)!.delete),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.getDescriptionDetails(),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    DateFormat('EEE, d/M/y').format(data.date),
+                    style:
+                        const TextStyle(fontSize: 12, color: patowaveWarning),
+                  ),
+                  // DateFormat('EEE, d/M/y').format(pickedDate)
+                ],
+              ),
+            ),
+            Container(width: 20),
+            data.isIncome()
+                ? Text(
+                    "Tsh ${formatter.format(data.amount)}",
+                    style: const TextStyle(
                       color: patowaveGreen,
                     ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      description,
-                      style: const TextStyle(fontSize: 12),
+                  )
+                : Text(
+                    "Tsh ${formatter.format(data.amount)}",
+                    style: const TextStyle(
+                      color: patowaveErrorRed,
                     ),
-                    Text(
-                      DateFormat('d MMMM, yyy').format((DateTime.parse(date))),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: patowaveWarning,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                  ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: Text(
-            received == 0 ? '-' : formatter.format(received),
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: patowaveGreen),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(5, 10, 10, 10),
-          child: Text(
-            paid == 0 ? '-' : formatter.format(paid),
-            textAlign: TextAlign.right,
-            style: const TextStyle(color: patowaveErrorRed),
-          ),
-        ),
-      ],
+      ),
     );
   }
+
+  // TableRow _singleFinancialData({
+  //   required String description,
+  //   required String date,
+  //   required int received,
+  //   required int paid,
+  // }) {
+  //   return TableRow(
+  //     children: [
+  //       Padding(
+  //         padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+  //         child: Row(
+  //           children: [
+  //             received == 0
+  //                 ? const Icon(
+  //                     Icons.keyboard_arrow_down,
+  //                     color: patowaveErrorRed,
+  //                   )
+  //                 : const Icon(
+  //                     Icons.keyboard_arrow_up,
+  //                     color: patowaveGreen,
+  //                   ),
+  //             Expanded(
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Text(
+  //                     description,
+  //                     style: const TextStyle(fontSize: 12),
+  //                   ),
+  //                   Text(
+  //                     DateFormat('d MMMM, yyy').format((DateTime.parse(date))),
+  //                     style: const TextStyle(
+  //                       fontSize: 12,
+  //                       color: patowaveWarning,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+  //         child: Text(
+  //           received == 0 ? '-' : formatter.format(received),
+  //           textAlign: TextAlign.center,
+  //           style: const TextStyle(color: patowaveGreen),
+  //         ),
+  //       ),
+  //       Padding(
+  //         padding: const EdgeInsets.fromLTRB(5, 10, 10, 10),
+  //         child: Text(
+  //           paid == 0 ? '-' : formatter.format(paid),
+  //           textAlign: TextAlign.right,
+  //           style: const TextStyle(color: patowaveErrorRed),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  // _deletingTransaction(FinancialData data) async {
+  //   String accessToken = await storage.read(key: 'access') ?? "";
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('${baseUrl}api/deleting-single-transaction/'),
+  //       headers: getAuthHeaders(accessToken),
+  //       body: jsonEncode(<String, dynamic>{
+  //         'transaction': data.getTransactionType(),
+  //         'id': data.getTransactionID(),
+  //       }),
+  //     );
+
+  //     if (response.statusCode == 201) {
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       setState(() {
+  //         data.deleteTransaction();
+  //       });
+  //     } else {
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pop(context);
+  //       showErrorMessage(
+  //         context: context,
+  //         builder: (context) => const ModalFitError(),
+  //       );
+  //       // throw Exception('Failed to updated customer.');
+  //     }
+  //   } catch (e) {
+  //     // ignore: use_build_context_synchronously
+  //     Navigator.pop(context);
+  //     showTimeOutMessage(
+  //       context: context,
+  //       builder: (context) => const ModalFitTimeOut(),
+  //     );
+  //   }
+  // }
 
   _firstRowData(SingleCustomer customer) => Card(
         shape: const RoundedRectangleBorder(
@@ -550,7 +799,9 @@ Powered by Patowave""";
                           children: [
                             Text(AppLocalizations.of(context)!.debtBalance),
                             Text(
-                              customer.isToReceive() ? AppLocalizations.of(context)!.toReceive : AppLocalizations.of(context)!.toGive,
+                              customer.isToReceive()
+                                  ? AppLocalizations.of(context)!.toReceive
+                                  : AppLocalizations.of(context)!.toGive,
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],

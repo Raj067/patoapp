@@ -21,11 +21,7 @@ class PartiesPage extends StatefulWidget {
 
 class _PartiesPageState extends State<PartiesPage> {
   double totalDebtMonth = 0;
-  double totalDebtWeek = 0;
   double customersDebtMonth = 0;
-  double customersDebtWeek = 0;
-  String dropdownValue = 'This Month';
-  List dropDownList = ['This Month', 'This Week'];
   bool isAlreadyLoad = false;
 
   // For searching contacts
@@ -33,35 +29,6 @@ class _PartiesPageState extends State<PartiesPage> {
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
-
-  fetchCustomerHeader(SingleCustomer data) {
-    for (Map dx in data.financialData) {
-      DateTime date = DateTime.parse(dx['date']);
-
-      // for monthly
-      if (date.isAfter(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month - 1,
-          DateTime.now().day,
-        ),
-      )) {
-        customersDebtMonth += dx['paid'];
-        totalDebtMonth += dx['received'];
-      }
-      // for Weekly
-      if (date.isAfter(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day - 7,
-        ),
-      )) {
-        customersDebtWeek += dx['paid'];
-        totalDebtWeek += dx['received'];
-      }
-    }
-  }
 
   fetchCustomersDB() async {
     // shop ID
@@ -71,12 +38,15 @@ class _PartiesPageState extends State<PartiesPage> {
     List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
     List<SingleCustomer> finalData = [];
     totalDebtMonth = 0;
-    totalDebtWeek = 0;
     customersDebtMonth = 0;
-    customersDebtWeek = 0;
     for (Map<String, dynamic> e in customers) {
       if (e['shopId'] == shopId) {
-        fetchCustomerHeader(fromJsonCustomer(e));
+        if (fromJsonCustomer(e).isToReceive()) {
+          totalDebtMonth += fromJsonCustomer(e).amount;
+        } else {
+          customersDebtMonth += fromJsonCustomer(e).amount * -1;
+        }
+
         finalData.add(fromJsonCustomer(e));
       }
     }
@@ -101,7 +71,13 @@ class _PartiesPageState extends State<PartiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainTopBar(_partiesButtomTopBar(), context),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        title: const ProfileIcon(),
+        actions: const [NotificationIcon(), SizedBox(width: 20)],
+        elevation: 0,
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
@@ -406,7 +382,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: const TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(totalDebtWeek) : formatter.format(totalDebtMonth)}",
+                            "Tsh ${formatter.format(totalDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -426,7 +402,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: const TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${dropdownValue == AppLocalizations.of(context)!.addPayment ? formatter.format(customersDebtWeek) : formatter.format(customersDebtMonth)}",
+                            "Tsh ${formatter.format(customersDebtMonth)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 16,
@@ -482,64 +458,7 @@ class _PartiesPageState extends State<PartiesPage> {
 
   _partiesButtomTopBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(48.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
-            child: SizedBox(
-              height: 30,
-              width: 120,
-              child: DropdownButtonFormField2(
-                value: dropdownValue,
-                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                dropdownOverButton: true,
-                buttonHeight: 30,
-                buttonWidth: 50,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Theme.of(context).chipTheme.backgroundColor,
-                  contentPadding: const EdgeInsets.all(5),
-                  enabled: false,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: InputBorder.none,
-                ),
-                isExpanded: false,
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                ),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                items: dropDownList
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    dropdownValue = value.toString();
-                  });
-                  //Do something when changing the item if you want.
-                },
-                onSaved: (value) {
-                  // selectedValue = value.toString();
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        preferredSize: const Size.fromHeight(48.0), child: ProfileIcon());
   }
 
   _reArrangeDataAlphabetically() {

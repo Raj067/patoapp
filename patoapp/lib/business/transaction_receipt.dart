@@ -51,7 +51,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     address = profile[0]['businessAddress'];
     telphone = profile[0]['businessPhone'] == ''
         ? '-'
-        : "${profile[0]['businessPhone']}";
+        : "+255${profile[0]['businessPhone']}";
     isLoading = false;
     setState(() {});
   }
