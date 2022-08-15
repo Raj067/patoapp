@@ -222,7 +222,8 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
 
                     if (pickedTime != null) {
                       setState(() {
-                        startTime.text = pickedTime.format(context);
+                        startTime.text =
+                            "${pickedTime.hour}:${pickedTime.minute}";
                         // .toString(); //set output date to TextField value.
                       });
                     } else {}
@@ -267,7 +268,8 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
 
                     if (pickedTime != null) {
                       setState(() {
-                        endTime.text = pickedTime.format(context);
+                        endTime.text =
+                            "${pickedTime.hour}:${pickedTime.minute}";
                         // .toString(); //set output date to TextField value.
                       });
                     } else {}

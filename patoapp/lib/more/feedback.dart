@@ -63,18 +63,18 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   size: 16,
                 ),
                 Container(width: 10),
-                const Text("0123456789"),
+                const Text("+255765865640"),
               ],
             ),
             Container(height: 10),
             Row(
               children: [
                 const Icon(
-                  Icons.phone_android,
+                  Icons.whatsapp,
                   size: 16,
                 ),
                 Container(width: 10),
-                const Text("0123456789"),
+                const Text("+255765865640"),
               ],
             ),
             Container(height: 30),

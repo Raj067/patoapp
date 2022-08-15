@@ -3,16 +3,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:patoapp/accounts/set_account.dart';
 import 'package:patoapp/accounts/signup.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/login_authenticate.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -134,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                            // print(MediaQuery.of(context).size.height);
+                          onPressed: () async {
+                            launchUrl(Uri.parse('${baseUrl}forgot-password/'));
                           },
                           child: const Text("Forgot Password?"),
                         ),
@@ -238,6 +243,39 @@ class _LoginPageState extends State<LoginPage> {
         await storage.write(key: "refresh", value: tokens['refresh']);
         await storage.write(key: "access", value: tokens['access']);
         await storage.write(key: "shopName", value: "true");
+
+        // Activate shop
+        SyncProfile syncProfile = SyncProfile();
+        await syncProfile.fetchData();
+
+        List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+        List<ProfileData> finalData = [];
+        finalData.addAll(profile
+            .map((dx) => ProfileData(
+                  instagramName: dx['instagramName'],
+                  businessSignature: dx['businessSignature'],
+                  businessSlogan: dx['businessSlogan'],
+                  businessLogo: dx['businessLogo'],
+                  businessCategory: dx['businessCategory'],
+                  businessType: dx['businessType'],
+                  businessEmail: dx['businessEmail'],
+                  businessPhone: "${dx['businessPhone']}",
+                  businessAddress: dx['businessAddress'],
+                  businessName: dx['businessName'],
+                  id: dx['id'],
+                ))
+            .toList());
+        if (finalData.isNotEmpty) {
+          await storage.write(key: "activeShop", value: "${finalData[0].id}");
+        } else {
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const SetAccountPage(),
+            ),
+          );
+        }
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
           context,

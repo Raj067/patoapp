@@ -10,6 +10,7 @@ import 'package:patoapp/animations/signup_authenticate.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -184,11 +185,47 @@ class _SignupPageState extends State<SignupPage> {
                             },
                           ),
                           Expanded(
-                            child: TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "By signing up, you agree to our privacy policy and our Terms of conditions",
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('By signing up, you agree to our '),
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        launchUrl(Uri.parse(
+                                            '${baseUrl}privacy-policy/'));
+                                      },
+                                      child: const Text(
+                                        'privacy policy ',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: patowavePrimary,
+                                        ),
+                                      ),
+                                    ),
+                                    const Text('and'),
+                                    InkWell(
+                                      onTap: () async {
+                                        launchUrl(
+                                          Uri.parse(
+                                              '${baseUrl}terms-conditions/'),
+                                        );
+                                      },
+                                      child: const Text(
+                                        ' Terms of conditions',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: patowavePrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                           // TextButton(
