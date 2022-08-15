@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/more/feedback.dart';
 import 'package:patoapp/more/general_settings.dart';
 import 'package:patoapp/more/greetings.dart';
@@ -9,6 +10,7 @@ import 'package:patoapp/more/privacy_policy.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/more/terms_conditions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../components/top_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,7 +83,11 @@ class MorePage extends StatelessWidget {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
-                      onTap: () {},
+                      onTap: () async{
+                        launchUrl(
+                          Uri.parse('${baseUrl}tutorials/'),
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Row(
@@ -135,15 +141,18 @@ class MorePage extends StatelessWidget {
                   children: [
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const TermsConditionsDialog(),
-                            fullscreenDialog: true,
-                          ),
+                      onTap: () async {
+                        launchUrl(
+                          Uri.parse('${baseUrl}terms-conditions/'),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute<void>(
+                        //     builder: (BuildContext context) =>
+                        //         const TermsConditionsDialog(),
+                        //     fullscreenDialog: true,
+                        //   ),
+                        // );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -176,15 +185,16 @@ class MorePage extends StatelessWidget {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                const PrivacyPolicyDialog(),
-                            fullscreenDialog: true,
-                          ),
-                        );
+                      onTap: () async {
+                        launchUrl(Uri.parse('${baseUrl}privacy-policy/'));
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute<void>(
+                        //     builder: (BuildContext context) =>
+                        //         const PrivacyPolicyDialog(),
+                        //     fullscreenDialog: true,
+                        //   ),
+                        // );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10),

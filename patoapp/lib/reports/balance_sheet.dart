@@ -26,6 +26,8 @@ class _BalanceSheetState extends State<BalanceSheet> {
     ),
     end: DateTime.now(),
   );
+  double receivable = 0;
+  double payable = 0;
   double inventoryInHandBalanceSheetVal = 0;
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
     data: [],
@@ -64,6 +66,10 @@ class _BalanceSheetState extends State<BalanceSheet> {
       }
     }
     inventoryInHandBalanceSheetVal = val;
+    Map data = await customerDataPrepared();
+    receivable = data['receivable'];
+    payable = data['payable'];
+
     setState(() {});
   }
 
@@ -71,6 +77,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
   void initState() {
     fetchBusinessDB();
     inventoryInHandBalanceSheet();
+
     super.initState();
   }
 
@@ -303,7 +310,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
             ),
             Container(width: 20),
             Text(
-              "Tsh ${formatter.format(profitAndLoss.accountReceivableBalanceSheet())}",
+              "Tsh ${formatter.format(receivable)}",
             )
           ],
         ),
@@ -370,7 +377,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
             ),
             Container(width: 20),
             Text(
-              "Tsh ${formatter.format(profitAndLoss.accountPayableBalanceSheet())}",
+              "Tsh ${formatter.format(payable)}",
             )
           ],
         ),
@@ -401,7 +408,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
             ),
             Container(width: 20),
             Text(
-              "Tsh ${formatter.format(profitAndLoss.totalAssetBalanceSheet() + inventoryInHandBalanceSheetVal - profitAndLoss.accountPayableBalanceSheet())}",
+              "Tsh ${formatter.format(profitAndLoss.totalAssetBalanceSheet() + inventoryInHandBalanceSheetVal - payable)}",
             )
           ],
         ),

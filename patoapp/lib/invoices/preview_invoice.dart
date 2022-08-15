@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 // import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 // import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
@@ -16,10 +19,9 @@ import 'package:patoapp/invoices/edit_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdfx/pdfx.dart';
 import 'package:http/http.dart' as http;
 import 'package:printing/printing.dart';
-// import 'package:path/path.dart' as pt;
+import 'package:path/path.dart' as pt;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreviewInvoice extends StatefulWidget {
@@ -51,6 +53,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   double tax = 0;
   double paid = 0;
   double balanceDue = 0;
+  List<TableRow> myRowData = [];
 
   fetchProfileDB() async {
     // shop ID
@@ -501,6 +504,45 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               "Tsh ${formatter.format(e['price'] * e['quantity'])}",
             ])
         .toList();
+    myRowData.add(const TableRow(children: [
+      Text(
+        'Item',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      ),
+      Text(
+        'Price',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      ),
+      Text(
+        'Quantity',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      ),
+      Text(
+        'Total',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      ),
+    ]));
+    for (List e in tableData) {
+      myRowData.add(TableRow(children: [
+        Text(
+          e[0],
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          e[1],
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          e[2],
+          style: const TextStyle(fontSize: 12),
+        ),
+        Text(
+          e[3],
+          style: const TextStyle(fontSize: 12),
+        ),
+      ]));
+    }
+
     subTotal = widget.invoice.totalAmount.toDouble();
     discount = widget.invoice.discount.toDouble();
     tax = 0;
@@ -529,24 +571,142 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
+            onPressed: (){},icon: const Icon(
               Icons.settings,
               color: patowaveWhite,
             ),
           ),
         ],
       ),
-      body: PdfViewPinch(
-        controller: PdfControllerPinch(
-          document: PdfDocument.openData(_generatePdf()),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(10),
+        child: Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          elevation: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: patowavePrimary.withAlpha(50),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                  'Due in ${DateFormat('EEE d MMMM, yyy').format(DateTime.parse(widget.invoice.dueDate))}'),
+                            ],
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Invoice To',
+                      style: TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(widget.invoice.fullName),
+                    const Text('Dar es salaam'),
+                    const Text('0679190720'),
+                    const Text('sample@patowave.com'),
+                  ],
+                ),
+              ),
+              const Divider(height: 0),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Invoice Details',
+                      style: TextStyle(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Invoice No:',
+                            style: TextStyle(),
+                          ),
+                          Text(widget.invoice.invoiceNo),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Issued Date: '),
+                          Text(
+                            DateFormat('d-M-yyy').format(DateTime.now()),
+                          ),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Due Date: '),
+                          Text(
+                            DateFormat('d-M-yyy')
+                                .format(DateTime.parse(widget.invoice.dueDate)),
+                          ),
+                        ]),
+                  ],
+                ),
+              ),
+              const Divider(height: 0),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Table(children: myRowData),
+              ),
+              Container(),
+            ],
+          ),
         ),
       ),
-      // body: PdfPreview(
-      //   build: (format) => _generatePdf(),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final bytes = await _generatePdf();
+          final dir = await getExternalStorageDirectory();
+          String myPath =
+              pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+          myPath = '$myPath/PatoWave/invoice';
+          Directory('$myPath/').create();
+          final file = File('$myPath/invoice-${widget.invoice.invoiceNo}.pdf');
+          await file.writeAsBytes(bytes);
+          await ImageDownloader.open(file.path);
+        },
+        child: const Icon(Icons.download),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
         items: <BottomNavigationBarItem>[
@@ -573,55 +733,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
       ),
-      persistentFooterButtons: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                    'Due in ${DateFormat('EEE d MMMM, yyy').format(DateTime.parse(widget.invoice.dueDate))}'),
-              ],
-            ),
-          ),
-          Container(width: 10),
-          ElevatedButton(
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(
-                const Size(35, 35),
-              ),
-              shape: MaterialStateProperty.all(
-                const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
-                  ),
-                ),
-              ),
-            ),
-            onPressed: () async {
-              // final bytes = await _generatePdf();
-              // final dir = await getExternalStorageDirectory();
-              // String myPath =
-              //     pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-              // myPath = '$myPath/PatoWave/invoice';
-              // Directory('$myPath/').create();
-              // final file = File('$myPath/invoice.pdf');
-              // await file.writeAsBytes(bytes);
-              // await ImageDownloader.open(file.path);
-            },
-            child: const Text(
-              "Pay Now",
-            ),
-          ),
-        ]),
-      ],
     );
   }
 }

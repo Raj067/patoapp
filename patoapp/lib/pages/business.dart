@@ -108,9 +108,11 @@ class _BusinessPageState extends State<BusinessPage> {
     expensesMonth = 0;
     profitMonth = 0;
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
-        DateTime date = DateTime.parse(dx['date']);
-        fetchHeaderData(date: date, data: fromJsonBusiness(dx));
+      DateTime date = DateTime.parse(dx['date']);
+      fetchHeaderData(date: date, data: fromJsonBusiness(dx));
+      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+        // DateTime date = DateTime.parse(dx['date']);
+        // fetchHeaderData(date: date, data: fromJsonBusiness(dx));
         if (date.isAfter(pickedRangeDate.start) &&
             date.isBefore(pickedRangeDate.end)) {
           finalData.add(fromJsonBusiness(dx));
