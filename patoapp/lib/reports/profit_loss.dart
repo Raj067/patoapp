@@ -39,7 +39,7 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+      if (dx['shopId'] == shopId) {
         finalData.add(fromJsonBusiness(dx));
       }
     }

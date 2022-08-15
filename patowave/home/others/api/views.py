@@ -406,7 +406,7 @@ def purchases_transaction_api(request):
                 product_name=Product.objects.get(id=dx.get('id')).product_name,
                 product_id=dx.get('id'),
                 price=Product.objects.get(
-                    id=dx.get('id')).selling_price_primary,
+                    id=dx.get('id')).purchases_price,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 purchases_data=reg,

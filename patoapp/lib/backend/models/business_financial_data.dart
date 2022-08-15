@@ -126,7 +126,7 @@ class FinancialData {
       return false;
     }
     if (isInvoice) {
-      return false;
+      return true;
     }
     if (isPurchases) {
       return false;

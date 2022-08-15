@@ -58,10 +58,16 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
     )) {
       if (data.isIncome()) {
-        salesMonth += data.amount;
+        // only cashsales and invoice
+        if (data.isCashSale || data.isInvoice) {
+          salesMonth += data.amount;
+        }
       }
       if (!data.isIncome()) {
-        expensesMonth += data.amount;
+        // only expenses and purchases
+        if (data.isExpenses || data.isPurchases) {
+          expensesMonth += data.amount;
+        }
       }
       profitMonth = salesMonth - expensesMonth;
     }
@@ -74,10 +80,14 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
     )) {
       if (data.isIncome()) {
-        salesWeek += data.amount;
+        if (data.isCashSale || data.isInvoice) {
+          salesWeek += data.amount;
+        }
       }
       if (!data.isIncome()) {
-        expensesWeek += data.amount;
+        if (data.isExpenses || data.isPurchases) {
+          expensesWeek += data.amount;
+        }
       }
       profitWeek = salesWeek - expensesWeek;
     }
@@ -98,7 +108,7 @@ class _BusinessPageState extends State<BusinessPage> {
     expensesMonth = 0;
     profitMonth = 0;
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+      if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         fetchHeaderData(date: date, data: fromJsonBusiness(dx));
         if (date.isAfter(pickedRangeDate.start) &&
@@ -466,74 +476,77 @@ class _BusinessPageState extends State<BusinessPage> {
                     ],
                   ),
                   Container(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showPleaseWait(
-                              context: context,
-                              builder: (context) => const ModalFit(),
-                            );
-                            _deletingTransaction(data);
+                  data.isInvoice
+                      ? Container()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  showPleaseWait(
+                                    context: context,
+                                    builder: (context) => const ModalFit(),
+                                  );
+                                  _deletingTransaction(data);
 
-                            // setState(() {
-                            //   data.deleteTransaction();
-                            // });
-                            // Navigator.pop(context);
-                          },
-                          style: ButtonStyle(
-                            // MaterialStateProperty<Color?>? backgroundColor,
-                            backgroundColor:
-                                MaterialStateProperty.all(patowaveErrorRed),
-                            minimumSize: MaterialStateProperty.all(
-                              const Size(45, 45),
-                            ),
-                            shape: MaterialStateProperty.all(
-                              const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30),
+                                  // setState(() {
+                                  //   data.deleteTransaction();
+                                  // });
+                                  // Navigator.pop(context);
+                                },
+                                style: ButtonStyle(
+                                  // MaterialStateProperty<Color?>? backgroundColor,
+                                  backgroundColor: MaterialStateProperty.all(
+                                      patowaveErrorRed),
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(45, 45),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30),
+                                      ),
+                                    ),
+                                  ),
                                 ),
+                                child:
+                                    Text(AppLocalizations.of(context)!.delete),
                               ),
                             ),
-                          ),
-                          child: Text(AppLocalizations.of(context)!.delete),
+                            // Container(width: 10),
+                            // Expanded(
+                            //   child: ElevatedButton(
+                            //     onPressed: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute<void>(
+                            //           builder: (BuildContext context) =>
+                            //               EditTransaction(data: data),
+                            //           fullscreenDialog: true,
+                            //         ),
+                            //       );
+                            //     },
+                            //     style: ButtonStyle(
+                            //       minimumSize: MaterialStateProperty.all(
+                            //         const Size(45, 45),
+                            //       ),
+                            //       shape: MaterialStateProperty.all(
+                            //         const RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.all(
+                            //             Radius.circular(30),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     child: const Text(
+                            //       "Edit",
+                            //       style: TextStyle(color: patowaveWhite),
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
                         ),
-                      ),
-                      // Container(width: 10),
-                      // Expanded(
-                      //   child: ElevatedButton(
-                      //     onPressed: () {
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute<void>(
-                      //           builder: (BuildContext context) =>
-                      //               EditTransaction(data: data),
-                      //           fullscreenDialog: true,
-                      //         ),
-                      //       );
-                      //     },
-                      //     style: ButtonStyle(
-                      //       minimumSize: MaterialStateProperty.all(
-                      //         const Size(45, 45),
-                      //       ),
-                      //       shape: MaterialStateProperty.all(
-                      //         const RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.all(
-                      //             Radius.circular(30),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     child: const Text(
-                      //       "Edit",
-                      //       style: TextStyle(color: patowaveWhite),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
                 ],
               ),
             );

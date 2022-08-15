@@ -55,7 +55,8 @@ def business_financial_data(request, shop):
                 "date": dx.updated_at,
                 "description": dx.description,
                 "name": dx.customer.customer_name if dx.customer else 'Purchases',
-                "amount": dx.amount_paid,
+                # "amount": dx.amount_paid,
+                "amount": dx.total_amount,  # using total amount instead of paid amount
                 "discount": dx.amount_paid - dx.total_amount,  # Balance due
                 "isCashSale": False,
                 "isExpenses": False,

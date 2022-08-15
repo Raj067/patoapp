@@ -54,7 +54,7 @@ class ProfitAndLoss {
       DateTime date = dx.date;
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
-        if (dx.isCashSale || dx.isPaymentIn || dx.isInvoice) {
+        if (dx.isCashSale || dx.isInvoice) {
           val1 += dx.amount;
         }
       }
@@ -63,7 +63,7 @@ class ProfitAndLoss {
   }
 
   double grossProfit() {
-    return salesRevenue() - costGoodsSold() + totalDirectExpenses();
+    return salesRevenue() - (costGoodsSold() + totalDirectExpenses());
   }
 
   double netProfit() {

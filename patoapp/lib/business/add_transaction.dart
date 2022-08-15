@@ -765,7 +765,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               selectedItemHighlightColor: patowavePrimary.withAlpha(50),
               scrollbarAlwaysShow: true,
               dropdownMaxHeight: 200,
-
+              validator: (val) {
+                if (addedItemsToPurchases.isNotEmpty &&
+                    (val == null || val == '')) {
+                  return AppLocalizations.of(context)!.pleaseSelectCustomer;
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 label: Text(
                   AppLocalizations.of(context)!.addContact,

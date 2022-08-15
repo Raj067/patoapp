@@ -20,7 +20,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         val = 0
         # For all payments
         for dx in myModel.customer_payment.all():
-            if dx.description=="Opening Balance":
+            if dx.description == "Opening Balance":
                 if dx.is_payment_in:
                     val += dx.amount
                 else:
@@ -37,7 +37,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
         # For all Invoices
         for dx in myModel.customer_invoice.all():
-            val -= dx.amount
+            val -= dx.total_amount - dx.amount_received
         return val
 
     def get_financial_data(mySerializer, myModel):
@@ -59,13 +59,13 @@ class CustomerSerializer(serializers.ModelSerializer):
         for dx in myModel.customer_purchase.all():
             data.append({
                 "name": "name", "description": "description",
-                "received": 0, "paid": dx.amount, "date": dx.created_at
+                "received": 0, "paid": dx.total_amount - dx.amount_paid, "date": dx.created_at
             })
 
-        # # For all Invoices
-        # for dx in myModel.customer_invoice.all():
-        #     data.append({
-        #         "name": "Invoice", "description": "description",
-        #         "received": 0, "paid": dx.amount, "date": dx.created_at
-        #     })
+        # For all Invoices
+        for dx in myModel.customer_invoice.all():
+            data.append({
+                "name": "Invoice", "description": "description",
+                "received": dx.total_amount - dx.amount_received, "paid": 0, "date": dx.created_at
+            })
         return data
