@@ -24,7 +24,10 @@ class UserManagement extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: Text("Coming Soon"),
+        child: Text(
+          'Coming Soon',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

@@ -133,10 +133,10 @@ class Customer(models.Model):
     customer_address = models.CharField(max_length=100, blank=True, null=True)
     customer_payment = models.ManyToManyField(
         "Payment", blank=True, related_name='data_customer_payment')
-    customer_invoice = models.ManyToManyField(
-        "Invoice", blank=True, related_name='data_customer_invoice')
-    customer_purchase = models.ManyToManyField(
-        "Purchase", blank=True, related_name='data_customer_purchase')
+    # customer_invoice = models.ManyToManyField(
+    #     "Invoice", blank=True, related_name='data_customer_invoice')
+    # customer_purchase = models.ManyToManyField(
+    #     "Purchase", blank=True, related_name='data_customer_purchase')
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

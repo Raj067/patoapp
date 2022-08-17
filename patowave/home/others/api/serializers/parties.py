@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
-from home.models import Customer
+from home.models import *
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -32,12 +32,12 @@ class CustomerSerializer(serializers.ModelSerializer):
                     val += dx.amount
 
         # For all purchases
-        for dx in myModel.customer_purchase.all():
-            val -= dx.amount
+        for dm in Purchase.objects.all():
+            val -= dm.total_amount - dm.amount_received
 
         # For all Invoices
-        for dx in myModel.customer_invoice.all():
-            val -= dx.total_amount - dx.amount_received
+        for di in Invoice.objects.filter(customer=myModel):
+            val += di.total_amount - di.amount_received
         return val
 
     def get_financial_data(mySerializer, myModel):
