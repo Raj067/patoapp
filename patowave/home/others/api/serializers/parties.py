@@ -32,8 +32,8 @@ class CustomerSerializer(serializers.ModelSerializer):
                     val += dx.amount
 
         # For all purchases
-        for dm in Purchase.objects.all():
-            val -= dm.total_amount - dm.amount_received
+        for dm in Purchase.objects.filter(customer=myModel):
+            val -= dm.total_amount - dm.amount_paid
 
         # For all Invoices
         for di in Invoice.objects.filter(customer=myModel):
@@ -56,16 +56,15 @@ class CustomerSerializer(serializers.ModelSerializer):
                 })
 
         # For all purchases
-        for dx in myModel.customer_purchase.all():
+        for dm in Purchase.objects.filter(customer=myModel):
             data.append({
-                "name": "name", "description": "description",
-                "received": 0, "paid": dx.total_amount - dx.amount_paid, "date": dx.created_at
+                "name": "Purchases", "description": "Purchases",
+                "received": 0, "paid": dm.total_amount - dm.amount_paid, "date": dm.created_at
             })
-
         # For all Invoices
-        for dx in myModel.customer_invoice.all():
+        for di in Invoice.objects.filter(customer=myModel):
             data.append({
-                "name": "Invoice", "description": "description",
-                "received": dx.total_amount - dx.amount_received, "paid": 0, "date": dx.created_at
+                "name": "Sale Invoice", "description": "Sale Invoice",
+                "received": di.total_amount - di.amount_received, "paid": 0, "date": di.created_at
             })
         return data

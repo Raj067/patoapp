@@ -295,17 +295,17 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                             ],
                           ),
                         ),
-                        const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Total Items sold'),
-                              Text("${widget.product.totalItemsSold}"),
-                            ],
-                          ),
-                        ),
+                        // const Divider(),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(10),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       const Text('Total Items sold'),
+                        //       Text("${widget.product.totalItemsSold}"),
+                        //     ],
+                        //   ),
+                        // ),
                         const Divider(),
                         Padding(
                           padding: const EdgeInsets.all(10),
