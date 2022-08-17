@@ -588,7 +588,7 @@ def delete_product_api(request):
 def adjust_product_api(request):
     if request.method == "POST":
         product = Product.objects.get(id=request.data.get('id'))
-        product.quantity = request.data.get('quantity')
+        product.quantity += request.data.get('quantity')
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)

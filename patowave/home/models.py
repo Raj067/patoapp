@@ -366,3 +366,21 @@ class GreetingCard(models.Model):
 
     def __str__(self) -> str:
         return f"card {self.id}"
+
+
+class InventoryTrack(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+
+    product_id = models.IntegerField()
+    product_name = models.CharField(max_length=500)
+    quantity_added = models.IntegerField()
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+    def __str__(self) -> str:
+        return self.product_name
