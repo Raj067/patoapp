@@ -118,6 +118,13 @@ def add_shedule(request):
         return Response(status=status.HTTP_201_CREATED, data={"id": shedule.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+def deleting_shedule_api(request):
+    if request.method == "POST":
+        Shedule.objects.get(id=request.data.get('id')).delete()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 # ================ For Tracking invetory ======
 
 

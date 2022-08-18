@@ -1,6 +1,14 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/shedules.dart';
+import 'package:patoapp/backend/sync/sync_shedule.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class SingleShedule extends StatefulWidget {
@@ -16,6 +24,11 @@ class SingleShedule extends StatefulWidget {
 
 class _SingleSheduleState extends State<SingleShedule> {
   DateTime eventDay = DateTime.now();
+  refreshDataDB() async {
+    SyncShedule syncShedule = SyncShedule();
+    await syncShedule.fetchData();
+  }
+
   @override
   void initState() {
     eventDay = DateTime.parse(widget.shedule.dateEvent);
@@ -264,7 +277,7 @@ class _SingleSheduleState extends State<SingleShedule> {
                         ),
                       ),
                       onPressed: () {
-                        _sheduleCompleted(context);
+                        _deletingShedule(widget.shedule);
                       },
                       child: const Text(
                         "Delete",
@@ -374,8 +387,46 @@ class _SingleSheduleState extends State<SingleShedule> {
     );
   }
 
-  _sheduleCompleted(BuildContext context) async {
-    widget.fetchShedule();
-    Navigator.pop(context);
+  _deletingShedule(SheduleModel data) async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/deleting-shedule/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'id': data.id,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        await refreshDataDB();
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        setState(() {
+          widget.fetchShedule();
+        });
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
   }
 }

@@ -85,6 +85,8 @@ api_urls = [
          name='shedule_details'),
     path('api/add-shedule/', add_shedule,
          name='add_shedule'),
+    path('api/deleting-shedule/', deleting_shedule_api,
+         name='deleting_shedule_api'),
 
     # for tracking inventory inventory_track_api
     path('api/inventory-track/', inventory_track_api,
