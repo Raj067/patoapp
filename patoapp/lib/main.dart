@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
+import 'package:patoapp/backend/db/db_Inventory.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
@@ -47,6 +48,7 @@ void main() {
       await DBHelperProfile.initDb();
       await DBHelperProduct.initDb();
       await DBHelperInvoice.initDb();
+      await DBHelperInventory.initDb();
       HttpOverrides.global = MyHttpOverrides();
       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
