@@ -113,11 +113,13 @@ class _ReminderDialogState extends State<ReminderDialog> {
               child: Padding(
                 padding: EdgeInsets.all(15),
                 child: Text("""
-Habari <CUSTOMER_NAME>, unakumbushwa kuja kulipa deni lako <SHOP_NAME> - <CUSTOMER_PHONE> kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+Habari <CUSTOMER_NAME>, unakumbushwa linki hii chini ili kuona taarifa za deni lako, 
+Asante kwa kufanya nasi biashara.
 <LINK>
             
-<SHOP_NAME>
-Powered by Patowave""", style: TextStyle()),
+<BUSINESS_NAME>
+Powered by 
+Patowave""", style: TextStyle()),
               ),
             ),
           ),

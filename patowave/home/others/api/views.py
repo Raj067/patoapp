@@ -118,6 +118,14 @@ def add_shedule(request):
         return Response(status=status.HTTP_201_CREATED, data={"id": shedule.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# ================ For Tracking invetory ======
+
+@api_view(['GET'])
+def inventory_track_api(request, *args, **kwargs):
+    data = [dx for dx in InventoryTrack.objects.all() if dx.shop in get_shop(request)]
+    serializer = InventoryTrackSerializer(data, many=True)
+    return Response(serializer.data)
+
 # ==================For Profile=============
 
 
@@ -553,6 +561,14 @@ def add_new_product_api(request):
             supplier_email=request.data.get('supplierEmail'),
         )
         product.save()
+        # Track new product when added
+        InventoryTrack(
+            shop=Shop.objects.get(id=request.data.get('shopId')),
+            product_id=product.id,
+            product_name=product.product_name,
+            quantity_added=product.quantity,
+            purchases_price=product.purchases_price,
+        ).save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

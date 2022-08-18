@@ -348,16 +348,20 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
 
   _sendSMS() async {
     String businessName = await _getBusinessName();
+    String businessPhone = await _getBusinessPhone();
     final Uri smsLaunchUri = Uri(
       scheme: 'sms',
       path: widget.customer.phoneNumber,
       queryParameters: <String, String>{
         'body': Uri.encodeComponent("""
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
+unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Asante kwa kufanya biashara nasi.
 <LINK>
 
 $businessName
-Powered by Patowave"""),
+Powered by 
+Patowave"""),
       },
     );
     launchUrl(smsLaunchUri);
@@ -376,7 +380,19 @@ Powered by Patowave"""),
     }
     return businessName;
   }
+  Future<String> _getBusinessPhone() async {
+    String businessName = '';
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
 
+    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
+    for (var dx in profile) {
+      if (dx['id'] == shopId) {
+        businessName = fromJsonProfile(dx).businessPhone;
+      }
+    }
+    return businessName;
+  }
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((MapEntry<String, String> e) =>
@@ -386,16 +402,20 @@ Powered by Patowave"""),
 
   _sendEmail() async {
     String businessName = await _getBusinessName();
+    String businessPhone = await _getBusinessPhone();
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: widget.customer.email,
       query: encodeQueryParameters(<String, String>{
         'subject': """
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
+unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Asante kwa kufanya biashara nasi.
 <LINK>
 
 $businessName
-Powered by Patowave""",
+Powered by 
+Patowave""",
       }),
     );
 
@@ -404,13 +424,17 @@ Powered by Patowave""",
 
   _sendWhatsApp() async {
     String businessName = await _getBusinessName();
+    String businessPhone = await _getBusinessPhone();
     var whatsapp = widget.customer.phoneNumber;
     String message = """
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName - ${widget.customer.phoneNumber} kama mlivyo kubaliana, unaweza kubofya hapa ili kuona maelezo ya deni lako, Asante.
+Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
+unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Asante kwa kufanya biashara nasi.
 <LINK>
 
 $businessName
-Powered by Patowave""";
+Powered by 
+Patowave""";
     var whatsappAndroid =
         Uri.parse("whatsapp://send?phone=$whatsapp&text=$message");
     if (await canLaunchUrl(whatsappAndroid)) {

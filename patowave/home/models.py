@@ -374,6 +374,7 @@ class InventoryTrack(models.Model):
     product_id = models.IntegerField()
     product_name = models.CharField(max_length=500)
     quantity_added = models.IntegerField()
+    purchases_price = models.IntegerField(default=0)
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)

@@ -37,7 +37,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         data = [
             {
                 "id": i.id,
-                "productId":i.product_id,
+                "productId": i.product_id,
                 "product": i.product_name,
                 "quantity": i.quantity,
                 "price": i.price,
@@ -47,3 +47,17 @@ class InvoiceSerializer(serializers.ModelSerializer):
             for i in myModel.sold_items.all()
         ]
         return data
+
+
+class InventoryTrackSerializer(serializers.ModelSerializer):
+    shopId = SerializerMethodField()
+
+    class Meta:
+        model = InventoryTrack
+        fields = ('id', 'shopId',
+                  'quantity_added', 'purchases_price', 'created_at',
+                  'updated_at',
+                  )
+
+    def get_shopId(mySerializer, myModel):
+        return myModel.shop.id
