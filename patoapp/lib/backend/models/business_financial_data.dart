@@ -93,7 +93,10 @@ class FinancialData {
 
   getTransactionType() {
     if (isCashSale) {
-      return "cash_sale";
+      if (name == "Cash Sales") {
+        return "cash_sale";
+      }
+      return "cash_sale_customer";
     }
     if (isPaymentIn || isPaymentOut) {
       return "payment";
@@ -183,4 +186,3 @@ FinancialData fromJsonBusiness(Map<String, dynamic> dx) {
     shopId: dx['shopId'],
   );
 }
-

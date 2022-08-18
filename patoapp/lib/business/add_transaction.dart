@@ -10,6 +10,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_purchases.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
@@ -1221,7 +1222,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        await widget.resetData();
+        SyncBusiness syncBusiness = SyncBusiness();
+        await syncBusiness.fetchData();
+        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 
@@ -1278,7 +1281,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        await widget.resetData();
+        SyncBusiness syncBusiness = SyncBusiness();
+        await syncBusiness.fetchData();
+        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously
@@ -1339,7 +1344,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        await widget.resetData();
+        SyncBusiness syncBusiness = SyncBusiness();
+        await syncBusiness.fetchData();
+        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously

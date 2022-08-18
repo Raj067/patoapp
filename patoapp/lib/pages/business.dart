@@ -46,7 +46,6 @@ class _BusinessPageState extends State<BusinessPage> {
   double profitMonth = 0;
 
   List<FinancialData> allFinancialData = [];
-  bool isLoading = true;
 
   fetchHeaderData({required DateTime date, required FinancialData data}) {
     // for monthly
@@ -121,8 +120,6 @@ class _BusinessPageState extends State<BusinessPage> {
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
-    isLoading = false;
-    // profitMonth = profitMonth;
     setState(() {});
   }
 
@@ -153,15 +150,7 @@ class _BusinessPageState extends State<BusinessPage> {
         children: [
           Container(height: 5),
           _firstRowBusinessData(context),
-          // SecondRowBusinessData(),()
-          isLoading
-              ? const SizedBox(
-                  height: 100,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : _allFinancialData(context),
+          _allFinancialData(context),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -171,7 +160,7 @@ class _BusinessPageState extends State<BusinessPage> {
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
                 resetData: () async {
-                  await refreshDataDB();
+                  await fetchBusinessDB();
                   setState(() {});
                 },
               ),
@@ -752,11 +741,13 @@ class _BusinessPageState extends State<BusinessPage> {
         headers: getAuthHeaders(accessToken),
         body: jsonEncode(<String, dynamic>{
           'transaction': data.getTransactionType(),
-          'id': data.getTransactionID(),
+          'itemsId': data.getTransactionID(),
+          'id': data.id,
         }),
       );
 
       if (response.statusCode == 201) {
+        await refreshDataDB();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously

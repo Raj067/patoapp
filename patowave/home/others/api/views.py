@@ -80,13 +80,41 @@ def business_financial_transactions(request, *args, **kwargs):
 @api_view(['POST'])
 def deleting_single_transaction_api(request):
     if request.method == "POST":
-        # print(request.data)
-        # data = Customer.objects.get(id=request.data.get("id"))
-        # data.customer_name = request.data.get("customerName")
-        # data.customer_number = request.data.get("phoneNumber")
-        # data.customer_email = request.data.get("address")
-        # data.customer_address = request.data.get("emailAddress")
-        # data.save()
+        transaction_id = request.data.get('id')
+        transaction = request.data.get('transaction')
+        items = request.data.get('itemsId')
+        transaction_id = transaction_id.split('-')[-1]
+
+        if transaction == 'payment':
+            Payment.objects.get(id=int(transaction_id)).delete()
+
+        elif transaction == 'expenses':
+            Expense.objects.get(id=int(transaction_id)).delete()
+
+        elif transaction == 'cash_sale':
+            # reversing all the quantity sold
+            for dx in items:
+                item = CashSoldItem.objects.get(id=dx)
+                try:
+                    prod = Product.objects.get(id=item.id)
+                    prod.quantity = prod.quantity + item.quantity
+                    prod.save()
+                except:
+                    pass
+                item.delete()
+            CashSale.objects.get(id=int(transaction_id)).delete()
+        elif transaction == 'cash_sale_customer':
+            # reversing all the quantity sold
+            for dx in items:
+                item = CashSoldItemCustomer.objects.get(id=dx)
+                try:
+                    prod = Product.objects.get(id=item.id)
+                    prod.quantity = prod.quantity + item.quantity
+                    prod.save()
+                except:
+                    pass
+                item.delete()
+            CashSaleCustomer.objects.get(id=int(transaction_id)).delete()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -117,6 +145,7 @@ def add_shedule(request):
         shedule.save()
         return Response(status=status.HTTP_201_CREATED, data={"id": shedule.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def deleting_shedule_api(request):
