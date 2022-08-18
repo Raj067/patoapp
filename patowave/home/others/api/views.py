@@ -120,9 +120,11 @@ def add_shedule(request):
 
 # ================ For Tracking invetory ======
 
+
 @api_view(['GET'])
 def inventory_track_api(request, *args, **kwargs):
-    data = [dx for dx in InventoryTrack.objects.all() if dx.shop in get_shop(request)]
+    data = [dx for dx in InventoryTrack.objects.all()
+            if dx.shop in get_shop(request)]
     serializer = InventoryTrackSerializer(data, many=True)
     return Response(serializer.data)
 
@@ -608,3 +610,12 @@ def adjust_product_api(request):
         product.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+# ========= Version check
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def version_check(request, *args, **kwargs):
+    data = VersionTrack.objects.all().latest('id')
+    return Response(data={'version': data.current_version})

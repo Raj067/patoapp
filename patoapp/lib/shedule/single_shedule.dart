@@ -267,34 +267,34 @@ class _SingleSheduleState extends State<SingleShedule> {
                         _sheduleCompleted(context);
                       },
                       child: const Text(
-                        "Cancel",
+                        "Delete",
                       ),
                     ),
                   ),
-                  Container(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        // MaterialStateProperty<Color?>? backgroundColor,
-                        minimumSize: MaterialStateProperty.all(
-                          const Size(45, 45),
-                        ),
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        _sheduleCompleted(context);
-                      },
-                      child: const Text(
-                        "Completed",
-                      ),
-                    ),
-                  ),
+                  // Container(width: 10),
+                  // Expanded(
+                  //   child: ElevatedButton(
+                  //     style: ButtonStyle(
+                  //       // MaterialStateProperty<Color?>? backgroundColor,
+                  //       minimumSize: MaterialStateProperty.all(
+                  //         const Size(45, 45),
+                  //       ),
+                  //       shape: MaterialStateProperty.all(
+                  //         const RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.all(
+                  //             Radius.circular(30),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {
+                  //       _sheduleCompleted(context);
+                  //     },
+                  //     child: const Text(
+                  //       "Completed",
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

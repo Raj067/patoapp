@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
@@ -36,11 +37,18 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
     'EURO',
     'GBP',
   ];
-  Locale localeName = Locale(box.read('languageCode') ?? 'en', '');
+  Locale localeName =
+      Locale(box.read('languageCode') ?? 'en', ''); // to be corrected better
   double usd = 1.0;
   double tzs = 2331.0;
   double euro = 0.9796;
   double gbp = 0.8340;
+  setLocale() async {
+    String? lang = await storage.read(key: 'languageCode');
+    localeName = Locale(lang ?? 'en', '');
+    setState(() {});
+  }
+
   fetchRates() async {
     try {
       var data = await http.get(
@@ -75,6 +83,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   @override
   void initState() {
     super.initState();
+    setLocale();
     fetchShedule();
     fetchRates();
     refreshDataDB();

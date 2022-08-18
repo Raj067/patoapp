@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_Inventory.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
@@ -16,6 +15,7 @@ import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/dark_theme.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:patoapp/themes/providers.dart';
+import 'package:patoapp/updates/updater.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patoapp/accounts/set_account.dart';
@@ -90,18 +90,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale(box.read('languageCode') ?? 'en', '');
-
-  void setLocale(Locale value) {
-    box.write('languageCode', value.languageCode);
+  Locale? _locale;
+  bool _checkVersion = true;
+  void setLocale(Locale value) async {
+    await storage.write(key: "languageCode", value: value.languageCode);
     setState(() {
       _locale = value;
     });
   }
 
+  updateVersion() async {
+    String? lang = await storage.read(key: 'languageCode');
+    _locale = Locale(lang ?? 'en', '');
+    _checkVersion = await checkVersion();
+    setState(() {});
+  }
+
   @override
   void initState() {
-    _locale = Locale(box.read('languageCode') ?? 'en', '');
+    updateVersion();
     super.initState();
   }
 
@@ -111,11 +118,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "PatoWave",
       theme: themeNotifier.getTheme(),
-      home: widget.isLogin
-          ? widget.isShopProfile
-              ? const HomePage()
-              : const SetAccountPage()
-          : const WelcomePage(),
+      home: _checkVersion
+          ? widget.isLogin
+              ? widget.isShopProfile
+                  ? const HomePage()
+                  : const SetAccountPage()
+              : const WelcomePage()
+          : const Updater(),
       darkTheme: patowaveDarkTheme(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [

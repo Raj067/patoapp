@@ -6,7 +6,7 @@ import 'package:patoapp/reports/day_book.dart';
 import 'package:patoapp/reports/expenses_reports.dart';
 import 'package:patoapp/reports/inventory_reports.dart';
 import 'package:patoapp/reports/inventory_summary.dart';
-import 'package:patoapp/reports/profit_loss.dart';
+// import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/reports/purchases_reports.dart';
 import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/themes/light_theme.dart';
