@@ -385,3 +385,18 @@ class InventoryTrack(models.Model):
 
     def __str__(self) -> str:
         return self.product_name
+
+
+class VersionTrack(models.Model):
+    current_version = models.IntegerField()
+    version_name = models.CharField(max_length=500)
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+    def __str__(self) -> str:
+        return self.version_name
