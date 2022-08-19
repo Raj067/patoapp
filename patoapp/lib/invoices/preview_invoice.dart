@@ -115,8 +115,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 // ),
 
                 pw.Container(
-                  width: 50,
-                  height: 50,
+                  width: 60,
+                  height: 60,
                   decoration: pw.BoxDecoration(
                     color: selectedColorInvoice,
                     borderRadius: pw.BorderRadius.circular(15),
@@ -133,7 +133,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                   ),
                 ),
 
-                pw.SizedBox(width: 1 * p.PdfPageFormat.mm),
+                pw.SizedBox(width: 3 * p.PdfPageFormat.mm),
                 pw.Column(
                   mainAxisSize: pw.MainAxisSize.min,
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -141,28 +141,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                     pw.Text(
                       myProfile!.businessName,
                       style: pw.TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: pw.FontWeight.bold,
-                      ),
-                    ),
-                    pw.Text(
-                      myProfile!.businessSlogan,
-                      style: const pw.TextStyle(
-                        fontSize: 15.0,
-                        color: p.PdfColors.grey700,
-                      ),
-                    ),
-                  ],
-                ),
-                pw.Spacer(),
-                pw.Column(
-                  mainAxisSize: pw.MainAxisSize.min,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      myProfile!.businessName,
-                      style: pw.TextStyle(
-                        fontSize: 15.5,
+                        fontSize: 16,
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
@@ -177,6 +156,37 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       DateFormat('d-MMM-yyy').format(DateTime.now()),
                     ),
                   ],
+                ),
+
+                pw.Spacer(),
+                // pw.Column(
+                //   mainAxisSize: pw.MainAxisSize.min,
+                //   crossAxisAlignment: pw.CrossAxisAlignment.start,
+                //   children: [
+                //     pw.Text(
+                //       myProfile!.businessName,
+                //       style: pw.TextStyle(
+                //         fontSize: 15.5,
+                //         fontWeight: pw.FontWeight.bold,
+                //       ),
+                //     ),
+                //     pw.Text(
+                //       myProfile!.businessAddress,
+                //     ),
+                //     pw.Text(myProfile!.businessPhone),
+                //     pw.Text(
+                //       myProfile!.businessEmail,
+                //     ),
+                //     pw.Text(
+                //       DateFormat('d-MMM-yyy').format(DateTime.now()),
+                //     ),
+                //   ],
+                // ),
+                pw.BarcodeWidget(
+                  height: 60,
+                  width: 60,
+                  barcode: pw.Barcode.qrCode(),
+                  data: widget.invoice.invoiceNo,
                 ),
               ],
             ),
@@ -230,46 +240,49 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                        children: [
-                          pw.Text(
-                            'Invoice No:',
-                            style: pw.TextStyle(
-                              // fontSize: 15.5,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Invoice No:',
+                          style: pw.TextStyle(
+                            // fontSize: 15.5,
+                            fontWeight: pw.FontWeight.bold,
                           ),
-                          pw.Text(widget.invoice.invoiceNo),
-                        ]),
+                        ),
+                        pw.Text(widget.invoice.invoiceNo),
+                      ],
+                    ),
                     pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                        children: [
-                          pw.Text(
-                            'Issued Date: ',
-                            style: pw.TextStyle(
-                              // fontSize: 15.5,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Issued Date: ',
+                          style: pw.TextStyle(
+                            // fontSize: 15.5,
+                            fontWeight: pw.FontWeight.bold,
                           ),
-                          pw.Text(
-                            DateFormat('d-M-yyy').format(DateTime.now()),
-                          ),
-                        ]),
+                        ),
+                        pw.Text(
+                          DateFormat('d-M-yyy').format(DateTime.now()),
+                        ),
+                      ],
+                    ),
                     pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                        children: [
-                          pw.Text(
-                            'Due Date: ',
-                            style: pw.TextStyle(
-                              // fontSize: 15.5,
-                              fontWeight: pw.FontWeight.bold,
-                            ),
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Due Date: ',
+                          style: pw.TextStyle(
+                            // fontSize: 15.5,
+                            fontWeight: pw.FontWeight.bold,
                           ),
-                          pw.Text(
-                            DateFormat('d-M-yyy')
-                                .format(DateTime.parse(widget.invoice.dueDate)),
-                          ),
-                        ]),
+                        ),
+                        pw.Text(
+                          DateFormat('d-M-yyy')
+                              .format(DateTime.parse(widget.invoice.dueDate)),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -307,7 +320,22 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               alignment: pw.Alignment.centerRight,
               child: pw.Row(
                 children: [
-                  pw.Spacer(flex: 6),
+                  // pw.Spacer(flex: 6),
+                  pw.Expanded(
+                    flex: 6,
+                    child: pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text(
+                          'Notes:',
+                          style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                        pw.Text('Thanks for your business'),
+                      ],
+                    ),
+                  ),
                   pw.Expanded(
                     flex: 4,
                     child: pw.Column(
@@ -406,6 +434,44 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 ],
               ),
             ),
+
+            // pw.Container(
+            //     // alignment: pw.Alignment.centerRight,
+            //     child: pw.Row(children: [
+            //   pw.Expanded(
+            //     flex: 6,
+            //     child: pw.Column(
+            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
+            //       children: [
+            //         pw.Text(
+            //           'Payment Method:',
+            //           style: pw.TextStyle(
+            //             fontWeight: pw.FontWeight.bold,
+            //           ),
+            //         ),
+            //         pw.Text('Payment description 1'),
+            //         pw.Text('Payment description 2'),
+            //         pw.Text('Payment description 3'),
+            //         pw.Text('Payment description 4'),
+            //       ],
+            //     ),
+            //   ),
+            //   pw.Expanded(
+            //     flex: 4,
+            //     child: pw.Column(
+            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
+            //       children: [
+            //         pw.Text(
+            //           'Signature',
+            //           style: pw.TextStyle(
+            //             fontWeight: pw.FontWeight.bold,
+            //           ),
+            //         ),
+            //         // pw.Text('Thanks for your business'),
+            //       ],
+            //     ),
+            //   ),
+            // ])),
           ];
         },
         footer: (context) {
@@ -574,6 +640,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         //   'Invoice',
         //   style: TextStyle(color: Colors.white),
         // ),
+        // backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -585,7 +652,31 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              final bytes = await _generatePdf();
+              final dir = await getExternalStorageDirectory();
+              String myPath =
+                  pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+              myPath = '$myPath/PatoWave/invoice';
+              Directory('$myPath/').create();
+              final file =
+                  File('$myPath/invoice-${widget.invoice.invoiceNo}.pdf');
+              await file.writeAsBytes(bytes);
+              await ImageDownloader.open(file.path);
+            },
+            icon: const Icon(
+              Icons.download,
+              color: patowaveWhite,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Coming Soon"),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.settings,
               color: patowaveWhite,
@@ -593,137 +684,280 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10),
-        child: Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-          ),
-          elevation: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: patowavePrimary.withAlpha(50),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                  'Due in ${DateFormat('EEE d MMMM, yyy').format(DateTime.parse(widget.invoice.dueDate))}'),
-                            ],
+                        Text(
+                          'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-                      ]),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Invoice To',
-                      style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.bold,
-                      ),
+                        Text(
+                          'Due in ${DateFormat('EEE d MMMM, yyy').format(DateTime.parse(widget.invoice.dueDate))}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(widget.invoice.fullName),
-                    Text(myCustomer == null ? "" : myCustomer!.address),
-                    Text(myCustomer == null ? "" : myCustomer!.phoneNumber),
-                    Text(myCustomer == null ? "" : myCustomer!.email),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Divider(height: 0),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Invoice Details',
-                      style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Invoice No:',
-                            style: TextStyle(),
-                          ),
-                          Text(widget.invoice.invoiceNo),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Issued Date: '),
-                          Text(
-                            DateFormat('d-M-yyy').format(DateTime.now()),
-                          ),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Due Date: '),
-                          Text(
-                            DateFormat('d-M-yyy')
-                                .format(DateTime.parse(widget.invoice.dueDate)),
-                          ),
-                        ]),
-                  ],
-                ),
-              ),
-              const Divider(height: 0),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Table(children: myRowData),
-              ),
-              Container(),
-            ],
+            ),
           ),
-        ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).cardColor,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Amount Details',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Total Amount',
+                                  style: TextStyle(),
+                                ),
+                                Text("Tsh: ${formatter.format(subTotal)}"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Discount',
+                                  style: TextStyle(),
+                                ),
+                                Text("Tsh: ${formatter.format(discount)}"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Paid Amount',
+                                  style: TextStyle(),
+                                ),
+                                Text("Tsh: ${formatter.format(paid)}"),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Balance Due',
+                                  style: TextStyle(),
+                                ),
+                                Text("Tsh: ${formatter.format(balanceDue)}"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Text(
+                              'Invoice To',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(widget.invoice.fullName),
+                            Text(myCustomer == null
+                                ? ""
+                                : myCustomer!.phoneNumber),
+                            Text(myCustomer == null ? "" : myCustomer!.address),
+                            Text(myCustomer == null ? "" : myCustomer!.email),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Invoice Details',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Invoice No:',
+                                  style: TextStyle(),
+                                ),
+                                Text(widget.invoice.invoiceNo),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Issued Date: '),
+                                Text(
+                                  DateFormat('d-M-yyy').format(DateTime.now()),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Due Date: '),
+                                Text(
+                                  DateFormat('d-M-yyy').format(
+                                      DateTime.parse(widget.invoice.dueDate)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Table(children: myRowData),
+                      ),
+                    ),
+                    Container(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: const [
+                            Text(
+                              'Notes',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text('Thanks for your business'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: patowavePrimary.withAlpha(50),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: const [
+                            Text(
+                              'Payment Methods',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text('None'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(height: 15),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final bytes = await _generatePdf();
-          final dir = await getExternalStorageDirectory();
-          String myPath =
-              pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-          myPath = '$myPath/PatoWave/invoice';
-          Directory('$myPath/').create();
-          final file = File('$myPath/invoice-${widget.invoice.invoiceNo}.pdf');
-          await file.writeAsBytes(bytes);
-          await ImageDownloader.open(file.path);
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Coming Soon"),
+            ),
+          );
         },
-        child: const Icon(Icons.download),
+        label: const Text("Receive Payment"),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: patowavePrimary,
+        backgroundColor: Theme.of(context).primaryColor,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.print),
