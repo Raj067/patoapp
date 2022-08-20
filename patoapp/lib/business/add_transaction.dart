@@ -13,7 +13,7 @@ import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
-import 'package:patoapp/backend/sync/sync_business.dart';
+// import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_purchases.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
@@ -63,7 +63,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   double totalPurchasesAmount = 0.0;
   List<SingleCustomer> finalCustomerData = [];
   final BusinessController _businessController = Get.put(BusinessController());
-
+  GlobalKey dropdownkey = GlobalKey();
   // Fetching data
   fetchData() async {
     // shop ID
@@ -295,6 +295,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     );
   }
 
+  onAddingCustomer(SingleCustomer data) {
+    Navigator.pop(context);
+    finalCustomerData = [data, ...finalCustomerData];
+    setState(() {});
+  }
+
   _addSales() {
     return Expanded(
       child: Form(
@@ -334,6 +340,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             Container(height: 15),
             DropdownButtonFormField2(
+                value: selectedCustmer,
                 selectedItemHighlightColor: patowavePrimary.withAlpha(50),
                 scrollbarAlwaysShow: true,
                 dropdownMaxHeight: 200,
@@ -432,9 +439,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
                                   AddNewCustomerTransaction(
-                                      refreshData: () async {
-                                await refreshData();
-                              }),
+                                refreshData: onAddingCustomer,
+                              ),
                               fullscreenDialog: true,
                             ),
                           );

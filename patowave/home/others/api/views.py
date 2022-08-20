@@ -256,7 +256,7 @@ def add_new_customer_api(request):
                 amount=request.data.get("openingBalance"),
                 receipt_no=str(random.randint(1000, 99999)),
             )
-        return Response(status=status.HTTP_201_CREATED, data={'customerId': reg.id})
+        return Response(status=status.HTTP_201_CREATED, data={'customerId': reg.id, 'customerName':reg.customer_name})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

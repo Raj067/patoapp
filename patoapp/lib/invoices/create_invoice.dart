@@ -20,6 +20,7 @@ import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateNewInvoice extends StatefulWidget {
   final Function resetData;
@@ -112,9 +113,9 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Create Invoice',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.createInvoice,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -139,7 +140,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Invoice No $invoiceNo",
+                      "${AppLocalizations.of(context)!.invoices} No $invoiceNo",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -149,7 +150,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
                       style: const TextStyle(
                           fontStyle: FontStyle.italic, fontSize: 14),
                     ),
@@ -186,9 +187,9 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                     _submitSalesCustomerData();
                   }
                 },
-                child: const Text(
-                  "Save Invoice",
-                  style: TextStyle(color: patowaveWhite),
+                child: Text(
+                  AppLocalizations.of(context)!.save,
+                  style: const TextStyle(color: patowaveWhite),
                 ),
               ),
             ),
@@ -196,6 +197,12 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
         ),
       ),
     );
+  }
+
+  onAddingCustomer(SingleCustomer data) {
+    Navigator.pop(context);
+    customData = [data, ...customData];
+    setState(() {});
   }
 
   _addInvoice() {
@@ -214,7 +221,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'This field is required';
+                  return AppLocalizations.of(context)!.amountReceivedRequired;
                 }
                 return null;
               },
@@ -224,12 +231,13 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   setState(() {});
                 }
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Amount Received*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.amountReceived}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -243,14 +251,14 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 dropdownMaxHeight: 200,
                 validator: (value) {
                   if (value == null || value == "" || selectedCustmer == '') {
-                    return 'This field is required';
+                    return AppLocalizations.of(context)!.pleaseSelectCustomer;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  label: const Text(
-                    'Select Customer*',
-                    style: TextStyle(
+                  label: Text(
+                    '${AppLocalizations.of(context)!.selectCustomer}*',
+                    style: const TextStyle(
                       fontSize: 14,
                       fontStyle: FontStyle.italic,
                     ),
@@ -305,15 +313,16 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                         child: TextFormField(
                           cursorColor: patowavePrimary,
                           controller: customerController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                               horizontal: 10,
                               vertical: 8,
                             ),
-                            hintText: 'Search for customer...',
-                            hintStyle: TextStyle(fontSize: 12),
-                            border: OutlineInputBorder(
+                            hintText:
+                                '${AppLocalizations.of(context)!.searchCustomer}...',
+                            hintStyle: const TextStyle(fontSize: 12),
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15),
                                 bottomLeft: Radius.circular(15),
@@ -338,12 +347,14 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  AddNewCustomerTransaction(refreshData: () {}),
+                                  AddNewCustomerTransaction(
+                                refreshData: onAddingCustomer,
+                              ),
                               fullscreenDialog: true,
                             ),
                           );
                         },
-                        child: const Text("add"),
+                        child: Text(AppLocalizations.of(context)!.add),
                       )
                     ],
                   ),
@@ -361,19 +372,19 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             TextFormField(
               controller: dueDate,
               //editing controller of this TextField
-              decoration: const InputDecoration(
-                suffixIcon: Icon(
+              decoration: InputDecoration(
+                suffixIcon: const Icon(
                   Icons.calendar_month,
                   color: patowavePrimary,
                 ),
                 label: Text(
-                  "Due Date*",
-                  style: TextStyle(
+                  "${AppLocalizations.of(context)!.dueDate}*",
+                  style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 14,
                   ),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -435,14 +446,14 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        "Add Items to sales",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.addItemsToSales,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios,
                         size: 14,
                         color: patowaveBlack,
@@ -457,9 +468,9 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Discount",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.discount,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -475,9 +486,9 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Total Amount",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.totalAmount,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -523,12 +534,13 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                 textInputAction: TextInputAction.newline,
                 minLines: 3,
                 maxLines: null,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   label: Text(
-                    "Descriptions",
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                    AppLocalizations.of(context)!.description,
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic, fontSize: 14),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15),
                     ),

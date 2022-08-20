@@ -42,9 +42,9 @@ class _AllShedulesState extends State<AllShedules> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'All Shedules',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.allSchedule,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {

@@ -256,7 +256,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                         ),
                       );
                     },
-                    child: Text("VIEW DETAILS",
+                    child: Text(AppLocalizations.of(context)!.viewDetails,
                         style: TextStyle(
                           fontSize: 12,
                           color: isOutStanding

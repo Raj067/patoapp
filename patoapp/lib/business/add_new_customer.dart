@@ -6,8 +6,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddNewCustomerTransaction extends StatefulWidget {
   final Function refreshData;
@@ -35,9 +36,9 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Customer',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addCustomer,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -59,17 +60,18 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
               controller: customerName,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Customer Name is required';
+                  return AppLocalizations.of(context)!.customerNameRequired;
                 }
                 return null;
               },
               cursorColor: patowavePrimary,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Customer Name*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.customerName}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -81,7 +83,7 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
               controller: phoneNumber,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Phone Number is required';
+                  return AppLocalizations.of(context)!.phoneNumberRequired;
                 }
                 return null;
               },
@@ -90,12 +92,13 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Phone Number*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.phoneNumber}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -142,9 +145,9 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
                     );
                   }
                 },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 16),
+                child: Text(
+                  AppLocalizations.of(context)!.save,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ),
@@ -186,7 +189,19 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
       );
 
       if (response.statusCode == 201) {
-        await widget.refreshData();
+        // Only customer name and id are important
+        SingleCustomer myData = SingleCustomer(
+          address: '',
+          email: '',
+          financialData: [],
+          fullName: jsonDecode(response.body)['customerName'],
+          phoneNumber: '',
+          amount: 0,
+          id: jsonDecode(response.body)['customerId'],
+          shopId: shopId,
+        );
+
+        widget.refreshData(myData);
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 

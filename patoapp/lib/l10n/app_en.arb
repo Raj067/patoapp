@@ -171,5 +171,9 @@
     "selectItem":"Select Item",
     "quantityRequired":"Quantity is required",
     "pleaseSelectItem":"Tafadhali chagua bidhaa",
-    "quantityAvailable":"Quantity available is "
+    "quantityAvailable":"Quantity available is ",
+    "createInvoice":"Create Invoice",
+    "allSchedule":"All Schedules",
+    "viewDetails":"VIEW DETAILS",
+    "pleaseWait":"Please Wait"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModalFit extends StatelessWidget {
   const ModalFit({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class ModalFit extends StatelessWidget {
             children: <Widget>[
               const CircularProgressIndicator(),
               Container(width: 15),
-              const Text("Please Wait....")
+              Text("${AppLocalizations.of(context)!.pleaseWait}....")
             ],
           ),
         ),
