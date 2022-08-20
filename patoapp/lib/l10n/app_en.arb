@@ -175,5 +175,21 @@
     "createInvoice":"Create Invoice",
     "allSchedule":"All Schedules",
     "viewDetails":"VIEW DETAILS",
-    "pleaseWait":"Please Wait"
+    "pleaseWait":"Please Wait",
+    "businessName":"Business Name",
+    "businessPhoneNumber":"Business Phone Number",
+    "businessEmail":"Business Email",
+    "businessAddress":"Business Address",
+    "instagramName":"Instagram Name",
+    "next":"Next",
+    "tapToAddBusinessLogo":"Tap to add your business logo",
+    "back":"Back",
+    "finish":"Finish",
+    "businessType":"Business Type",
+    "businessCategory":"Business Category",
+    "businessSlogan":"Business Slogan",
+    "businessNameRequired":"Business Name is required",
+    "businessAddressRequired":"Business Address is required",
+    "addBusiness":"Add Business"
+
 }

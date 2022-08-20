@@ -98,8 +98,8 @@ List<String> expenses = [
   "Service fee",
   "Software subscription",
   "Transport",
-  "Other direct expenses",
-  "Other indirect expenses",
+  "Other expenses",
+  // "Other indirect expenses",
 ];
 List<String> directExpenses = [
   "purchase",

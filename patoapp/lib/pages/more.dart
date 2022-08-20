@@ -12,6 +12,7 @@ import 'package:patoapp/more/reports.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:store_redirect/store_redirect.dart';
 import '../components/top_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -83,7 +84,7 @@ class MorePage extends StatelessWidget {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
-                      onTap: () async{
+                      onTap: () async {
                         launchUrl(
                           Uri.parse('${baseUrl}tutorials/'),
                         );
@@ -266,7 +267,11 @@ class MorePage extends StatelessWidget {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(15),
-                      onTap: () {},
+                      onTap: () {
+                        StoreRedirect.redirect(
+                          androidAppId: "com.patowave.patoapp",
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Row(

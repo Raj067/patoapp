@@ -58,8 +58,10 @@ class _BusinessPageState extends State<BusinessPage> {
     )) {
       if (data.isIncome()) {
         // only cashsales and invoice
-        if (data.isCashSale || data.isInvoice) {
+        if (data.isCashSale) {
           salesMonth += data.amount;
+        } else if (data.isInvoice) {
+          salesMonth += data.details[0]['total_amount'];
         }
       }
       if (!data.isIncome()) {
@@ -79,8 +81,10 @@ class _BusinessPageState extends State<BusinessPage> {
       ),
     )) {
       if (data.isIncome()) {
-        if (data.isCashSale || data.isInvoice) {
+        if (data.isCashSale) {
           salesWeek += data.amount;
+        } else if (data.isInvoice) {
+          salesWeek += data.details[0]['total_amount'];
         }
       }
       if (!data.isIncome()) {

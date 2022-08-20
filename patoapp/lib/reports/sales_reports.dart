@@ -38,8 +38,9 @@ class _SalesReportsState extends State<SalesReports> {
       if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end) &&
-            dx['isCashSale'] == 1) {
+                date.isBefore(pickedRangeDate.end) &&
+                dx['isCashSale'] == 1 ||
+            dx['isInvoice'] == 1) {
           finalData.add(fromJsonBusiness(dx));
         }
       }

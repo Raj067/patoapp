@@ -7,6 +7,7 @@ import 'package:patoapp/reports/purchases_reports.dart';
 import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OverviewDialog extends StatefulWidget {
   const OverviewDialog({Key? key}) : super(key: key);
@@ -62,9 +63,9 @@ class _OverviewDialogState extends State<OverviewDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Overview',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.overview,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -101,9 +102,9 @@ class _OverviewDialogState extends State<OverviewDialog> {
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Reports'),
-                    Icon(Icons.arrow_forward_ios,
+                  children: [
+                    Text(AppLocalizations.of(context)!.reports),
+                    const Icon(Icons.arrow_forward_ios,
                         color: Colors.black38, size: 14),
                   ],
                 ),
@@ -229,9 +230,9 @@ class _OverviewDialogState extends State<OverviewDialog> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Sales",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.sales,
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -286,9 +287,9 @@ class _OverviewDialogState extends State<OverviewDialog> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Purchases",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.purchases,
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),

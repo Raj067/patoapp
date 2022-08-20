@@ -52,7 +52,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   double discountAmount = 0;
   String? selectedValue;
   String? selectedCustmer;
-  String expensesCategory = 'Other indirect expenses';
+  String expensesCategory = 'Other expenses';
   final TextEditingController customerController = TextEditingController();
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController expensesController = TextEditingController();
@@ -1294,7 +1294,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           'amount_paid':
               totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
           'category': expensesCategory == ''
-              ? 'Other indirect expenses'
+              ? 'Other expenses'
               : expensesCategory,
           'description': expensesDescription.text == ""
               ? "Expenses"

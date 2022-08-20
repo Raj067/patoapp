@@ -33,7 +33,7 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+      if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
             date.isBefore(pickedRangeDate.end)) {

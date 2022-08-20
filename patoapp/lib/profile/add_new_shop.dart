@@ -6,6 +6,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddNewShop extends StatefulWidget {
   final Function refreshData;
@@ -27,9 +28,9 @@ class _AddNewShopState extends State<AddNewShop> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Shop',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.addBusiness,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -52,16 +53,17 @@ class _AddNewShopState extends State<AddNewShop> {
               cursorColor: patowavePrimary,
               validator: (value) {
                 if (value == null || value == "") {
-                  return 'Business Name is required';
+                  return AppLocalizations.of(context)!.businessNameRequired;
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Business Name*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.businessName}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -72,12 +74,13 @@ class _AddNewShopState extends State<AddNewShop> {
             TextFormField(
               cursorColor: patowavePrimary,
               controller: businessEmail,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Business Email",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.businessEmail,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -90,16 +93,17 @@ class _AddNewShopState extends State<AddNewShop> {
               controller: businessAddress,
               validator: (value) {
                 if (value == null || value == "") {
-                  return 'Business Address is required';
+                  return AppLocalizations.of(context)!.businessAddressRequired;
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Business Address*",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  "${AppLocalizations.of(context)!.businessAddress}*",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -110,12 +114,13 @@ class _AddNewShopState extends State<AddNewShop> {
             TextFormField(
               cursorColor: patowavePrimary,
               controller: instagramName,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 label: Text(
-                  "Instagram Name",
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                  AppLocalizations.of(context)!.instagramName,
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 14),
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
@@ -151,8 +156,8 @@ class _AddNewShopState extends State<AddNewShop> {
                     _addShop(context);
                   }
                 },
-                child: const Text(
-                  "Add Shop",
+                child: Text(
+                  AppLocalizations.of(context)!.addBusiness,
                 ),
               ),
             ),

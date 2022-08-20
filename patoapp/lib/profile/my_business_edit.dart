@@ -17,6 +17,7 @@ import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditMyBusiness extends StatefulWidget {
   final Function refreshData;
@@ -112,9 +113,9 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'My Business',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          AppLocalizations.of(context)!.myBusiness,
+          style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           onPressed: () {
@@ -134,7 +135,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           children: [
             value == 2
                 ? TextButton(
-                    child: const Text("Back"),
+                    child: Text(AppLocalizations.of(context)!.back),
                     onPressed: () {
                       setState(() {
                         value = 1;
@@ -163,7 +164,9 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                     ),
             ]),
             TextButton(
-              child: Text(value == 1 ? "Next" : "Finish"),
+              child: Text(value == 1
+                  ? AppLocalizations.of(context)!.next
+                  : AppLocalizations.of(context)!.finish),
               onPressed: () {
                 setState(() {
                   if (value == 1) {
@@ -260,10 +263,10 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
             ),
           ),
           Container(height: 10),
-          const Center(
+          Center(
             child: Text(
-              "Tap to add your business logo",
-              style: TextStyle(color: patowavePrimary),
+              AppLocalizations.of(context)!.tapToAddBusinessLogo,
+              style: const TextStyle(color: patowavePrimary),
             ),
           ),
           Container(height: 15),
@@ -276,12 +279,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
               }
               return null;
             },
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               label: Text(
-                "Business Name*",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                "${AppLocalizations.of(context)!.businessName}*",
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -302,12 +306,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
             ],
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               label: Text(
-                "Business Phone Number*",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                "${AppLocalizations.of(context)!.businessPhoneNumber}*",
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -318,12 +323,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           TextFormField(
             cursorColor: patowavePrimary,
             controller: businessEmail,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               label: Text(
-                "Business Email",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                AppLocalizations.of(context)!.businessEmail,
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -340,12 +346,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
               }
               return null;
             },
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               label: Text(
-                "Business Address*",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                "${AppLocalizations.of(context)!.businessAddress}*",
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -356,12 +363,13 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           TextFormField(
             cursorColor: patowavePrimary,
             controller: instagramName,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               label: Text(
-                "Instagram Name",
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+                AppLocalizations.of(context)!.instagramName,
+                style:
+                    const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
               ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
@@ -369,9 +377,9 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
             ),
           ),
           Container(height: 15),
-          const Text(
-            "Signature",
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.signature,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -468,7 +476,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
 
   _secondScreen() {
     return ListView(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       children: [
         DropdownButtonFormField2(
           value: businessTypes.contains(businessType.text)
@@ -478,9 +486,9 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           scrollbarAlwaysShow: true,
           dropdownMaxHeight: 200,
           decoration: InputDecoration(
-            label: const Text(
-              'Business Type',
-              style: TextStyle(
+            label: Text(
+              AppLocalizations.of(context)!.businessType,
+              style: const TextStyle(
                 fontSize: 14,
                 fontStyle: FontStyle.italic,
               ),
@@ -526,9 +534,9 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
           scrollbarAlwaysShow: true,
           dropdownMaxHeight: 200,
           decoration: InputDecoration(
-            label: const Text(
-              'Business Category',
-              style: TextStyle(
+            label: Text(
+              AppLocalizations.of(context)!.businessCategory,
+              style: const TextStyle(
                 fontSize: 14,
                 fontStyle: FontStyle.italic,
               ),
@@ -569,12 +577,12 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
         TextFormField(
           cursorColor: patowavePrimary,
           controller: businessSlogan,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             label: Text(
-              "Business Slogan",
-              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
+              AppLocalizations.of(context)!.businessSlogan,
+              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
             ),
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
               ),

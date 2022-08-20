@@ -16,7 +16,8 @@ class DayBookReports extends StatefulWidget {
 
 class _DayBookReportsState extends State<DayBookReports> {
   DateTime selectedDate = DateTime.now();
-
+  int moneyIn = 0;
+  int moneyOut = 0;
   List<FinancialData> allFinancialData = [];
   bool isLoading = true;
   fetchBusinessDB() async {
@@ -27,7 +28,7 @@ class _DayBookReportsState extends State<DayBookReports> {
     List<Map<String, dynamic>> business = await DBHelperBusiness.query();
     List<FinancialData> finalData = [];
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+      if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         DateTime d1 = DateTime(
           date.year,
@@ -105,14 +106,36 @@ class _DayBookReportsState extends State<DayBookReports> {
               child: Card(
                 elevation: 0,
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                ),
+                // shape: const RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.only(
+                //     bottomLeft: Radius.circular(15),
+                //     bottomRight: Radius.circular(15),
+                //   ),
+                // ),
                 child: ListView(
                   children: _allFinancialData(context),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: patowavePrimary.withAlpha(100),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Money-In - Money-Out'),
+                    Text('Tsh: ${formatter.format(moneyIn - moneyOut)}'),
+                  ],
                 ),
               ),
             ),
@@ -234,10 +257,15 @@ class _DayBookReportsState extends State<DayBookReports> {
 
   List<Widget> _allFinancialData(BuildContext context) {
     List<Widget> data = [];
-    for (var element in allFinancialData) {
-      if (!element.isDeleted) {
-        data.add(_singleFinancialData(context, element));
-        data.add(const Divider(height: 0));
+    moneyIn = 0;
+    moneyOut = 0;
+    for (FinancialData element in allFinancialData) {
+      data.add(_singleFinancialData(context, element));
+      data.add(const Divider(height: 0));
+      if (element.isIncome()) {
+        moneyIn += element.amount;
+      } else {
+        moneyOut += element.amount;
       }
     }
     return data;
