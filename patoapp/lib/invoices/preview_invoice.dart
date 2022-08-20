@@ -640,7 +640,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         //   'Invoice',
         //   style: TextStyle(color: Colors.white),
         // ),
-        // backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -722,225 +722,222 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             ),
           ),
           Expanded(
-            child: Container(
-              color: Theme.of(context).cardColor,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Amount Details',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Amount Details',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Total Amount',
+                                style: TextStyle(),
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Total Amount',
-                                  style: TextStyle(),
-                                ),
-                                Text("Tsh: ${formatter.format(subTotal)}"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Discount',
-                                  style: TextStyle(),
-                                ),
-                                Text("Tsh: ${formatter.format(discount)}"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Paid Amount',
-                                  style: TextStyle(),
-                                ),
-                                Text("Tsh: ${formatter.format(paid)}"),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Balance Due',
-                                  style: TextStyle(),
-                                ),
-                                Text("Tsh: ${formatter.format(balanceDue)}"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(height: 15),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Text(
-                              'Invoice To',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              Text("Tsh: ${formatter.format(subTotal)}"),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Discount',
+                                style: TextStyle(),
                               ),
-                            ),
-                            Text(widget.invoice.fullName),
-                            Text(myCustomer == null
-                                ? ""
-                                : myCustomer!.phoneNumber),
-                            Text(myCustomer == null ? "" : myCustomer!.address),
-                            Text(myCustomer == null ? "" : myCustomer!.email),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(height: 15),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Invoice Details',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              Text("Tsh: ${formatter.format(discount)}"),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Paid Amount',
+                                style: TextStyle(),
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Invoice No:',
-                                  style: TextStyle(),
-                                ),
-                                Text(widget.invoice.invoiceNo),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Issued Date: '),
-                                Text(
-                                  DateFormat('d-M-yyy').format(DateTime.now()),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Due Date: '),
-                                Text(
-                                  DateFormat('d-M-yyy').format(
-                                      DateTime.parse(widget.invoice.dueDate)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(height: 15),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Table(children: myRowData),
-                      ),
-                    ),
-                    Container(height: 15),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: const [
-                            Text(
-                              'Notes',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                              Text("Tsh: ${formatter.format(paid)}"),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Balance Due',
+                                style: TextStyle(),
                               ),
-                            ),
-                            Text('Thanks for your business'),
-                          ],
-                        ),
+                              Text("Tsh: ${formatter.format(balanceDue)}"),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    Container(height: 15),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: patowavePrimary.withAlpha(50),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
+                  ),
+                  // Container(height: 10),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: const [
-                            Text(
-                              'Payment Methods',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Invoice To',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(widget.invoice.fullName),
+                          Text(myCustomer == null
+                              ? ""
+                              : myCustomer!.phoneNumber),
+                          Text(myCustomer == null ? "" : myCustomer!.address),
+                          Text(myCustomer == null ? "" : myCustomer!.email),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Container(height: 10),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Invoice Details',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Invoice No:',
+                                style: TextStyle(),
                               ),
-                            ),
-                            Text('None'),
-                          ],
-                        ),
+                              Text(widget.invoice.invoiceNo),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Issued Date: '),
+                              Text(
+                                DateFormat('d-M-yyy').format(DateTime.now()),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Due Date: '),
+                              Text(
+                                DateFormat('d-M-yyy').format(
+                                    DateTime.parse(widget.invoice.dueDate)),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    Container(height: 15),
-                  ],
-                ),
+                  ),
+                  // Container(height: 10),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Table(children: myRowData),
+                    ),
+                  ),
+                  // Container(height: 10),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: const [
+                          Text(
+                            'Notes',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('Thanks for your business'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Container(height: 10),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: const [
+                          Text(
+                            'Payment Methods',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('None'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Container(height: 10),
+                ],
               ),
             ),
           ),
