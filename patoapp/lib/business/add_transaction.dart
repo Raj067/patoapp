@@ -3,13 +3,16 @@ import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_purchases.dart';
@@ -59,6 +62,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   final TextEditingController salesDescription = TextEditingController();
   double totalPurchasesAmount = 0.0;
   List<SingleCustomer> finalCustomerData = [];
+  final BusinessController _businessController = Get.put(BusinessController());
+
   // Fetching data
   fetchData() async {
     // shop ID
@@ -1222,8 +1227,24 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        SyncBusiness syncBusiness = SyncBusiness();
-        await syncBusiness.fetchData();
+        FinancialData myData = FinancialData(
+          date: DateTime.parse(jsonDecode(response.body)['date']),
+          isCashSale: false,
+          isPaymentIn: false,
+          isExpenses: false,
+          isPaymentOut: false,
+          isPurchases: true,
+          isInvoice: false,
+          name: jsonDecode(response.body)['name'],
+          description: jsonDecode(response.body)['description'],
+          details: jsonDecode(response.body)['details'],
+          amount: jsonDecode(response.body)['amount'].toInt(),
+          receipt: "$receiptNo",
+          discount: jsonDecode(response.body)['discount'].toInt(),
+          id: jsonDecode(response.body)['id'],
+          shopId: shopId,
+        );
+        await _businessController.addBusiness(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
@@ -1281,8 +1302,25 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        SyncBusiness syncBusiness = SyncBusiness();
-        await syncBusiness.fetchData();
+        FinancialData myData = FinancialData(
+          date: DateTime.parse(jsonDecode(response.body)['date']),
+          isCashSale: false,
+          isPaymentIn: false,
+          isExpenses: true,
+          isPaymentOut: false,
+          isPurchases: false,
+          isInvoice: false,
+          name: jsonDecode(response.body)['name'],
+          description: jsonDecode(response.body)['description'],
+          details: jsonDecode(response.body)['details'],
+          amount:
+              totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
+          receipt: "$receiptNo",
+          discount: discountAmount.toInt().toInt(),
+          id: jsonDecode(response.body)['id'],
+          shopId: shopId,
+        );
+        await _businessController.addBusiness(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
@@ -1344,8 +1382,24 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
-        SyncBusiness syncBusiness = SyncBusiness();
-        await syncBusiness.fetchData();
+        FinancialData myData = FinancialData(
+          date: DateTime.parse(jsonDecode(response.body)['date']),
+          isCashSale: true,
+          isPaymentIn: false,
+          isExpenses: false,
+          isPaymentOut: false,
+          isPurchases: false,
+          isInvoice: false,
+          name: jsonDecode(response.body)['name'],
+          description: "Cash Sales",
+          details: jsonDecode(response.body)['details'],
+          amount: (totalAmount - discountAmount).toInt(),
+          receipt: "$receiptNo",
+          discount: discountAmount.toInt(),
+          id: jsonDecode(response.body)['id'],
+          shopId: shopId,
+        );
+        await _businessController.addBusiness(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

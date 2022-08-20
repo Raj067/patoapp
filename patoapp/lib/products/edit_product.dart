@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -8,6 +9,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,6 +38,7 @@ class _EditProductState extends State<EditProduct> {
   bool _isSupplierActivated = false;
   final editProductFormKey = GlobalKey<FormState>();
   final editServicesFormKey = GlobalKey<FormState>();
+  final ProductController _productController = Get.put(ProductController());
 
   TextEditingController productName = TextEditingController();
   TextEditingController purchasesPrice = TextEditingController();
@@ -618,6 +621,9 @@ class _EditProductState extends State<EditProduct> {
       context: context,
       builder: (context) => const ModalFit(),
     );
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
       final response = await http.post(
@@ -640,6 +646,23 @@ class _EditProductState extends State<EditProduct> {
       );
 
       if (response.statusCode == 201) {
+        SingleProduct myData = SingleProduct(
+          shopId: shopId,
+          isService: false,
+          productUnit: primaryUnit.text,
+          id: widget.product.id,
+          productName: productName.text,
+          quantity: quantity.text != '' ? int.parse(quantity.text) : 0,
+          purchasesPrice:
+              purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
+          sellingPrice:
+              sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
+          stockLevel: stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
+          supplierName: supplierName.text,
+          supplierContact: supplierNumber.text,
+          thumbnail: '',
+        );
+        await _productController.updateProduct(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

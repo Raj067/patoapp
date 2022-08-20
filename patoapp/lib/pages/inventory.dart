@@ -273,7 +273,8 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                     builder: (BuildContext context) => AddProductPage(
                       isProductImage: isProductImage,
                       isProductBarcode: isProductBarcode,
-                      resetData: () {
+                      resetData: () async {
+                        await fetchProductsDB();
                         refreshDataDB();
                       },
                     ),
@@ -395,7 +396,8 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   product: product,
                   isProductImage: isProductImage,
                   isProductBarcode: isProductBarcode,
-                  resetData: () {
+                  resetData: () async {
+                    await fetchProductsDB();
                     refreshDataDB();
                   },
                 ),

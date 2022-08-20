@@ -256,7 +256,7 @@ def add_new_customer_api(request):
                 amount=request.data.get("openingBalance"),
                 receipt_no=str(random.randint(1000, 99999)),
             )
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'customerId': reg.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -304,14 +304,21 @@ def all_invoices_api(request):
 def edit_invoice_api(request):
     if request.method == "POST":
         # print(request.data)
+
         invoice = Invoice.objects.get(id=request.data.get('invoiceId'))
         invoice.amount_received = request.data.get('amount_received')
         invoice.total_amount = request.data.get('total_amount')
         invoice.discount = request.data.get('discount')
-        invoice.date_due = request.data.get('dueDate'),
+        try:
+            date_due = request.data.get('dueDate').split('-')
+            year, month, day = date_due
+            invoice.date_due = datetime.datetime(year, month, day),
+        except:
+            pass
+
         invoice.invoice_no = str(request.data.get('invoiceNo'))
         invoice.description = request.data.get('description')
-
+        invoice.save()
         # ---- Once Invoice is edited, the initial
         # quantity is returned to inventory and
         # the new ones are taken from inventory
@@ -396,7 +403,7 @@ def create_invoice_api(request):
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'invoiceId': reg.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -462,8 +469,24 @@ def purchases_transaction_api(request):
             prod = Product.objects.get(id=dx.get('id'))
             prod.quantity = prod.quantity + dx.get('quantity')
             prod.save()
+        data = {
+            "id": f"purchases-{reg.id}",
+            "date": reg.updated_at,
+            "description": reg.description,
+            "name": reg.customer.customer_name if reg.customer else 'Purchases',
+            "amount": reg.total_amount,  # using total amount instead of paid amount
+            "discount": reg.amount_paid - reg.total_amount,  # Balance due
 
-        return Response(status=status.HTTP_201_CREATED)
+            "details": [{
+                "id": i.id,
+                "product": i.product_name,
+                "quantity": i.quantity,
+                "price": i.price,
+                "product_unit": i.product_unit,
+                "date": i.updated_at,
+            } for i in reg.purchased_items.all()]
+        }
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -487,8 +510,16 @@ def expenses_transaction_api(request):
         if customer:
             reg.customer = Customer.objects.get(id=customer)
             reg.save()
-
-        return Response(status=status.HTTP_201_CREATED)
+        data = {
+            "id":  f"expense-{reg.id}",
+            "date": reg.updated_at,
+            "name": reg.expenses_category if reg.expenses_category else 'Other indirect expenses',
+            "description": reg.description,
+            "details": [{
+                "id": reg.id,
+            }]
+        }
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # FOR TRANSACTIONS - SALES
@@ -565,8 +596,20 @@ def cash_sales_customer_transaction_api(request):
             prod = Product.objects.get(id=dx.get('id'))
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
-
-        return Response(status=status.HTTP_201_CREATED)
+        data = {
+            "id": f"cash_sale_customer-{reg.id}",
+            "date": reg.updated_at,
+            "name": reg.customer.customer_name,
+            "details": [{
+                "id": i.id,
+                "product": i.product_name,
+                "quantity": i.quantity,
+                "price": i.price,
+                "product_unit": i.product_unit,
+                "date": i.updated_at,
+            } for i in reg.sold_items.all()]
+        }
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # For products
@@ -607,7 +650,7 @@ def add_new_product_api(request):
             quantity_added=product.quantity,
             purchases_price=product.purchases_price,
         ).save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'productId': product.id})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

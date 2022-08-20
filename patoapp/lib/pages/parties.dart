@@ -296,7 +296,10 @@ class _PartiesPageState extends State<PartiesPage> {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            AddCustomerDialog(refreshData: refreshDataDB),
+                            AddCustomerDialog(refreshData: () async {
+                          await fetchCustomersDB();
+                          refreshDataDB();
+                        }),
                         fullscreenDialog: true,
                       ),
                     );

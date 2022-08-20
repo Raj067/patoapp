@@ -111,7 +111,8 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                     context,
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) => CreateNewInvoice(
-                        resetData: () {
+                        resetData: () async {
+                          await fetchInvoiceDB();
                           refreshDataDB();
                         },
                       ),
@@ -246,7 +247,8 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) => PreviewInvoice(
                             invoice: dx,
-                            resetData: () {
+                            resetData: () async {
+                              await fetchInvoiceDB();
                               refreshDataDB();
                             },
                           ),

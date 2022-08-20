@@ -3,13 +3,16 @@ import 'dart:math';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/business/add_new_customer.dart';
@@ -35,6 +38,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   String? selectedProductValueSales;
   bool isLoading = false;
   String selectedUnit = "Items";
+  String customerName = '';
 
   List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
@@ -46,6 +50,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final TextEditingController quantityControllerSales = TextEditingController();
   final TextEditingController dueDate = TextEditingController();
   final TextEditingController invoiceDescription = TextEditingController();
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
 
   fetchCustomersDB() async {
     // shop ID
@@ -277,6 +282,10 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   //Do something when changing the item if you want.
                   setState(() {
                     selectedCustmer = value.toString();
+                    customerName = customData
+                        .firstWhere((element) =>
+                            element.id.toString() == selectedCustmer)
+                        .fullName;
                   });
                 },
                 onSaved: (value) {
@@ -814,6 +823,22 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
       );
 
       if (response.statusCode == 201) {
+        SingleInvoice myData = SingleInvoice(
+          id: jsonDecode(response.body)['invoiceId'],
+          shopId: shopId,
+          customerId: int.parse(selectedCustmer ?? '1'),
+          fullName: customerName,
+          amountReceived: receivedAmount.toInt(),
+          totalAmount: totalAmount.toInt() - discountAmount.toInt(),
+          discount: discountAmount.toInt(),
+          dueDate: dueDate.text,
+          items: items,
+          invoiceNo: "$invoiceNo",
+          description: invoiceDescription.text == ''
+              ? 'Invoice'
+              : invoiceDescription.text,
+        );
+        await _invoiceController.addInvoice(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

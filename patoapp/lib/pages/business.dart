@@ -113,7 +113,7 @@ class _BusinessPageState extends State<BusinessPage> {
         // DateTime date = DateTime.parse(dx['date']);
         // fetchHeaderData(date: date, data: fromJsonBusiness(dx));
         if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end)) {
+            date.isBefore(pickedRangeDate.end.add(const Duration(days: 1)))) {
           finalData.add(fromJsonBusiness(dx));
         }
       }
@@ -131,11 +131,9 @@ class _BusinessPageState extends State<BusinessPage> {
 
   @override
   void initState() {
-    super.initState();
-    // fetchData();
-    // fetchCustomer();
     fetchBusinessDB();
     refreshDataDB();
+    super.initState();
   }
 
   @override
@@ -161,7 +159,7 @@ class _BusinessPageState extends State<BusinessPage> {
               builder: (BuildContext context) => AddTransactionDialog(
                 resetData: () async {
                   await fetchBusinessDB();
-                  setState(() {});
+                  refreshDataDB();
                 },
               ),
               fullscreenDialog: true,

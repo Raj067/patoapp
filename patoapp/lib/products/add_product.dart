@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -8,6 +9,8 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
+import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -34,6 +37,8 @@ class _AddProductPageState extends State<AddProductPage> {
   int _value = 1;
   final addProductFormKey = GlobalKey<FormState>();
   final addServicesFormKey = GlobalKey<FormState>();
+  final ProductController _productController = Get.put(ProductController());
+
   // Controllers
 
   TextEditingController productName = TextEditingController();
@@ -747,7 +752,24 @@ class _AddProductPageState extends State<AddProductPage> {
       );
 
       if (response.statusCode == 201) {
-        await widget.resetData();
+        SingleProduct myData = SingleProduct(
+          shopId: shopId,
+          isService: isService,
+          productUnit: primaryUnit.text,
+          id: jsonDecode(response.body)['productId'],
+          productName: productName.text,
+          quantity: quantity.text != '' ? int.parse(quantity.text) : 0,
+          purchasesPrice:
+              purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
+          sellingPrice:
+              sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
+          stockLevel: stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
+          supplierName: supplierName.text,
+          supplierContact: supplierNumber.text,
+          thumbnail: '',
+        );
+        await _productController.addProduct(myData);
+        widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously

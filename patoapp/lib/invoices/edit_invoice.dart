@@ -3,11 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
@@ -47,6 +49,7 @@ class _EditInvoiceState extends State<EditInvoice> {
   final TextEditingController quantityControllerSales = TextEditingController();
   final TextEditingController dueDate = TextEditingController();
   final TextEditingController invoiceDescription = TextEditingController();
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
 
   fetchCustomersDB() async {
     // shop ID
@@ -753,6 +756,22 @@ class _EditInvoiceState extends State<EditInvoice> {
       );
 
       if (response.statusCode == 201) {
+        SingleInvoice myData = SingleInvoice(
+          id: widget.invoice.id,
+          shopId: shopId,
+          customerId: widget.invoice.customerId,
+          fullName: widget.invoice.fullName,
+          amountReceived: receivedAmount.toInt(),
+          totalAmount: totalAmount.toInt() - discountAmount.toInt(),
+          discount: discountAmount.toInt(),
+          dueDate: dueDate.text,
+          items: items,
+          invoiceNo: invoiceNo,
+          description: invoiceDescription.text == ''
+              ? 'Invoice'
+              : invoiceDescription.text,
+        );
+        await _invoiceController.updateInvoice(myData);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

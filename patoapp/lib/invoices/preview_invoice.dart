@@ -3,6 +3,7 @@ import 'dart:io';
 // import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_downloader/image_downloader.dart';
 // import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -45,6 +47,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     'Quantity',
     'Total',
   ];
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
 
   List<List> tableData = [];
   ProfileData? myProfile;
@@ -527,6 +530,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     }
     if (index == 2) {
       // api/delete-invoices/
+
       String accessToken = await storage.read(key: 'access') ?? "";
       showPleaseWait(
         context: context,
@@ -542,7 +546,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         );
 
         if (response.statusCode == 201) {
-          await widget.resetData();
+          await _invoiceController.deleteInvoice(widget.invoice);
+          widget.resetData();
+
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
           // ignore: use_build_context_synchronously

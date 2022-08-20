@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/products/edit_product.dart';
@@ -35,6 +37,7 @@ class SingleProductDetails extends StatefulWidget {
 
 class _SingleProductDetailsState extends State<SingleProductDetails> {
   final ImagePicker _picker = ImagePicker();
+  final ProductController _productController = Get.put(ProductController());
 
   Uint8List? uploadedImage;
   @override
@@ -610,6 +613,7 @@ Selling Price: Tsh ${widget.product.sellingPrice}
       );
 
       if (response.statusCode == 201) {
+        await _productController.updateProduct(widget.product);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
@@ -653,6 +657,7 @@ Selling Price: Tsh ${widget.product.sellingPrice}
       );
 
       if (response.statusCode == 201) {
+        await _productController.deleteProduct(widget.product);
         widget.resetData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

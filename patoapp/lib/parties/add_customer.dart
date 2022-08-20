@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,8 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -26,6 +29,8 @@ class AddCustomerDialog extends StatefulWidget {
 
 class _AddCustomerDialogState extends State<AddCustomerDialog> {
   final addCustomerFormKey = GlobalKey<FormState>();
+  final CustomerController _customerController = Get.put(CustomerController());
+
   // Controllers for form
   TextEditingController customerName = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
@@ -523,7 +528,38 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
       );
 
       if (response.statusCode == 201) {
-        await widget.refreshData();
+        int balance = openingBalance == "" ? 0 : int.parse(openingBalance);
+        List<Map> financialData = toReceive
+            ? [
+                {
+                  "name": "Payment in",
+                  "description": "Opening Balance",
+                  "received": balance,
+                  "paid": 0,
+                  "date": DateTime.now().toString(),
+                }
+              ]
+            : [
+                {
+                  "name": "Payment in",
+                  "description": "Opening Balance",
+                  "received": 0,
+                  "paid": balance,
+                  "date": DateTime.now().toString(),
+                }
+              ];
+        SingleCustomer myData = SingleCustomer(
+          address: address,
+          email: emailAddress,
+          financialData: financialData,
+          fullName: customerName,
+          phoneNumber: phoneNumber,
+          amount: balance,
+          id: jsonDecode(response.body)['customerId'],
+          shopId: shopId,
+        );
+        await _customerController.addCustomer(myData);
+        widget.refreshData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 
