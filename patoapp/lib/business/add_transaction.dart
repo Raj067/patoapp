@@ -451,7 +451,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
+                  String newVal = finalCustomerData
+                      .firstWhere(
+                          (element) => element.id.toString() == item.value)
+                      .fullName;
+                  return (newVal
+                      .toLowerCase()
+                      .contains(searchValue.toLowerCase()));
                 },
                 //This to clear the search value when you close the menu
                 onMenuStateChange: (isOpen) {
@@ -832,25 +838,65 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   right: 8,
                   left: 8,
                 ),
-                child: TextFormField(
-                  cursorColor: patowavePrimary,
-                  controller: customerController,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 8,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        cursorColor: patowavePrimary,
+                        controller: customerController,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
+                          hintText: 'Search for contact...',
+                          hintStyle: TextStyle(fontSize: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    hintText: 'Search for contact...',
-                    hintStyle: const TextStyle(fontSize: 12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                AddNewCustomerTransaction(
+                              refreshData: onAddingCustomer,
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
+                      child: Text(AppLocalizations.of(context)!.add),
+                    )
+                  ],
                 ),
               ),
               searchMatchFn: (item, searchValue) {
-                return (item.value.toString().contains(searchValue));
+                String newVal = finalCustomerData
+                    .firstWhere(
+                        (element) => element.id.toString() == item.value)
+                    .fullName;
+                return (newVal
+                    .toLowerCase()
+                    .contains(searchValue.toLowerCase()));
               },
               //This to clear the search value when you close the menu
               onMenuStateChange: (isOpen) {
@@ -1293,9 +1339,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         body: jsonEncode(<String, dynamic>{
           'amount_paid':
               totalAmountPaid.text == '' ? 0 : int.parse(totalAmountPaid.text),
-          'category': expensesCategory == ''
-              ? 'Other expenses'
-              : expensesCategory,
+          'category':
+              expensesCategory == '' ? 'Other expenses' : expensesCategory,
           'description': expensesDescription.text == ""
               ? "Expenses"
               : expensesDescription.text,

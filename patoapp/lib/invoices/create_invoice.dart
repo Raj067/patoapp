@@ -360,7 +360,13 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
+                  String newVal = customData
+                      .firstWhere(
+                          (element) => element.id.toString() == item.value)
+                      .fullName;
+                  return (newVal
+                      .toLowerCase()
+                      .contains(searchValue.toLowerCase()));
                 },
                 //This to clear the search value when you close the menu
                 onMenuStateChange: (isOpen) {

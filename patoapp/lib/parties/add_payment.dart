@@ -394,7 +394,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
+                  String newVal = finalCustomerData
+                      .where((element) => element.amount >= 0)
+                      .toList()
+                      .firstWhere(
+                          (element) => element.id.toString() == item.value)
+                      .fullName;
+                  return (newVal
+                      .toLowerCase()
+                      .contains(searchValue.toLowerCase()));
                 },
                 //This to clear the search value when you close the menu
                 onMenuStateChange: (isOpen) {
@@ -522,7 +530,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 items: finalCustomerData
-                    .where((element) => element.amount < 0)
+                    .where((element) => element.amount <= 0)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
@@ -569,7 +577,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  return (item.value.toString().contains(searchValue));
+                  String newVal = finalCustomerData
+                      .where((element) => element.amount <= 0)
+                      .toList()
+                      .firstWhere(
+                          (element) => element.id.toString() == item.value)
+                      .fullName;
+                  return (newVal
+                      .toLowerCase()
+                      .contains(searchValue.toLowerCase()));
                 },
                 //This to clear the search value when you close the menu
                 onMenuStateChange: (isOpen) {
