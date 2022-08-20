@@ -1,10 +1,17 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:ui' as ui;
+import 'package:path/path.dart' as pt;
 
 class ShareGreetingCard extends StatefulWidget {
   final SingleGreetingCard myCard;
@@ -16,6 +23,17 @@ class ShareGreetingCard extends StatefulWidget {
 
 class _ShareGreetingCardState extends State<ShareGreetingCard> {
   TextEditingController textMessage = TextEditingController();
+  final GlobalKey globalKey = GlobalKey();
+  Future<Uint8List> capturePng() async {
+    final RenderRepaintBoundary boundary =
+        globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    final ui.Image image = await boundary.toImage(pixelRatio: 5);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+    return pngBytes;
+  }
+
   @override
   void initState() {
     textMessage.text = widget.myCard.description;
@@ -55,8 +73,11 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: "$imageBaseUrl${widget.myCard.greetingCard}",
+                    RepaintBoundary(
+                      key: globalKey,
+                      child: CachedNetworkImage(
+                        imageUrl: "$imageBaseUrl${widget.myCard.greetingCard}",
+                      ),
                     ),
                     Container(height: 15),
                     SizedBox(
@@ -130,9 +151,22 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
                 ),
               ),
               onPressed: () async {
-                await Share.share(
-                    '$imageBaseUrl${widget.myCard.greetingCard} ${textMessage.text}',
-                    subject: textMessage.text);
+                final bytes = await capturePng();
+                final dir = await getExternalStorageDirectory();
+                String myPath =
+                    pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+                myPath = '$myPath/PatoWave/greeting-cards';
+                Directory('$myPath/').create();
+                String imageName =
+                    pt.basename(widget.myCard.greetingCard).replaceAll('.', '');
+                final file = File('$myPath/$imageName.png');
+                await file.writeAsBytes(bytes);
+                // file.path
+                await Share.shareFiles([file.path],
+                    subject: textMessage.text, text: textMessage.text);
+                // await Share.share(
+                //     '$imageBaseUrl${widget.myCard.greetingCard} ${textMessage.text}',
+                //     subject: textMessage.text);
               },
               child: Text(
                 AppLocalizations.of(context)!.send,

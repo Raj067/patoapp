@@ -6,6 +6,7 @@ import 'package:patoapp/backend/models/shedules.dart';
 import 'package:patoapp/backend/sync/sync_shedule.dart';
 import 'package:patoapp/shedule/single_shedule.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllShedules extends StatefulWidget {
   const AllShedules({Key? key}) : super(key: key);
@@ -160,7 +161,7 @@ class _AllShedulesState extends State<AllShedules> {
                 Column(
                   children: [
                     Text(
-                      "view",
+                      AppLocalizations.of(context)!.view,
                       style: TextStyle(
                         fontSize: 12,
                         color: sheduleColors[shedule.color],

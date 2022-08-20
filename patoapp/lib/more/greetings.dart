@@ -1,13 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_downloader/image_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/greeting_card.dart';
 import 'package:patoapp/greeting_cards/share_card.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'dart:ui' as ui;
+import 'package:path/path.dart' as pt;
 
 class MainGreetingsCards extends StatefulWidget {
   const MainGreetingsCards({Key? key}) : super(key: key);
@@ -21,6 +27,17 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
   List offersData = [];
   List goodMorningData = [];
   bool isLoading = true;
+  final GlobalKey globalKey = GlobalKey();
+  Future<Uint8List> capturePng() async {
+    final RenderRepaintBoundary boundary =
+        globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    final ui.Image image = await boundary.toImage(pixelRatio: 5);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+    return pngBytes;
+  }
+
   fetchData() async {
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
@@ -219,8 +236,11 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              CachedNetworkImage(
-                imageUrl: "$imageBaseUrl$cardImage",
+              RepaintBoundary(
+                key: globalKey,
+                child: CachedNetworkImage(
+                  imageUrl: "$imageBaseUrl$cardImage",
+                ),
               ),
               // Image.network(
               //   "$imageBaseUrl$cardImage",
@@ -252,15 +272,17 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       ),
                     ),
                     onPressed: () async {
-                      var imageId = await ImageDownloader.downloadImage(
-                        "$imageBaseUrl$cardImage",
-                        destination: AndroidDestinationType.custom(
-                          directory: 'PatoWave/Cards/',
-                          inPublicDir: true,
-                        ),
-                      );
-                      var path = await ImageDownloader.findPath(imageId!);
-                      ImageDownloader.open(path!);
+                      final bytes = await capturePng();
+                      final dir = await getExternalStorageDirectory();
+                      String myPath = pt.dirname(
+                          pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+                      myPath = '$myPath/PatoWave/greeting-cards';
+                      Directory('$myPath/').create();
+                      String imageName =
+                          pt.basename('$cardImage').replaceAll('.', '');
+                      final file = File('$myPath/$imageName.png');
+                      await file.writeAsBytes(bytes);
+                      await ImageDownloader.open(file.path);
                     },
                     child: Row(
                       children: [

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -279,8 +280,8 @@ class _SingleSheduleState extends State<SingleShedule> {
                       onPressed: () {
                         _deletingShedule(widget.shedule);
                       },
-                      child: const Text(
-                        "Delete",
+                      child: Text(
+                        AppLocalizations.of(context)!.delete,
                       ),
                     ),
                   ),
