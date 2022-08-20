@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
@@ -25,6 +27,7 @@ class EditCustomer extends StatefulWidget {
 
 class _EditCustomerState extends State<EditCustomer> {
   final editCustomerFormKey = GlobalKey<FormState>();
+  final CustomerController _customerController = Get.put(CustomerController());
 
   // Controllers for form
   TextEditingController customerName = TextEditingController();
@@ -234,10 +237,16 @@ class _EditCustomerState extends State<EditCustomer> {
       );
 
       if (response.statusCode == 201) {
-        await widget.refreshData();
+        widget.customer.address = address;
+        widget.customer.fullName = customerName;
+        widget.customer.phoneNumber = phoneNumber;
+        await _customerController.updateCustomer(widget.customer);
+        widget.refreshData();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // Navigator

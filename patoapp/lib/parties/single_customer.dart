@@ -93,10 +93,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) => EditCustomer(
                     customer: widget.customer,
-                    refreshData: () async {
-                      await widget.refreshData();
-                      Navigator.pop(context);
-                    },
+                    refreshData: widget.refreshData,
                   ),
                   fullscreenDialog: true,
                 ),
@@ -380,6 +377,7 @@ Patowave"""),
     }
     return businessName;
   }
+
   Future<String> _getBusinessPhone() async {
     String businessName = '';
     String? activeShop = await storage.read(key: 'activeShop');
@@ -393,6 +391,7 @@ Patowave"""),
     }
     return businessName;
   }
+
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((MapEntry<String, String> e) =>

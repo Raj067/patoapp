@@ -172,7 +172,8 @@ class _PartiesPageState extends State<PartiesPage> {
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
                   refreshData: () async {
-                    await refreshDataDB();
+                    await fetchCustomersDB();
+                    refreshDataDB();
                   },
                 ),
                 fullscreenDialog: true,
