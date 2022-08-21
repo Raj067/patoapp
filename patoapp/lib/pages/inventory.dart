@@ -763,6 +763,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     customData = [pName, ...newAddedData, ...newUnAddedData];
     allAddedProduct = val;
     addedItemsToCart = addedItems;
+    setState(() {});
   }
 
   _onResetAllData() {
