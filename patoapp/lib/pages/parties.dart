@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -100,7 +101,11 @@ class _PartiesPageState extends State<PartiesPage> {
             context,
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddPaymentDialog(
-                refreshData: refreshDataDB,
+                refreshData: () async {
+                  await fetchCustomersDB();
+                  refreshDataDB();
+                  syncAllImportantForPartiesPageOnly();
+                },
               ),
               fullscreenDialog: true,
             ),
@@ -174,6 +179,7 @@ class _PartiesPageState extends State<PartiesPage> {
                   refreshData: () async {
                     await fetchCustomersDB();
                     refreshDataDB();
+                    syncAllImportantForPartiesPageOnly();
                   },
                 ),
                 fullscreenDialog: true,

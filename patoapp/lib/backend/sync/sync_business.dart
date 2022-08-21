@@ -20,7 +20,7 @@ class SyncBusiness {
       if (data.statusCode == 200) {
         for (var dx in jsonDecode(data.body)) {
           FinancialData myData = FinancialData(
-            date: DateTime.parse(dx['date']),
+            date: DateTime.parse(dx['date']).toLocal(),
             isCashSale: dx['isCashSale'],
             isPaymentIn: dx['isPaymentIn'],
             isExpenses: dx['isExpenses'],

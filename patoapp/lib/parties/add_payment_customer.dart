@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +8,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,6 +38,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   int receiptNo = Random().nextInt(10000);
   final paidAmountFormKey1 = GlobalKey<FormState>();
   final receivedAmountformKey1 = GlobalKey<FormState>();
+  final CustomerController _customerController = Get.put(CustomerController());
 
   TextEditingController amountReceived = TextEditingController();
   TextEditingController amountPaid = TextEditingController();
@@ -493,8 +496,36 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
       );
 
       if (response.statusCode == 201) {
-        await widget.refreshData();
-        syncAllImportantForPartiesPageOnly();
+        List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+        List<SingleCustomer> finalData =
+            customers.map((e) => fromJsonCustomer(e)).toList();
+        SingleCustomer myData = finalData.firstWhere(
+            (element) => element.id == jsonDecode(response.body)['customerId']);
+
+        Map payment = isPaymentIn
+            ? {
+                "name": "Payment in",
+                "description": "Payment in",
+                "received": amount,
+                "paid": 0,
+                "date": DateTime.now().toIso8601String(),
+              }
+            : {
+                "name": "Payment Out",
+                "description": "Payment Out",
+                "received": 0,
+                "paid": amount,
+                "date": DateTime.now().toIso8601String(),
+              };
+        if (isPaymentIn) {
+          myData.amount -= amount;
+        } else {
+          myData.amount += amount;
+        }
+        myData.financialData = [payment, ...myData.financialData];
+        await _customerController.updateCustomer(myData);
+        widget.refreshData();
+
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 

@@ -139,7 +139,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
       ),
       body: Column(
         children: [
-          isProgressGoing ? LinearProgressIndicator() : Container(),
+          isProgressGoing ? const LinearProgressIndicator() : Container(),
           _searchBox(context),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),

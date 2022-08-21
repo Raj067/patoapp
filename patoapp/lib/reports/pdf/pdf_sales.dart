@@ -9,7 +9,7 @@ import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path/path.dart' as pt;
 
-Future<Uint8List> generateCashFlow({
+Future<Uint8List> generateSales({
   required List<FinancialData> data,
   required ProfileData profile,
   required DateTimeRange pickedRangeDate,
@@ -89,7 +89,7 @@ Future<Uint8List> generateCashFlow({
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text(
-                      'Cashflow Reports',
+                      'Sales Reports',
                       style: pw.TextStyle(
                         fontSize: 16,
                         fontWeight: pw.FontWeight.bold,
@@ -331,12 +331,12 @@ Future<Uint8List> generateCashFlow({
   return pdf.save();
 }
 
-Future<File> generateCashFlowPdf({
+Future<File> generateSalesPdf({
   required List<FinancialData> data,
   required ProfileData profile,
   required DateTimeRange pickedRangeDate,
 }) async {
-  final bytes = await generateCashFlow(
+  final bytes = await generateSales(
     data: data,
     profile: profile,
     pickedRangeDate: pickedRangeDate,
@@ -346,7 +346,7 @@ Future<File> generateCashFlowPdf({
   myPath = '$myPath/PatoWave/Reports';
   Directory('$myPath/').create();
   final file = File(
-      '$myPath/Cashflow Report as at ${DateFormat('d MMMM, yyy').format(pickedRangeDate.start)} to ${DateFormat('d MMMM, yyy').format(pickedRangeDate.end)}.pdf');
+      '$myPath/Sales Report as at ${DateFormat('d MMMM, yyy').format(pickedRangeDate.start)} to ${DateFormat('d MMMM, yyy').format(pickedRangeDate.end)}.pdf');
   await file.writeAsBytes(bytes);
   return file;
 }

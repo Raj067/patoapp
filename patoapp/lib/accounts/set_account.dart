@@ -211,23 +211,13 @@ class _SetAccountPageState extends State<SetAccountPage> {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         await storage.write(key: "shopName", value: businessName.text);
-        // ignore: use_build_context_synchronously
-        // Navigator.pushAndRemoveUntil(
-        //     context,
-        //     MaterialPageRoute<void>(
-        //       builder: (BuildContext context) => const LanguageAccount(),
-        //       fullscreenDialog: true,
-        //     ),
-        //     (route) => false);
 
         // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => const LanguageAccount(),
-            fullscreenDialog: true,
-          ),
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const LanguageAccount(),
+            ),
+            (route) => false);
       } else {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

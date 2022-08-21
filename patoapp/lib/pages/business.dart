@@ -7,7 +7,6 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/components/top_bar.dart';

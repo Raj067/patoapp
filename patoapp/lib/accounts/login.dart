@@ -277,12 +277,18 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => const HomePage(),
-          ),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute<void>(
+        //     builder: (BuildContext context) => const HomePage(),
+        //   ),
+        // );
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const HomePage(),
+            ),
+            (route) => false);
       } else if (response.statusCode == 401) {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

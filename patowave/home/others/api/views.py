@@ -286,7 +286,7 @@ def adding_payment_customer_api(request):
             receipt_no=str(request.data.get('receiptNo')),
         )
         data.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'customerId': data.id, 'customerName':data.customer_name})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

@@ -6,6 +6,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_shedule.dart';
 import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/inventory.dart';
@@ -828,7 +829,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
                               AddTransactionDialog(
-                            resetData: () {},
+                            resetData: () {
+                              syncAllImportantForBusinessTransactions();
+                            },
                           ),
                           fullscreenDialog: true,
                         ),
@@ -873,7 +876,9 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) => AddPaymentDialog(
-                            refreshData: () {},
+                            refreshData: () {
+                              syncAllImportantForPartiesPageOnly();
+                            },
                           ),
                           fullscreenDialog: true,
                         ),

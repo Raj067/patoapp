@@ -289,7 +289,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       customer: widget.customer,
                       isPaymentIn: false,
                       refreshData: () async {
-                        await widget.refreshData();
+                        widget.refreshData();
                         Navigator.pop(context);
                       },
                     ),
@@ -325,7 +325,7 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                       customer: widget.customer,
                       isPaymentIn: true,
                       refreshData: () async {
-                        await widget.refreshData();
+                        widget.refreshData();
                         Navigator.pop(context);
                       },
                     ),

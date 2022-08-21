@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
+import 'package:patoapp/reports/pdf/pdf_sales.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:printing/printing.dart';
+import 'package:pdf/pdf.dart' as p;
 
 class SalesReports extends StatefulWidget {
   const SalesReports({Key? key}) : super(key: key);
@@ -17,6 +23,9 @@ class SalesReports extends StatefulWidget {
 class _SalesReportsState extends State<SalesReports> {
   int totalAmount = 0;
   int totalBalance = 0;
+  bool isProgressGoing = false;
+  ProfileData profile =
+      ProfileData(businessName: '', businessAddress: '', id: 0);
   DateTimeRange pickedRangeDate = DateTimeRange(
     start: DateTime(
       DateTime.now().year,
@@ -38,22 +47,40 @@ class _SalesReportsState extends State<SalesReports> {
       if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
-                date.isBefore(pickedRangeDate.end) &&
-                dx['isCashSale'] == 1 ||
-            dx['isInvoice'] == 1) {
+            date.isBefore(pickedRangeDate.end) &&
+            (dx['isCashSale'] == 1 || dx['isInvoice'] == 1)) {
           finalData.add(fromJsonBusiness(dx));
         }
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData = finalData;
+
     isLoading = false;
+    setState(() {});
+  }
+
+  fetchProfileDB() async {
+    List<Map<String, dynamic>> myProfile = await DBHelperProfile.query();
+    List<ProfileData> finalData = [];
+    finalData.addAll(myProfile.map((dx) => fromJsonProfile(dx)).toList());
+    String? activeShop = await storage.read(key: 'activeShop');
+
+    if (finalData.isNotEmpty) {
+      if (activeShop == null) {
+        profile = finalData[0];
+      } else {
+        int id = int.parse(activeShop);
+        profile = finalData.firstWhere((element) => element.id == id);
+      }
+    }
     setState(() {});
   }
 
   @override
   void initState() {
     fetchBusinessDB();
+    fetchProfileDB();
     super.initState();
   }
 
@@ -74,6 +101,41 @@ class _SalesReportsState extends State<SalesReports> {
             color: patowaveWhite,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Printing.layoutPdf(
+                  onLayout: (p.PdfPageFormat format) async =>
+                      await generateSales(
+                        data: allFinancialData,
+                        profile: profile,
+                        pickedRangeDate: pickedRangeDate,
+                      ));
+            },
+            icon: const Icon(
+              Icons.print,
+              color: patowaveWhite,
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              isProgressGoing = true;
+              setState(() {});
+              final file = await generateSalesPdf(
+                data: allFinancialData,
+                profile: profile,
+                pickedRangeDate: pickedRangeDate,
+              );
+              isProgressGoing = false;
+              setState(() {});
+              await ImageDownloader.open(file.path);
+            },
+            icon: const Icon(
+              Icons.download,
+              color: patowaveWhite,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
