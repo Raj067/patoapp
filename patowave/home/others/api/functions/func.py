@@ -1,10 +1,9 @@
 
-from calendar import month_name
-
-from home.models import ShopUser
+from home.models import *
 
 
 def get_shop(request) -> list:
-    shop = [i.shop for i in ShopUser.objects.all() if i.user.id ==
-            request.user.id]
+    # shop = [i.shop for i in ShopUser.objects.all() if i.user.id ==
+    #         request.user.id]
+    shop = Shop.objects.all()
     return shop
