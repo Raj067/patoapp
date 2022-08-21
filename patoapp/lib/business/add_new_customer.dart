@@ -7,6 +7,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -202,6 +203,7 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
         );
 
         widget.refreshData(myData);
+        syncAllImportantContactOnly();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 

@@ -9,6 +9,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/product_list.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class ProductsCart extends StatefulWidget {
@@ -436,6 +437,7 @@ class _ProductsCartState extends State<ProductsCart> {
           }
         }
         widget.resetData();
+        syncAllImportantProductTransaction();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously

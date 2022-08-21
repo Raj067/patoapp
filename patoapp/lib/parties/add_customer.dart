@@ -11,6 +11,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:contacts_service/contacts_service.dart';
@@ -559,6 +560,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         );
         await _customerController.addCustomer(myData);
         widget.refreshData();
+        syncAllImportantForPartiesPageOnly();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 

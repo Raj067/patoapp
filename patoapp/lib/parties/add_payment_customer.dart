@@ -8,6 +8,7 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -493,6 +494,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
 
       if (response.statusCode == 201) {
         await widget.refreshData();
+        syncAllImportantForPartiesPageOnly();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
 
