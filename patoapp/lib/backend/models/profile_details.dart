@@ -51,7 +51,7 @@ ProfileData fromJsonProfile(Map<String, dynamic> profile) {
     businessType: profile['businessType'],
     businessEmail: profile['businessEmail'],
     businessPhone: "${profile['businessPhone']}",
-    businessAddress: profile['businessAddress'],
+    businessAddress: "${profile['businessAddress']}",
     businessName: profile['businessName'],
     id: profile['id'],
   );
