@@ -62,21 +62,7 @@ class _ProfileIconState extends State<ProfileIcon> {
   fetchProfileDB() async {
     List<Map<String, dynamic>> profile = await DBHelperProfile.query();
     List<ProfileData> finalData = [];
-    finalData.addAll(profile
-        .map((dx) => ProfileData(
-              instagramName: dx['instagramName'],
-              businessSignature: dx['businessSignature'],
-              businessSlogan: dx['businessSlogan'],
-              businessLogo: dx['businessLogo'],
-              businessCategory: dx['businessCategory'],
-              businessType: dx['businessType'],
-              businessEmail: dx['businessEmail'],
-              businessPhone: "${dx['businessPhone']}",
-              businessAddress: dx['businessAddress'],
-              businessName: dx['businessName'],
-              id: dx['id'],
-            ))
-        .toList());
+    finalData.addAll(profile.map((dx) => fromJsonProfile(dx)).toList());
     String? activeShop = await storage.read(key: 'activeShop');
 
     if (finalData.isNotEmpty) {

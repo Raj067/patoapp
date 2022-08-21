@@ -574,7 +574,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     if (index == 3) {
       await Printing.sharePdf(
         bytes: await _generatePdf(),
-        filename: 'invoice-${widget.invoice.invoiceNo}.pdf',
+        filename: 'Invoice-${widget.invoice.invoiceNo}.pdf',
       );
     }
   }
@@ -663,10 +663,10 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
               final dir = await getExternalStorageDirectory();
               String myPath =
                   pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-              myPath = '$myPath/PatoWave/invoice';
+              myPath = '$myPath/PatoWave/Invoice';
               Directory('$myPath/').create();
               final file =
-                  File('$myPath/invoice-${widget.invoice.invoiceNo}.pdf');
+                  File('$myPath/Invoice-${widget.invoice.invoiceNo}.pdf');
               await file.writeAsBytes(bytes);
               await ImageDownloader.open(file.path);
             },

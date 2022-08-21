@@ -5,6 +5,7 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_products.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
@@ -25,6 +26,7 @@ class InventoryPage extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
+            syncAllImportantData();
             Navigator.pop(context);
           },
           icon: const Icon(

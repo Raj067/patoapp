@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_business.dart';
+import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
+import 'package:patoapp/reports/pdf/pdf_cashflow.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:printing/printing.dart';
+import 'package:pdf/pdf.dart' as p;
 
 class CashFlowReports extends StatefulWidget {
   const CashFlowReports({Key? key}) : super(key: key);
@@ -31,6 +37,10 @@ class _CashFlowReportsState extends State<CashFlowReports> {
       end: DateTime.now(),
     ),
   );
+  List<FinancialData> selectedFinancialData = [];
+  bool isProgressGoing = false;
+  ProfileData profile =
+      ProfileData(businessName: '', businessAddress: '', id: 0);
   fetchBusinessDB() async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
@@ -46,12 +56,31 @@ class _CashFlowReportsState extends State<CashFlowReports> {
     finalData.sort((b, a) => a.date.compareTo(b.date));
     profitAndLoss =
         ProfitAndLoss(data: finalData, pickedRangeDate: pickedRangeDate);
+    selectedFinancialData = finalData;
+    setState(() {});
+  }
+
+  fetchProfileDB() async {
+    List<Map<String, dynamic>> myProfile = await DBHelperProfile.query();
+    List<ProfileData> finalData = [];
+    finalData.addAll(myProfile.map((dx) => fromJsonProfile(dx)).toList());
+    String? activeShop = await storage.read(key: 'activeShop');
+
+    if (finalData.isNotEmpty) {
+      if (activeShop == null) {
+        profile = finalData[0];
+      } else {
+        int id = int.parse(activeShop);
+        profile = finalData.firstWhere((element) => element.id == id);
+      }
+    }
     setState(() {});
   }
 
   @override
   void initState() {
     fetchBusinessDB();
+    fetchProfileDB();
     super.initState();
   }
 
@@ -59,7 +88,8 @@ class _CashFlowReportsState extends State<CashFlowReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.cashflow,
+        title: Text(
+          AppLocalizations.of(context)!.cashflow,
           style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -71,9 +101,45 @@ class _CashFlowReportsState extends State<CashFlowReports> {
             color: patowaveWhite,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Printing.layoutPdf(
+                  onLayout: (p.PdfPageFormat format) async =>
+                      await generateCashFlow(
+                        data: selectedFinancialData,
+                        profile: profile,
+                        pickedRangeDate: pickedRangeDate,
+                      ));
+            },
+            icon: const Icon(
+              Icons.print,
+              color: patowaveWhite,
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              isProgressGoing = true;
+              setState(() {});
+              final file = await generateCashFlowPdf(
+                data: selectedFinancialData,
+                profile: profile,
+                pickedRangeDate: pickedRangeDate,
+              );
+              isProgressGoing = false;
+              setState(() {});
+              await ImageDownloader.open(file.path);
+            },
+            icon: const Icon(
+              Icons.download,
+              color: patowaveWhite,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
+          isProgressGoing ? LinearProgressIndicator() : Container(),
           _searchBox(context),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),

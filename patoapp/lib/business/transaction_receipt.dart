@@ -68,9 +68,9 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       final bytes = await capturePng();
       final dir = await getExternalStorageDirectory();
       String myPath = pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-      myPath = '$myPath/PatoWave/receipt';
+      myPath = '$myPath/PatoWave/Receipt';
       Directory('$myPath/').create();
-      final file = File('$myPath/receipt-${widget.data.receipt}.png');
+      final file = File('$myPath/Receipt-${widget.data.receipt}.png');
       await file.writeAsBytes(bytes);
       // var imageId = await ImageDownloader.downloadImage(url);
       // var imageId = await ImageDownloader.downloadImage(dir.path);

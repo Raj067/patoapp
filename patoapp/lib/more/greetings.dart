@@ -276,7 +276,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       final dir = await getExternalStorageDirectory();
                       String myPath = pt.dirname(
                           pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-                      myPath = '$myPath/PatoWave/greeting-cards';
+                      myPath = '$myPath/PatoWave/Greeting-Cards';
                       Directory('$myPath/').create();
                       String imageName =
                           pt.basename('$cardImage').replaceAll('.', '');
