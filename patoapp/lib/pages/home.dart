@@ -109,13 +109,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: const ProfileIcon(),
-        actions: const [NotificationIcon(), SizedBox(width: 20)],
-        elevation: 0,
-      ),
+
       body: Column(
         children: [
           _weatherHeader(),

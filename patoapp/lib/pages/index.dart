@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
@@ -27,6 +28,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        title: const ProfileIcon(),
+        actions: const [NotificationIcon(), SizedBox(width: 10)],
+        elevation: 0,
+      ),
       body: Center(
         child: <Widget>[
           const MainEntryHomePage(),

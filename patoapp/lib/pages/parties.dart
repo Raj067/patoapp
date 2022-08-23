@@ -1,10 +1,10 @@
 // import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
-import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
@@ -21,40 +21,13 @@ class PartiesPage extends StatefulWidget {
 }
 
 class _PartiesPageState extends State<PartiesPage> {
-  double totalDebtMonth = 0;
-  double customersDebtMonth = 0;
-  bool isAlreadyLoad = false;
+  final CustomerController _customerController = Get.put(CustomerController());
 
-  // For searching contacts
-  List<SingleCustomer> customData = [];
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
-  fetchCustomersDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-    totalDebtMonth = 0;
-    customersDebtMonth = 0;
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        if (fromJsonCustomer(e).isToReceive()) {
-          totalDebtMonth += fromJsonCustomer(e).amount;
-        } else {
-          customersDebtMonth += fromJsonCustomer(e).amount * -1;
-        }
-
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    customData = finalData;
-    isAlreadyLoad = true;
-    setState(() {});
-  }
+  fetchCustomersDB() async {}
 
   refreshDataDB() async {
     SyncCustomers syncCustomer = SyncCustomers();
@@ -63,36 +36,15 @@ class _PartiesPageState extends State<PartiesPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    fetchCustomersDB();
-    refreshDataDB();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Theme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: const ProfileIcon(),
-        actions: const [NotificationIcon(), SizedBox(width: 20)],
-        elevation: 0,
-      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
           Container(height: 5),
           _headerSection(context),
           _searchBox(context),
-          isAlreadyLoad
-              ? _customerDetails(context)
-              : const SizedBox(
-                  height: 100,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
+          _customerDetails(context),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -118,7 +70,7 @@ class _PartiesPageState extends State<PartiesPage> {
 
   _customerDetails(BuildContext context) {
     List<Widget> data = [];
-    for (var element in customData) {
+    for (var element in _customerController.allCustomers) {
       data.add(_singleCustomerDetails(context, element));
     }
 
@@ -132,14 +84,17 @@ class _PartiesPageState extends State<PartiesPage> {
   _onSearchChange(String val) {
     List<SingleCustomer> newFilteredeData = [];
     List<SingleCustomer> newUnFilteredeData = [];
-    for (var element in customData) {
+    for (var element in _customerController.allCustomers) {
       if (_stringLinearSearch(child: val, parent: element.fullName)) {
         newFilteredeData.add(element);
       } else {
         newUnFilteredeData.add(element);
       }
     }
-    customData = [...newFilteredeData, ...newUnFilteredeData];
+    _customerController.allCustomers.value = [
+      ...newFilteredeData,
+      ...newUnFilteredeData
+    ];
     customersMatchedInSearch = newFilteredeData.length;
     if (newFilteredeData.isNotEmpty) {
       isCustomerFound = true;
@@ -392,7 +347,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: const TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${formatter.format(totalDebtMonth)}",
+                            "Tsh ${formatter.format(_customerController.toBePaid.value)}",
                             style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
@@ -412,7 +367,7 @@ class _PartiesPageState extends State<PartiesPage> {
                             style: const TextStyle(fontSize: 14),
                           ),
                           Text(
-                            "Tsh ${formatter.format(customersDebtMonth)}",
+                            "Tsh ${formatter.format(_customerController.toBeReceived.value)}",
                             style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 16,
@@ -472,7 +427,7 @@ class _PartiesPageState extends State<PartiesPage> {
   // }
 
   _reArrangeDataAlphabetically() {
-    customData.sort(
+    _customerController.allCustomers.sort(
         (a, b) => a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase()));
     setState(() {});
   }

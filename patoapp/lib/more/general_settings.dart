@@ -153,7 +153,7 @@ class GeneralSettingsDialog extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const UserManagement(),
+                    builder: (BuildContext context) => UserManagement(),
                     fullscreenDialog: true,
                   ),
                 );

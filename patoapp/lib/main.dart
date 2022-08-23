@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_Inventory.dart';
@@ -115,7 +116,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
-    return MaterialApp(
+    return GetMaterialApp(
       title: "PatoWave",
       theme: themeNotifier.getTheme(),
       home: _checkVersion

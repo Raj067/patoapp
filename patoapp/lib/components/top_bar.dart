@@ -118,13 +118,13 @@ class _ProfileIconState extends State<ProfileIcon> {
   }
 }
 
-PreferredSizeWidget _moreButtomTopBar() => const PreferredSize(
-      preferredSize: Size.fromHeight(48.0),
-      child: DarkModeSettingsIcon(),
-    );
+// PreferredSizeWidget _moreButtomTopBar() => const PreferredSize(
+//       preferredSize: Size.fromHeight(48.0),
+//       child: DarkModeSettingsIcon(),
+//     );
 
-PreferredSizeWidget mainMoreTopBar(BuildContext context) =>
-    mainTopBar(_moreButtomTopBar(), context);
+// PreferredSizeWidget mainMoreTopBar(BuildContext context) =>
+//     mainTopBar(_moreButtomTopBar(), context);
 
 class DarkModeSettingsIcon extends StatefulWidget {
   const DarkModeSettingsIcon({Key? key}) : super(key: key);

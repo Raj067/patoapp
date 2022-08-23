@@ -1,9 +1,23 @@
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 
 class CustomerController extends GetxController {
+  var toBePaid = 0.obs;
+  var toBeReceived = 0.obs;
+  final allCustomers = <SingleCustomer>[].obs;
+  var searchController = TextEditingController().obs;
+
+  @override
+  void onInit() {
+    if (allCustomers.isEmpty) {
+      fetchCustomersDB();
+    }
+    super.onInit();
+  }
+
   Future<int> addCustomer(SingleCustomer customer) async {
     return await DBHelperCustomer.insertDb(customer);
   }
@@ -14,5 +28,31 @@ class CustomerController extends GetxController {
 
   Future<void> deleteCustomer(SingleCustomer customer) async {
     await DBHelperCustomer.deleteItem(customer);
+  }
+
+  fetchCustomersDB() async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+
+    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+    List<SingleCustomer> finalData = [];
+    toBePaid = 0.obs;
+    toBeReceived = 0.obs;
+    for (Map<String, dynamic> e in customers) {
+      if (fromJsonCustomer(e).isToReceive()) {
+        toBePaid += fromJsonCustomer(e).amount;
+      } else {
+        toBeReceived += fromJsonCustomer(e).amount * -1;
+      }
+
+      if (e['shopId'] == shopId) {
+        finalData.add(fromJsonCustomer(e));
+      }
+    }
+    allCustomers.value = finalData;
+  }
+  customerChangeUpdater(SingleCustomer customer){
+
   }
 }

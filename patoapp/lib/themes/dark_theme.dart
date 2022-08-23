@@ -40,7 +40,10 @@ CheckboxThemeData _checkboxTheme = CheckboxThemeData(
   fillColor: MaterialStateProperty.all(patowavePrimary),
   side: const BorderSide(width: 1, color: Colors.grey),
 );
-AppBarTheme _appBarTheme = const AppBarTheme(elevation: 0);
+AppBarTheme _appBarTheme = AppBarTheme(
+  elevation: 0,
+  backgroundColor: patowavePrimary.withAlpha(50),
+);
 
 InputDecorationTheme _inputDecorationTheme = const InputDecorationTheme(
   contentPadding: EdgeInsets.fromLTRB(10, 5, 5, 5),

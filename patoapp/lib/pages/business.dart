@@ -146,16 +146,78 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainTopBar(
-        _businessButtomTopBar(),
-        context,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      body: Column(
         children: [
-          Container(height: 5),
-          _firstRowBusinessData(context),
-          _allFinancialData(context),
+          Container(
+            height: 48,
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
+                  child: SizedBox(
+                    height: 30,
+                    width: 120,
+                    child: DropdownButtonFormField2(
+                      value: dropdownValue,
+                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                      dropdownOverButton: true,
+                      buttonHeight: 30,
+                      buttonWidth: 50,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).chipTheme.backgroundColor,
+                        contentPadding: const EdgeInsets.all(5),
+                        enabled: false,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        focusedBorder: InputBorder.none,
+                      ),
+                      isExpanded: false,
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: dropDownList
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          dropdownValue = value.toString();
+                        });
+                        //Do something when changing the item if you want.
+                      },
+                      onSaved: (value) {
+                        // selectedValue = value.toString();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              children: [
+                Container(height: 5),
+                _firstRowBusinessData(context),
+                _allFinancialData(context),
+              ],
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -181,65 +243,65 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  PreferredSizeWidget _businessButtomTopBar() => PreferredSize(
-        preferredSize: const Size.fromHeight(48.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
-              child: SizedBox(
-                height: 30,
-                width: 120,
-                child: DropdownButtonFormField2(
-                  value: dropdownValue,
-                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                  dropdownOverButton: true,
-                  buttonHeight: 30,
-                  buttonWidth: 50,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Theme.of(context).chipTheme.backgroundColor,
-                    contentPadding: const EdgeInsets.all(5),
-                    enabled: false,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: InputBorder.none,
-                  ),
-                  isExpanded: false,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  items: dropDownList
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      dropdownValue = value.toString();
-                    });
-                    //Do something when changing the item if you want.
-                  },
-                  onSaved: (value) {
-                    // selectedValue = value.toString();
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+  // PreferredSizeWidget _businessButtomTopBar() => PreferredSize(
+  //       preferredSize: const Size.fromHeight(48.0),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.end,
+  //         children: <Widget>[
+  //           Padding(
+  //             padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
+  //             child: SizedBox(
+  //               height: 30,
+  //               width: 120,
+  //               child: DropdownButtonFormField2(
+  //                 value: dropdownValue,
+  //                 selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+  //                 dropdownOverButton: true,
+  //                 buttonHeight: 30,
+  //                 buttonWidth: 50,
+  //                 decoration: InputDecoration(
+  //                   filled: true,
+  //                   fillColor: Theme.of(context).chipTheme.backgroundColor,
+  //                   contentPadding: const EdgeInsets.all(5),
+  //                   enabled: false,
+  //                   border: OutlineInputBorder(
+  //                     borderRadius: BorderRadius.circular(15),
+  //                   ),
+  //                   focusedBorder: InputBorder.none,
+  //                 ),
+  //                 isExpanded: false,
+  //                 icon: const Icon(
+  //                   Icons.arrow_drop_down,
+  //                 ),
+  //                 dropdownDecoration: BoxDecoration(
+  //                   borderRadius: BorderRadius.circular(15),
+  //                 ),
+  //                 items: dropDownList
+  //                     .map((item) => DropdownMenuItem<String>(
+  //                           value: item,
+  //                           child: Text(
+  //                             item,
+  //                             style: const TextStyle(
+  //                               fontSize: 14,
+  //                             ),
+  //                           ),
+  //                         ))
+  //                     .toList(),
+  //                 onChanged: (value) {
+  //                   setState(() {
+  //                     dropdownValue = value.toString();
+  //                   });
+  //                   //Do something when changing the item if you want.
+  //                 },
+  //                 onSaved: (value) {
+  //                   // selectedValue = value.toString();
+  //                 },
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
   _firstRowBusinessData(BuildContext context) {
     return Card(
