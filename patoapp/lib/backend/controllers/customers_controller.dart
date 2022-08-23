@@ -36,16 +36,15 @@ class CustomerController extends GetxController {
 
     List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
     List<SingleCustomer> finalData = [];
-    toBePaid = 0.obs;
-    toBeReceived = 0.obs;
+    toBePaid.value = 0;
+    toBeReceived.value = 0;
     for (Map<String, dynamic> e in customers) {
-      if (fromJsonCustomer(e).isToReceive()) {
-        toBePaid += fromJsonCustomer(e).amount;
-      } else {
-        toBeReceived += fromJsonCustomer(e).amount * -1;
-      }
-
       if (e['shopId'] == shopId) {
+        if (fromJsonCustomer(e).isToReceive()) {
+          toBePaid.value += fromJsonCustomer(e).amount;
+        } else {
+          toBeReceived.value += fromJsonCustomer(e).amount * -1;
+        }
         finalData.add(fromJsonCustomer(e));
       }
     }

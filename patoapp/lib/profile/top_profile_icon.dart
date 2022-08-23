@@ -2,8 +2,10 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/backend/sync/sync_profile.dart';
@@ -30,6 +32,8 @@ class TopProfileIcon extends StatefulWidget {
 
 class _TopProfileIconState extends State<TopProfileIcon> {
   final GlobalKey globalKey = GlobalKey();
+  final CustomerController _customerController = Get.put(CustomerController());
+
   List<ProfileData> myProfileData = [];
   int profilePercent = 20;
 
@@ -615,6 +619,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
 
   _setShop(ProfileData shop) async {
     await storage.write(key: "activeShop", value: "${shop.id}");
+    await _customerController.fetchCustomersDB();
     // widget.refreshData();
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
