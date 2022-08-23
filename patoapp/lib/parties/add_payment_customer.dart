@@ -494,10 +494,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
       );
 
       if (response.statusCode == 201) {
-        List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-        List<SingleCustomer> finalData =
-            customers.map((e) => fromJsonCustomer(e)).toList();
-        SingleCustomer myData = finalData.firstWhere(
+        SingleCustomer myData = _customerController.allCustomers.firstWhere(
             (element) => element.id == jsonDecode(response.body)['customerId']);
 
         Map payment = isPaymentIn

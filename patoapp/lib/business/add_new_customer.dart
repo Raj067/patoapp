@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -32,6 +34,7 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
   TextEditingController emailAddress = TextEditingController();
   TextEditingController openingBalance = TextEditingController();
   bool toReceive = false;
+  final CustomerController _customerController = Get.put(CustomerController());
 
   @override
   Widget build(BuildContext context) {
@@ -202,17 +205,13 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
           shopId: shopId,
         );
 
+        _customerController.customerChangeAdd(myData);
+        // updating the previous instance
         widget.refreshData(myData);
-        syncAllImportantContactOnly();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -220,8 +219,7 @@ class _AddNewCustomerTransactionState extends State<AddNewCustomerTransaction> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

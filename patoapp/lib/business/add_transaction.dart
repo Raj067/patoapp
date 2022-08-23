@@ -10,12 +10,13 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
 // import 'package:patoapp/backend/sync/sync_business.dart';
-import 'package:patoapp/backend/sync/sync_customers.dart';
+// import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_purchases.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/business/add_new_customer.dart';
@@ -39,8 +40,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   int _value = 1;
   final salesTransactionFormKey = GlobalKey<FormState>();
   final expensesTransactionFormKey = GlobalKey<FormState>();
-  final addItemToSalesFormKey = GlobalKey<FormState>();
-  final addItemToPurchasesFormKey = GlobalKey<FormState>();
+  final CustomerController _customerController = Get.put(CustomerController());
+
   List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
   List<SingleProduct> addedItemsToPurchases = [];
@@ -62,7 +63,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   final TextEditingController expensesDescription = TextEditingController();
   final TextEditingController salesDescription = TextEditingController();
   double totalPurchasesAmount = 0.0;
-  List<SingleCustomer> finalCustomerData = [];
   final BusinessController _businessController = Get.put(BusinessController());
   GlobalKey dropdownkey = GlobalKey();
   // Fetching data
@@ -82,34 +82,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     setState(() {});
   }
 
-  fetchCustomersDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    finalCustomerData = finalData;
-    setState(() {});
-  }
-
-  refreshData() async {
-    SyncCustomers syncCustomer = SyncCustomers();
-    await syncCustomer.fetchData();
-    fetchCustomersDB();
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
     fetchData();
-    fetchCustomersDB();
   }
 
   @override
@@ -297,9 +273,18 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   onAddingCustomer(SingleCustomer data) {
+    // Get.back();
+    _customerController.update();
     Navigator.pop(context);
-    finalCustomerData = [data, ...finalCustomerData];
-    setState(() {});
+    // Obx(() => Text(_customerController.allCustomers.length.toString()));
+    // print(_customerController.allCustomers);
+
+    // _customerController.allCustomers.value = [
+    //   data,
+    //   ..._customerController.allCustomers
+    // ];
+    _customerController.allCustomers;
+    // Obs(()=>);
   }
 
   _addSales() {
@@ -371,7 +356,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                items: finalCustomerData
+                items: _customerController.allCustomers
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
                           child: Text(
@@ -452,7 +437,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  String newVal = finalCustomerData
+                  String newVal = _customerController.allCustomers
                       .firstWhere(
                           (element) => element.id.toString() == item.value)
                       .fullName;
@@ -811,7 +796,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               dropdownDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
-              items: finalCustomerData
+              items: _customerController.allCustomers
                   .map((item) => DropdownMenuItem<String>(
                         value: "${item.id}",
                         child: Text(
@@ -891,7 +876,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
               ),
               searchMatchFn: (item, searchValue) {
-                String newVal = finalCustomerData
+                String newVal = _customerController.allCustomers
                     .firstWhere(
                         (element) => element.id.toString() == item.value)
                     .fullName;

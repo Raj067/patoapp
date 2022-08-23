@@ -11,7 +11,6 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:contacts_service/contacts_service.dart';
@@ -558,19 +557,11 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
           shopId: shopId,
         );
         // customerChangeAdd;
-        await _customerController.customerChangeAdd(myData);
-        // await _customerController.addCustomer(myData);
-        // widget.refreshData();
-        syncAllImportantForPartiesPageOnly();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
+        _customerController.customerChangeAdd(myData);
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -578,8 +569,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

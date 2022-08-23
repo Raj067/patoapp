@@ -17,8 +17,7 @@ import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPaymentDialog extends StatefulWidget {
-  const AddPaymentDialog({Key? key})
-      : super(key: key);
+  const AddPaymentDialog({Key? key}) : super(key: key);
 
   @override
   State<AddPaymentDialog> createState() => _AddPaymentDialogState();
@@ -39,23 +38,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   TextEditingController paymentOutDesc = TextEditingController(text: "");
   TextEditingController userController = TextEditingController();
   String userSelected = "0";
-  List<SingleCustomer> finalCustomerData = [];
-
-  fetchCustomersDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    finalCustomerData = finalData;
-    setState(() {});
-  }
 
   @override
   void dispose() {
@@ -65,12 +47,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     paymentOutDesc.dispose();
     userController.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCustomersDB();
   }
 
   @override
@@ -348,7 +324,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                items: finalCustomerData
+                items: _customerController.allCustomers
                     .where((element) => element.amount >= 0)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
@@ -396,7 +372,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  String newVal = finalCustomerData
+                  String newVal = _customerController.allCustomers
                       .where((element) => element.amount >= 0)
                       .toList()
                       .firstWhere(
@@ -531,7 +507,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 dropdownDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                items: finalCustomerData
+                items: _customerController.allCustomers
                     .where((element) => element.amount <= 0)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
@@ -579,7 +555,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   ),
                 ),
                 searchMatchFn: (item, searchValue) {
-                  String newVal = finalCustomerData
+                  String newVal = _customerController.allCustomers
                       .where((element) => element.amount <= 0)
                       .toList()
                       .firstWhere(
@@ -664,10 +640,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
       );
 
       if (response.statusCode == 201) {
-        List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-        List<SingleCustomer> finalData =
-            customers.map((e) => fromJsonCustomer(e)).toList();
-        SingleCustomer myData = finalData.firstWhere(
+        SingleCustomer myData = _customerController.allCustomers.firstWhere(
             (element) => element.id == jsonDecode(response.body)['customerId']);
 
         Map payment = isPaymentIn
