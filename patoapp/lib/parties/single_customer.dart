@@ -288,10 +288,6 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
                       customer: widget.customer,
                       isPaymentIn: false,
-                      refreshData: () async {
-                        widget.refreshData();
-                        Navigator.pop(context);
-                      },
                     ),
                     fullscreenDialog: true,
                   ),
@@ -324,10 +320,6 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
                     builder: (BuildContext context) => AddPaymentCustomerDialog(
                       customer: widget.customer,
                       isPaymentIn: true,
-                      refreshData: () async {
-                        widget.refreshData();
-                        Navigator.pop(context);
-                      },
                     ),
                     fullscreenDialog: true,
                   ),

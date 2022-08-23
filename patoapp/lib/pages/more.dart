@@ -48,14 +48,6 @@ class MorePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             onTap: () {
                               Get.to(const GeneralSettingsDialog());
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute<void>(
-                              //     builder: (BuildContext context) =>
-                              //         const GeneralSettingsDialog(),
-                              //     fullscreenDialog: true,
-                              //   ),
-                              // );
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(10),

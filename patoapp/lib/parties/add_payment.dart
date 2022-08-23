@@ -17,8 +17,7 @@ import 'dart:math';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPaymentDialog extends StatefulWidget {
-  final Function refreshData;
-  const AddPaymentDialog({Key? key, required this.refreshData})
+  const AddPaymentDialog({Key? key})
       : super(key: key);
 
   @override
@@ -692,18 +691,12 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
           myData.amount += amount;
         }
         myData.financialData = [payment, ...myData.financialData];
-        await _customerController.updateCustomer(myData);
-        widget.refreshData();
+        _customerController.customerChangeUpdater(myData);
 
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -711,8 +704,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

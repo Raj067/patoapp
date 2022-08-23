@@ -7,6 +7,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
+import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -240,19 +241,13 @@ class _EditCustomerState extends State<EditCustomer> {
         widget.customer.address = address;
         widget.customer.fullName = customerName;
         widget.customer.phoneNumber = phoneNumber;
-        await _customerController.updateCustomer(widget.customer);
-        widget.refreshData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
+        _customerController.customerChangeUpdater(widget.customer);
+        // await _customerController.updateCustomer(widget.customer);
+        Get.back();
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -260,8 +255,7 @@ class _EditCustomerState extends State<EditCustomer> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

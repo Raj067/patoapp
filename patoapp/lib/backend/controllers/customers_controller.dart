@@ -7,8 +7,7 @@ import 'package:patoapp/backend/models/customer_list.dart';
 class CustomerController extends GetxController {
   var toBePaid = 0.obs;
   var toBeReceived = 0.obs;
-  final allCustomers = <SingleCustomer>[].obs;
-  var searchController = TextEditingController().obs;
+  RxList<SingleCustomer> allCustomers = <SingleCustomer>[].obs;
 
   @override
   void onInit() {
@@ -52,7 +51,29 @@ class CustomerController extends GetxController {
     }
     allCustomers.value = finalData;
   }
-  customerChangeUpdater(SingleCustomer customer){
 
+  customerChangeUpdater(SingleCustomer customer) {
+    // after successfully updated
+    // 1. Update state
+    SingleCustomer oldCustomer =
+        allCustomers.firstWhere((element) => element.id == customer.id);
+    int index = allCustomers.indexOf(oldCustomer);
+    allCustomers.remove(oldCustomer);
+    allCustomers.insert(index, customer);
+
+    update();
+    // 2. Send data to local DB
+    updateCustomer(customer);
+  }
+
+  customerChangeAdd(SingleCustomer customer) {
+    // after successfully updated
+
+    // 1. Update state
+    allCustomers.insert(0, customer);
+    update();
+
+    // 2. Send data to local DB, so as to update it
+    addCustomer(customer);
   }
 }

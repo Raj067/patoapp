@@ -33,6 +33,7 @@ class UserManagement extends StatelessWidget {
       body: Column(
         children: [
           Obx(() => Text("Clicks: ${c.count.value}")),
+          Text("Clicks: ${c.count.value}"),
           const Center(
             child: Text(
               'Coming Soon',

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
-import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
@@ -27,13 +26,13 @@ class _PartiesPageState extends State<PartiesPage> {
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
-  fetchCustomersDB() async {}
+  // fetchCustomersDB() async {}
 
-  refreshDataDB() async {
-    SyncCustomers syncCustomer = SyncCustomers();
-    await syncCustomer.fetchData();
-    fetchCustomersDB();
-  }
+  // refreshDataDB() async {
+  // SyncCustomers syncCustomer = SyncCustomers();
+  // await syncCustomer.fetchData();
+  // fetchCustomersDB();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +51,7 @@ class _PartiesPageState extends State<PartiesPage> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddPaymentDialog(
-                refreshData: () async {
-                  await fetchCustomersDB();
-                  refreshDataDB();
-                  syncAllImportantForPartiesPageOnly();
-                },
-              ),
+              builder: (BuildContext context) => const AddPaymentDialog(),
               fullscreenDialog: true,
             ),
           );
@@ -69,14 +62,21 @@ class _PartiesPageState extends State<PartiesPage> {
   }
 
   _customerDetails(BuildContext context) {
-    List<Widget> data = [];
-    for (var element in _customerController.allCustomers) {
-      data.add(_singleCustomerDetails(context, element));
-    }
+    // List<Widget> data = [];
+    // for (var element in _customerController.allCustomers) {
+    //   data.add(_singleCustomerDetails(context, element));
+    // }
+    // Obx(() =>
+    Widget data1 = GetBuilder<CustomerController>(builder: (controller) {
+      List<Widget> data = [];
+      for (var element in controller.allCustomers) {
+        data.add(_singleCustomerDetails(context, element));
+      }
+      return Column(children: data);
+    });
+    // _customerController.allCustomers;
 
-    return Column(
-      children: data,
-    );
+    return data1;
   }
 
   bool _stringLinearSearch({required String child, required String parent}) =>
@@ -132,9 +132,9 @@ class _PartiesPageState extends State<PartiesPage> {
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
                   refreshData: () async {
-                    await fetchCustomersDB();
-                    refreshDataDB();
-                    syncAllImportantForPartiesPageOnly();
+                    // await fetchCustomersDB();
+                    // refreshDataDB();
+                    // syncAllImportantForPartiesPageOnly();
                   },
                 ),
                 fullscreenDialog: true,
@@ -254,17 +254,7 @@ class _PartiesPageState extends State<PartiesPage> {
                   ),
                   child: const Icon(Icons.add),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            AddCustomerDialog(refreshData: () async {
-                          await fetchCustomersDB();
-                          refreshDataDB();
-                        }),
-                        fullscreenDialog: true,
-                      ),
-                    );
+                    Get.to(const AddCustomerDialog());
                   },
                 ),
               ),

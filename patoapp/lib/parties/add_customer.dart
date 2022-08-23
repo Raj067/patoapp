@@ -18,9 +18,8 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddCustomerDialog extends StatefulWidget {
-  final Function refreshData;
-  const AddCustomerDialog({Key? key, required this.refreshData})
-      : super(key: key);
+  // final Function refreshData;
+  const AddCustomerDialog({Key? key}) : super(key: key);
 
   @override
   State<AddCustomerDialog> createState() => _AddCustomerDialogState();
@@ -558,8 +557,10 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
           id: jsonDecode(response.body)['customerId'],
           shopId: shopId,
         );
-        await _customerController.addCustomer(myData);
-        widget.refreshData();
+        // customerChangeAdd;
+        await _customerController.customerChangeAdd(myData);
+        // await _customerController.addCustomer(myData);
+        // widget.refreshData();
         syncAllImportantForPartiesPageOnly();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

@@ -869,10 +869,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => AddPaymentDialog(
-                            refreshData: () {
-                              syncAllImportantForPartiesPageOnly();
-                            },
+                          builder: (BuildContext context) => const AddPaymentDialog(
+                            
                           ),
                           fullscreenDialog: true,
                         ),
