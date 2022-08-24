@@ -41,7 +41,7 @@ class UserManagement extends StatelessWidget {
           Text("Clicks: ${c.count.value}"),
           ElevatedButton(
               onPressed: () {
-                customerController.fetchCustomersDB();
+                // customerController.fetchCustomersDB( );
               },
               child: Text('Add customer')),
           const Center(

@@ -10,10 +10,9 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
-import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/product_list.dart';
@@ -51,29 +50,6 @@ class _EditInvoiceState extends State<EditInvoice> {
   final TextEditingController invoiceDescription = TextEditingController();
   final InvoiceController _invoiceController = Get.put(InvoiceController());
 
-  fetchCustomersDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    customData = finalData;
-    setState(() {});
-  }
-
-  refreshData() async {
-    SyncCustomers syncCustomer = SyncCustomers();
-    await syncCustomer.fetchData();
-    fetchCustomersDB();
-    setState(() {});
-  }
-
   @override
   void dispose() {
     customerController.dispose();
@@ -87,8 +63,6 @@ class _EditInvoiceState extends State<EditInvoice> {
   @override
   void initState() {
     fetchData();
-    fetchCustomersDB();
-    // initialize data
 
     for (var e in widget.invoice.items) {
       _addItemsToSale(

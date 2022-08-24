@@ -26,14 +26,6 @@ class _PartiesPageState extends State<PartiesPage> {
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
 
-  // fetchCustomersDB() async {}
-
-  // refreshDataDB() async {
-  // SyncCustomers syncCustomer = SyncCustomers();
-  // await syncCustomer.fetchData();
-  // fetchCustomersDB();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,11 +54,6 @@ class _PartiesPageState extends State<PartiesPage> {
   }
 
   _customerDetails(BuildContext context) {
-    // List<Widget> data = [];
-    // for (var element in _customerController.allCustomers) {
-    //   data.add(_singleCustomerDetails(context, element));
-    // }
-    // Obx(() =>
     Widget data1 = GetBuilder<CustomerController>(builder: (controller) {
       List<Widget> data = [];
       for (var element in controller.allCustomers) {
@@ -131,11 +118,7 @@ class _PartiesPageState extends State<PartiesPage> {
               MaterialPageRoute<void>(
                 builder: (BuildContext context) => SingleCustomerPage(
                   customer: customer,
-                  refreshData: () async {
-                    // await fetchCustomersDB();
-                    // refreshDataDB();
-                    // syncAllImportantForPartiesPageOnly();
-                  },
+                  refreshData: () {},
                 ),
                 fullscreenDialog: true,
               ),
@@ -316,58 +299,72 @@ class _PartiesPageState extends State<PartiesPage> {
         height: 100,
         child: Column(
           children: [
-            Container(
-              alignment: AlignmentDirectional.centerStart,
-              height: 60,
-              child: Row(children: [
-                Expanded(
-                  child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        right: BorderSide(
-                            width: 1, color: Colors.black.withAlpha(50)),
+            GetBuilder<CustomerController>(builder: (controller) {
+              double toBePaid = 0;
+              double toBeReceived = 0;
+              for (SingleCustomer e in controller.allCustomers) {
+                if (!e.isToReceive()) {
+                  toBePaid += e.amount * -1;
+                } else {
+                  toBeReceived += e.amount;
+                }
+              }
+
+              return Container(
+                alignment: AlignmentDirectional.centerStart,
+                height: 60,
+                child: Row(children: [
+                  Expanded(
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                              width: 1, color: Colors.black.withAlpha(50)),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.toBeReceived,
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          Text(
-                            "Tsh ${formatter.format(_customerController.toBePaid.value)}",
-                            style: const TextStyle(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.toBeReceived,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            Text(
+                              "Tsh ${formatter.format(toBeReceived)}",
+                              style: const TextStyle(
                                 color: patowaveGreen,
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ]),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 80,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.toBePaid,
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          Text(
-                            "Tsh ${formatter.format(_customerController.toBeReceived.value)}",
-                            style: const TextStyle(
+                  Expanded(
+                    child: SizedBox(
+                      height: 80,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.toBePaid,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            Text(
+                              "Tsh ${formatter.format(toBePaid)}",
+                              style: const TextStyle(
                                 color: patowaveErrorRed,
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ]),
+                    ),
                   ),
-                ),
-              ]),
-            ),
+                ]),
+              );
+            }),
             const Divider(
               height: 0,
             ),

@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 
 class CustomerController extends GetxController {
-  var toBePaid = 0.obs;
-  var toBeReceived = 0.obs;
   RxList<SingleCustomer> allCustomers = <SingleCustomer>[].obs;
 
   @override
@@ -36,15 +33,9 @@ class CustomerController extends GetxController {
 
     List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
     List<SingleCustomer> finalData = [];
-    toBePaid.value = 0;
-    toBeReceived.value = 0;
+
     for (Map<String, dynamic> e in customers) {
       if (e['shopId'] == shopId) {
-        if (fromJsonCustomer(e).isToReceive()) {
-          toBePaid.value += fromJsonCustomer(e).amount;
-        } else {
-          toBeReceived.value += fromJsonCustomer(e).amount * -1;
-        }
         finalData.add(fromJsonCustomer(e));
       }
     }

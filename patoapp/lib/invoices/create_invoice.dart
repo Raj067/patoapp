@@ -55,29 +55,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final InvoiceController _invoiceController = Get.put(InvoiceController());
   final CustomerController _customerController = Get.put(CustomerController());
 
-  // fetchCustomersDB() async {
-  //   // shop ID
-  //   String? activeShop = await storage.read(key: 'activeShop');
-  //   int shopId = int.parse(activeShop ?? '0');
-
-  //   List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-  //   List<SingleCustomer> finalData = [];
-  //   for (Map<String, dynamic> e in customers) {
-  //     if (e['shopId'] == shopId) {
-  //       finalData.add(fromJsonCustomer(e));
-  //     }
-  //   }
-  //   customData = finalData;
-  //   setState(() {});
-  // }
-
-  // refreshData() async {
-  //   SyncCustomers syncCustomer = SyncCustomers();
-  //   await syncCustomer.fetchData();
-  //   fetchCustomersDB();
-  //   setState(() {});
-  // }
-
   @override
   void dispose() {
     customerController.dispose();
@@ -92,7 +69,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   void initState() {
     super.initState();
     fetchData();
-    // fetchCustomersDB();
   }
 
   fetchData() async {
