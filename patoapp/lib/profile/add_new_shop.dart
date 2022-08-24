@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddNewShop extends StatefulWidget {
-  final Function refreshData;
-  const AddNewShop({Key? key, required this.refreshData}) : super(key: key);
+  // final Function refreshData;
+  const AddNewShop({Key? key}) : super(key: key);
 
   @override
   State<AddNewShop> createState() => _AddNewShopState();
@@ -18,6 +21,7 @@ class AddNewShop extends StatefulWidget {
 
 class _AddNewShopState extends State<AddNewShop> {
   final addShopFormKey = GlobalKey<FormState>();
+  ProfileController get _profileController => Get.put(ProfileController());
 
   TextEditingController businessName = TextEditingController();
   TextEditingController businessEmail = TextEditingController();
@@ -186,15 +190,20 @@ class _AddNewShopState extends State<AddNewShop> {
       );
 
       if (response.statusCode == 201) {
-        widget.refreshData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        ProfileData profile = ProfileData(
+          id: jsonDecode(response.body)['id'],
+          businessName: businessName.text,
+          businessEmail: businessEmail.text,
+          businessAddress: businessAddress.text,
+          instagramName: instagramName.text,
+        );
+        // widget.refreshData(); profileChangeAdd
+        _profileController.profileChangeAdd(profile);
+        Get.back();
         await storage.write(key: "shopName", value: businessName.text);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -202,8 +211,7 @@ class _AddNewShopState extends State<AddNewShop> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

@@ -273,18 +273,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   onAddingCustomer(SingleCustomer data) {
-    // Get.back();
-    _customerController.update();
+    selectedCustmer = "${data.id}";
     Navigator.pop(context);
-    // Obx(() => Text(_customerController.allCustomers.length.toString()));
-    // print(_customerController.allCustomers);
-
-    // _customerController.allCustomers.value = [
-    //   data,
-    //   ..._customerController.allCustomers
-    // ];
-    _customerController.allCustomers;
-    // Obs(()=>);
   }
 
   _addSales() {
@@ -325,132 +315,134 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ),
             ),
             Container(height: 15),
-            DropdownButtonFormField2(
-                value: selectedCustmer,
-                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                scrollbarAlwaysShow: true,
-                dropdownMaxHeight: 200,
-                validator: (value) {
-                  if (value == null || value == "") {
-                    return AppLocalizations.of(context)!.selectCustomer;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  label: Text(
-                    '${AppLocalizations.of(context)!.selectCustomer}*',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
+            GetBuilder<CustomerController>(builder: (controller) {
+              return DropdownButtonFormField2(
+                  value: selectedCustmer,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return AppLocalizations.of(context)!.selectCustomer;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: Text(
+                      '${AppLocalizations.of(context)!.selectCustomer}*',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  border: OutlineInputBorder(
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                ),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                items: _customerController.allCustomers
-                    .map((item) => DropdownMenuItem<String>(
-                          value: "${item.id}",
-                          child: Text(
-                            item.fullName,
-                            style: const TextStyle(
-                              fontSize: 14,
+                  items: _customerController.allCustomers
+                      .map((item) => DropdownMenuItem<String>(
+                            value: "${item.id}",
+                            child: Text(
+                              item.fullName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  //Do something when changing the item if you want.
-                  setState(() {
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                    setState(() {
+                      selectedCustmer = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
                     selectedCustmer = value.toString();
+                  },
+                  searchController: customerController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: patowavePrimary,
+                            controller: customerController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText:
+                                  '${AppLocalizations.of(context)!.searchCustomer}...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    AddNewCustomerTransaction(
+                                  refreshData: onAddingCustomer,
+                                ),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.add),
+                        )
+                      ],
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    String newVal = controller.allCustomers
+                        .firstWhere(
+                            (element) => element.id.toString() == item.value)
+                        .fullName;
+                    return (newVal
+                        .toLowerCase()
+                        .contains(searchValue.toLowerCase()));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      customerController.clear();
+                    }
                   });
-                },
-                onSaved: (value) {
-                  selectedCustmer = value.toString();
-                },
-                searchController: customerController,
-                searchInnerWidget: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 4,
-                    right: 8,
-                    left: 8,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          cursorColor: patowavePrimary,
-                          controller: customerController,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText:
-                                '${AppLocalizations.of(context)!.searchCustomer}...',
-                            hintStyle: const TextStyle(fontSize: 12),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(15),
-                                bottomRight: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  AddNewCustomerTransaction(
-                                refreshData: onAddingCustomer,
-                              ),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                        },
-                        child: Text(AppLocalizations.of(context)!.add),
-                      )
-                    ],
-                  ),
-                ),
-                searchMatchFn: (item, searchValue) {
-                  String newVal = _customerController.allCustomers
-                      .firstWhere(
-                          (element) => element.id.toString() == item.value)
-                      .fullName;
-                  return (newVal
-                      .toLowerCase()
-                      .contains(searchValue.toLowerCase()));
-                },
-                //This to clear the search value when you close the menu
-                onMenuStateChange: (isOpen) {
-                  if (!isOpen) {
-                    customerController.clear();
-                  }
-                }),
+            }),
             Container(height: 15),
             addedItemsToSales.isNotEmpty
                 ? _allAddedItemsToSales(context)
@@ -765,130 +757,135 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                     },
                   ),
             Container(height: 15),
-            DropdownButtonFormField2(
-              selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-              scrollbarAlwaysShow: true,
-              dropdownMaxHeight: 200,
-              validator: (val) {
-                if (addedItemsToPurchases.isNotEmpty &&
-                    (val == null || val == '')) {
-                  return AppLocalizations.of(context)!.pleaseSelectCustomer;
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                label: Text(
-                  AppLocalizations.of(context)!.addContact,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              isExpanded: true,
-              icon: const Icon(
-                Icons.arrow_drop_down,
-              ),
-              dropdownDecoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              items: _customerController.allCustomers
-                  .map((item) => DropdownMenuItem<String>(
-                        value: "${item.id}",
-                        child: Text(
-                          item.fullName,
-                          style: const TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                //Do something when changing the item if you want.
-                setState(() {
-                  selectedCustmer = value.toString();
-                });
-              },
-              onSaved: (value) {
-                selectedCustmer = value.toString();
-              },
-              searchController: customerController,
-              searchInnerWidget: Padding(
-                padding: const EdgeInsets.only(
-                  top: 8,
-                  bottom: 4,
-                  right: 8,
-                  left: 8,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        cursorColor: patowavePrimary,
-                        controller: customerController,
-                        decoration: const InputDecoration(
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
-                          ),
-                          hintText: 'Search for contact...',
-                          hintStyle: TextStyle(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(15),
-                            ),
-                          ),
-                        ),
+            GetBuilder<CustomerController>(
+              builder: (controller) {
+                return DropdownButtonFormField2(
+                  value: selectedCustmer,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  validator: (val) {
+                    if (addedItemsToPurchases.isNotEmpty &&
+                        (val == null || val == '')) {
+                      return AppLocalizations.of(context)!.pleaseSelectCustomer;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: Text(
+                      AppLocalizations.of(context)!.addContact,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(15),
-                              bottomRight: Radius.circular(15),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  items: _customerController.allCustomers
+                      .map((item) => DropdownMenuItem<String>(
+                            value: "${item.id}",
+                            child: Text(
+                              item.fullName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                    setState(() {
+                      selectedCustmer = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
+                    selectedCustmer = value.toString();
+                  },
+                  searchController: customerController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: patowavePrimary,
+                            controller: customerController,
+                            decoration: const InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for contact...',
+                              hintStyle: TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                AddNewCustomerTransaction(
-                              refreshData: onAddingCustomer,
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                              ),
                             ),
-                            fullscreenDialog: true,
                           ),
-                        );
-                      },
-                      child: Text(AppLocalizations.of(context)!.add),
-                    )
-                  ],
-                ),
-              ),
-              searchMatchFn: (item, searchValue) {
-                String newVal = _customerController.allCustomers
-                    .firstWhere(
-                        (element) => element.id.toString() == item.value)
-                    .fullName;
-                return (newVal
-                    .toLowerCase()
-                    .contains(searchValue.toLowerCase()));
-              },
-              //This to clear the search value when you close the menu
-              onMenuStateChange: (isOpen) {
-                if (!isOpen) {
-                  customerController.clear();
-                }
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    AddNewCustomerTransaction(
+                                  refreshData: onAddingCustomer,
+                                ),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.add),
+                        )
+                      ],
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    String newVal = _customerController.allCustomers
+                        .firstWhere(
+                            (element) => element.id.toString() == item.value)
+                        .fullName;
+                    return (newVal
+                        .toLowerCase()
+                        .contains(searchValue.toLowerCase()));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      customerController.clear();
+                    }
+                  },
+                );
               },
             ),
             Container(height: 15),

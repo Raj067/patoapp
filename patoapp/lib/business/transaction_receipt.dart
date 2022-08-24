@@ -3,8 +3,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,9 @@ class TransactionReceipt extends StatefulWidget {
 
 class _TransactionReceiptState extends State<TransactionReceipt> {
   final GlobalKey globalKey = GlobalKey();
+
+  final ProfileController _profileController = Get.put(ProfileController());
+
   Future<Uint8List> capturePng() async {
     final RenderRepaintBoundary boundary =
         globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
@@ -37,24 +42,24 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     return pngBytes;
   }
 
-  String shopName = "";
-  String address = "";
-  String telphone = "";
-  bool isLoading = true;
-  fetchData() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-    List<Map<String, dynamic>> profile = await DBHelperProfile.getItem(shopId);
+  // String shopName = "";
+  // String address = "";
+  // String telphone = "";
+  // bool isLoading = true;
+  // fetchData() async {
+  //   // shop ID
+  //   String? activeShop = await storage.read(key: 'activeShop');
+  //   int shopId = int.parse(activeShop ?? '0');
+  //   List<Map<String, dynamic>> profile = await DBHelperProfile.getItem(shopId);
 
-    shopName = profile[0]['businessName'];
-    address = profile[0]['businessAddress'];
-    telphone = profile[0]['businessPhone'] == ''
-        ? '-'
-        : "+255${profile[0]['businessPhone']}";
-    isLoading = false;
-    setState(() {});
-  }
+  //   shopName = profile[0]['businessName'];
+  //   address = profile[0]['businessAddress'];
+  //   telphone = profile[0]['businessPhone'] == ''
+  //       ? '-'
+  //       : "+255${profile[0]['businessPhone']}";
+  //   isLoading = false;
+  //   setState(() {});
+  // }
 
   void _onItemTapped(int index) async {
     if (index == 0) {
@@ -72,10 +77,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       Directory('$myPath/').create();
       final file = File('$myPath/Receipt-${widget.data.receipt}.png');
       await file.writeAsBytes(bytes);
-      // var imageId = await ImageDownloader.downloadImage(url);
-      // var imageId = await ImageDownloader.downloadImage(dir.path);
-      // var path = await ImageDownloader.findPath(imageId!);
-      // ImageDownloader. ;
       await ImageDownloader.open(file.path);
     }
     if (index == 2) {
@@ -87,11 +88,11 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchData();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,42 +112,38 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
           ),
         ),
       ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(height: 10),
-                  Center(
-                    child: SizedBox(
-                      width: 300,
-                      child: Stack(
-                        children: [
-                          RepaintBoundary(
-                            key: globalKey,
-                            child: Card(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(0),
-                                ),
-                              ),
-                              color: patowaveWhite,
-                              elevation: 0,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: _myReceipt()),
-                            ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(height: 10),
+            Center(
+              child: SizedBox(
+                width: 300,
+                child: Stack(
+                  children: [
+                    RepaintBoundary(
+                      key: globalKey,
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(0),
                           ),
-                        ],
+                        ),
+                        color: patowaveWhite,
+                        elevation: 0,
+                        child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: _myReceipt()),
                       ),
                     ),
-                  ),
-                  Container(height: 10),
-                ],
+                  ],
+                ),
               ),
             ),
+            Container(height: 10),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: patowavePrimary,
         onTap: _onItemTapped,
@@ -195,7 +192,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
               ),
         Container(height: 10),
         Text(
-          shopName,
+          _profileController.myProfile.value.businessName,
           style: const TextStyle(
             color: patowaveBlack,
           ),
@@ -219,7 +216,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
               ),
             ),
             Text(
-              address,
+              _profileController.myProfile.value.businessAddress,
               style: const TextStyle(
                 color: patowaveBlack,
               ),
@@ -237,7 +234,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
               ),
             ),
             Text(
-              telphone,
+              _profileController.myProfile.value.businessPhone,
               style: const TextStyle(
                 color: patowaveBlack,
               ),

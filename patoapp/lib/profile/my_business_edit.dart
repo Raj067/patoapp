@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:signature/signature.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
@@ -20,12 +22,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditMyBusiness extends StatefulWidget {
-  final Function refreshData;
+  // final Function refreshData;
   final ProfileData profileData;
   const EditMyBusiness({
     Key? key,
     required this.profileData,
-    required this.refreshData,
+    // required this.refreshData,
   }) : super(key: key);
 
   @override
@@ -86,6 +88,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
   TextEditingController businessCategory = TextEditingController();
 
   final editShopFormKey1 = GlobalKey<FormState>();
+  final ProfileController _profileController = Get.put(ProfileController());
 
   final SignatureController _controller = SignatureController(
     penStrokeWidth: 3,
@@ -617,18 +620,23 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
       );
 
       if (response.statusCode == 201) {
-        SyncProfile syncProfile = SyncProfile();
-        await syncProfile.fetchData();
-        widget.refreshData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        widget.profileData.businessName = businessName.text;
+        widget.profileData.businessEmail = businessEmail.text;
+        widget.profileData.businessAddress = businessAddress.text;
+        widget.profileData.instagramName = instagramName.text;
+        widget.profileData.businessPhone = businessPhone.text;
+        widget.profileData.businessSlogan = businessSlogan.text;
+        widget.profileData.businessType = businessType.text;
+        widget.profileData.businessCategory = businessCategory.text;
+        _profileController.myProfileChangeUpdaterProfile(widget.profileData);
+        // update shop
+        _profileController.myProfileChangeUpdater(widget.profileData);
+
+        // Get.back();
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -636,8 +644,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
         // throw Exception('Failed to updated customer.');
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      Get.back();
       showTimeOutMessage(
         context: context,
         builder: (context) => const ModalFitTimeOut(),

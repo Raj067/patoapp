@@ -9,11 +9,12 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
-import 'package:patoapp/backend/sync/sync_customers.dart';
+// import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/business/add_new_customer.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -43,7 +44,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
   List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
-  List<SingleCustomer> customData = [];
+  // List<SingleCustomer> customData = [];
   final addItemToSalesFormKey = GlobalKey<FormState>();
   final invoiceFormKey = GlobalKey<FormState>();
   final TextEditingController customerController = TextEditingController();
@@ -52,29 +53,30 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final TextEditingController dueDate = TextEditingController();
   final TextEditingController invoiceDescription = TextEditingController();
   final InvoiceController _invoiceController = Get.put(InvoiceController());
+  final CustomerController _customerController = Get.put(CustomerController());
 
-  fetchCustomersDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
+  // fetchCustomersDB() async {
+  //   // shop ID
+  //   String? activeShop = await storage.read(key: 'activeShop');
+  //   int shopId = int.parse(activeShop ?? '0');
 
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    customData = finalData;
-    setState(() {});
-  }
+  //   List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+  //   List<SingleCustomer> finalData = [];
+  //   for (Map<String, dynamic> e in customers) {
+  //     if (e['shopId'] == shopId) {
+  //       finalData.add(fromJsonCustomer(e));
+  //     }
+  //   }
+  //   customData = finalData;
+  //   setState(() {});
+  // }
 
-  refreshData() async {
-    SyncCustomers syncCustomer = SyncCustomers();
-    await syncCustomer.fetchData();
-    fetchCustomersDB();
-    setState(() {});
-  }
+  // refreshData() async {
+  //   SyncCustomers syncCustomer = SyncCustomers();
+  //   await syncCustomer.fetchData();
+  //   fetchCustomersDB();
+  //   setState(() {});
+  // }
 
   @override
   void dispose() {
@@ -90,7 +92,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   void initState() {
     super.initState();
     fetchData();
-    fetchCustomersDB();
+    // fetchCustomersDB();
   }
 
   fetchData() async {
@@ -200,9 +202,8 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   }
 
   onAddingCustomer(SingleCustomer data) {
+    selectedCustmer = "${data.id}";
     Navigator.pop(context);
-    customData = [data, ...customData];
-    setState(() {});
   }
 
   _addInvoice() {
@@ -245,135 +246,136 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
               ),
             ),
             Container(height: 15),
-            DropdownButtonFormField2(
-                selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                scrollbarAlwaysShow: true,
-                dropdownMaxHeight: 200,
-                validator: (value) {
-                  if (value == null || value == "" || selectedCustmer == '') {
-                    return AppLocalizations.of(context)!.pleaseSelectCustomer;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  label: Text(
-                    '${AppLocalizations.of(context)!.selectCustomer}*',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
+            GetBuilder<CustomerController>(
+              builder: (controller) {
+                return DropdownButtonFormField2(
+                  value: selectedCustmer,
+                  selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                  scrollbarAlwaysShow: true,
+                  dropdownMaxHeight: 200,
+                  validator: (value) {
+                    if (value == null || value == "" || selectedCustmer == '') {
+                      return AppLocalizations.of(context)!.pleaseSelectCustomer;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    label: Text(
+                      AppLocalizations.of(context)!.addContact,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  border: OutlineInputBorder(
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                ),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                items: customData
-                    .map((item) => DropdownMenuItem<String>(
-                          value: "${item.id}",
-                          child: Text(
-                            item.fullName,
-                            style: const TextStyle(
-                              fontSize: 14,
+                  items: _customerController.allCustomers
+                      .map((item) => DropdownMenuItem<String>(
+                            value: "${item.id}",
+                            child: Text(
+                              item.fullName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  //Do something when changing the item if you want.
-                  setState(() {
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    //Do something when changing the item if you want.
+                    setState(() {
+                      selectedCustmer = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
                     selectedCustmer = value.toString();
-                    customerName = customData
-                        .firstWhere((element) =>
-                            element.id.toString() == selectedCustmer)
+                  },
+                  searchController: customerController,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: patowavePrimary,
+                            controller: customerController,
+                            decoration: const InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for contact...',
+                              hintStyle: TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    AddNewCustomerTransaction(
+                                  refreshData: onAddingCustomer,
+                                ),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.add),
+                        )
+                      ],
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    String newVal = _customerController.allCustomers
+                        .firstWhere(
+                            (element) => element.id.toString() == item.value)
                         .fullName;
-                  });
-                },
-                onSaved: (value) {
-                  selectedCustmer = value.toString();
-                },
-                searchController: customerController,
-                searchInnerWidget: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 4,
-                    right: 8,
-                    left: 8,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          cursorColor: patowavePrimary,
-                          controller: customerController,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            hintText:
-                                '${AppLocalizations.of(context)!.searchCustomer}...',
-                            hintStyle: const TextStyle(fontSize: 12),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                bottomLeft: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(15),
-                                bottomRight: Radius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  AddNewCustomerTransaction(
-                                refreshData: onAddingCustomer,
-                              ),
-                              fullscreenDialog: true,
-                            ),
-                          );
-                        },
-                        child: Text(AppLocalizations.of(context)!.add),
-                      )
-                    ],
-                  ),
-                ),
-                searchMatchFn: (item, searchValue) {
-                  String newVal = customData
-                      .firstWhere(
-                          (element) => element.id.toString() == item.value)
-                      .fullName;
-                  return (newVal
-                      .toLowerCase()
-                      .contains(searchValue.toLowerCase()));
-                },
-                //This to clear the search value when you close the menu
-                onMenuStateChange: (isOpen) {
-                  if (!isOpen) {
-                    customerController.clear();
-                  }
-                }),
+                    return (newVal
+                        .toLowerCase()
+                        .contains(searchValue.toLowerCase()));
+                  },
+                  //This to clear the search value when you close the menu
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      customerController.clear();
+                    }
+                  },
+                );
+              },
+            ),
             Container(height: 15),
             TextFormField(
               controller: dueDate,

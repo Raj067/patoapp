@@ -1,10 +1,14 @@
 // ignore: file_names
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:patoapp/components/top_bar.dart';
+import 'package:get/get.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
 import 'package:patoapp/pages/parties.dart';
+import 'package:patoapp/profile/top_notification_icon.dart';
+import 'package:patoapp/profile/top_profile_icon.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ProfileController _profileController = Get.put(ProfileController());
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -31,8 +36,44 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        title: const ProfileIcon(),
-        actions: const [NotificationIcon(), SizedBox(width: 10)],
+        title: ActionChip(
+          avatar:
+              Obx(() => _profileController.myProfile.value.businessLogo != ''
+                  ? CircleAvatar(
+                      backgroundImage: (CachedNetworkImageProvider(
+                        _profileController.myProfile.value.businessLogo,
+                      )),
+                    )
+                  : const CircleAvatar()),
+          label:
+              Obx(() => Text(_profileController.myProfile.value.businessName)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const TopProfileIcon(),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset("assets/svg/alarmoff.svg",
+                width: 25, height: 25),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      const TopNotificationIcon(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 10)
+        ],
         elevation: 0,
       ),
       body: Center(
