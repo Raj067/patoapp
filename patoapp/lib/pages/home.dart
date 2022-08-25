@@ -822,10 +822,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                              AddTransactionDialog(
-                            resetData: () {
-                              syncAllImportantForBusinessTransactions();
-                            },
+                              const AddTransactionDialog(
+                            
                           ),
                           fullscreenDialog: true,
                         ),

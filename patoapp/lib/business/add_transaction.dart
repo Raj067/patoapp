@@ -13,9 +13,9 @@ import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
-import 'package:patoapp/backend/db/db_products.dart';
+// import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
+// import 'package:patoapp/backend/sync/sync_all.dart';
 // import 'package:patoapp/backend/sync/sync_business.dart';
 // import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_purchases.dart';
@@ -28,10 +28,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddTransactionDialog extends StatefulWidget {
-  final Function resetData;
+  // final Function resetData;
   // final List<SingleCustomer> finalData;
-  const AddTransactionDialog({Key? key, required this.resetData})
-      : super(key: key);
+  const AddTransactionDialog({Key? key}) : super(key: key);
 
   @override
   State<AddTransactionDialog> createState() => _AddTransactionDialogState();
@@ -1257,18 +1256,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           id: jsonDecode(response.body)['id'],
           shopId: shopId,
         );
-        await _businessController.addBusiness(myData);
-        widget.resetData();
-        syncAllImportantForBusinessTransactions();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        _businessController.businessChangeAdd(myData);
 
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
+
+        Get.back();
         // Navigator
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -1333,17 +1328,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           id: jsonDecode(response.body)['id'],
           shopId: shopId,
         );
-        await _businessController.addBusiness(myData);
-        widget.resetData();
-        syncAllImportantForBusinessTransactions();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        _businessController.businessChangeAdd(myData);
+
+        Get.back();
+        Get.back();
         // Navigator
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -1413,17 +1404,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           id: jsonDecode(response.body)['id'],
           shopId: shopId,
         );
-        await _businessController.addBusiness(myData);
-        widget.resetData();
-        syncAllImportantForBusinessTransactions();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        _businessController.businessChangeAdd(myData);
+
+        Get.back();
+        Get.back();
         // Navigator
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),

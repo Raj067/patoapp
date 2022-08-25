@@ -7,11 +7,12 @@ import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
-import 'package:patoapp/backend/db/db_profile.dart';
+// import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
-import 'package:patoapp/backend/sync/sync_profile.dart';
+// import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/profile/add_new_shop.dart';
 import 'package:patoapp/profile/my_business_edit.dart';
@@ -34,6 +35,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
   final CustomerController _customerController = Get.put(CustomerController());
   final ProfileController _profileController = Get.put(ProfileController());
   final BusinessController _businessController = Get.put(BusinessController());
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
 
   final ProductController _productController = Get.put(ProductController());
 
@@ -427,6 +429,8 @@ class _TopProfileIconState extends State<TopProfileIcon> {
     // update financial data
     _businessController.fetchBusinessDB();
 
+// updating invoices
+    _invoiceController.fetchInvoiceDB();
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,

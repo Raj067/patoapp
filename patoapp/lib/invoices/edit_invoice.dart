@@ -21,11 +21,9 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:http/http.dart' as http;
 
 class EditInvoice extends StatefulWidget {
-  final Function resetData;
   final SingleInvoice invoice;
   const EditInvoice({
     Key? key,
-    required this.resetData,
     required this.invoice,
   }) : super(key: key);
 
@@ -739,18 +737,14 @@ class _EditInvoiceState extends State<EditInvoice> {
               : invoiceDescription.text,
         );
         await _invoiceController.updateInvoice(myData);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
         // widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
+        Get.back();
+        // widget.resetData();
+        Get.back();
         // Navigator
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),

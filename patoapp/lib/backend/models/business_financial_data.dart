@@ -182,7 +182,7 @@ FinancialData fromJsonBusiness(Map<String, dynamic> dx) {
     amount: dx['amount'],
     receipt: "${dx['receipt']}",
     discount: dx['discount'],
-    id: dx['id'],
+    id: "${dx['id']}",
     shopId: dx['shopId'],
   );
 }

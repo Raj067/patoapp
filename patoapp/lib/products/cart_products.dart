@@ -9,7 +9,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -31,6 +33,7 @@ class _ProductsCartState extends State<ProductsCart> {
   double discount = 0;
 
   final ProductController _productController = Get.put(ProductController());
+  final BusinessController _businessController = Get.put(BusinessController());
 
   int receiptNo = Random().nextInt(10000);
   @override
@@ -444,8 +447,26 @@ class _ProductsCartState extends State<ProductsCart> {
           }
         }
         widget.resetData();
-        // _productController.productChangeUpdater(widget.products);
-        // syncAllImportantProductTransaction();
+
+        // add transaction
+        FinancialData myData = FinancialData(
+          date: DateTime.parse(jsonDecode(response.body)['date']),
+          isCashSale: true,
+          isPaymentIn: false,
+          isExpenses: false,
+          isPaymentOut: false,
+          isPurchases: false,
+          isInvoice: false,
+          name: "Cash Sales",
+          description: "Cash Sales",
+          details: jsonDecode(response.body)['details'],
+          amount: (totalAmount - discount).toInt(),
+          receipt: "$receiptNo",
+          discount: discount.toInt(),
+          id: jsonDecode(response.body)['id'],
+          shopId: shopId,
+        );
+        _businessController.businessChangeAdd(myData);
         Get.back();
         Get.back();
       } else {

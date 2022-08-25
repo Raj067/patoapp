@@ -42,4 +42,15 @@ class BusinessController extends GetxController {
     finalData.sort((b, a) => a.date.compareTo(b.date));
     allFinancialData.value = finalData;
   }
+
+  businessChangeAdd(FinancialData business) {
+    // after successfully updated
+
+    // 1. Update state
+    allFinancialData.insert(0, business);
+    update();
+
+    // 2. Send data to local DB, so as to update it
+    addBusiness(business);
+  }
 }

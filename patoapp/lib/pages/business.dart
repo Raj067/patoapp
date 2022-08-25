@@ -104,14 +104,7 @@ class _BusinessPageState extends State<BusinessPage> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              children: [
-                Container(height: 5),
-                _firstRowBusinessData(context),
-                _allFinancialData(context),
-              ],
-            ),
+            child: _allFinancialData(context),
           ),
         ],
       ),
@@ -120,14 +113,7 @@ class _BusinessPageState extends State<BusinessPage> {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddTransactionDialog(
-                resetData: () async {
-                  // await fetchBusinessDB();
-                  // refreshDataDB();
-                  // Refresh all Important data
-                  // on respective page
-                },
-              ),
+              builder: (BuildContext context) => const AddTransactionDialog(),
               fullscreenDialog: true,
             ),
           );
@@ -580,51 +566,100 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   _allFinancialData(BuildContext context) {
-    List<Widget> data = [
-      _searchBox(context),
-      Container(
-        decoration: BoxDecoration(
-          color: patowavePrimary.withAlpha(100),
-          // borderRadius: const BorderRadius.only(
-          //   topLeft: Radius.circular(15),
-          //   topRight: Radius.circular(15),
-          // ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(AppLocalizations.of(context)!.details),
-              Text(AppLocalizations.of(context)!.amount),
-            ],
-          ),
-        ),
-      ),
-    ];
+    // List<Widget> data = [
+    //   _searchBox(context),
+    //   Container(
+    //     decoration: BoxDecoration(
+    //       color: patowavePrimary.withAlpha(100),
+    //       // borderRadius: const BorderRadius.only(
+    //       //   topLeft: Radius.circular(15),
+    //       //   topRight: Radius.circular(15),
+    //       // ),
+    //     ),
+    //     child: Padding(
+    //       padding: const EdgeInsets.all(10),
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Text(AppLocalizations.of(context)!.details),
+    //           Text(AppLocalizations.of(context)!.amount),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // ];
 
     Widget myWidget = GetBuilder<BusinessController>(builder: (controller) {
+      List<Widget> myData = [
+        _firstRowBusinessData(context),
+        Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          elevation: 0,
+          margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+          child: _searchBox(context),
+        ),
+        Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(0),
+            ),
+          ),
+          elevation: 0,
+          margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+          color: patowavePrimary.withAlpha(100),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(AppLocalizations.of(context)!.details),
+                Text(AppLocalizations.of(context)!.amount),
+              ],
+            ),
+          ),
+        ),
+      ];
       controller.allFinancialData.sort((b, a) => a.date.compareTo(b.date));
       for (var element in controller.allFinancialData) {
         if (element.date.isAfter(pickedRangeDate.start) &&
             element.date
                 .isBefore(pickedRangeDate.end.add(const Duration(days: 1)))) {
           if (!element.isDeleted) {
-            data.add(_singleFinancialData(context, element));
-            data.add(const Divider(height: 0));
+            myData.add(
+              Card(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(0),
+                  ),
+                ),
+                elevation: 0,
+                margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+                child: _singleFinancialData(context, element),
+              ),
+            );
+            myData.add(const Divider(
+              height: 0,
+              thickness: 1,
+              indent: 4,
+              endIndent: 4,
+            ));
+            // data.add(_singleFinancialData(context, element));
+            // data.add(const Divider(height: 0));
           }
         }
       }
-      return Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        elevation: 0,
-        child: Column(
-          children: data,
-        ),
+
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return myData[index];
+        },
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        itemCount: myData.length,
       );
     });
     return myWidget;

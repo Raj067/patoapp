@@ -256,7 +256,7 @@ def add_new_customer_api(request):
                 amount=request.data.get("openingBalance"),
                 receipt_no=str(random.randint(1000, 99999)),
             )
-        return Response(status=status.HTTP_201_CREATED, data={'customerId': reg.id, 'customerName':reg.customer_name})
+        return Response(status=status.HTTP_201_CREATED, data={'customerId': reg.id, 'customerName': reg.customer_name})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -286,7 +286,7 @@ def adding_payment_customer_api(request):
             receipt_no=str(request.data.get('receiptNo')),
         )
         data.save()
-        return Response(status=status.HTTP_201_CREATED, data={'customerId': data.id, 'customerName':data.customer_name})
+        return Response(status=status.HTTP_201_CREATED, data={'customerId': data.id, 'customerName': data.customer_name})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -403,7 +403,7 @@ def create_invoice_api(request):
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
 
-        return Response(status=status.HTTP_201_CREATED, data={'invoiceId': reg.id})
+        return Response(status=status.HTTP_201_CREATED, data={'invoiceId': reg.id, 'date': reg.created_at})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -558,7 +558,20 @@ def cash_sales_transaction_api(request):
             prod = Product.objects.get(id=dx.get('id'))
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
-        return Response(status=status.HTTP_201_CREATED)
+        data = {
+            "id": f"cash_sale-{reg.id}",
+            "date": reg.updated_at,
+            "name": "Cash Sales",
+            "details": [{
+                "id": i.id,
+                "product": i.product_name,
+                "quantity": i.quantity,
+                "price": i.price,
+                "product_unit": i.product_unit,
+                "date": i.updated_at,
+            } for i in reg.sold_items.all()]
+        }
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

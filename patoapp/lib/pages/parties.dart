@@ -29,13 +29,18 @@ class _PartiesPageState extends State<PartiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      body: Column(
+        // padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
-          Container(height: 5),
-          _headerSection(context),
-          _searchBox(context),
-          _customerDetails(context),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: _headerSection(context),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: _searchBox(context),
+          ),
+          Expanded(child: _customerDetails(context)),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -54,15 +59,17 @@ class _PartiesPageState extends State<PartiesPage> {
   }
 
   _customerDetails(BuildContext context) {
-    Widget data1 = GetBuilder<CustomerController>(builder: (controller) {
-      List<Widget> data = [];
-      for (var element in controller.allCustomers) {
-        data.add(_singleCustomerDetails(context, element));
-      }
-      return Column(children: data);
-    });
-    // _customerController.allCustomers;
 
+    Widget data1 = GetBuilder<CustomerController>(builder: (controller) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return _singleCustomerDetails(
+              context, controller.allCustomers[index]);
+        },
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        itemCount: controller.allCustomers.length,
+      );
+    });
     return data1;
   }
 

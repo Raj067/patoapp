@@ -9,9 +9,11 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 // import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
@@ -25,8 +27,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateNewInvoice extends StatefulWidget {
-  final Function resetData;
-  const CreateNewInvoice({Key? key, required this.resetData}) : super(key: key);
+  const CreateNewInvoice({Key? key}) : super(key: key);
 
   @override
   State<CreateNewInvoice> createState() => _CreateNewInvoiceState();
@@ -39,7 +40,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   double receivedAmount = 0;
   String? selectedCustmer;
   String? selectedProductValueSales;
-  
+
   String selectedUnit = "Items";
   String customerName = '';
 
@@ -55,6 +56,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final InvoiceController _invoiceController = Get.put(InvoiceController());
   final CustomerController _customerController = Get.put(CustomerController());
   final ProductController _productController = Get.put(ProductController());
+  final BusinessController _businessController = Get.put(BusinessController());
 
   @override
   void dispose() {
@@ -778,65 +780,78 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-    try {
-      final response = await http.post(
-        Uri.parse('${baseUrl}api/create-invoice/'),
-        headers: getAuthHeaders(accessToken),
-        body: jsonEncode(<String, dynamic>{
-          'amount_received': receivedAmount.toInt(),
-          'total_amount': totalAmount.toInt() - discountAmount.toInt(),
-          'discount': discountAmount.toInt(),
-          'items': items,
-          'invoiceNo': invoiceNo,
-          'dueDate': dueDate.text,
-          'description': invoiceDescription.text == ''
-              ? 'Invoice'
-              : invoiceDescription.text,
-          'shopId': shopId,
-          "customer": int.parse(selectedCustmer ?? '1'),
-        }),
-      );
+    // try {
+    final response = await http.post(
+      Uri.parse('${baseUrl}api/create-invoice/'),
+      headers: getAuthHeaders(accessToken),
+      body: jsonEncode(<String, dynamic>{
+        'amount_received': receivedAmount.toInt(),
+        'total_amount': totalAmount.toInt() - discountAmount.toInt(),
+        'discount': discountAmount.toInt(),
+        'items': items,
+        'invoiceNo': invoiceNo,
+        'dueDate': dueDate.text,
+        'description':
+            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text,
+        'shopId': shopId,
+        "customer": int.parse(selectedCustmer ?? '1'),
+      }),
+    );
 
-      if (response.statusCode == 201) {
-        SingleInvoice myData = SingleInvoice(
-          id: jsonDecode(response.body)['invoiceId'],
-          shopId: shopId,
-          customerId: int.parse(selectedCustmer ?? '1'),
-          fullName: customerName,
-          amountReceived: receivedAmount.toInt(),
-          totalAmount: totalAmount.toInt() - discountAmount.toInt(),
-          discount: discountAmount.toInt(),
-          dueDate: dueDate.text,
-          items: items,
-          invoiceNo: "$invoiceNo",
-          description: invoiceDescription.text == ''
-              ? 'Invoice'
-              : invoiceDescription.text,
-        );
-        await _invoiceController.addInvoice(myData);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // Navigator
-      } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        showErrorMessage(
-          context: context,
-          builder: (context) => const ModalFitError(),
-        );
-        // throw Exception('Failed to updated customer.');
-      }
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context);
-      showTimeOutMessage(
-        context: context,
-        builder: (context) => const ModalFitTimeOut(),
+    if (response.statusCode == 201) {
+      SingleInvoice myData = SingleInvoice(
+        id: jsonDecode(response.body)['invoiceId'],
+        shopId: shopId,
+        customerId: int.parse(selectedCustmer ?? '1'),
+        fullName: customerName,
+        amountReceived: receivedAmount.toInt(),
+        totalAmount: totalAmount.toInt() - discountAmount.toInt(),
+        discount: discountAmount.toInt(),
+        dueDate: dueDate.text,
+        items: items,
+        invoiceNo: "$invoiceNo",
+        description:
+            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text,
       );
+      _invoiceController.invoiceChangeAdd(myData);
+
+      // update transactions
+      FinancialData myFinancialData = FinancialData(
+        date: DateTime.parse(jsonDecode(response.body)['date']).toLocal(),
+        isCashSale: false,
+        isPaymentIn: false,
+        isExpenses: false,
+        isPaymentOut: false,
+        isPurchases: false,
+        isInvoice: true,
+        name: customerName,
+        description:
+            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text,
+        details: items,
+        amount: totalAmount.toInt() - discountAmount.toInt(),
+        receipt: "$invoiceNo",
+        discount: discountAmount.toInt(),
+        id: "${jsonDecode(response.body)['invoiceId']}",
+        shopId: shopId,
+      );
+      _businessController.businessChangeAdd(myFinancialData);
+      Get.back();
+      Get.back();
+    } else {
+      Get.back();
+      showErrorMessage(
+        context: context,
+        builder: (context) => const ModalFitError(),
+      );
+      // throw Exception('Failed to updated customer.');
     }
+    // } catch (e) {
+    //   // ignore: use_build_context_synchronously
+    //   Navigator.pop(context);
+    //   showTimeOutMessage(
+    //     context: context,
+    //     builder: (context) => const ModalFitTimeOut(),
+    //   );
+    // }
   }
 }

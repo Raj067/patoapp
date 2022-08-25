@@ -16,8 +16,8 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
-import 'package:patoapp/backend/db/db_profile.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
@@ -32,12 +32,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
-  final Function resetData;
-  const PreviewInvoice({
-    Key? key,
-    required this.invoice,
-    required this.resetData,
-  }) : super(key: key);
+  const PreviewInvoice({Key? key, required this.invoice}) : super(key: key);
   @override
   State<PreviewInvoice> createState() => _PreviewInvoiceState();
 }
@@ -511,9 +506,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         MaterialPageRoute<void>(
           builder: (BuildContext context) => EditInvoice(
             invoice: widget.invoice,
-            resetData: () {
-              widget.resetData();
-            },
           ),
           fullscreenDialog: true,
         ),
@@ -537,16 +529,12 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         );
 
         if (response.statusCode == 201) {
-          await _invoiceController.deleteInvoice(widget.invoice);
-          widget.resetData();
+          _invoiceController.invoiceChangeDelete(widget.invoice);
 
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
+          Get.back();
+          Get.back();
         } else {
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
+          Get.back();
           showErrorMessage(
             context: context,
             builder: (context) => const ModalFitError(),
