@@ -18,13 +18,11 @@ class EditProduct extends StatefulWidget {
   final SingleProduct product;
   final bool isProductImage;
   final bool isProductBarcode;
-  final Function resetData;
   const EditProduct({
     Key? key,
     required this.product,
     required this.isProductImage,
     required this.isProductBarcode,
-    required this.resetData,
   }) : super(key: key);
 
   @override
@@ -622,8 +620,8 @@ class _EditProductState extends State<EditProduct> {
       builder: (context) => const ModalFit(),
     );
     // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
+    // String? activeShop = await storage.read(key: 'activeShop');
+    // int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
     try {
       final response = await http.post(
@@ -646,30 +644,24 @@ class _EditProductState extends State<EditProduct> {
       );
 
       if (response.statusCode == 201) {
-        SingleProduct myData = SingleProduct(
-          shopId: shopId,
-          isService: false,
-          productUnit: primaryUnit.text,
-          id: widget.product.id,
-          productName: productName.text,
-          quantity: quantity.text != '' ? int.parse(quantity.text) : 0,
-          purchasesPrice:
-              purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0,
-          sellingPrice:
-              sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0,
-          stockLevel: stockLevel.text != '' ? int.parse(stockLevel.text) : 0,
-          supplierName: supplierName.text,
-          supplierContact: supplierNumber.text,
-          thumbnail: '',
-        );
-        await _productController.updateProduct(myData);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        widget.product.productUnit = primaryUnit.text;
+        widget.product.productName = productName.text;
+        widget.product.quantity =
+            quantity.text != '' ? int.parse(quantity.text) : 0;
+        widget.product.purchasesPrice =
+            purchasesPrice.text != '' ? int.parse(purchasesPrice.text) : 0;
+        widget.product.sellingPrice =
+            sellingPrice.text != '' ? int.parse(sellingPrice.text) : 0;
+        widget.product.stockLevel =
+            stockLevel.text != '' ? int.parse(stockLevel.text) : 0;
+        widget.product.supplierName = supplierName.text;
+        widget.product.supplierContact = supplierNumber.text;
+
+        _productController.productChangeUpdater(widget.product);
+        // widget.resetData();
+        Get.back();
+        Get.back();
+        Get.back();
       } else {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

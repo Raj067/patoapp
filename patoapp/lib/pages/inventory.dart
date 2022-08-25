@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
-import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
+// import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
-import 'package:patoapp/backend/sync/sync_products.dart';
+// import 'package:patoapp/backend/sync/sync_products.dart';
 import 'package:patoapp/products/add_product.dart';
 import 'package:patoapp/products/cart_products.dart';
 import 'package:patoapp/products/single_product_details.dart';
@@ -50,178 +52,148 @@ class InventoryHomePage extends StatefulWidget {
 }
 
 class _InventoryHomePageState extends State<InventoryHomePage> {
-  List<SingleProduct> customData = [];
-  int allAddedProduct = 0;
-  int allAddedProductPrice = 0;
   bool isProductFound = true;
   int itemsMatchedInSearch = 0;
-  int addedItemsToCart = 0;
   TextEditingController searchController = TextEditingController();
 
-  bool isAlreadyLoad = false;
-
-  fetchProductsDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> products = await DBHelperProduct.query();
-    List<SingleProduct> finalData = [];
-    for (Map<String, dynamic> e in products) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonProduct(e));
-      }
-    }
-    customData = finalData;
-    isAlreadyLoad = true;
-    setState(() {});
-  }
-
-  refreshDataDB() async {
-    SyncProduct syncProduct = SyncProduct();
-    await syncProduct.fetchData();
-    fetchProductsDB();
-  }
+  final ProductController _productController = Get.put(ProductController());
 
   // For Preferences
   bool isProductImage = box.read('isProductImage') ?? false;
   bool isProductBarcode = box.read('isProductBarcode') ?? false;
 
   @override
-  void initState() {
-    super.initState();
-    fetchProductsDB();
-    refreshDataDB();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(height: 5),
-          _itemSearchBar(context),
-          Container(height: 5),
-          searchController.text != ''
-              ? isProductFound
-                  ? Row(
-                      children: [
-                        Text(
-                          " * $itemsMatchedInSearch",
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        const Text(
-                          " Items match your search ",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        Text(
-                          searchController.text,
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        const Text(
-                          " * No item match your search ",
-                          style:
-                              TextStyle(fontSize: 12, color: patowaveErrorRed),
-                        ),
-                        Text(
-                          searchController.text.length < 15
-                              ? searchController.text
-                              : searchController.text
-                                  .replaceRange(15, null, "..."),
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: patowaveErrorRed,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-              : Container(),
-          isAlreadyLoad
-              ? _itemAllDataFiltered()
-              : const SizedBox(
-                  height: 100,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-          allAddedProduct != 0
-              ? Dismissible(
-                  key: const Key('removeData'),
-                  confirmDismiss: (direction) async {
-                    if (direction == DismissDirection.startToEnd) {
-                      _onResetAllData();
-                    } else {
-                      _onResetAllData();
-                    }
-                    return true;
-                  },
-                  child: Card(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                    ),
-                    elevation: 0,
-                    color: patowavePrimary,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => ProductsCart(
-                              products: customData,
-                              resetData: _onResetAllData,
-                            ),
-                            fullscreenDialog: true,
+      child: GetBuilder<ProductController>(builder: (controller) {
+        List<Widget> data = [];
+        for (var element in controller.allProducts) {
+          data.add(_singleProductTile(context, element));
+          data.add(Container(height: 10));
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(height: 5),
+            _itemSearchBar(context),
+            Container(height: 5),
+            searchController.text != ''
+                ? isProductFound
+                    ? Row(
+                        children: [
+                          Text(
+                            " * $itemsMatchedInSearch",
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
                           ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${AppLocalizations.of(context)!.totalItems}: $addedItemsToCart',
-                              style: const TextStyle(
-                                color: Colors.white,
+                          const Text(
+                            " Items match your search ",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            searchController.text,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          const Text(
+                            " * No item match your search ",
+                            style: TextStyle(
+                                fontSize: 12, color: patowaveErrorRed),
+                          ),
+                          Text(
+                            searchController.text.length < 15
+                                ? searchController.text
+                                : searchController.text
+                                    .replaceRange(15, null, "..."),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: patowaveErrorRed,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )
+                : Container(),
+            Expanded(
+              child: ListView(
+                children: data,
+              ),
+            ),
+            controller.allAddedProduct.value != 0
+                ? Dismissible(
+                    key: const Key('removeData'),
+                    confirmDismiss: (direction) async {
+                      if (direction == DismissDirection.startToEnd) {
+                        _onResetAllData();
+                      } else {
+                        _onResetAllData();
+                      }
+                      return true;
+                    },
+                    child: Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      elevation: 0,
+                      color: patowavePrimary,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) => ProductsCart(
+                                products: controller.allProducts,
+                                resetData: _onResetAllData,
                               ),
+                              fullscreenDialog: true,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Tsh. ${formatter.format(allAddedProductPrice)}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Container(
-                                  width: 10,
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${AppLocalizations.of(context)!.totalItems}: ${_productController.addedItemsToCart.value}',
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  size: 14,
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Tsh. ${formatter.format(controller.allAddedProductPrice.value)}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              : const Center(),
-        ],
-      ),
+                  )
+                : const Center(),
+          ],
+        );
+      }),
     );
   }
 
@@ -275,10 +247,6 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                     builder: (BuildContext context) => AddProductPage(
                       isProductImage: isProductImage,
                       isProductBarcode: isProductBarcode,
-                      resetData: () async {
-                        await fetchProductsDB();
-                        refreshDataDB();
-                      },
                     ),
                     fullscreenDialog: true,
                   ),
@@ -292,17 +260,21 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
 
   bool _stringLinearSearch({required String child, required String parent}) =>
       parent.toLowerCase().contains(child.toLowerCase());
+
   _onSearchChange(String val) {
     List<SingleProduct> newFilteredeData = [];
     List<SingleProduct> newUnFilteredeData = [];
-    for (var element in customData) {
+    for (var element in _productController.allProducts) {
       if (_stringLinearSearch(child: val, parent: element.productName)) {
         newFilteredeData.add(element);
       } else {
         newUnFilteredeData.add(element);
       }
     }
-    customData = [...newFilteredeData, ...newUnFilteredeData];
+    _productController.allProducts.value = [
+      ...newFilteredeData,
+      ...newUnFilteredeData
+    ];
     itemsMatchedInSearch = newFilteredeData.length;
     if (newFilteredeData.isNotEmpty) {
       isProductFound = true;
@@ -312,18 +284,30 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     setState(() {});
   }
 
-  Widget _itemAllDataFiltered() {
-    List<Widget> data = [];
-    for (var element in customData) {
-      data.add(_singleProductTile(context, element));
-      data.add(Container(height: 10));
-    }
-    return Expanded(
-      child: ListView(
-        children: data,
-      ),
-    );
-  }
+  // Widget _itemAllDataFiltered() {
+  //   // List<Widget> data = [];
+  //   // for (var element in customData) {
+  //   //   data.add(_singleProductTile(context, element));
+  //   //   data.add(Container(height: 10));
+  //   // }
+  //   // return Expanded(
+  //   //   child: ListView(
+  //   //     children: data,
+  //   //   ),
+  //   // );
+  //   return GetBuilder<ProductController>(builder: (controller) {
+  //     List<Widget> data = [];
+  //     for (var element in controller.allProducts) {
+  //       data.add(_singleProductTile(context, element));
+  //       data.add(Container(height: 10));
+  //     }
+  //     return Expanded(
+  //       child: ListView(
+  //         children: data,
+  //       ),
+  //     );
+  //   });
+  // }
 
   Widget _singleProductTile(BuildContext context, SingleProduct product) {
     return Dismissible(
@@ -398,10 +382,6 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   product: product,
                   isProductImage: isProductImage,
                   isProductBarcode: isProductBarcode,
-                  resetData: () async {
-                    await fetchProductsDB();
-                    refreshDataDB();
-                  },
                 ),
                 fullscreenDialog: true,
               ),
@@ -537,7 +517,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                           : const CircleAvatar(
                               backgroundColor: patowavePrimary,
                               foregroundColor: patowaveWhite,
-                              child: Icon(Icons.add_shopping_cart_rounded),
+                              child: Icon(
+                                Icons.add_shopping_cart_rounded,
+                              ),
                             ),
                     ],
                   ),
@@ -746,7 +728,7 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     int val = 0;
     int addedItems = 0;
     int price = 0;
-    for (var element in customData) {
+    for (var element in _productController.allProducts) {
       element.addedToCart > 0 ? addedItems += 1 : addedItems;
       val += element.addedToCart;
       price += element.getTotalPrice();
@@ -759,25 +741,29 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
         }
       }
     }
-    allAddedProductPrice = price;
-    customData = [pName, ...newAddedData, ...newUnAddedData];
-    allAddedProduct = val;
-    addedItemsToCart = addedItems;
+    _productController.allAddedProductPrice.value = price;
+    _productController.allProducts.value = [
+      pName,
+      ...newAddedData,
+      ...newUnAddedData
+    ];
+    _productController.allAddedProduct.value = val;
+    _productController.addedItemsToCart.value = addedItems;
     setState(() {});
   }
 
   _onResetAllData() {
     List<SingleProduct> newData = [];
-    for (var element in customData) {
+    for (var element in _productController.allProducts) {
       element.addedToCart = 0;
       element.isAddedToCartAutomatic = false;
       newData.add(element);
     }
-    setState(() {
-      customData = newData;
-      allAddedProduct = 0;
-      allAddedProductPrice = 0;
-    });
+
+    _productController.allProducts.value = newData;
+    _productController.allAddedProduct.value = 0;
+    _productController.allAddedProductPrice.value = 0;
+    setState(() {});
   }
 
   _onResetSingleData(SingleProduct product) {
@@ -787,16 +773,16 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     int val = 0;
     int addedItems = 0;
     int price = 0;
-    for (var element in customData) {
+    for (var element in _productController.allProducts) {
       element.addedToCart > 0 ? addedItems += 1 : addedItems;
       val += element.addedToCart;
       price += element.getTotalPrice();
       newData.add(element);
     }
-    allAddedProductPrice = price;
-    customData = newData;
-    allAddedProduct = val;
-    addedItemsToCart = addedItems;
+    _productController.allAddedProductPrice.value = price;
+    _productController.allProducts.value = newData;
+    _productController.allAddedProduct.value = val;
+    _productController.addedItemsToCart.value = addedItems;
     setState(() {});
   }
 }

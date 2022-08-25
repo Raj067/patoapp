@@ -25,12 +25,10 @@ class SingleProductDetails extends StatefulWidget {
     required this.product,
     required this.isProductImage,
     required this.isProductBarcode,
-    required this.resetData,
   });
   final SingleProduct product;
   final bool isProductImage;
   final bool isProductBarcode;
-  final Function resetData;
   @override
   State<SingleProductDetails> createState() => _SingleProductDetailsState();
 }
@@ -63,9 +61,6 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                     product: widget.product,
                     isProductBarcode: widget.isProductBarcode,
                     isProductImage: widget.isProductImage,
-                    resetData: () {
-                      widget.resetData();
-                    },
                   ),
                   fullscreenDialog: true,
                 ),
@@ -613,17 +608,13 @@ Selling Price: Tsh ${widget.product.sellingPrice}
       );
 
       if (response.statusCode == 201) {
-        await _productController.updateProduct(widget.product);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        widget.product.quantity = widget.product.quantity + quantity;
+        _productController.productChangeUpdater(widget.product);
+        Get.back();
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
@@ -657,14 +648,10 @@ Selling Price: Tsh ${widget.product.sellingPrice}
       );
 
       if (response.statusCode == 201) {
-        await _productController.deleteProduct(widget.product);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        _productController.productChangeDelete(widget.product);
+        Get.back();
+        Get.back();
+        Get.back();
       } else {
         // ignore: use_build_context_synchronously
         Navigator.pop(context);

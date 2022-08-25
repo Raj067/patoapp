@@ -17,12 +17,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AddProductPage extends StatefulWidget {
   final bool isProductImage;
   final bool isProductBarcode;
-  final Function resetData;
   const AddProductPage({
     Key? key,
     required this.isProductImage,
     required this.isProductBarcode,
-    required this.resetData,
   }) : super(key: key);
 
   @override
@@ -768,15 +766,12 @@ class _AddProductPageState extends State<AddProductPage> {
           supplierContact: supplierNumber.text,
           thumbnail: '',
         );
-        await _productController.addProduct(myData);
-        widget.resetData();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        _productController.productChangeAdd(myData);
+        // widget.resetData();
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),

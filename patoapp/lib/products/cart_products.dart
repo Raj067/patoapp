@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -27,6 +29,9 @@ class _ProductsCartState extends State<ProductsCart> {
   double totalAmount = 0;
   int balanceDue = 0;
   double discount = 0;
+
+  final ProductController _productController = Get.put(ProductController());
+
   int receiptNo = Random().nextInt(10000);
   @override
   Widget build(BuildContext context) {
@@ -431,20 +436,20 @@ class _ProductsCartState extends State<ProductsCart> {
       );
 
       if (response.statusCode == 201) {
+        // updating the data status
         for (var element in widget.products) {
           if (element.addedToCart > 0) {
             element.quantity = element.quantity - element.addedToCart;
+            _productController.productChangeUpdater(element);
           }
         }
         widget.resetData();
-        syncAllImportantProductTransaction();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        // _productController.productChangeUpdater(widget.products);
+        // syncAllImportantProductTransaction();
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),
