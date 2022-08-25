@@ -13,9 +13,11 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 // import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -46,6 +48,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   ];
   final InvoiceController _invoiceController = Get.put(InvoiceController());
 
+  final BusinessController _businessController = Get.put(BusinessController());
   final CustomerController _customerController = Get.put(CustomerController());
   final ProfileController _profileController = Get.put(ProfileController());
 
@@ -530,7 +533,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
 
         if (response.statusCode == 201) {
           _invoiceController.invoiceChangeDelete(widget.invoice);
-
+          FinancialData val = _businessController.allFinancialData.firstWhere(
+              (element) => element.id == "invoice-${widget.invoice.id}");
+          _businessController.businessChangeDelete(val);
           Get.back();
           Get.back();
         } else {

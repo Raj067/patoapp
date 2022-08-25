@@ -402,8 +402,36 @@ def create_invoice_api(request):
             prod = Product.objects.get(id=dx.get('id'))
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
-
-        return Response(status=status.HTTP_201_CREATED, data={'invoiceId': reg.id, 'date': reg.created_at})
+        data={
+            'invoiceId': reg.id, 
+            'date': reg.created_at,
+            "details": [{
+                "total_amount": reg.total_amount,
+                "due_date": reg.date_due,
+                "data": [{
+                        "id": i.id,
+                        "product": i.product_name,
+                        "quantity": i.quantity,
+                        "price": i.price,
+                        "product_unit": i.product_unit,
+                        "date": i.updated_at,
+                        }
+                    for i in reg.sold_items.all()
+                ]}],
+                "items":[
+                    {
+                "id": i.id,
+                "productId": i.product_id,
+                "product": i.product_name,
+                "quantity": i.quantity,
+                "price": i.price,
+                "product_unit": i.product_unit,
+                "date": i.updated_at,
+                    }
+                    for i in reg.sold_items.all()
+                ]
+            }
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

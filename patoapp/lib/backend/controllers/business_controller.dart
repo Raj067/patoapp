@@ -53,4 +53,13 @@ class BusinessController extends GetxController {
     // 2. Send data to local DB, so as to update it
     addBusiness(business);
   }
+
+  businessChangeDelete(FinancialData business) {
+    // after successfully updated
+    // 1. Update state
+    allFinancialData.remove(business);
+    update();
+    // 2. Send data to local DB
+    deleteBusiness(business);
+  }
 }
