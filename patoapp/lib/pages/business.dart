@@ -1,15 +1,17 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/sync/sync_business.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
+// import 'package:patoapp/backend/db/db_business.dart';
+// import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
-import 'package:patoapp/components/top_bar.dart';
+// import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/business/add_transaction.dart';
@@ -31,117 +33,10 @@ class _BusinessPageState extends State<BusinessPage> {
   String dropdownValue = 'This Month';
   List dropDownList = ['This Month', 'This Week'];
   DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day - 30,
-    ),
+    start: DateTime.now().subtract(const Duration(days: 30)),
     end: DateTime.now(),
   );
-  double salesWeek = 0;
-  double expensesWeek = 0;
-  double profitWeek = 0;
-  double salesMonth = 0;
-  double expensesMonth = 0;
-  double profitMonth = 0;
-
-  List<FinancialData> allFinancialData = [];
-
-  fetchHeaderData({required DateTime date, required FinancialData data}) {
-    // for monthly
-    if (date.isAfter(
-      DateTime(
-        DateTime.now().year,
-        DateTime.now().month - 1,
-        DateTime.now().day,
-      ),
-    )) {
-      if (data.isIncome()) {
-        // only cashsales and invoice
-        if (data.isCashSale) {
-          salesMonth += data.amount;
-        } else if (data.isInvoice) {
-          salesMonth += data.details[0]['total_amount'];
-        }
-      }
-      if (!data.isIncome()) {
-        // only expenses and purchases
-        if (data.isExpenses || data.isPurchases) {
-          expensesMonth += data.amount;
-        }
-      }
-      profitMonth = salesMonth - expensesMonth;
-    }
-    // for Weekly
-    if (date.isAfter(
-      DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day - 7,
-      ),
-    )) {
-      if (data.isIncome()) {
-        if (data.isCashSale) {
-          salesWeek += data.amount;
-        } else if (data.isInvoice) {
-          salesWeek += data.details[0]['total_amount'];
-        }
-      }
-      if (!data.isIncome()) {
-        if (data.isExpenses || data.isPurchases) {
-          expensesWeek += data.amount;
-        }
-      }
-      profitWeek = salesWeek - expensesWeek;
-    }
-    setState(() {});
-  }
-
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
-    List<FinancialData> finalData = [];
-    salesWeek = 0;
-    expensesWeek = 0;
-    profitWeek = 0;
-    salesMonth = 0;
-    expensesMonth = 0;
-    profitMonth = 0;
-    for (Map<String, dynamic> dx in business) {
-      DateTime date = DateTime.parse(dx['date']);
-      if (dx['shopId'] == shopId) {
-        fetchHeaderData(date: date, data: fromJsonBusiness(dx));
-      }
-
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
-        // DateTime date = DateTime.parse(dx['date']);
-        // fetchHeaderData(date: date, data: fromJsonBusiness(dx));
-        if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end.add(const Duration(days: 1)))) {
-          finalData.add(fromJsonBusiness(dx));
-        }
-      }
-    }
-    finalData.sort((b, a) => a.date.compareTo(b.date));
-    allFinancialData = finalData;
-    setState(() {});
-  }
-
-  refreshDataDB() async {
-    SyncBusiness syncBusiness = SyncBusiness();
-    await syncBusiness.fetchData();
-    fetchBusinessDB();
-  }
-
-  @override
-  void initState() {
-    fetchBusinessDB();
-    refreshDataDB();
-    super.initState();
-  }
+  final BusinessController _businessController = Get.put(BusinessController());
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +122,7 @@ class _BusinessPageState extends State<BusinessPage> {
             MaterialPageRoute<void>(
               builder: (BuildContext context) => AddTransactionDialog(
                 resetData: () async {
-                  await fetchBusinessDB();
+                  // await fetchBusinessDB();
                   // refreshDataDB();
                   // Refresh all Important data
                   // on respective page
@@ -243,66 +138,6 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  // PreferredSizeWidget _businessButtomTopBar() => PreferredSize(
-  //       preferredSize: const Size.fromHeight(48.0),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.end,
-  //         children: <Widget>[
-  //           Padding(
-  //             padding: const EdgeInsets.fromLTRB(0, 8, 15, 8),
-  //             child: SizedBox(
-  //               height: 30,
-  //               width: 120,
-  //               child: DropdownButtonFormField2(
-  //                 value: dropdownValue,
-  //                 selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-  //                 dropdownOverButton: true,
-  //                 buttonHeight: 30,
-  //                 buttonWidth: 50,
-  //                 decoration: InputDecoration(
-  //                   filled: true,
-  //                   fillColor: Theme.of(context).chipTheme.backgroundColor,
-  //                   contentPadding: const EdgeInsets.all(5),
-  //                   enabled: false,
-  //                   border: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(15),
-  //                   ),
-  //                   focusedBorder: InputBorder.none,
-  //                 ),
-  //                 isExpanded: false,
-  //                 icon: const Icon(
-  //                   Icons.arrow_drop_down,
-  //                 ),
-  //                 dropdownDecoration: BoxDecoration(
-  //                   borderRadius: BorderRadius.circular(15),
-  //                 ),
-  //                 items: dropDownList
-  //                     .map((item) => DropdownMenuItem<String>(
-  //                           value: item,
-  //                           child: Text(
-  //                             item,
-  //                             style: const TextStyle(
-  //                               fontSize: 14,
-  //                             ),
-  //                           ),
-  //                         ))
-  //                     .toList(),
-  //                 onChanged: (value) {
-  //                   setState(() {
-  //                     dropdownValue = value.toString();
-  //                   });
-  //                   //Do something when changing the item if you want.
-  //                 },
-  //                 onSaved: (value) {
-  //                   // selectedValue = value.toString();
-  //                 },
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     );
-
   _firstRowBusinessData(BuildContext context) {
     return Card(
       shape: const RoundedRectangleBorder(
@@ -313,118 +148,175 @@ class _BusinessPageState extends State<BusinessPage> {
       elevation: 0,
       child: SizedBox(
         height: 140,
-        child: Column(
-          children: [
-            Container(
-              alignment: AlignmentDirectional.centerStart,
-              height: 60,
-              child: Row(children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 60,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.sales,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          Text(
-                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
-                            style: const TextStyle(
-                                color: patowaveGreen,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ]),
+        child: GetBuilder<BusinessController>(builder: (controller) {
+          double salesWeek = 0;
+          double expensesWeek = 0;
+          double profitWeek = 0;
+          double salesMonth = 0;
+          double expensesMonth = 0;
+          double profitMonth = 0;
+          for (FinancialData data in controller.allFinancialData) {
+            DateTime date = data.date;
+            // for monthly
+            if (date.isAfter(
+              DateTime(
+                DateTime.now().year,
+                DateTime.now().month - 1,
+                DateTime.now().day,
+              ),
+            )) {
+              if (data.isIncome()) {
+                // only cashsales and invoice
+                if (data.isCashSale) {
+                  salesMonth += data.amount;
+                } else if (data.isInvoice) {
+                  salesMonth += data.details[0]['total_amount'];
+                }
+              }
+              if (!data.isIncome()) {
+                // only expenses and purchases
+                if (data.isExpenses || data.isPurchases) {
+                  expensesMonth += data.amount;
+                }
+              }
+              profitMonth = salesMonth - expensesMonth;
+            }
+            // for Weekly
+            if (date.isAfter(
+              DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day - 7,
+              ),
+            )) {
+              if (data.isIncome()) {
+                if (data.isCashSale) {
+                  salesWeek += data.amount;
+                } else if (data.isInvoice) {
+                  salesWeek += data.details[0]['total_amount'];
+                }
+              }
+              if (!data.isIncome()) {
+                if (data.isExpenses || data.isPurchases) {
+                  expensesWeek += data.amount;
+                }
+              }
+              profitWeek = salesWeek - expensesWeek;
+            }
+          }
+          return Column(
+            children: [
+              Container(
+                alignment: AlignmentDirectional.centerStart,
+                height: 60,
+                child: Row(children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.sales,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              "Tsh ${dropdownValue == 'This Week' ? formatter.format(salesWeek) : formatter.format(salesMonth)}",
+                              style: const TextStyle(
+                                  color: patowaveGreen,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ]),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          width: 1,
-                          color: Colors.black.withAlpha(50),
+                  Expanded(
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            width: 1,
+                            color: Colors.black.withAlpha(50),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.expenses,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          Text(
-                            "Tsh ${dropdownValue == 'This Week' ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
-                            style: const TextStyle(
-                              color: patowaveErrorRed,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.expenses,
+                              style: const TextStyle(fontSize: 18),
                             ),
-                          )
-                        ]),
-                  ),
-                ),
-              ]),
-            ),
-            const Divider(height: 0),
-            SizedBox(
-              height: 40,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(AppLocalizations.of(context)!.profit),
-                    Text(
-                      "Tsh ${dropdownValue == 'This Week' ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
-                      style: const TextStyle(color: patowaveGreen),
+                            Text(
+                              "Tsh ${dropdownValue == 'This Week' ? formatter.format(expensesWeek) : formatter.format(expensesMonth)}",
+                              style: const TextStyle(
+                                color: patowaveErrorRed,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ]),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            const Divider(height: 0),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) =>
-                        const ProfitLossReports(),
-                    fullscreenDialog: true,
                   ),
-                );
-              },
-              child: SizedBox(
+                ]),
+              ),
+              const Divider(height: 0),
+              SizedBox(
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.file_copy, color: patowaveBlue),
-                          Container(width: 10),
-                          Text(
-                            AppLocalizations.of(context)!.financialReports,
-                            style: const TextStyle(color: patowaveBlue),
-                          ),
-                        ],
+                      Text(AppLocalizations.of(context)!.profit),
+                      Text(
+                        "Tsh ${dropdownValue == 'This Week' ? formatter.format(profitWeek) : formatter.format(profitMonth)}",
+                        style: const TextStyle(color: patowaveGreen),
                       ),
-                      const Icon(Icons.arrow_forward_ios,
-                          color: patowaveBlue, size: 14),
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+              const Divider(height: 0),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                          const ProfitLossReports(),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  height: 40,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.file_copy, color: patowaveBlue),
+                            Container(width: 10),
+                            Text(
+                              AppLocalizations.of(context)!.financialReports,
+                              style: const TextStyle(color: patowaveBlue),
+                            ),
+                          ],
+                        ),
+                        const Icon(Icons.arrow_forward_ios,
+                            color: patowaveBlue, size: 14),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -710,23 +602,32 @@ class _BusinessPageState extends State<BusinessPage> {
         ),
       ),
     ];
-    for (var element in allFinancialData) {
-      if (!element.isDeleted) {
-        data.add(_singleFinancialData(context, element));
-        data.add(const Divider(height: 0));
+
+    Widget myWidget = GetBuilder<BusinessController>(builder: (controller) {
+      controller.allFinancialData.sort((b, a) => a.date.compareTo(b.date));
+      for (var element in controller.allFinancialData) {
+        if (element.date.isAfter(pickedRangeDate.start) &&
+            element.date
+                .isBefore(pickedRangeDate.end.add(const Duration(days: 1)))) {
+          if (!element.isDeleted) {
+            data.add(_singleFinancialData(context, element));
+            data.add(const Divider(height: 0));
+          }
+        }
       }
-    }
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15),
+      return Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
         ),
-      ),
-      elevation: 0,
-      child: Column(
-        children: data,
-      ),
-    );
+        elevation: 0,
+        child: Column(
+          children: data,
+        ),
+      );
+    });
+    return myWidget;
   }
 
   _searchBox(BuildContext context) {
@@ -751,7 +652,7 @@ class _BusinessPageState extends State<BusinessPage> {
           if (pickedDate != null) {
             setState(() {
               pickedRangeDate = pickedDate;
-              fetchBusinessDB();
+              // fetchBusinessDB();
             });
           } else {}
         },
@@ -816,7 +717,7 @@ class _BusinessPageState extends State<BusinessPage> {
       );
 
       if (response.statusCode == 201) {
-        await refreshDataDB();
+        // await refreshDataDB();
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // ignore: use_build_context_synchronously

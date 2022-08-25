@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
@@ -32,6 +33,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
   final GlobalKey globalKey = GlobalKey();
   final CustomerController _customerController = Get.put(CustomerController());
   final ProfileController _profileController = Get.put(ProfileController());
+  final BusinessController _businessController = Get.put(BusinessController());
 
   final ProductController _productController = Get.put(ProductController());
 
@@ -420,8 +422,11 @@ class _TopProfileIconState extends State<TopProfileIcon> {
     // update products
     await _productController.fetchProductsDB();
     _productController.allAddedProduct.value = 0;
-  _productController.allAddedProductPrice.value = 0;
-    // widget.refreshData();
+    _productController.allAddedProductPrice.value = 0;
+
+    // update financial data
+    _businessController.fetchBusinessDB();
+
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,
