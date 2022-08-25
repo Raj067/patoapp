@@ -250,21 +250,7 @@ class _LoginPageState extends State<LoginPage> {
 
         List<Map<String, dynamic>> profile = await DBHelperProfile.query();
         List<ProfileData> finalData = [];
-        finalData.addAll(profile
-            .map((dx) => ProfileData(
-                  instagramName: dx['instagramName'],
-                  businessSignature: dx['businessSignature'],
-                  businessSlogan: dx['businessSlogan'],
-                  businessLogo: dx['businessLogo'],
-                  businessCategory: dx['businessCategory'],
-                  businessType: dx['businessType'],
-                  businessEmail: dx['businessEmail'],
-                  businessPhone: "${dx['businessPhone']}",
-                  businessAddress: dx['businessAddress'],
-                  businessName: dx['businessName'],
-                  id: dx['id'],
-                ))
-            .toList());
+        finalData.addAll(profile.map((dx) => fromJsonProfile(dx)).toList());
         if (finalData.isNotEmpty) {
           await storage.write(key: "activeShop", value: "${finalData[0].id}");
         } else {

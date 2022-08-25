@@ -10,8 +10,9 @@ import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
-import 'package:patoapp/backend/db/db_products.dart';
+// import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -49,6 +50,7 @@ class _EditInvoiceState extends State<EditInvoice> {
   final TextEditingController dueDate = TextEditingController();
   final TextEditingController invoiceDescription = TextEditingController();
   final InvoiceController _invoiceController = Get.put(InvoiceController());
+  final ProductController _productController = Get.put(ProductController());
 
   @override
   void dispose() {
@@ -89,24 +91,15 @@ class _EditInvoiceState extends State<EditInvoice> {
   }
 
   fetchData() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> products = await DBHelperProduct.query();
     List<SingleProduct> finalData = [];
-    for (Map<String, dynamic> e in products) {
-      if (e['shopId'] == shopId) {
-        SingleProduct req = fromJsonProduct(e);
-        //  start --------------
-        for (var e in widget.invoice.items) {
-          // increment the quantity of the
-          // products to the available quantity
-          if (req.id != e['id']) {
-            req.quantity = req.quantity + e['quantity'] as int;
-          }
+    for (SingleProduct req in _productController.allProducts) {
+      //  start --------------
+      for (var e in widget.invoice.items) {
+        // increment the quantity of the
+        // products to the available quantity
+        if (req.id != e['id']) {
+          req.quantity = req.quantity + e['quantity'] as int;
         }
-        // end ---------------------
         finalData.add(req);
       }
     }

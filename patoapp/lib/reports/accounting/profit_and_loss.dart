@@ -14,17 +14,17 @@ Future<Map> customerDataPrepared() async {
   List<SingleCustomer> finalData = [];
   double receivable = 0;
   double payable = 0;
-  for (Map<String, dynamic> e in customers) {
-    if (e['shopId'] == shopId) {
-      if (fromJsonCustomer(e).isToReceive()) {
-        receivable += fromJsonCustomer(e).amount;
-      } else {
-        payable += fromJsonCustomer(e).amount * -1;
-      }
+  // for (Map<String, dynamic> e in customers) {
+  //   if (e['shopId'] == shopId) {
+  //     if (fromJsonCustomer(e).isToReceive()) {
+  //       receivable += fromJsonCustomer(e).amount;
+  //     } else {
+  //       payable += fromJsonCustomer(e).amount * -1;
+  //     }
 
-      finalData.add(fromJsonCustomer(e));
-    }
-  }
+  //     finalData.add(fromJsonCustomer(e));
+  //   }
+  // }
   return {'payable': payable, 'receivable': receivable};
 }
 

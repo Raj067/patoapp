@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_products.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,29 +15,8 @@ class InventorySummary extends StatefulWidget {
 
 class _InventorySummaryState extends State<InventorySummary> {
   double totalAmount = 0;
-  List<SingleProduct> customData = [];
-
-  fetchProductsDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> products = await DBHelperProduct.query();
-    List<SingleProduct> finalData = [];
-    for (Map<String, dynamic> e in products) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonProduct(e));
-      }
-    }
-    customData = finalData;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchProductsDB();
-  }
+  // List<SingleProduct> customData = [];
+  final ProductController _productController = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +133,7 @@ class _InventorySummaryState extends State<InventorySummary> {
   List<Widget> _allInventoryData() {
     List<Widget> data = [];
     double val = 0;
-    for (var element in customData) {
+    for (var element in _productController.allProducts) {
       val += element.quantity * element.purchasesPrice;
       data.add(_singleInventoryData(element));
       data.add(const Divider(height: 0));

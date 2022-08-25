@@ -13,7 +13,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -49,6 +51,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   ];
   final InvoiceController _invoiceController = Get.put(InvoiceController());
 
+  final CustomerController _customerController = Get.put(CustomerController());
+  final ProfileController _profileController = Get.put(ProfileController());
+
   List<List> tableData = [];
   ProfileData? myProfile;
   SingleCustomer? myCustomer;
@@ -61,24 +66,10 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   double balanceDue = 0;
   List<TableRow> myRowData = [];
 
-  fetchProfileDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
-    myProfile = fromJsonProfile(
-      profile.firstWhere((element) => element['id'] == shopId),
-    );
-    List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-    List<SingleCustomer> finalData = [];
-
-    for (Map<String, dynamic> e in customers) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonCustomer(e));
-      }
-    }
-    myCustomer = finalData.firstWhere((e) => e.id == widget.invoice.customerId);
+  fetchProfileDB() {
+    myProfile = _profileController.myProfile.value;
+    myCustomer = _customerController.allCustomers
+        .firstWhere((e) => e.id == widget.invoice.customerId);
     setState(() {});
   }
 

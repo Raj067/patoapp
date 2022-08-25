@@ -4,12 +4,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_profile.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
+// import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/backend/models/profile_details.dart';
+// import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/business/transaction_receipt.dart';
 import 'package:patoapp/parties/edit_customer.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
@@ -34,6 +36,8 @@ class SingleCustomerPage extends StatefulWidget {
 
 class _SingleCustomerPageState extends State<SingleCustomerPage> {
   TextEditingController dateInput = TextEditingController();
+  final ProfileController _profileController = Get.put(ProfileController());
+
   int receiptNo = Random().nextInt(10000);
   @override
   void dispose() {
@@ -335,9 +339,9 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
     );
   }
 
-  _sendSMS() async {
-    String businessName = await _getBusinessName();
-    String businessPhone = await _getBusinessPhone();
+  _sendSMS() {
+    String businessName = _profileController.myProfile.value.businessName;
+    String businessPhone = _profileController.myProfile.value.businessPhone;
     final Uri smsLaunchUri = Uri(
       scheme: 'sms',
       path: widget.customer.phoneNumber,
@@ -356,34 +360,6 @@ Patowave"""),
     launchUrl(smsLaunchUri);
   }
 
-  Future<String> _getBusinessName() async {
-    String businessName = '';
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
-    for (var dx in profile) {
-      if (dx['id'] == shopId) {
-        businessName = fromJsonProfile(dx).businessName;
-      }
-    }
-    return businessName;
-  }
-
-  Future<String> _getBusinessPhone() async {
-    String businessName = '';
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> profile = await DBHelperProfile.query();
-    for (var dx in profile) {
-      if (dx['id'] == shopId) {
-        businessName = fromJsonProfile(dx).businessPhone;
-      }
-    }
-    return businessName;
-  }
-
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((MapEntry<String, String> e) =>
@@ -391,9 +367,9 @@ Patowave"""),
         .join('&');
   }
 
-  _sendEmail() async {
-    String businessName = await _getBusinessName();
-    String businessPhone = await _getBusinessPhone();
+  _sendEmail() {
+    String businessName = _profileController.myProfile.value.businessName;
+    String businessPhone = _profileController.myProfile.value.businessPhone;
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: widget.customer.email,
@@ -414,8 +390,8 @@ Patowave""",
   }
 
   _sendWhatsApp() async {
-    String businessName = await _getBusinessName();
-    String businessPhone = await _getBusinessPhone();
+    String businessName = _profileController.myProfile.value.businessName;
+    String businessPhone = _profileController.myProfile.value.businessPhone;
     var whatsapp = widget.customer.phoneNumber;
     String message = """
 Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 

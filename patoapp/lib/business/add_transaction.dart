@@ -11,6 +11,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
@@ -41,11 +42,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   final salesTransactionFormKey = GlobalKey<FormState>();
   final expensesTransactionFormKey = GlobalKey<FormState>();
   final CustomerController _customerController = Get.put(CustomerController());
+  final ProductController _productController = Get.put(ProductController());
 
-  List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
   List<SingleProduct> addedItemsToPurchases = [];
-  bool isLoading = false;
 
   int receiptNo = Random().nextInt(10000);
   int billNo = Random().nextInt(10000);
@@ -65,28 +65,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   double totalPurchasesAmount = 0.0;
   final BusinessController _businessController = Get.put(BusinessController());
   GlobalKey dropdownkey = GlobalKey();
-  // Fetching data
-  fetchData() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> products = await DBHelperProduct.query();
-    List<SingleProduct> finalData = [];
-    for (Map<String, dynamic> e in products) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonProduct(e));
-      }
-    }
-    allProducts = finalData;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
 
   @override
   void dispose() {
@@ -454,7 +432,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddItemsToSale(
-                      allProducts: allProducts,
+                      allProducts: _productController.allProducts,
                       addedItemsToSales: addedItemsToSales,
                       addItems: _addItemsToSale,
                     ),
@@ -621,7 +599,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddItemsToPurchases(
-                      allProducts: allProducts,
+                      allProducts: _productController.allProducts,
                       addedItemsToPurchases: addedItemsToPurchases,
                       addItems: _addItemsToPurchases,
                     ),

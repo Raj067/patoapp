@@ -284,31 +284,6 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
     setState(() {});
   }
 
-  // Widget _itemAllDataFiltered() {
-  //   // List<Widget> data = [];
-  //   // for (var element in customData) {
-  //   //   data.add(_singleProductTile(context, element));
-  //   //   data.add(Container(height: 10));
-  //   // }
-  //   // return Expanded(
-  //   //   child: ListView(
-  //   //     children: data,
-  //   //   ),
-  //   // );
-  //   return GetBuilder<ProductController>(builder: (controller) {
-  //     List<Widget> data = [];
-  //     for (var element in controller.allProducts) {
-  //       data.add(_singleProductTile(context, element));
-  //       data.add(Container(height: 10));
-  //     }
-  //     return Expanded(
-  //       child: ListView(
-  //         children: data,
-  //       ),
-  //     );
-  //   });
-  // }
-
   Widget _singleProductTile(BuildContext context, SingleProduct product) {
     return Dismissible(
       key: Key("${product.id}"),

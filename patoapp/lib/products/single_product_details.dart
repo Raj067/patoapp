@@ -117,6 +117,11 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                                   'api/update-product-thumbnail/${widget.product.id}/',
                                   context,
                                 );
+
+                                // widget.product.thumbnail = '$imageBaseUrl${dx['product_image']}';
+
+                                _productController
+                                    .productChangeUpdater(widget.product);
                                 setState(() {});
                               },
                               child: widget.product.thumbnail != ""
@@ -573,7 +578,7 @@ Selling Price: Tsh ${widget.product.sellingPrice}
                   ),
                   onPressed: () {
                     setState(() {
-                      product.adjustProductQuantity(int.parse(controller.text));
+                      // product.adjustProductQuantity(int.parse(controller.text));
                       _adjustProduct(int.parse(controller.text));
                     });
                   },

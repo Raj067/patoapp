@@ -11,8 +11,9 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
-import 'package:patoapp/backend/db/db_products.dart';
+// import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 // import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/business/add_items/to_sales.dart';
@@ -38,11 +39,10 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   double receivedAmount = 0;
   String? selectedCustmer;
   String? selectedProductValueSales;
-  bool isLoading = false;
+  
   String selectedUnit = "Items";
   String customerName = '';
 
-  List<SingleProduct> allProducts = [];
   List<SingleProduct> addedItemsToSales = [];
   // List<SingleCustomer> customData = [];
   final addItemToSalesFormKey = GlobalKey<FormState>();
@@ -54,6 +54,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   final TextEditingController invoiceDescription = TextEditingController();
   final InvoiceController _invoiceController = Get.put(InvoiceController());
   final CustomerController _customerController = Get.put(CustomerController());
+  final ProductController _productController = Get.put(ProductController());
 
   @override
   void dispose() {
@@ -63,28 +64,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
     dueDate.dispose();
     invoiceDescription.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  fetchData() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> products = await DBHelperProduct.query();
-    List<SingleProduct> finalData = [];
-    for (Map<String, dynamic> e in products) {
-      if (e['shopId'] == shopId) {
-        finalData.add(fromJsonProduct(e));
-      }
-    }
-    allProducts = finalData;
-    setState(() {});
   }
 
   @override
@@ -411,7 +390,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => AddItemsToSale(
-                      allProducts: allProducts,
+                      allProducts: _productController.allProducts,
                       addedItemsToSales: addedItemsToSales,
                       addItems: _addItemsToSale,
                     ),
