@@ -24,6 +24,7 @@ import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/invoices/edit_invoice.dart';
+import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
@@ -536,6 +537,19 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           FinancialData val = _businessController.allFinancialData.firstWhere(
               (element) => element.id == "invoice-${widget.invoice.id}");
           _businessController.businessChangeDelete(val);
+
+          // Update customer
+          SingleCustomer myDataCustomer = _customerController.allCustomers
+              .firstWhere((element) => element.id == widget.invoice.customerId);
+
+          myDataCustomer.amount +=
+              widget.invoice.totalAmount - widget.invoice.amountReceived;
+
+          // myDataCustomer.financialData = [
+          //   payment,
+          //   ...myDataCustomer.financialData
+          // ];
+          _customerController.customerChangeUpdater(myDataCustomer);
           Get.back();
           Get.back();
         } else {
@@ -935,9 +949,14 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Coming Soon"),
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => AddPaymentCustomerDialog(
+                customer: myCustomer!,
+                isPaymentIn: true,
+              ),
+              fullscreenDialog: true,
             ),
           );
         },

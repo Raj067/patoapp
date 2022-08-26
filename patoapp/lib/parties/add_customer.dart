@@ -9,7 +9,9 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
@@ -28,6 +30,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   final addCustomerFormKey = GlobalKey<FormState>();
   final CustomerController _customerController = Get.put(CustomerController());
 
+  final BusinessController _businessController = Get.put(BusinessController());
   // Controllers for form
   TextEditingController customerName = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
@@ -558,6 +561,28 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         );
         // customerChangeAdd;
         _customerController.customerChangeAdd(myData);
+        // Add transaction
+        FinancialData fData = FinancialData(
+          date: DateTime.now(),
+          isCashSale: false,
+          isPaymentIn: toReceive,
+          isExpenses: false,
+          isPaymentOut: !toReceive,
+          isPurchases: false,
+          isInvoice: false,
+          name: customerName,
+          description: "Opening Balance",
+          details: [],
+          amount: balance,
+          receipt: " ",
+          discount: 0,
+          id: "payment-${jsonDecode(response.body)['id']}",
+          shopId: shopId,
+        );
+        if (balance > 0) {
+          _businessController.businessChangeAdd(fData);
+        }
+
         Get.back();
         Get.back();
       } else {

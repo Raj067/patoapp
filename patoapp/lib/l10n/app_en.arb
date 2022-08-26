@@ -190,6 +190,9 @@
     "businessSlogan":"Business Slogan",
     "businessNameRequired":"Business Name is required",
     "businessAddressRequired":"Business Address is required",
-    "addBusiness":"Add Business"
+    "addBusiness":"Add Business",
+    "contactUs":"Contact Us",
+    "callUs":"Call Us",
+    "whatsappUs":"WhatsApp Us"
 
 }

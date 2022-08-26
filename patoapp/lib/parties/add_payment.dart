@@ -9,8 +9,10 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:math';
@@ -32,6 +34,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   final paymentOutFormKey = GlobalKey<FormState>();
   final CustomerController _customerController = Get.put(CustomerController());
 
+  final BusinessController _businessController = Get.put(BusinessController());
   TextEditingController amountReceived = TextEditingController();
   TextEditingController amountPaid = TextEditingController();
   TextEditingController paymentInDesc = TextEditingController(text: "");
@@ -665,6 +668,25 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         }
         myData.financialData = [payment, ...myData.financialData];
         _customerController.customerChangeUpdater(myData);
+        // Add transaction
+        FinancialData fData = FinancialData(
+          date: DateTime.now(),
+          isCashSale: false,
+          isPaymentIn: isPaymentIn,
+          isExpenses: false,
+          isPaymentOut: !isPaymentIn,
+          isPurchases: false,
+          isInvoice: false,
+          name: myData.fullName,
+          description: isPaymentIn ? "Payment In" : "Payment Out",
+          details: [],
+          amount: amount,
+          receipt: "$receiptNo",
+          discount: 0,
+          id: "payment-${jsonDecode(response.body)['paymentId']}",
+          shopId: shopId,
+        );
+        _businessController.businessChangeAdd(fData);
 
         Get.back();
         Get.back();

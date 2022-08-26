@@ -190,5 +190,8 @@
     "businessSlogan":"Slogani ya biashara",
     "businessNameRequired":"Jina la biashara ni lazima",
     "businessAddressRequired":"Makazi ya biashara ni lazima",
-    "addBusiness":"Ongeza Biashara"
+    "addBusiness":"Ongeza Biashara",
+    "contactUs":"Mawasiliano",
+    "callUs":"Wasiliana Nasi",
+    "whatsappUs":"Meseji WhatsApp"
 }

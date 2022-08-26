@@ -41,10 +41,10 @@ class SingleCustomer {
       'id': id,
       'shopId': shopId,
       'amount': amount,
-      'fullName': fullName,
-      'address': address,
-      'phoneNumber': phoneNumber,
-      'email': email,
+      'fullName': fullName.toString(),
+      'address': address.toString(),
+      'phoneNumber': phoneNumber.toString(),
+      'email': email.toString(),
       'financialData': jsonEncode(financialData),
     };
   }
@@ -55,10 +55,10 @@ SingleCustomer fromJsonCustomer(Map<String, dynamic> e) {
     id: e['id'],
     shopId: e['shopId'],
     amount: e['amount'],
-    fullName: e['fullName'],
-    address: e['address'],
-    phoneNumber: "${e['phoneNumber']}",
-    email: e['email'],
+    fullName: e['fullName'].toString(),
+    address: e['address'].toString(),
+    phoneNumber: "${e['phoneNumber']}".toString(),
+    email: e['email'].toString(),
     financialData: jsonDecode(e['financialData']),
   );
 }

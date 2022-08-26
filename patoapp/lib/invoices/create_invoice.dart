@@ -834,10 +834,34 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           amount: totalAmount.toInt() - discountAmount.toInt(),
           receipt: "$invoiceNo",
           discount: discountAmount.toInt(),
-          id: "${jsonDecode(response.body)['invoiceId']}",
+          id: "invoice-${jsonDecode(response.body)['invoiceId']}",
           shopId: shopId,
         );
         _businessController.businessChangeAdd(myFinancialData);
+
+        // Update customer
+        SingleCustomer myDataCustomer = _customerController.allCustomers
+            .firstWhere(
+                (element) => element.id == int.parse(selectedCustmer ?? '1'));
+
+        Map payment = {
+          "name": "Sale Invoice",
+          "description": "Sale Invoice",
+          "received": (totalAmount.toInt() - discountAmount.toInt()) -
+              receivedAmount.toInt(),
+          "paid": 0,
+          "date": DateTime.now().toIso8601String(),
+        };
+
+        myDataCustomer.amount +=
+            (totalAmount.toInt() - discountAmount.toInt()) -
+                receivedAmount.toInt();
+
+        myDataCustomer.financialData = [
+          payment,
+          ...myDataCustomer.financialData
+        ];
+        _customerController.customerChangeUpdater(myDataCustomer);
         Get.back();
         Get.back();
       } else {

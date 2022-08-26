@@ -286,7 +286,20 @@ def adding_payment_customer_api(request):
             receipt_no=str(request.data.get('receiptNo')),
         )
         data.save()
-        return Response(status=status.HTTP_201_CREATED, data={'customerId': data.id, 'customerName': data.customer_name})
+
+        req = Payment.objects.filter(
+            shop=Shop.objects.get(id=request.data.get('shopId')),
+            customer=data,
+            is_payment_in=request.data.get("isPaymentIn"),
+            description=request.data.get("description"),
+            amount=request.data.get("amount"),
+            receipt_no=str(request.data.get('receiptNo')),).first()
+        data1 = {
+            'customerId': data.id,
+            'customerName': data.customer_name,
+            'paymentId': req.id
+        }
+        return Response(status=status.HTTP_201_CREATED, data=data1)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -402,8 +415,8 @@ def create_invoice_api(request):
             prod = Product.objects.get(id=dx.get('id'))
             prod.quantity = prod.quantity - dx.get('quantity')
             prod.save()
-        data={
-            'invoiceId': reg.id, 
+        data = {
+            'invoiceId': reg.id,
             'date': reg.created_at,
             "details": [{
                 "total_amount": reg.total_amount,
@@ -418,19 +431,19 @@ def create_invoice_api(request):
                         }
                     for i in reg.sold_items.all()
                 ]}],
-                "items":[
-                    {
-                "id": i.id,
-                "productId": i.product_id,
-                "product": i.product_name,
-                "quantity": i.quantity,
-                "price": i.price,
-                "product_unit": i.product_unit,
-                "date": i.updated_at,
-                    }
-                    for i in reg.sold_items.all()
-                ]
-            }
+            "items": [
+                {
+                    "id": i.id,
+                    "productId": i.product_id,
+                    "product": i.product_name,
+                    "quantity": i.quantity,
+                    "price": i.price,
+                    "product_unit": i.product_unit,
+                    "date": i.updated_at,
+                }
+                for i in reg.sold_items.all()
+            ]
+        }
         return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

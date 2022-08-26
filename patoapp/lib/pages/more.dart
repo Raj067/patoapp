@@ -128,6 +128,117 @@ class MorePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                         child: Text(
+                          AppLocalizations.of(context)!.contactUs,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      elevation: 0,
+                      child: Column(
+                        children: [
+                          InkWell(
+                            borderRadius: BorderRadius.circular(15),
+                            onTap: () {
+                              final Uri phoneLaunchUri = Uri(
+                                scheme: 'tel',
+                                path: '+255765865640',
+                              );
+                              launchUrl(phoneLaunchUri);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.call,
+                                    color: Colors.green,
+                                  ),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!.callUs,
+                                        ),
+                                        const Icon(Icons.arrow_forward_ios,
+                                            size: 14),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            height: 0,
+                          ),
+                          InkWell(
+                            borderRadius: BorderRadius.circular(15),
+                            onTap: () async {
+                              String whatsapp = '+255765865640';
+                              String message = 'Habari, ...';
+                              var whatsappAndroid = Uri.parse(
+                                  "whatsapp://send?phone=$whatsapp&text=$message");
+                              if (await canLaunchUrl(whatsappAndroid)) {
+                                await launchUrl(whatsappAndroid);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "WhatsApp is not installed on the device"),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset("assets/svg/whatsapp.svg",
+                                      width: 20, height: 20),
+                                  Container(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .whatsappUs,
+                                        ),
+                                        const Icon(Icons.arrow_forward_ios,
+                                            size: 14),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                        child: Text(
                           AppLocalizations.of(context)!.information,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),

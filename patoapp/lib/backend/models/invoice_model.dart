@@ -31,14 +31,14 @@ class SingleInvoice {
       'id': id,
       'shopId': shopId,
       'customerId': customerId,
-      'fullName': fullName,
+      'fullName': fullName.toString(),
       'amountReceived': amountReceived,
       'totalAmount': totalAmount,
       'discount': discount,
-      'dueDate': dueDate,
+      'dueDate': dueDate.toString(),
       'items': jsonEncode(items),
-      'invoiceNo': invoiceNo,
-      'description': description,
+      'invoiceNo': invoiceNo.toString(),
+      'description': description.toString(),
     };
   }
 }
@@ -48,13 +48,13 @@ SingleInvoice fromJsonInvoice(Map<String, dynamic> e) {
     id: e['id'],
     shopId: e['shopId'],
     customerId: e['customerId'],
-    fullName: e['fullName'],
+    fullName: e['fullName'].toString(),
     amountReceived: e['amountReceived'],
     totalAmount: e['totalAmount'],
     discount: e['discount'],
     dueDate: "${e['dueDate']}",
     items: jsonDecode(e['items']),
-    invoiceNo: "${e['invoiceNo']}",
-    description: e['description'],
+    invoiceNo: "${e['invoiceNo']}".toString(),
+    description: e['description'].toString(),
   );
 }
