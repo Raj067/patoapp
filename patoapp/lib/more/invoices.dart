@@ -1,66 +1,21 @@
-// import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
-// import 'package:patoapp/backend/db/db_invoices.dart';
-// import 'package:patoapp/backend/models/invoice_model.dart';
-// import 'package:patoapp/backend/sync/sync_invoice.dart';
+import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MainInvoicePage extends StatefulWidget {
+class MainInvoicePage extends StatelessWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
 
   @override
-  State<MainInvoicePage> createState() => _MainInvoicePageState();
-}
-
-class _MainInvoicePageState extends State<MainInvoicePage> {
-  // List<SingleInvoice> myCustomData = [];
-  // int outstanding = 0;
-  // int overdue = 0;
-  // double totalOutstanding = 0;
-  // double totalOverdue = 0;
-  // double totalUnpaidInvoice = 0;
-  // final InvoiceController _invoiceController = Get.put(InvoiceController());
-
-  // fetchInvoiceDB() async {
-  //   // shop ID
-  //   String? activeShop = await storage.read(key: 'activeShop');
-  //   int shopId = int.parse(activeShop ?? '0');
-  //   List<Map<String, dynamic>> invoice = await DBHelperInvoice.query();
-  //   List<SingleInvoice> finalData = [];
-  //   for (Map<String, dynamic> e in invoice) {
-  //     if (e['shopId'] == shopId) {
-  //       finalData.add(fromJsonInvoice(e));
-  //     }
-  //   }
-  //   myCustomData = finalData;
-  //   setState(() {});
-  // }
-  // refreshDataDB() async {
-  //   SyncInvoice syncInvoice = SyncInvoice();
-  //   await syncInvoice.fetchData();
-  //   fetchInvoiceDB();
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    // fetchInvoiceDB();
-    // refreshDataDB();
-    // outstanding = 1;
-    // overdue = 1;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final CustomerController customerController = Get.put(CustomerController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -199,6 +154,9 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
           DateTime dueDate = DateTime.parse(dx.dueDate);
           bool isOutStanding = dueDate.isBefore(DateTime.now()) ? false : true;
 
+          SingleCustomer myDataCustomer = customerController.allCustomers
+              .firstWhere((element) => element.id == dx.customerId);
+
           if (isOutStanding) {
             outstanding += 1;
             totalOutstanding += dx.totalAmount - dx.amountReceived;
@@ -245,7 +203,7 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                             ),
                           ),
                           Text(
-                            dx.fullName,
+                            myDataCustomer.fullName,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -396,7 +354,8 @@ class _MainInvoicePageState extends State<MainInvoicePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => CreateNewInvoice(),
+                      builder: (BuildContext context) =>
+                          const CreateNewInvoice(),
                       fullscreenDialog: true,
                     ),
                   );

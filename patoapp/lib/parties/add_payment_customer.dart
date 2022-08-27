@@ -329,6 +329,28 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
+                  AppLocalizations.of(context)!.outstandingAmount,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowavePrimary,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${formatter.format(widget.customer.amount)}",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowavePrimary,
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   AppLocalizations.of(context)!.totalAmount,
                   style: const TextStyle(
                       fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
@@ -427,6 +449,28 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
               ),
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.outstandingAmount,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowaveErrorRed,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${formatter.format(widget.customer.amount)}",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowaveErrorRed,
+                  ),
+                ),
+              ],
             ),
             Container(height: 15),
             Row(

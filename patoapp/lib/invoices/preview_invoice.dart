@@ -221,7 +221,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
-                    pw.Text(widget.invoice.fullName),
+                    pw.Text(myCustomer == null ? "" : myCustomer!.fullName),
                     pw.Text(myCustomer == null ? "" : myCustomer!.address),
                     pw.Text(myCustomer == null ? "" : myCustomer!.phoneNumber),
                     pw.Text(myCustomer == null ? "" : myCustomer!.email),
@@ -706,7 +706,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Invoice #${widget.invoice.invoiceNo}: ${widget.invoice.fullName}',
+                          'Invoice #${widget.invoice.invoiceNo}: ${myCustomer == null ? "" : myCustomer!.fullName}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -814,7 +814,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(widget.invoice.fullName),
+                          Text(myCustomer == null ? "" : myCustomer!.fullName),
                           Text(myCustomer == null
                               ? ""
                               : myCustomer!.phoneNumber),
