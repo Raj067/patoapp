@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_customer.dart';
+// import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
-import 'package:patoapp/backend/models/customer_list.dart';
+// import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
-Future<Map> customerDataPrepared() async {
-  // shop ID
-  String? activeShop = await storage.read(key: 'activeShop');
-  int shopId = int.parse(activeShop ?? '0');
+// Future<Map> customerDataPrepared() async {
+//   // shop ID
+//   String? activeShop = await storage.read(key: 'activeShop');
+//   int shopId = int.parse(activeShop ?? '0');
 
-  List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
-  List<SingleCustomer> finalData = [];
-  double receivable = 0;
-  double payable = 0;
-  // for (Map<String, dynamic> e in customers) {
-  //   if (e['shopId'] == shopId) {
-  //     if (fromJsonCustomer(e).isToReceive()) {
-  //       receivable += fromJsonCustomer(e).amount;
-  //     } else {
-  //       payable += fromJsonCustomer(e).amount * -1;
-  //     }
+//   List<Map<String, dynamic>> customers = await DBHelperCustomer.query();
+//   List<SingleCustomer> finalData = [];
+//   double receivable = 0;
+//   double payable = 0;
+//   // for (Map<String, dynamic> e in customers) {
+//   //   if (e['shopId'] == shopId) {
+//   //     if (fromJsonCustomer(e).isToReceive()) {
+//   //       receivable += fromJsonCustomer(e).amount;
+//   //     } else {
+//   //       payable += fromJsonCustomer(e).amount * -1;
+//   //     }
 
-  //     finalData.add(fromJsonCustomer(e));
-  //   }
-  // }
-  return {'payable': payable, 'receivable': receivable};
-}
+//   //     finalData.add(fromJsonCustomer(e));
+//   //   }
+//   // }
+//   return {'payable': payable, 'receivable': receivable};
+// }
 
 class ProfitAndLoss {
   List<FinancialData> data;

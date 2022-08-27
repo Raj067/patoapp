@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
+// import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/parties/add_customer.dart';

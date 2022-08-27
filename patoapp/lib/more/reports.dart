@@ -6,7 +6,7 @@ import 'package:patoapp/reports/day_book.dart';
 import 'package:patoapp/reports/expenses_reports.dart';
 import 'package:patoapp/reports/inventory_reports.dart';
 import 'package:patoapp/reports/inventory_summary.dart';
-// import 'package:patoapp/reports/profit_loss.dart';
+import 'package:patoapp/reports/profit_loss.dart';
 import 'package:patoapp/reports/purchases_reports.dart';
 import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -38,37 +38,37 @@ class MainReportsPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         children: [
           Container(height: 10),
-          // Card(
-          //   shape: const RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.all(
-          //       Radius.circular(15),
-          //     ),
-          //   ),
-          //   elevation: 0,
-          //   child: InkWell(
-          //     borderRadius: BorderRadius.circular(15),
-          //     onTap: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute<void>(
-          //           builder: (BuildContext context) =>
-          //               const ProfitLossReports(),
-          //           fullscreenDialog: true,
-          //         ),
-          //       );
-          //     },
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(15),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Text(AppLocalizations.of(context)!.profitAndLoss),
-          //           const Icon(Icons.arrow_forward_ios, size: 14),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        const ProfitLossReports(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(AppLocalizations.of(context)!.profitAndLoss),
+                    const Icon(Icons.arrow_forward_ios, size: 14),
+                  ],
+                ),
+              ),
+            ),
+          ),
           // // Card(
           //   shape: const RoundedRectangleBorder(
           //     borderRadius: BorderRadius.all(

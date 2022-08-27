@@ -16,7 +16,7 @@ import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/backend/funcs/upload_image.dart';
 import 'package:signature/signature.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
-import 'package:patoapp/backend/sync/sync_profile.dart';
+// import 'package:patoapp/backend/sync/sync_profile.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

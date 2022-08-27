@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/accounts/welcome_page.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/controllers/customers_controller.dart';
-import 'package:patoapp/backend/controllers/profile_controller.dart';
+// import 'package:patoapp/backend/controllers/customers_controller.dart';
+// import 'package:patoapp/backend/controllers/profile_controller.dart';
 import 'package:patoapp/backend/db/db_Inventory.dart';
 import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
@@ -53,9 +53,6 @@ void main() {
       await DBHelperInvoice.initDb();
       await DBHelperInventory.initDb();
 
-      // Initialize states
-      Get.put(CustomerController());
-      Get.put(ProfileController());
 
       HttpOverrides.global = MyHttpOverrides();
       runApp(

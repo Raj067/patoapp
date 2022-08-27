@@ -6,9 +6,9 @@ import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/db/db_shedule.dart';
 import 'package:patoapp/backend/models/shedules.dart';
-import 'package:patoapp/backend/sync/sync_all.dart';
+// import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/backend/sync/sync_shedule.dart';
-import 'package:patoapp/components/top_bar.dart';
+// import 'package:patoapp/components/top_bar.dart';
 import 'package:patoapp/pages/inventory.dart';
 import 'package:patoapp/parties/add_payment.dart';
 import 'package:patoapp/business/add_transaction.dart';
@@ -109,7 +109,6 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
         children: [
           _weatherHeader(),
@@ -822,9 +821,7 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                         context,
                         MaterialPageRoute<void>(
                           builder: (BuildContext context) =>
-                              const AddTransactionDialog(
-                            
-                          ),
+                              const AddTransactionDialog(),
                           fullscreenDialog: true,
                         ),
                       );
@@ -867,9 +864,8 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => const AddPaymentDialog(
-                            
-                          ),
+                          builder: (BuildContext context) =>
+                              const AddPaymentDialog(),
                           fullscreenDialog: true,
                         ),
                       );

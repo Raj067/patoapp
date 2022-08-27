@@ -7,7 +7,7 @@ import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
-import 'package:patoapp/pages/parties.dart';
+// import 'package:patoapp/pages/parties.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

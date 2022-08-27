@@ -66,9 +66,9 @@ class _BalanceSheetState extends State<BalanceSheet> {
       }
     }
     inventoryInHandBalanceSheetVal = val;
-    Map data = await customerDataPrepared();
-    receivable = data['receivable'];
-    payable = data['payable'];
+    // Map data = await customerDataPrepared();
+    receivable = 10;
+    payable = 20;
 
     setState(() {});
   }

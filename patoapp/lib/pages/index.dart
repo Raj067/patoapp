@@ -2,7 +2,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/invoice_controller.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
+import 'package:patoapp/backend/sync/sync_all.dart';
 import 'package:patoapp/pages/business.dart';
 import 'package:patoapp/pages/home.dart';
 import 'package:patoapp/pages/more.dart';
@@ -28,6 +33,33 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  final CustomerController _customerController = Get.put(CustomerController());
+  final BusinessController _businessController = Get.put(BusinessController());
+  final InvoiceController _invoiceController = Get.put(InvoiceController());
+  final ProductController _productController = Get.put(ProductController());
+
+  initialize() async {
+    await syncAllImportantData();
+    // update shop
+    await _profileController.fetchProfileDB();
+    // update customer
+    await _customerController.fetchCustomersDB();
+    // update products
+    await _productController.fetchProductsDB();
+
+    // update financial data
+    await _businessController.fetchBusinessDB();
+
+    // updating invoices
+    await _invoiceController.fetchInvoiceDB();
+  }
+
+  @override
+  void initState() {
+    initialize();
+    super.initState();
   }
 
   @override

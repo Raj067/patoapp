@@ -33,8 +33,8 @@ class MainInvoicePage extends StatelessWidget {
         ),
       ),
       body: GetBuilder<InvoiceController>(builder: (controller) {
-        int outstanding = 0;
-        int overdue = 0;
+        // int outstanding = 0;
+        // int overdue = 0;
         double totalOutstanding = 0;
         double totalOverdue = 0;
         double totalUnpaidInvoice = 0;
@@ -158,10 +158,10 @@ class MainInvoicePage extends StatelessWidget {
               .firstWhere((element) => element.id == dx.customerId);
 
           if (isOutStanding) {
-            outstanding += 1;
+            // outstanding += 1;
             totalOutstanding += dx.totalAmount - dx.amountReceived;
           } else {
-            overdue += 1;
+            // overdue += 1;
             totalOverdue += dx.totalAmount - dx.amountReceived;
           }
           totalUnpaidInvoice += dx.totalAmount - dx.amountReceived;

@@ -905,7 +905,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                         children: [
                           const Text(
                             'Notes',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
