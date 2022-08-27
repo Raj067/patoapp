@@ -13,6 +13,7 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
@@ -65,6 +66,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   double paid = 0;
   double balanceDue = 0;
   List<TableRow> myRowData = [];
+
+  String? note = box.read('note');
+  String? paymentMethod = box.read('paymentMethod');
 
   fetchProfileDB() {
     myProfile = _profileController.myProfile.value;
@@ -326,7 +330,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                             fontWeight: pw.FontWeight.bold,
                           ),
                         ),
-                        pw.Text('Thanks for your business'),
+                        
+                        pw.Text(note ?? 'Thanks for your business'),
                       ],
                     ),
                   ),
@@ -428,44 +433,41 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 ],
               ),
             ),
-
-            // pw.Container(
-            //     // alignment: pw.Alignment.centerRight,
-            //     child: pw.Row(children: [
-            //   pw.Expanded(
-            //     flex: 6,
-            //     child: pw.Column(
-            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
-            //       children: [
-            //         pw.Text(
-            //           'Payment Method:',
-            //           style: pw.TextStyle(
-            //             fontWeight: pw.FontWeight.bold,
-            //           ),
-            //         ),
-            //         pw.Text('Payment description 1'),
-            //         pw.Text('Payment description 2'),
-            //         pw.Text('Payment description 3'),
-            //         pw.Text('Payment description 4'),
-            //       ],
-            //     ),
-            //   ),
-            //   pw.Expanded(
-            //     flex: 4,
-            //     child: pw.Column(
-            //       crossAxisAlignment: pw.CrossAxisAlignment.start,
-            //       children: [
-            //         pw.Text(
-            //           'Signature',
-            //           style: pw.TextStyle(
-            //             fontWeight: pw.FontWeight.bold,
-            //           ),
-            //         ),
-            //         // pw.Text('Thanks for your business'),
-            //       ],
-            //     ),
-            //   ),
-            // ])),
+            paymentMethod == null
+                ? pw.Container()
+                : pw.Container(
+                    // alignment: pw.Alignment.centerRight,
+                    child: pw.Row(children: [
+                    pw.Expanded(
+                      flex: 6,
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Text(
+                            'Payment Method:',
+                            style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                            ),
+                          ),
+                          pw.Text(paymentMethod!),
+                        ],
+                      ),
+                    ),
+                    pw.Expanded(
+                      flex: 4,
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          // pw.Text(
+                          //   'Signature',
+                          //   style: pw.TextStyle(
+                          //     fontWeight: pw.FontWeight.bold,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ])),
           ];
         },
         footer: (context) {
@@ -900,14 +902,14 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             'Notes',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text('Thanks for your business'),
+                          Text(note ?? 'Thanks for your business'),
                         ],
                       ),
                     ),
@@ -925,14 +927,14 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             'Payment Methods',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text('None'),
+                          Text(paymentMethod ?? 'None'),
                         ],
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:patoapp/api/constants.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class InvoiceSettings extends StatefulWidget {
@@ -10,17 +11,27 @@ class InvoiceSettings extends StatefulWidget {
 }
 
 class _InvoiceSettingsState extends State<InvoiceSettings> {
-  TextEditingController customerName = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController();
-  TextEditingController businessName = TextEditingController();
-  TextEditingController description = TextEditingController();
-  // final addFeedbackFormKey = GlobalKey<FormState>();
+  TextEditingController noteController = TextEditingController();
+  TextEditingController paymentController = TextEditingController();
+
+  String? note = box.read('note');
+  String? paymentMethod = box.read('paymentMethod');
+
+  @override
+  void initState() {
+    if (note != null) {
+      noteController.text = note!;
+    }
+    if (paymentMethod != null) {
+      paymentController.text = paymentMethod!;
+    }
+    super.initState();
+  }
+
   @override
   void dispose() {
-    customerName.dispose();
-    phoneNumber.dispose();
-    businessName.dispose();
-    description.dispose();
+    noteController.dispose();
+    paymentController.dispose();
     super.dispose();
   }
 
@@ -49,7 +60,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
           children: [
             Container(height: 10),
             TextFormField(
-              controller: customerName,
+              controller: noteController,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
               //     return 'Name is required';
@@ -72,7 +83,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             ),
             Container(height: 15),
             TextFormField(
-              controller: description,
+              controller: paymentController,
               cursorColor: patowavePrimary,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
@@ -80,7 +91,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
               maxLines: null,
               // validator: (value) {
               //   if (value == null || value.isEmpty) {
-              //     return 'Description is required';
+              //     return 'paymentController is required';
               //   }
               //   return null;
               // },
@@ -119,6 +130,14 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
                   ),
                 ),
                 onPressed: () {
+                  if (noteController.text != "") {
+                    box.write('note', noteController.text);
+                  }
+                  if (paymentController.text != '') {
+                    box.write('paymentMethod', paymentController.text);
+                  }
+
+                  Get.back();
                   Get.back();
                 },
                 child: const Text(
