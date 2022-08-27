@@ -337,7 +337,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
                 Text(
-                  "Tsh: ${formatter.format(widget.customer.amount)}",
+                  "Tsh: ${!widget.customer.isToReceive() ? formatter.format(widget.customer.amount * -1) : formatter.format(widget.customer.amount)}",
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
@@ -463,7 +463,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                   ),
                 ),
                 Text(
-                  "Tsh: ${formatter.format(widget.customer.amount)}",
+                  "Tsh: ${widget.customer.isToReceive() ? formatter.format(widget.customer.amount * -1) : formatter.format(widget.customer.amount)}",
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,

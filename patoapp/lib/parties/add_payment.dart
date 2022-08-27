@@ -42,6 +42,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   TextEditingController userController = TextEditingController();
   String userSelected = "0";
 
+  int outstandingAmount1 = 0;
+  int outstandingAmount2 = 0;
+
   @override
   void dispose() {
     amountReceived.dispose();
@@ -257,7 +260,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
 
   _paymentIn() {
     String? selectedUser;
-
+    outstandingAmount2 = 0;
     return Expanded(
       child: Form(
         key: paymentInFormKey,
@@ -345,6 +348,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   setState(() {
                     userSelected = value.toString();
                   });
+                  var newVal = _customerController.allCustomers.firstWhere(
+                      (element) => element.id.toString() == value.toString());
+                  outstandingAmount1 = newVal.amount;
                 },
                 onSaved: (value) {
                   selectedUser = value.toString();
@@ -396,6 +402,28 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
+                  AppLocalizations.of(context)!.outstandingAmount,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowavePrimary,
+                  ),
+                ),
+                Text(
+                  "Tsh: $outstandingAmount1",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowavePrimary,
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   AppLocalizations.of(context)!.totalAmount,
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
@@ -440,6 +468,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
 
   _paymentOut() {
     String? selectedUser;
+    outstandingAmount1 = 0;
 
     return Expanded(
       child: Form(
@@ -528,6 +557,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   setState(() {
                     userSelected = value.toString();
                   });
+                  var newVal = _customerController.allCustomers.firstWhere(
+                      (element) => element.id.toString() == value.toString());
+                  outstandingAmount2 = newVal.amount;
                 },
                 onSaved: (value) {
                   selectedUser = value.toString();
@@ -574,6 +606,28 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     userController.clear();
                   }
                 }),
+            Container(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.outstandingAmount,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowaveErrorRed,
+                  ),
+                ),
+                Text(
+                  "Tsh: ${outstandingAmount2 * -1}",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: patowaveErrorRed,
+                  ),
+                ),
+              ],
+            ),
             Container(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
