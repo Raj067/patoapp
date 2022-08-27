@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/inventory_controller.dart';
+import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
@@ -9,8 +11,10 @@ import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class ProfitAndLoss {
-  List<SingleCustomer> customersList =
-      Get.put(CustomerController()).allCustomers;
+  var customersList = Get.put(CustomerController()).allCustomers;
+
+  var productList = Get.put(ProductController()).allProducts;
+
   List<FinancialData> data;
   DateTimeRange pickedRangeDate;
   ProfitAndLoss({
@@ -42,20 +46,30 @@ class ProfitAndLoss {
   }
 
   double startingInventory() {
+    double val = 0;
     // for temporaly
+    // print('\n\n\n\n');
+    // print(Get.put(InventoryController()).allData);
+    // print('\n\n\n\n');
+    for (var dx in Get.put(InventoryController()).allData) {
+      val += dx.purchasesPrice * dx.quantityAdded;
+    }
 
-    return closingInventory() - purchases();
+    return val + purchases();
   }
 
   double closingInventory() {
     double val = 0;
-    for (FinancialData dx in data) {
-      DateTime date = dx.date;
-      if (date.isBefore(pickedRangeDate.end)) {
-        if (dx.isPurchases) {
-          val += dx.amount;
-        }
-      }
+    // for (FinancialData dx in data) {
+    //   DateTime date = dx.date;
+    //   if (date.isBefore(pickedRangeDate.end)) {
+    //     if (dx.isPurchases) {
+    //       val += dx.amount;
+    //     }
+    //   }
+    // }
+    for (var dx in productList) {
+      val = dx.quantity.toDouble() * dx.purchasesPrice.toDouble();
     }
     return val;
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/inventory_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
@@ -54,6 +55,8 @@ class _HomePageState extends State<HomePage> {
 
     // updating invoices
     await _invoiceController.fetchInvoiceDB();
+
+    Get.put(InventoryController()).fetchInventoryDB();
   }
 
   @override

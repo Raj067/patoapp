@@ -7,6 +7,7 @@ import 'package:patoapp/accounts/login.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/controllers/inventory_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/controllers/profile_controller.dart';
@@ -425,7 +426,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
     await _productController.fetchProductsDB();
     _productController.allAddedProduct.value = 0;
     _productController.allAddedProductPrice.value = 0;
-
+    Get.put(InventoryController()).fetchInventoryDB();
     // update financial data
     _businessController.fetchBusinessDB();
 
