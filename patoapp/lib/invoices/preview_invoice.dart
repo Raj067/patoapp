@@ -24,6 +24,7 @@ import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/invoices/edit_invoice.dart';
+import 'package:patoapp/invoices/settings.dart';
 import 'package:patoapp/parties/add_payment_customer.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
@@ -675,11 +676,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           ),
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Coming Soon"),
-                ),
-              );
+              Get.to(const InvoiceSettings());
             },
             icon: const Icon(
               Icons.settings,
