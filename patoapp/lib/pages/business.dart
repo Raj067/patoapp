@@ -566,29 +566,6 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   _allFinancialData(BuildContext context) {
-    // List<Widget> data = [
-    //   _searchBox(context),
-    //   Container(
-    //     decoration: BoxDecoration(
-    //       color: patowavePrimary.withAlpha(100),
-    //       // borderRadius: const BorderRadius.only(
-    //       //   topLeft: Radius.circular(15),
-    //       //   topRight: Radius.circular(15),
-    //       // ),
-    //     ),
-    //     child: Padding(
-    //       padding: const EdgeInsets.all(10),
-    //       child: Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Text(AppLocalizations.of(context)!.details),
-    //           Text(AppLocalizations.of(context)!.amount),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // ];
-
     Widget myWidget = GetBuilder<BusinessController>(builder: (controller) {
       List<Widget> myData = [
         _firstRowBusinessData(context),
@@ -629,7 +606,7 @@ class _BusinessPageState extends State<BusinessPage> {
         if (element.date.isAfter(pickedRangeDate.start) &&
             element.date
                 .isBefore(pickedRangeDate.end.add(const Duration(days: 1)))) {
-          if (!element.isDeleted) {
+          if (!element.isInvoice) {
             myData.add(
               Card(
                 shape: const RoundedRectangleBorder(
@@ -752,17 +729,12 @@ class _BusinessPageState extends State<BusinessPage> {
       );
 
       if (response.statusCode == 201) {
-        // await refreshDataDB();
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        setState(() {
-          data.deleteTransaction();
-        });
+        _businessController.businessChangeDelete(data);
+
+        Get.back();
+        Get.back();
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Get.back();
         showErrorMessage(
           context: context,
           builder: (context) => const ModalFitError(),

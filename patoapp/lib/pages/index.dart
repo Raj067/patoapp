@@ -91,8 +91,24 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            icon: SvgPicture.asset("assets/svg/alarmoff.svg",
-                width: 25, height: 25),
+            icon: const Icon(Icons.sync, color: patowaveWhite),
+            onPressed: () async {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Syncronizing database..."),
+                ),
+              );
+              await initialize();
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Syncronization Completed"),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications, color: patowaveWhite),
             onPressed: () {
               Navigator.push(
                 context,
@@ -104,7 +120,6 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          const SizedBox(width: 10)
         ],
         elevation: 0,
       ),
