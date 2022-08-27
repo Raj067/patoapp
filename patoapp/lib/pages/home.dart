@@ -116,6 +116,46 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
           Expanded(
             child: ListView(
               children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    color: patowavePrimary.withAlpha(100),
+                    elevation: 0,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(15),
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute<void>(
+                        //     builder: (BuildContext context) =>
+                        //         const LanguageSettings(),
+                        //     fullscreenDialog: true,
+                        //   ),
+                        // );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Karibu PatoWave',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(
+                              textAlign: TextAlign.justify,
+                              'Hongera kuwa mmoja kati ya wafanya biashara wanaoenda kukuza biashara zao na PatoWave, bofya hapa kuona ni jinsi gani tumerahisisha uendeshaji wa biashara yako.',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 isCurrencyDashboard ? _currencyExchange() : Container(),
                 _calendarSection(),
                 _upcomingSchedule(),

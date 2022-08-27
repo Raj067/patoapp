@@ -40,7 +40,7 @@ class _SingleSheduleState extends State<SingleShedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: patowavePrimary,
+        backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         title: Text(
           "${DateFormat('MMMM').format(eventDay)} ${DateFormat('yyy').format(eventDay)}",
@@ -65,7 +65,7 @@ class _SingleSheduleState extends State<SingleShedule> {
         child: Column(
           children: [
             Container(
-              color: patowavePrimary,
+              color: Theme.of(context).appBarTheme.backgroundColor,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: Column(

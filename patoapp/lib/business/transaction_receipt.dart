@@ -145,7 +145,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: patowavePrimary,
+        backgroundColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
