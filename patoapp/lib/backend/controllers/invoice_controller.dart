@@ -5,6 +5,9 @@ import 'package:patoapp/backend/models/invoice_model.dart';
 
 class InvoiceController extends GetxController {
   RxList<SingleInvoice> allInvoice = <SingleInvoice>[].obs;
+  var totalUnpaidInvoice = 0.obs;
+  var totalOutstanding = 0.obs;
+  var totalOverdue = 0.obs;
 
   @override
   void onInit() {

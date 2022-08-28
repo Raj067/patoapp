@@ -55,6 +55,10 @@ final List<String> primaryUnits = [
   'Pairs',
   'Pcs',
   'Items',
+  'Quintal',
+  'Rolls',
+  'Squares',
+  'Tablets',
 ];
 
 final List<String> serviceUnit = [

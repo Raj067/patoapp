@@ -10,6 +10,12 @@ import 'package:patoapp/invoices/preview_invoice.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+class InvoiceData {
+  int id;
+  int amount;
+  InvoiceData({required this.id, required this.amount});
+}
+
 class MainInvoicePage extends StatelessWidget {
   const MainInvoicePage({Key? key}) : super(key: key);
 
@@ -33,11 +39,14 @@ class MainInvoicePage extends StatelessWidget {
         ),
       ),
       body: GetBuilder<InvoiceController>(builder: (controller) {
-        // int outstanding = 0;
-        // int overdue = 0;
-        double totalOutstanding = 0;
-        double totalOverdue = 0;
-        double totalUnpaidInvoice = 0;
+        // InvoiceData
+        var ref = customerController.allCustomers
+            .map((element) =>
+                InvoiceData(id: element.id, amount: element.amount))
+            .toList();
+        controller.totalUnpaidInvoice.value = 0;
+        controller.totalOutstanding.value = 0;
+        controller.totalOverdue.value = 0;
         List<Widget> myData = [
           Container(height: 10),
           Card(
@@ -52,8 +61,10 @@ class MainInvoicePage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child: Text(
-                      "${AppLocalizations.of(context)!.totalUnpaidInvoice} Tsh ${formatter.format(totalUnpaidInvoice)}"),
+                  child: Obx(
+                    () => Text(
+                        "${AppLocalizations.of(context)!.totalUnpaidInvoice} Tsh ${formatter.format(controller.totalUnpaidInvoice.value)}"),
+                  ),
                 ),
                 // LinearPercentIndicator(
                 //   percent: outstanding / (outstanding + overdue),
@@ -109,11 +120,13 @@ class MainInvoicePage extends StatelessWidget {
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
-                              Text(
-                                "Tsh: ${formatter.format(totalOutstanding)}",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                              Obx(
+                                () => Text(
+                                  "Tsh: ${formatter.format(controller.totalOutstanding.value)}",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -131,11 +144,13 @@ class MainInvoicePage extends StatelessWidget {
                                   fontWeight: FontWeight.w300,
                                 ),
                               ),
-                              Text(
-                                "Tsh: ${formatter.format(totalOverdue)}",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                              Obx(
+                                () => Text(
+                                  "Tsh: ${formatter.format(controller.totalOverdue.value)}",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -157,15 +172,33 @@ class MainInvoicePage extends StatelessWidget {
           SingleCustomer myDataCustomer = customerController.allCustomers
               .firstWhere((element) => element.id == dx.customerId);
 
+          // required amount
+          int requiredAmount = dx.totalAmount - dx.amountReceived;
+
+          int available = ref
+              .firstWhere((element) => element.id == myDataCustomer.id)
+              .amount;
+
+          if (available > requiredAmount) {
+            requiredAmount = requiredAmount;
+            ref
+                .firstWhere((element) => element.id == myDataCustomer.id)
+                .amount -= requiredAmount;
+          } else {
+            available >= 0 ? requiredAmount = available : requiredAmount = 0;
+            ref
+                .firstWhere((element) => element.id == myDataCustomer.id)
+                .amount = 0;
+          }
+
           if (isOutStanding) {
             // outstanding += 1;
-            totalOutstanding += dx.totalAmount - dx.amountReceived;
+            controller.totalOutstanding += requiredAmount;
           } else {
             // overdue += 1;
-            totalOverdue += dx.totalAmount - dx.amountReceived;
+            controller.totalOverdue += requiredAmount;
           }
-          totalUnpaidInvoice += dx.totalAmount - dx.amountReceived;
-
+          controller.totalUnpaidInvoice += requiredAmount;
           myData.add(Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -214,9 +247,11 @@ class MainInvoicePage extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: isOutStanding
-                            ? patowaveWarning.withAlpha(50)
-                            : patowaveErrorRed.withAlpha(50),
+                        color: requiredAmount == 0
+                            ? patowaveGreen.withAlpha(50)
+                            : isOutStanding
+                                ? patowaveWarning.withAlpha(50)
+                                : patowaveErrorRed.withAlpha(50),
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
@@ -225,13 +260,17 @@ class MainInvoicePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          isOutStanding
-                              ? AppLocalizations.of(context)!.outstanding
-                              : AppLocalizations.of(context)!.overdue,
+                          requiredAmount == 0
+                              ? 'Completed'
+                              : isOutStanding
+                                  ? AppLocalizations.of(context)!.outstanding
+                                  : AppLocalizations.of(context)!.overdue,
                           style: TextStyle(
-                            color: isOutStanding
-                                ? patowaveWarning
-                                : patowaveErrorRed,
+                            color: requiredAmount == 0
+                                ? patowaveGreen
+                                : isOutStanding
+                                    ? patowaveWarning
+                                    : patowaveErrorRed,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -270,9 +309,11 @@ class MainInvoicePage extends StatelessWidget {
                         child: Text(AppLocalizations.of(context)!.viewDetails,
                             style: TextStyle(
                               fontSize: 12,
-                              color: isOutStanding
-                                  ? patowaveWarning
-                                  : patowaveErrorRed,
+                              color: requiredAmount == 0
+                                  ? patowaveGreen
+                                  : isOutStanding
+                                      ? patowaveWarning
+                                      : patowaveErrorRed,
                             )),
                       ),
                       Expanded(
@@ -283,19 +324,22 @@ class MainInvoicePage extends StatelessWidget {
                               "Tsh ",
                               style: TextStyle(
                                 fontSize: 12,
-                                color: isOutStanding
-                                    ? patowaveWarning
-                                    : patowaveErrorRed,
+                                color: requiredAmount == 0
+                                    ? patowaveGreen
+                                    : isOutStanding
+                                        ? patowaveWarning
+                                        : patowaveErrorRed,
                               ),
                             ),
                             Text(
-                              formatter
-                                  .format(dx.totalAmount - dx.amountReceived),
+                              formatter.format(requiredAmount),
                               style: TextStyle(
                                 fontSize: 17,
-                                color: isOutStanding
-                                    ? patowaveWarning
-                                    : patowaveErrorRed,
+                                color: requiredAmount == 0
+                                    ? patowaveGreen
+                                    : isOutStanding
+                                        ? patowaveWarning
+                                        : patowaveErrorRed,
                               ),
                             ),
                           ],
