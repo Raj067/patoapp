@@ -239,81 +239,82 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Starting Inventory',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            Container(width: 20),
-            Text(
-              "Tsh ${formatter.format(profitAndLoss.startingInventory())}",
-              style: const TextStyle(color: patowaveErrorRed),
-            )
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Purchases',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            Container(width: 20),
-            Text(
-              "Tsh ${formatter.format(profitAndLoss.purchases())}",
-              style: const TextStyle(color: patowaveErrorRed),
-            )
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Closing Inventory',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-            Container(width: 20),
-            Text(
-              "Tsh ${formatter.format(profitAndLoss.closingInventory())}",
-              style: const TextStyle(color: patowaveErrorRed),
-            )
-          ],
-        ),
-      ),
+      // Padding(
+      //   padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+      //   child: Row(
+      //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: const [
+      //             Text(
+      //               'Starting Inventory',
+      //               style: TextStyle(fontSize: 14),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       Container(width: 20),
+      //       Text(
+      //         "Tsh ${formatter.format(profitAndLoss.startingInventory())}",
+      //         style: const TextStyle(color: patowaveErrorRed),
+      //       )
+      //     ],
+      //   ),
+      // ),
+      // Padding(
+      //   padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+      //   child: Row(
+      //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: const [
+      //             Text(
+      //               'Purchases',
+      //               style: TextStyle(fontSize: 14),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       Container(width: 20),
+      //       Text(
+      //         "Tsh ${formatter.format(profitAndLoss.purchases())}",
+      //         style: const TextStyle(color: patowaveErrorRed),
+      //       )
+      //     ],
+      //   ),
+      // ),
+      // Padding(
+      //   padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+      //   child: Row(
+      //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: const [
+      //             Text(
+      //               'Closing Inventory',
+      //               style: TextStyle(fontSize: 14),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       Container(width: 20),
+      //       Text(
+      //         "Tsh ${formatter.format(profitAndLoss.closingInventory())}",
+      //         style: const TextStyle(color: patowaveErrorRed),
+      //       )
+      //     ],
+      //   ),
+      // ),
+
       Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(
@@ -325,7 +326,7 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    'Cost of Goods Sold',
+                    'Total Cost of Goods Sold',
                     style: TextStyle(fontSize: 14),
                   ),
                 ],

@@ -27,6 +27,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
   List offersData = [];
   List goodMorningData = [];
   bool isLoading = true;
+  bool isProgressGoing = false;
   final GlobalKey globalKey = GlobalKey();
   Future<Uint8List> capturePng() async {
     final RenderRepaintBoundary boundary =
@@ -272,6 +273,8 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       ),
                     ),
                     onPressed: () async {
+                      isProgressGoing = true;
+                      setState(() {});
                       final bytes = await capturePng();
                       final dir = await getExternalStorageDirectory();
                       String myPath = pt.dirname(
@@ -283,6 +286,8 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       final file = File('$myPath/$imageName.png');
                       await file.writeAsBytes(bytes);
                       await ImageDownloader.open(file.path);
+                      isProgressGoing = false;
+                      setState(() {});
                     },
                     child: Row(
                       children: [

@@ -156,6 +156,7 @@ class CashSoldItem(models.Model):
     product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
+    purchases_price = models.IntegerField()
     product_unit = models.CharField(max_length=100,)
 
     cash_sale_data = models.ForeignKey("CashSale", on_delete=models.CASCADE)
@@ -173,6 +174,7 @@ class CashSoldItemCustomer(models.Model):
     product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
+    purchases_price = models.IntegerField()
     product_unit = models.CharField(max_length=100,)
 
     cash_sale_customer = models.ForeignKey(
@@ -208,6 +210,7 @@ class InvoiceSoldItem(models.Model):
     product_id = models.IntegerField()
     quantity = models.IntegerField()
     price = models.IntegerField()
+    purchases_price = models.IntegerField()
     product_unit = models.CharField(max_length=100, default="Items")
 
     invoice_data = models.ForeignKey("Invoice", on_delete=models.CASCADE)

@@ -10,6 +10,19 @@ import 'package:patoapp/backend/models/customer_list.dart';
 // import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
+class Product {
+  int productId;
+  DateTime date;
+  int quantity;
+  int purchasesPrice;
+  Product({
+    required this.productId,
+    required this.date,
+    required this.quantity,
+    required this.purchasesPrice,
+  });
+}
+
 class ProfitAndLoss {
   var customersList = Get.put(CustomerController()).allCustomers;
 
@@ -45,34 +58,34 @@ class ProfitAndLoss {
     return receivable;
   }
 
-  double startingInventory() {
-    double val = 0;
-    // for temporaly
-    // print('\n\n\n\n');
-    // print(Get.put(InventoryController()).allData);
-    // print('\n\n\n\n');
-    for (var dx in Get.put(InventoryController()).allData) {
-      val += dx.purchasesPrice * dx.quantityAdded;
-    }
+  // double startingInventory() {
+  //   double val = 0;
+  //   // for temporaly
+  //   // print('\n\n\n\n');
+  //   // print(Get.put(InventoryController()).allData);
+  //   // print('\n\n\n\n');
+  //   for (var dx in Get.put(InventoryController()).allData) {
+  //     val += dx.purchasesPrice * dx.quantityAdded;
+  //   }
 
-    return val + purchases();
-  }
+  //   return val + purchases();
+  // }
 
-  double closingInventory() {
-    double val = 0;
-    // for (FinancialData dx in data) {
-    //   DateTime date = dx.date;
-    //   if (date.isBefore(pickedRangeDate.end)) {
-    //     if (dx.isPurchases) {
-    //       val += dx.amount;
-    //     }
-    //   }
-    // }
-    for (var dx in productList) {
-      val = dx.quantity.toDouble() * dx.purchasesPrice.toDouble();
-    }
-    return val;
-  }
+  // double closingInventory() {
+  //   double val = 0;
+  //   // for (FinancialData dx in data) {
+  //   //   DateTime date = dx.date;
+  //   //   if (date.isBefore(pickedRangeDate.end)) {
+  //   //     if (dx.isPurchases) {
+  //   //       val += dx.amount;
+  //   //     }
+  //   //   }
+  //   // }
+  //   for (var dx in productList) {
+  //     val = dx.quantity.toDouble() * dx.purchasesPrice.toDouble();
+  //   }
+  //   return val;
+  // }
 
   double purchases() {
     double val = 0;
@@ -89,8 +102,23 @@ class ProfitAndLoss {
   }
 
   double costGoodsSold() {
-    double cogas = startingInventory() + purchases();
-    return cogas - closingInventory();
+    double cogas = 0;
+    for (FinancialData dx in data) {
+      DateTime date = dx.date;
+      if (date.isAfter(pickedRangeDate.start) &&
+          date.isBefore(pickedRangeDate.end)) {
+        if (dx.isCashSale) {
+          for (Map dw in dx.details) {
+            cogas += dw['quantity'] * dw['purchases_price'];
+          }
+        } else if (dx.isInvoice) {
+          for (Map dw in dx.details[0]['data']) {
+            cogas += dw['quantity'] * dw['purchases_price'];
+          }
+        }
+      }
+    }
+    return cogas;
   }
 
   double salesRevenue() {

@@ -36,7 +36,7 @@ class _InventoryReportsState extends State<InventoryReports> {
     stockOut = 0;
     myData = [];
     for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
+      if (dx['shopId'] == shopId) {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
             date.isBefore(pickedRangeDate.end)) {
@@ -81,7 +81,8 @@ class _InventoryReportsState extends State<InventoryReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.inventoryReports,
+        title: Text(
+          AppLocalizations.of(context)!.inventoryReports,
           style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(

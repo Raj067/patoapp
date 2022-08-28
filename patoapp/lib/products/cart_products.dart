@@ -31,7 +31,7 @@ class _ProductsCartState extends State<ProductsCart> {
   double totalAmount = 0;
   int balanceDue = 0;
   double discount = 0;
-
+  DateTime transactionDate = DateTime.now();
   final ProductController _productController = Get.put(ProductController());
   final BusinessController _businessController = Get.put(BusinessController());
 
@@ -85,13 +85,31 @@ class _ProductsCartState extends State<ProductsCart> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Center(
-                    child: Text(
-                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: transactionDate,
+                        firstDate: DateTime(DateTime.now().year - 3),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        initialDatePickerMode: DatePickerMode.day,
+                        helpText: "Select Transaction  Date");
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        transactionDate = pickedDate;
+                      });
+                    } else {}
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        "Date: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),

@@ -104,6 +104,8 @@ def business_financial_data(request, shop):
                         "price": i.price,
                         "product_unit": i.product_unit,
                         "date": i.updated_at,
+                        "purchasesPrice": i.purchases_price,
+                        "productId": i.product_id,
                     }
                         for i in dx.sold_items.all()
                     ]}]
@@ -133,6 +135,8 @@ def business_financial_data(request, shop):
                     "price": i.price,
                     "product_unit": i.product_unit,
                     "date": i.updated_at,
+                    "purchasesPrice": i.purchases_price,
+                    "productId": i.product_id,
                 } for i in dx.sold_items.all()]
             })
     for dx in CashSaleCustomer.objects.all():
@@ -159,6 +163,8 @@ def business_financial_data(request, shop):
                     "price": i.price,
                     "product_unit": i.product_unit,
                     "date": i.updated_at,
+                    "purchasesPrice":  i.purchases_price,
+                    "productId":  i.product_id,
                 } for i in dx.sold_items.all()]
             })
     data = sorted(data, key=lambda item: item.get('date'), reverse=True)

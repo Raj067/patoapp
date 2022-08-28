@@ -44,7 +44,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
 
   int outstandingAmount1 = 0;
   int outstandingAmount2 = 0;
-
+  DateTime transactionDate = DateTime.now();
   @override
   void dispose() {
     amountReceived.dispose();
@@ -169,13 +169,31 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: transactionDate,
+                        firstDate: DateTime(DateTime.now().year - 3),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        initialDatePickerMode: DatePickerMode.day,
+                        helpText: "Select Transaction  Date");
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        transactionDate = pickedDate;
+                      });
+                    } else {}
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -331,7 +349,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 items: _customerController.allCustomers
-                    .where((element) => element.amount >= 0)
+                    .where((element) => element.amount >= 1)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
@@ -540,7 +558,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 items: _customerController.allCustomers
-                    .where((element) => element.amount <= 0)
+                    .where((element) => element.amount <= 1)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",

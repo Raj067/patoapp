@@ -406,6 +406,8 @@ def create_invoice_api(request):
                 product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
+                purchases_price=Product.objects.get(
+                    id=dx.get('id')).purchases_price,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 invoice_data=reg,
@@ -427,6 +429,8 @@ def create_invoice_api(request):
                         "quantity": i.quantity,
                         "price": i.price,
                         "product_unit": i.product_unit,
+                        "product_id": i.product_id,
+                        "purchases_price": i.purchases_price,
                         "date": i.updated_at,
                         }
                     for i in reg.sold_items.all()
@@ -590,6 +594,8 @@ def cash_sales_transaction_api(request):
                 product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
+                purchases_price=Product.objects.get(
+                    id=dx.get('id')).purchases_price,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_data=reg,
@@ -609,6 +615,8 @@ def cash_sales_transaction_api(request):
                 "quantity": i.quantity,
                 "price": i.price,
                 "product_unit": i.product_unit,
+                "product_id": i.product_id,
+                "purchases_price": i.purchases_price,
                 "date": i.updated_at,
             } for i in reg.sold_items.all()]
         }
@@ -641,6 +649,8 @@ def cash_sales_customer_transaction_api(request):
                 product_id=dx.get('id'),
                 price=Product.objects.get(
                     id=dx.get('id')).selling_price_primary,
+                purchases_price=Product.objects.get(
+                    id=dx.get('id')).purchases_price,
                 product_unit=Product.objects.get(id=dx.get('id')).primary_unit,
                 quantity=dx.get('quantity'),
                 cash_sale_customer=reg,
@@ -660,6 +670,8 @@ def cash_sales_customer_transaction_api(request):
                 "quantity": i.quantity,
                 "price": i.price,
                 "product_unit": i.product_unit,
+                "product_id": i.product_id,
+                "purchases_price": i.purchases_price,
                 "date": i.updated_at,
             } for i in reg.sold_items.all()]
         }

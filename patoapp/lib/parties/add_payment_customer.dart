@@ -39,7 +39,7 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
   final paidAmountFormKey1 = GlobalKey<FormState>();
   final receivedAmountformKey1 = GlobalKey<FormState>();
   final CustomerController _customerController = Get.put(CustomerController());
-
+  DateTime transactionDate = DateTime.now();
   final BusinessController _businessController = Get.put(BusinessController());
   TextEditingController amountReceived = TextEditingController();
   TextEditingController amountPaid = TextEditingController();
@@ -171,13 +171,31 @@ class _AddPaymentCustomerDialogState extends State<AddPaymentCustomerDialog> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: transactionDate,
+                        firstDate: DateTime(DateTime.now().year - 3),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        initialDatePickerMode: DatePickerMode.day,
+                        helpText: "Select Transaction  Date");
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        transactionDate = pickedDate;
+                      });
+                    } else {}
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
