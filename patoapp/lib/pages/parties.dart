@@ -1,5 +1,6 @@
 // import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
@@ -59,7 +60,6 @@ class _PartiesPageState extends State<PartiesPage> {
   }
 
   _customerDetails(BuildContext context) {
-
     Widget data1 = GetBuilder<CustomerController>(builder: (controller) {
       return ListView.builder(
         itemBuilder: (context, index) {
@@ -119,6 +119,118 @@ class _PartiesPageState extends State<PartiesPage> {
             child: Text(customer.fullName.toUpperCase()[0]),
           ),
           contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          onLongPress: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+              ),
+              context: context,
+              builder: (context) {
+                // Using Wrap makes the bottom sheet height the height of the content.
+                // Otherwise, the height will be half the height of the screen.
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.debtAdjustment,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Container(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            customer.fullName,
+                          ),
+                          Text(': '),
+                          Text(
+                            "Tsh: ${customer.amount}",
+                          ),
+                        ],
+                      ),
+                      Container(height: 15),
+                      TextFormField(
+                        // controller: openingBalance,
+                        cursorColor: patowavePrimary,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                          label: Text(
+                            AppLocalizations.of(context)!.openingBalance,
+                            style: const TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(height: 15),
+                      TextFormField(
+                        // controller: openingBalance,
+                        cursorColor: patowavePrimary,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                          label: Text(
+                            AppLocalizations.of(context)!.openingBalance,
+                            style: const TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 14,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  // MaterialStateProperty<Color?>? backgroundColor,
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(45, 45),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: Text('Save Adjustment')),
+                          ),
+                        ],
+                      ),
+                      Container(height: 10),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
           onTap: () {
             Navigator.push(
               context,

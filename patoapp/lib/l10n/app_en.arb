@@ -194,6 +194,7 @@
     "contactUs":"Contact Us",
     "callUs":"Call Us",
     "whatsappUs":"WhatsApp Us",
-    "outstandingAmount":"Outstanding Amount"
+    "outstandingAmount":"Outstanding Amount",
+    "debtAdjustment":"Debt Adjustment"
 
 }
