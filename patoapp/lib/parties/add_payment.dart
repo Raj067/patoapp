@@ -558,7 +558,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 items: _customerController.allCustomers
-                    .where((element) => element.amount <= 1)
+                    .where((element) => element.amount <= -1)
                     .toList()
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
