@@ -100,7 +100,10 @@ class ProfitAndLoss {
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
         if (dx.isCashSale || dx.isInvoice) {
-          val1 += dx.amount;
+          // val1 += dx.amount;
+          dx.isCashSale
+              ? val1 += dx.amount
+              : val1 += dx.details[0]['total_amount'];
         }
       }
     }

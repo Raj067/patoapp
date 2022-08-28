@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/models/business_financial_data.dart';
+// import 'package:patoapp/backend/db/db_business.dart';
+// import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/reports/purchases_reports.dart';
 import 'package:patoapp/reports/sales_reports.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 
 class OverviewDialog extends StatefulWidget {
   const OverviewDialog({Key? key}) : super(key: key);
@@ -18,35 +20,28 @@ class OverviewDialog extends StatefulWidget {
 
 class _OverviewDialogState extends State<OverviewDialog> {
   DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day - 30,
-    ),
+    start: DateTime.now().subtract(const Duration(days: 30)),
     end: DateTime.now(),
   );
+  final BusinessController _businessController = Get.put(BusinessController());
+
   double sales = 0;
   double purchases = 0;
 
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
+  fetchBusinessDB() {
     sales = 0;
     purchases = 0;
-    for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
-        DateTime date = DateTime.parse(dx['date']);
-        if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end)) {
-          if (dx['isCashSale'] == 1) {
-            sales += fromJsonBusiness(dx).amount;
-          }
-          if (dx['isPurchases'] == 1) {
-            purchases += fromJsonBusiness(dx).amount;
-          }
+    for (var dx in _businessController.allFinancialData) {
+      DateTime date = dx.date;
+      if (date.isAfter(pickedRangeDate.start) &&
+          date.isBefore(pickedRangeDate.end)) {
+        if (dx.isCashSale || dx.isInvoice) {
+          dx.isCashSale
+              ? sales += dx.amount
+              : sales += dx.details[0]['total_amount'];
+        }
+        if (dx.isPurchases) {
+          purchases += dx.amount;
         }
       }
     }
@@ -243,6 +238,7 @@ class _OverviewDialogState extends State<OverviewDialog> {
                         Expanded(
                           child: Text(
                             "TZS ${formatter.format(sales.toInt())}",
+                            style: const TextStyle(fontSize: 12),
                           ),
                         ),
                       ],
@@ -300,6 +296,7 @@ class _OverviewDialogState extends State<OverviewDialog> {
                         Expanded(
                           child: Text(
                             "TZS ${formatter.format(purchases.toInt())}",
+                            style: const TextStyle(fontSize: 12),
                           ),
                         ),
                       ],

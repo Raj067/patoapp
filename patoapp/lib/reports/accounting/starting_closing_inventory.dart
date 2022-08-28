@@ -17,7 +17,6 @@ getAllTransaction() {
             quantity: dm['quantity'],
             purchasesPrice: 0,
           ));
-          print(dm);
         }
       }
     }
