@@ -43,7 +43,8 @@ class MainInvoicePage extends StatelessWidget {
         var ref = customerController.allCustomers
             .map((element) =>
                 InvoiceData(id: element.id, amount: element.amount))
-            .toList();
+            .toList()
+            .obs;
         controller.totalUnpaidInvoice.value = 0;
         controller.totalOutstanding.value = 0;
         controller.totalOverdue.value = 0;

@@ -1,7 +1,9 @@
 // import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 // import 'package:patoapp/backend/sync/sync_all.dart';
@@ -98,74 +100,89 @@ class _PartiesPageState extends State<PartiesPage> {
     setState(() {});
   }
 
-  Widget _singleCustomerDetails(
-          BuildContext context, SingleCustomer customer) =>
-      Card(
+  Widget _singleCustomerDetails(BuildContext context, SingleCustomer customer) {
+    List items = [
+      AppLocalizations.of(context)!.toBePaid,
+      AppLocalizations.of(context)!.toBeReceived,
+    ];
+    String selectedValue = AppLocalizations.of(context)!.toBeReceived;
+
+    final addCustomerFormKey = GlobalKey<FormState>();
+
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      elevation: 0,
+      child: ListTile(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(15),
           ),
         ),
-        elevation: 0,
-        child: ListTile(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
-          ),
-          leading: CircleAvatar(
-            backgroundColor: patowaveGreen400,
-            foregroundColor: patowaveWhite,
-            child: Text(customer.fullName.toUpperCase()[0]),
-          ),
-          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          onLongPress: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                ),
+        leading: CircleAvatar(
+          backgroundColor: patowaveGreen400,
+          foregroundColor: patowaveWhite,
+          child: Text(customer.fullName.toUpperCase()[0]),
+        ),
+        contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        onLongPress: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
-              context: context,
-              builder: (context) {
-                // Using Wrap makes the bottom sheet height the height of the content.
-                // Otherwise, the height will be half the height of the screen.
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.debtAdjustment,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Container(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            customer.fullName,
-                          ),
-                          Text(': '),
-                          Text(
-                            "Tsh: ${customer.amount}",
-                          ),
-                        ],
-                      ),
-                      Container(height: 15),
-                      TextFormField(
+            ),
+            context: context,
+            builder: (context) {
+              // Using Wrap makes the bottom sheet height the height of the content.
+              // Otherwise, the height will be half the height of the screen.
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.debtAdjustment,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Container(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          customer.fullName,
+                        ),
+                        const Text(': '),
+                        Text(
+                          "Tsh: ${customer.amount}",
+                        ),
+                      ],
+                    ),
+                    Container(height: 15),
+                    Form(
+                      key: addCustomerFormKey,
+                      child: TextFormField(
                         // controller: openingBalance,
                         cursorColor: patowavePrimary,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppLocalizations.of(context)!.amountRequired;
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           label: Text(
-                            AppLocalizations.of(context)!.openingBalance,
+                            AppLocalizations.of(context)!.debtBalance,
                             style: const TextStyle(
                               fontStyle: FontStyle.italic,
                               fontSize: 14,
@@ -178,102 +195,135 @@ class _PartiesPageState extends State<PartiesPage> {
                           ),
                         ),
                       ),
-                      Container(height: 15),
-                      TextFormField(
-                        // controller: openingBalance,
-                        cursorColor: patowavePrimary,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        decoration: InputDecoration(
-                          label: Text(
-                            AppLocalizations.of(context)!.openingBalance,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontSize: 14,
-                            ),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                          ),
+                    ),
+                    Container(height: 15),
+                    DropdownButtonFormField2(
+                      value: selectedValue,
+                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                      scrollbarAlwaysShow: true,
+                      dropdownMaxHeight: 200,
+                      decoration: InputDecoration(
+                        // label: Text(
+                        //   AppLocalizations.of(context)!.businessType,
+                        //   style: const TextStyle(
+                        //     fontSize: 14,
+                        //     fontStyle: FontStyle.italic,
+                        //   ),
+                        // ),
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      Container(height: 15),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                  // MaterialStateProperty<Color?>? backgroundColor,
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(45, 45),
+                      isExpanded: true,
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: items
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
                                   ),
-                                  shape: MaterialStateProperty.all(
-                                    const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
-                                      ),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        //Do something when changing the item if you want.
+                        selectedValue = value.toString();
+                        setState(() {});
+                      },
+                      onSaved: (value) {
+                        selectedValue = value.toString();
+                      },
+                    ),
+                    Container(height: 15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                // MaterialStateProperty<Color?>? backgroundColor,
+                                minimumSize: MaterialStateProperty.all(
+                                  const Size(45, 45),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(30),
                                     ),
                                   ),
                                 ),
-                                onPressed: () {},
-                                child: Text('Save Adjustment')),
-                          ),
-                        ],
-                      ),
-                      Container(height: 10),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => SingleCustomerPage(
-                  customer: customer,
-                  refreshData: () {},
+                              ),
+                              onPressed: () {
+                                if (addCustomerFormKey.currentState!
+                                    .validate()) {
+                                  Get.back();
+                                  _debtAdjustment(customer: customer);
+                                }
+                              },
+                              child: Text(AppLocalizations.of(context)!
+                                  .saveAdjustment)),
+                        ),
+                      ],
+                    ),
+                    Container(height: 10),
+                  ],
                 ),
-                fullscreenDialog: true,
+              );
+            },
+          );
+        },
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => SingleCustomerPage(
+                customer: customer,
+                refreshData: () {},
               ),
-            );
-          },
-          title: Text(customer.fullName),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              Text(
-                "Tsh: ${formatter.format(customer.getAmount())}",
-                style: TextStyle(
-                  color: customer.isToReceive()
-                      ? customer.getAmount() > 0
-                          ? patowaveGreen
-                          : Theme.of(context).textTheme.bodyLarge!.color
-                      : patowaveErrorRed,
-                  fontSize: 14,
-                ),
-              ),
-              Text(
-                customer.isToReceive()
+              fullscreenDialog: true,
+            ),
+          );
+        },
+        title: Text(customer.fullName),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            Text(
+              "Tsh: ${formatter.format(customer.getAmount())}",
+              style: TextStyle(
+                color: customer.isToReceive()
                     ? customer.getAmount() > 0
-                        ? AppLocalizations.of(context)!.toReceive
-                        : ""
-                    : AppLocalizations.of(context)!.toGive,
-                style: const TextStyle(fontSize: 10),
+                        ? patowaveGreen
+                        : Theme.of(context).textTheme.bodyLarge!.color
+                    : patowaveErrorRed,
+                fontSize: 14,
               ),
-            ],
-          ),
+            ),
+            Text(
+              customer.isToReceive()
+                  ? customer.getAmount() > 0
+                      ? AppLocalizations.of(context)!.toReceive
+                      : ""
+                  : AppLocalizations.of(context)!.toGive,
+              style: const TextStyle(fontSize: 10),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   _searchBox(BuildContext context) {
     return Column(
@@ -527,14 +577,16 @@ class _PartiesPageState extends State<PartiesPage> {
     );
   }
 
-  // _partiesButtomTopBar() {
-  //   return PreferredSize(
-  //       preferredSize: const Size.fromHeight(48.0), child: ProfileIcon());
-  // }
-
   _reArrangeDataAlphabetically() {
     _customerController.allCustomers.sort(
         (a, b) => a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase()));
     setState(() {});
+  }
+
+  _debtAdjustment({required SingleCustomer customer}) {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
   }
 }

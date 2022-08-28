@@ -195,5 +195,7 @@
     "callUs":"Wasiliana Nasi",
     "whatsappUs":"Meseji WhatsApp",
     "outstandingAmount":"Outstanding Amount",
-    "debtAdjustment":"Debt Adjustment"
+    "debtAdjustment":"Debt Adjustment",
+    "saveAdjustment":"Save Adjustment",
+    "amountRequired":"Amount Required"
 }
