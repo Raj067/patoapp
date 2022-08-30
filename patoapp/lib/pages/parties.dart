@@ -1,12 +1,20 @@
 // import 'package:dropdown_button2/dropdown_button2.dart';
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 // import 'package:patoapp/backend/sync/sync_all.dart';
+import 'package:http/http.dart' as http;
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/more/reports.dart';
 import 'package:patoapp/parties/add_customer.dart';
@@ -24,7 +32,8 @@ class PartiesPage extends StatefulWidget {
 
 class _PartiesPageState extends State<PartiesPage> {
   final CustomerController _customerController = Get.put(CustomerController());
-
+  int receiptNo = Random().nextInt(10000);
+  final BusinessController _businessController = Get.put(BusinessController());
   bool isCustomerFound = true;
   int customersMatchedInSearch = 0;
   TextEditingController searchController = TextEditingController();
@@ -108,7 +117,7 @@ class _PartiesPageState extends State<PartiesPage> {
     String selectedValue = AppLocalizations.of(context)!.toBeReceived;
 
     final addCustomerFormKey = GlobalKey<FormState>();
-
+    var debdtBalance = TextEditingController();
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -168,7 +177,7 @@ class _PartiesPageState extends State<PartiesPage> {
                     Form(
                       key: addCustomerFormKey,
                       child: TextFormField(
-                        // controller: openingBalance,
+                        controller: debdtBalance,
                         cursorColor: patowavePrimary,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
@@ -248,28 +257,39 @@ class _PartiesPageState extends State<PartiesPage> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                // MaterialStateProperty<Color?>? backgroundColor,
-                                minimumSize: MaterialStateProperty.all(
-                                  const Size(45, 45),
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(30),
-                                    ),
+                            style: ButtonStyle(
+                              // MaterialStateProperty<Color?>? backgroundColor,
+                              minimumSize: MaterialStateProperty.all(
+                                const Size(45, 45),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30),
                                   ),
                                 ),
                               ),
-                              onPressed: () {
-                                if (addCustomerFormKey.currentState!
-                                    .validate()) {
-                                  Get.back();
-                                  _debtAdjustment(customer: customer);
-                                }
-                              },
-                              child: Text(AppLocalizations.of(context)!
-                                  .saveAdjustment)),
+                            ),
+                            onPressed: () {
+                              if (addCustomerFormKey.currentState!.validate()) {
+                                Get.back();
+                                bool isToReceive = true;
+                                selectedValue ==
+                                        AppLocalizations.of(context)!
+                                            .toBeReceived
+                                    ? isToReceive = true
+                                    : isToReceive = false;
+                                _debtAdjustment(
+                                    customer: customer,
+                                    amount:
+                                        int.tryParse(debdtBalance.text) ?? 0,
+                                    isToReceive: isToReceive);
+                              }
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.saveAdjustment,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -583,10 +603,102 @@ class _PartiesPageState extends State<PartiesPage> {
     setState(() {});
   }
 
-  _debtAdjustment({required SingleCustomer customer}) {
+  _debtAdjustment({
+    required SingleCustomer customer,
+    required int amount,
+    required bool isToReceive,
+  }) {
     showPleaseWait(
       context: context,
       builder: (context) => const ModalFit(),
     );
+  }
+
+  _addPaymentCustomer({
+    required int amount,
+    required String description,
+    required bool isPaymentIn,
+    required SingleCustomer myData,
+  }) async {
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+    String accessToken = await storage.read(key: 'access') ?? "";
+
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/adding-payment-customer/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'amount': amount,
+          'description': description,
+          'isPaymentIn': isPaymentIn,
+          'id': myData.id,
+          "receiptNo": receiptNo,
+          'shopId': shopId,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        Map payment = isPaymentIn
+            ? {
+                "name": "Payment in",
+                "description": "Payment in",
+                "received": amount,
+                "paid": 0,
+                "date": DateTime.now().toIso8601String(),
+              }
+            : {
+                "name": "Payment Out",
+                "description": "Payment Out",
+                "received": 0,
+                "paid": amount,
+                "date": DateTime.now().toIso8601String(),
+              };
+        if (isPaymentIn) {
+          myData.amount -= amount;
+        } else {
+          myData.amount += amount;
+        }
+        myData.financialData = [payment, ...myData.financialData];
+        _customerController.customerChangeUpdater(myData);
+        // Add transaction
+        FinancialData fData = FinancialData(
+          date: DateTime.now(),
+          isCashSale: false,
+          isPaymentIn: isPaymentIn,
+          isExpenses: false,
+          isPaymentOut: !isPaymentIn,
+          isPurchases: false,
+          isInvoice: false,
+          name: myData.fullName,
+          description: isPaymentIn ? "Payment In" : "Payment Out",
+          details: [],
+          amount: amount,
+          receipt: "$receiptNo",
+          discount: 0,
+          id: "payment-${jsonDecode(response.body)['paymentId']}",
+          shopId: shopId,
+        );
+        _businessController.businessChangeAdd(fData);
+
+        Get.back();
+        Get.back();
+        Get.back();
+      } else {
+        Get.back();
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      Get.back();
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
   }
 }
