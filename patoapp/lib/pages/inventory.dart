@@ -425,18 +425,25 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontStyle: FontStyle.italic,
-                                    color: product.quantity <= 0
-                                        ? patowaveErrorRed
-                                        : product.isStockLevelReached()
-                                            ? patowaveWarning
-                                            : patowavePrimary,
-                                  ),
-                                ),
+                                product.isService
+                                    ? Text(product.productUnit,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic,
+                                          color: patowavePrimary,
+                                        ))
+                                    : Text(
+                                        '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic,
+                                          color: product.quantity <= 0
+                                              ? patowaveErrorRed
+                                              : product.isStockLevelReached()
+                                                  ? patowaveWarning
+                                                  : patowavePrimary,
+                                        ),
+                                      ),
                               ],
                             ),
                           ],
@@ -568,18 +575,26 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
-                                        '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontStyle: FontStyle.italic,
-                                          color: product.quantity <= 0
-                                              ? patowaveErrorRed
-                                              : product.isStockLevelReached()
-                                                  ? patowaveWarning
-                                                  : patowavePrimary,
-                                        ),
-                                      ),
+                                      product.isService
+                                          ? Text(product.productUnit,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic,
+                                                color: patowavePrimary,
+                                              ))
+                                          : Text(
+                                              '${AppLocalizations.of(context)!.qty}: ${product.quantity}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontStyle: FontStyle.italic,
+                                                color: product.quantity <= 0
+                                                    ? patowaveErrorRed
+                                                    : product
+                                                            .isStockLevelReached()
+                                                        ? patowaveWarning
+                                                        : patowavePrimary,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ],
@@ -613,8 +628,9 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                               Radius.circular(15),
                             ),
                           ),
-                          helperText:
-                              "*${AppLocalizations.of(context)!.maximumQuantity} ${product.availableQuantity()}",
+                          helperText: product.isService
+                              ? ""
+                              : "*${AppLocalizations.of(context)!.maximumQuantity} ${product.availableQuantity()}",
                           helperStyle: TextStyle(
                               color: product
                                       .compareToCart(int.parse(controller.text))
@@ -676,7 +692,14 @@ class _InventoryHomePageState extends State<InventoryHomePage> {
                   onPressed: () {
                     setState(() {
                       var val = int.parse(controller.text);
-                      if (!product.compareToCart(val)) {
+                      if (!product.compareToCart(val) && !product.isService) {
+                        product.addNewProductToCart(val);
+                        product.isAddedToCartAutomatic = true;
+                        _onCartChange(product);
+                        Navigator.pop(context);
+                      }
+                      // for services
+                      if (product.isService) {
                         product.addNewProductToCart(val);
                         product.isAddedToCartAutomatic = true;
                         _onCartChange(product);

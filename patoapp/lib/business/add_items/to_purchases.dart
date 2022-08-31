@@ -84,6 +84,8 @@ class _AddItemsToPurchasesState extends State<AddItemsToPurchases> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 items: widget.allProducts
+                    .where((element) => !element.isService)
+                    .toList()
                     .map((item) => DropdownMenuItem<String>(
                           value: "${item.id}",
                           child: Text(

@@ -59,6 +59,7 @@ final List<String> primaryUnits = [
   'Rolls',
   'Squares',
   'Tablets',
+  'Crate',
 ];
 
 final List<String> serviceUnit = [
@@ -72,6 +73,9 @@ final List<String> serviceUnit = [
   "Per Month",
   "Per Night",
   "Per Unit",
+  "Per Item",
+  "Per Plate",
+  "Per Service",
 ];
 
 List<String> expenses = [
@@ -103,6 +107,7 @@ List<String> expenses = [
   "Software subscription",
   "Transport",
   "Other expenses",
+  "Cost of services",
   // "Other indirect expenses",
 ];
 List<String> directExpenses = [

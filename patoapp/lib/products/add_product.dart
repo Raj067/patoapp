@@ -164,7 +164,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ],
           ),
           const Divider(height: 0),
-          _value == 1 ? _addProduct() : _comingSoon(), // _addService(),
+          _value == 1 ? _addProduct() : _addService(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -207,17 +207,6 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  _comingSoon() {
-    return const Expanded(
-      child: Center(
-        child: Text(
-          'Coming Soon',
-          style: TextStyle(fontSize: 18),
         ),
       ),
     );

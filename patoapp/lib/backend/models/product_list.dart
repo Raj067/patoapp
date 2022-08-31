@@ -59,10 +59,14 @@ class SingleProduct {
   }
 
   bool isMaxProductWarning() {
-    if (addedToCart >= quantity) {
-      return true;
+    if (isService) {
+      return false;
+    } else {
+      if (addedToCart >= quantity) {
+        return true;
+      }
+      return false;
     }
-    return false;
   }
 
   bool compareToCart(int val) {
@@ -117,4 +121,3 @@ SingleProduct fromJsonProduct(Map<String, dynamic> dx) {
     thumbnail: dx['thumbnail'],
   );
 }
-

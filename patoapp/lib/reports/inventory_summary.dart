@@ -134,9 +134,11 @@ class _InventorySummaryState extends State<InventorySummary> {
     List<Widget> data = [];
     double val = 0;
     for (var element in _productController.allProducts) {
-      val += element.quantity * element.purchasesPrice;
-      data.add(_singleInventoryData(element));
-      data.add(const Divider(height: 0));
+      if (!element.isService) {
+        val += element.quantity * element.purchasesPrice;
+        data.add(_singleInventoryData(element));
+        data.add(const Divider(height: 0));
+      }
     }
     totalAmount = val;
     return data;

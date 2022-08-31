@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
-import 'package:patoapp/backend/controllers/inventory_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
@@ -107,17 +106,27 @@ class ProfitAndLoss {
       DateTime date = dx.date;
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
-        if (dx.isCashSale) {
-          for (Map dw in dx.details) {
-            cogas += dw['quantity'] * dw['purchases_price'];
+        try {
+          if (dx.isCashSale) {
+            for (Map dw in dx.details) {
+              cogas += dw['quantity'] * dw['purchases_price'];
+            }
+          } else if (dx.isInvoice) {
+            for (Map dw in dx.details[0]['data']) {
+              cogas += dw['quantity'] * dw['purchases_price'];
+            }
           }
-        } else if (dx.isInvoice) {
-          for (Map dw in dx.details[0]['data']) {
-            cogas += dw['quantity'] * dw['purchases_price'];
-          }
+        } catch (e) {
+          // Purchases price is null
+        }
+        // for cost of sales
+        if (dx.isExpenses &&
+            "cost of services" == dx.getDescriptionName().toLowerCase()) {
+          cogas += dx.amount;
         }
       }
     }
+
     return cogas;
   }
 
@@ -200,7 +209,7 @@ class ProfitAndLoss {
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
         if (dx.isExpenses &&
-            !directExpenses.contains(dx.getDescriptionName().toLowerCase())) {
+            inDirectExpenses.contains(dx.getDescriptionName().toLowerCase())) {
           val += dx.amount;
         }
       }
@@ -254,7 +263,7 @@ class ProfitAndLoss {
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
         if (dx.isExpenses &&
-            !directExpenses.contains(dx.getDescriptionName().toLowerCase())) {
+            inDirectExpenses.contains(dx.getDescriptionName().toLowerCase())) {
           myData.add(Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
             child: Row(

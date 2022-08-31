@@ -94,6 +94,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                     Radius.circular(15),
                   ),
                 ),
+                elevation: 0,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
                   child: Center(
@@ -188,6 +189,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                         Radius.circular(15),
                       ),
                     ),
+                    elevation: 0,
                     child: Column(
                       children: [
                         Padding(
@@ -257,6 +259,7 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                         Radius.circular(15),
                       ),
                     ),
+                    elevation: 0,
                     child: Column(
                       children: [
                         Padding(
@@ -350,60 +353,62 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                 ),
         ],
       ),
-      persistentFooterButtons: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Expanded(
-            child: OutlinedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(
-                  const Size(45, 45),
-                ),
-                shape: MaterialStateProperty.all(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
+      persistentFooterButtons: widget.product.isService
+          ? []
+          : [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Expanded(
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(45, 45),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              onPressed: () async {
-                Share.share("""
+                    onPressed: () async {
+                      Share.share("""
 Product Name: ${widget.product.productName}
 Selling Price: Tsh ${widget.product.sellingPrice}
 """, subject: '${widget.product.productName} details');
-              },
-              child: const Text(
-                "Share",
-                // style: TextStyle(fontSize: 14),
-              ),
-            ),
-          ),
-          Container(width: 10),
-          Expanded(
-            child: ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(
-                  const Size(45, 45),
-                ),
-                shape: MaterialStateProperty.all(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
+                    },
+                    child: const Text(
+                      "Share",
+                      // style: TextStyle(fontSize: 14),
                     ),
                   ),
                 ),
-              ),
-              onPressed: () {
-                _productAdjustment(context, widget.product);
-              },
-              child: const Text(
-                "Adjust Item",
-                style: TextStyle(color: patowaveWhite),
-              ),
-            ),
-          ),
-        ]),
-      ],
+                Container(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(45, 45),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      _productAdjustment(context, widget.product);
+                    },
+                    child: const Text(
+                      "Adjust Item",
+                      style: TextStyle(color: patowaveWhite),
+                    ),
+                  ),
+                ),
+              ]),
+            ],
     );
   }
 

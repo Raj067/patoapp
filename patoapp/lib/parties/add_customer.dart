@@ -14,9 +14,10 @@ import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/themes/light_theme.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AddCustomerDialog extends StatefulWidget {
   // final Function refreshData;
@@ -39,10 +40,15 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   TextEditingController openingBalance = TextEditingController();
   bool toReceive = false;
   TextEditingController dateInput = TextEditingController();
-  // List<Contact> contacts = [];
-  // fetchContacts() async {
-  //   contacts = await ContactsService.getContacts(withThumbnails: false);
-  // }
+  List<Contact> contacts = [];
+  fetchContacts() async {
+    var status = await Permission.contacts.request();
+    if (status.isGranted) {
+      contacts = await ContactsService.getContacts(withThumbnails: false);
+    } else {
+      // print('Permission denied');
+    }
+  }
 
   @override
   void dispose() {
@@ -59,7 +65,7 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   void initState() {
     dateInput.text = DateFormat('yyyy-MM-dd')
         .format(DateTime.now()); //set the initial value of text field
-    // fetchContacts();
+    fetchContacts();
     super.initState();
   }
 
@@ -86,70 +92,69 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           children: [
-            // Container(height: 10),
-            // InkWell(
-            //   borderRadius: BorderRadius.circular(15),
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute<void>(
-            //         builder: (BuildContext context) => _selectContact(context),
-            //         fullscreenDialog: true,
-            //       ),
-            //     );
-            //   },
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: patowavePrimary.withAlpha(100),
-            //       borderRadius: const BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Row(
-            //             children: [
-            //               SvgPicture.asset(
-            //                 "assets/svg/contacts.svg",
-            //                 width: 33,
-            //                 height: 33,
-            //               ),
-            //               Container(width: 8),
-            //               Column(
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: [
-            //                   Text(
-            //                     AppLocalizations.of(context)!.importCustomer,
-            //                     style: const TextStyle(
-            //                         fontStyle: FontStyle.italic,
-            //                         fontSize: 12,
-            //                         fontWeight: FontWeight.bold),
-            //                   ),
-            //                   Text(
-            //                     AppLocalizations.of(context)!.fromContacts,
-            //                     style: const TextStyle(
-            //                       fontStyle: FontStyle.italic,
-            //                       fontSize: 12,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ],
-            //           ),
-            //           const Icon(
-            //             Icons.arrow_forward_ios,
-            //             size: 14,
-            //             color: patowaveBlack,
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
+            Container(height: 10),
+            InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => _selectContact(context),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: patowavePrimary.withAlpha(100),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            "assets/svg/contacts.svg",
+                            width: 33,
+                            height: 33,
+                          ),
+                          Container(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.importCustomer,
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.fromContacts,
+                                style: const TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                        color: patowaveBlack,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Container(height: 15),
             TextFormField(
               controller: customerName,
@@ -437,66 +442,66 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     );
   }
 
-  // Widget _selectContact(BuildContext context) {
-  //   List<Widget> data = [];
+  Widget _selectContact(BuildContext context) {
+    List<Widget> data = [];
 
-  //   for (Contact dx in contacts) {
-  //     String phone = dx.phones![0].value ?? '-';
-  //     String name = dx.displayName!;
-  //     data.add(Card(
-  //       shape: const RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.all(
-  //           Radius.circular(15),
-  //         ),
-  //       ),
-  //       elevation: 0,
-  //       child: ListTile(
-  //         contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //         onTap: () {
-  //           customerName.text = name;
-  //           phoneNumber.text = phone;
+    for (Contact dx in contacts) {
+      String phone = dx.phones![0].value ?? '-';
+      String name = dx.displayName!;
+      data.add(Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        elevation: 0,
+        child: ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          onTap: () {
+            customerName.text = name;
+            phoneNumber.text = phone;
 
-  //           Navigator.pop(context);
-  //         },
-  //         shape: const RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.all(
-  //             Radius.circular(15),
-  //           ),
-  //         ),
-  //         leading: CircleAvatar(
-  //           backgroundColor: patowaveGreen400,
-  //           foregroundColor: patowaveWhite,
-  //           child: Text(name.toUpperCase()[0]),
-  //         ),
-  //         title: Text(name),
-  //         subtitle: Text(phone),
-  //       ),
-  //     ));
-  //   }
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text(
-  //         AppLocalizations.of(context)!.selectContact,
-  //         style: const TextStyle(color: Colors.white),
-  //       ),
-  //       leading: IconButton(
-  //         onPressed: () {
-  //           Navigator.pop(context);
-  //         },
-  //         icon: const Icon(
-  //           Icons.arrow_back,
-  //           color: patowaveWhite,
-  //         ),
-  //       ),
-  //     ),
-  //     body: ListView(
-  //       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //       children: [
-  //         Column(children: data),
-  //       ],
-  //     ),
-  //   );
-  // }
+            Navigator.pop(context);
+          },
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          leading: CircleAvatar(
+            backgroundColor: patowaveGreen400,
+            foregroundColor: patowaveWhite,
+            child: Text(name.toUpperCase()[0]),
+          ),
+          title: Text(name),
+          subtitle: Text(phone),
+        ),
+      ));
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.selectContact,
+          style: const TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: patowaveWhite,
+          ),
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        children: [
+          Column(children: data),
+        ],
+      ),
+    );
+  }
 
   _addingCustomer({
     required String customerName,

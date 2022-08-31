@@ -150,7 +150,8 @@ class _AddItemsToSaleState extends State<AddItemsToSale> {
                 if (value == null || value.isEmpty) {
                   return AppLocalizations.of(context)!.quantityRequired;
                 }
-                if (int.parse(value) > selectedProduct!.quantity) {
+                if (int.parse(value) > selectedProduct!.quantity &&
+                    !selectedProduct!.isService) {
                   return '${AppLocalizations.of(context)!.quantityAvailable} ${selectedProduct!.quantity}';
                 }
                 return null;
