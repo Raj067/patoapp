@@ -20,7 +20,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         val = 0
         # For all payments
         for dx in myModel.customer_payment.all():
-            if dx.description == "Opening Balance":
+            if dx.description == "Opening Balance" or dx.description == "Debt Adjustment":
                 if dx.is_payment_in:
                     val += dx.amount
                 else:

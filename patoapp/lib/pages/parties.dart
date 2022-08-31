@@ -138,166 +138,160 @@ class _PartiesPageState extends State<PartiesPage> {
         ),
         contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         onLongPress: () {
-          showModalBottomSheet(
+          Get.bottomSheet(
             isScrollControlled: true,
+            backgroundColor: Theme.of(context).cardColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
               ),
             ),
-            context: context,
-            builder: (context) {
-              // Using Wrap makes the bottom sheet height the height of the content.
-              // Otherwise, the height will be half the height of the screen.
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.debtAdjustment,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    Container(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          customer.fullName,
-                        ),
-                        const Text(': '),
-                        Text(
-                          "Tsh: ${customer.amount}",
-                        ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.debtAdjustment,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        customer.fullName,
+                      ),
+                      const Text(': '),
+                      Text(
+                        "Tsh: ${customer.amount}",
+                      ),
+                    ],
+                  ),
+                  Container(height: 15),
+                  Form(
+                    key: addCustomerFormKey,
+                    child: TextFormField(
+                      controller: debdtBalance,
+                      cursorColor: patowavePrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
                       ],
-                    ),
-                    Container(height: 15),
-                    Form(
-                      key: addCustomerFormKey,
-                      child: TextFormField(
-                        controller: debdtBalance,
-                        cursorColor: patowavePrimary,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!.amountRequired;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          label: Text(
-                            AppLocalizations.of(context)!.debtBalance,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontSize: 14,
-                            ),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(height: 15),
-                    DropdownButtonFormField2(
-                      value: selectedValue,
-                      selectedItemHighlightColor: patowavePrimary.withAlpha(50),
-                      scrollbarAlwaysShow: true,
-                      dropdownMaxHeight: 200,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.amountRequired;
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
-                        // label: Text(
-                        //   AppLocalizations.of(context)!.businessType,
-                        //   style: const TextStyle(
-                        //     fontSize: 14,
-                        //     fontStyle: FontStyle.italic,
-                        //   ),
-                        // ),
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                        label: Text(
+                          AppLocalizations.of(context)!.debtBalance,
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 14,
+                          ),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
                         ),
                       ),
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                      ),
-                      dropdownDecoration: BoxDecoration(
+                    ),
+                  ),
+                  Container(height: 15),
+                  DropdownButtonFormField2(
+                    value: selectedValue,
+                    selectedItemHighlightColor: patowavePrimary.withAlpha(50),
+                    scrollbarAlwaysShow: true,
+                    dropdownMaxHeight: 200,
+                    decoration: InputDecoration(
+                      // label: Text(
+                      //   AppLocalizations.of(context)!.businessType,
+                      //   style: const TextStyle(
+                      //     fontSize: 14,
+                      //     fontStyle: FontStyle.italic,
+                      //   ),
+                      // ),
+                      contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      items: items
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        //Do something when changing the item if you want.
-                        selectedValue = value.toString();
-                        setState(() {});
-                      },
-                      onSaved: (value) {
-                        selectedValue = value.toString();
-                      },
                     ),
-                    Container(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              // MaterialStateProperty<Color?>? backgroundColor,
-                              minimumSize: MaterialStateProperty.all(
-                                const Size(45, 45),
-                              ),
-                              shape: MaterialStateProperty.all(
-                                const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
+                    isExpanded: true,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                    ),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    items: items
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
                                 ),
                               ),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      //Do something when changing the item if you want.
+                      selectedValue = value.toString();
+                      setState(() {});
+                    },
+                    onSaved: (value) {
+                      selectedValue = value.toString();
+                    },
+                  ),
+                  Container(height: 15),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            // MaterialStateProperty<Color?>? backgroundColor,
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(45, 45),
                             ),
-                            onPressed: () {
-                              if (addCustomerFormKey.currentState!.validate()) {
-                                Get.back();
-                                bool isToReceive = true;
-                                selectedValue ==
-                                        AppLocalizations.of(context)!
-                                            .toBeReceived
-                                    ? isToReceive = true
-                                    : isToReceive = false;
-                                _debtAdjustment(
-                                    customer: customer,
-                                    amount:
-                                        int.tryParse(debdtBalance.text) ?? 0,
-                                    isToReceive: isToReceive);
-                              }
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.saveAdjustment,
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
                             ),
                           ),
+                          onPressed: () {
+                            if (addCustomerFormKey.currentState!.validate()) {
+                              Get.back();
+                              bool isToReceive = true;
+                              selectedValue ==
+                                      AppLocalizations.of(context)!.toBeReceived
+                                  ? isToReceive = true
+                                  : isToReceive = false;
+                              _debtAdjustment(
+                                customer: customer,
+                                amount: int.tryParse(debdtBalance.text) ?? 0,
+                                isToReceive: isToReceive,
+                              );
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.saveAdjustment,
+                          ),
                         ),
-                      ],
-                    ),
-                    Container(height: 10),
-                  ],
-                ),
-              );
-            },
+                      ),
+                    ],
+                  ),
+                  Container(height: 10),
+                ],
+              ),
+            ),
           );
         },
         onTap: () {
@@ -603,76 +597,78 @@ class _PartiesPageState extends State<PartiesPage> {
     setState(() {});
   }
 
+  // _debtAdjustment({
+  //   required SingleCustomer customer,
+  //   required int amount,
+  //   required bool isToReceive,
+  // }) {
+  //   showPleaseWait(
+  //     context: context,
+  //     builder: (context) => const ModalFit(),
+  //   );
+  // }
+
   _debtAdjustment({
-    required SingleCustomer customer,
     required int amount,
     required bool isToReceive,
-  }) {
-    showPleaseWait(
-      context: context,
-      builder: (context) => const ModalFit(),
-    );
-  }
-
-  _addPaymentCustomer({
-    required int amount,
-    required String description,
-    required bool isPaymentIn,
-    required SingleCustomer myData,
+    required SingleCustomer customer,
   }) async {
     // shop ID
     String? activeShop = await storage.read(key: 'activeShop');
     int shopId = int.parse(activeShop ?? '0');
     String accessToken = await storage.read(key: 'access') ?? "";
-
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
     try {
       final response = await http.post(
         Uri.parse('${baseUrl}api/adding-payment-customer/'),
         headers: getAuthHeaders(accessToken),
         body: jsonEncode(<String, dynamic>{
           'amount': amount,
-          'description': description,
-          'isPaymentIn': isPaymentIn,
-          'id': myData.id,
+          'description': 'Debt Adjustment',
+          'isPaymentIn': isToReceive,
+          'id': customer.id,
           "receiptNo": receiptNo,
           'shopId': shopId,
         }),
       );
 
       if (response.statusCode == 201) {
-        Map payment = isPaymentIn
+        Map payment = isToReceive
             ? {
-                "name": "Payment in",
-                "description": "Payment in",
-                "received": amount,
-                "paid": 0,
-                "date": DateTime.now().toIso8601String(),
-              }
-            : {
-                "name": "Payment Out",
-                "description": "Payment Out",
+                "name": "Debt Adjustment",
+                "description": "Debt Adjustment",
                 "received": 0,
                 "paid": amount,
                 "date": DateTime.now().toIso8601String(),
+              }
+            : {
+                "name": "Debt Adjustment",
+                "description": "Debt Adjustment",
+                "received": amount,
+                "paid": 0,
+                "date": DateTime.now().toIso8601String(),
               };
-        if (isPaymentIn) {
-          myData.amount -= amount;
+        if (isToReceive) {
+          customer.amount += amount;
         } else {
-          myData.amount += amount;
+          customer.amount -= amount;
         }
-        myData.financialData = [payment, ...myData.financialData];
-        _customerController.customerChangeUpdater(myData);
+        customer.financialData = [payment, ...customer.financialData];
+        _customerController.customerChangeUpdater(customer);
         // Add transaction
         FinancialData fData = FinancialData(
           date: DateTime.now(),
           isCashSale: false,
-          isPaymentIn: isPaymentIn,
+          isPaymentIn: isToReceive,
           isExpenses: false,
-          isPaymentOut: !isPaymentIn,
+          isPaymentOut: !isToReceive,
           isPurchases: false,
           isInvoice: false,
-          name: myData.fullName,
-          description: isPaymentIn ? "Payment In" : "Payment Out",
+          name: customer.fullName,
+          description: "Debt Adjustment",
           details: [],
           amount: amount,
           receipt: "$receiptNo",

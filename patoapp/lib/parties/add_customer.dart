@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/permission.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
@@ -46,7 +47,8 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     if (status.isGranted) {
       contacts = await ContactsService.getContacts(withThumbnails: false);
     } else {
-      // print('Permission denied');
+      // ignore: use_build_context_synchronously
+      permissionDenied(context);
     }
   }
 
