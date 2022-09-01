@@ -11,7 +11,6 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui' as ui;
-import 'package:path/path.dart' as pt;
 
 class ShareGreetingCard extends StatefulWidget {
   final SingleGreetingCard myCard;

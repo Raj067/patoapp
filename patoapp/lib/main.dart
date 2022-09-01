@@ -25,6 +25,7 @@ import 'package:patoapp/accounts/set_account.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
 
 class MyHttpOverrides extends HttpOverrides {

@@ -7,6 +7,7 @@ import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/models/customer_list.dart';
 import 'package:patoapp/invoices/create_invoice.dart';
 import 'package:patoapp/invoices/preview_invoice.dart';
+import 'package:patoapp/notification/duedate.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -195,6 +196,14 @@ class MainInvoicePage extends StatelessWidget {
           if (isOutStanding) {
             // outstanding += 1;
             controller.totalOutstanding += requiredAmount;
+            // set allert
+            NotificationAll(
+              context: context,
+              id: dx.id,
+              sheduleDate: DateTime.parse(dx.dueDate),
+              description:
+                  "Your customer ${myDataCustomer.fullName} invoice is overdue, your action is needed.",
+            ).sheduleAll();
           } else {
             // overdue += 1;
             controller.totalOverdue += requiredAmount;
