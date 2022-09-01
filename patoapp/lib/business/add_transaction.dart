@@ -172,15 +172,101 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             children: [
               TableRow(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      _value == 1
-                          ? "${AppLocalizations.of(context)!.receipt} No $receiptNo"
-                          : "Bill No $billNo",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
+                InkWell(
+                  onTap: () {
+                    Get.bottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Theme.of(context).cardColor,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(height: 10),
+                            TextFormField(
+                              initialValue:
+                                  _value == 1 ? "$receiptNo" : "$billNo",
+                              cursorColor: patowavePrimary,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              onChanged: (val) {
+                                if (val != '') {
+                                  setState(() {
+                                    _value == 1
+                                        ? receiptNo = int.parse(val)
+                                        : billNo = int.parse(val);
+                                  });
+                                }
+                              },
+                              decoration: InputDecoration(
+                                label: Text(
+                                  AppLocalizations.of(context)!.receipt,
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(height: 15),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      // MaterialStateProperty<Color?>? backgroundColor,
+                                      minimumSize: MaterialStateProperty.all(
+                                        const Size(45, 45),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(30),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: Text(
+                                      AppLocalizations.of(context)!.save,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(height: 10),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        _value == 1
+                            ? "${AppLocalizations.of(context)!.receipt} No $receiptNo"
+                            : "Bill No $billNo",
+                        style: const TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ),
                 ),

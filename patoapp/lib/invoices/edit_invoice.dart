@@ -130,37 +130,37 @@ class _EditInvoiceState extends State<EditInvoice> {
       ),
       body: Column(
         children: [
-          Table(
-            border: TableBorder.all(
-              width: 1.0,
-              color: Colors.grey.withAlpha(100),
-            ),
-            children: [
-              TableRow(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Invoice No $invoiceNo",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
-                    ),
-                  ),
-                ),
-              ]),
-            ],
-          ),
-          const Divider(height: 0),
+          // Table(
+          //   border: TableBorder.all(
+          //     width: 1.0,
+          //     color: Colors.grey.withAlpha(100),
+          //   ),
+          //   children: [
+          //     TableRow(children: [
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Center(
+          //           child: Text(
+          //             "Invoice No $invoiceNo",
+          //             style: const TextStyle(
+          //                 fontStyle: FontStyle.italic, fontSize: 14),
+          //           ),
+          //         ),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Center(
+          //           child: Text(
+          //             "Date: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
+          //             style: const TextStyle(
+          //                 fontStyle: FontStyle.italic, fontSize: 14),
+          //           ),
+          //         ),
+          //       ),
+          //     ]),
+          //   ],
+          // ),
+          // const Divider(height: 0),
           _addInvoice(),
         ],
       ),
