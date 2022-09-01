@@ -232,7 +232,7 @@ class CashSale(models.Model):
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         ordering = ("-id",)
@@ -250,7 +250,7 @@ class CashSaleCustomer(models.Model):
 
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         ordering = ("-id",)
@@ -271,7 +271,7 @@ class Invoice(models.Model):
         InvoiceSoldItem, blank=True, related_name='invoice_data_name')
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         ordering = ("-id",)
@@ -291,7 +291,7 @@ class Purchase(models.Model):
         PurchasedItem, blank=True, related_name='purchases_data_name')
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         ordering = ("-id",)
@@ -343,7 +343,7 @@ class Expense(models.Model):
     description = models.CharField(max_length=500, default="Expenses")
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     class Meta:
         ordering = ("-id",)

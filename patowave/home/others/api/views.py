@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 import datetime
 import random
+from django.utils import timezone
 
 
 @api_view(['GET', 'POST'])
@@ -372,7 +373,7 @@ def edit_invoice_api(request):
             prod = Product.objects.get(id=dx['id'])
             prod.quantity = prod.quantity - dx['quantity']
             prod.save()
-            data = { "items": [
+            data = {"items": [
                 {
                     "id": i.id,
                     "productId": i.product_id,
@@ -383,14 +384,24 @@ def edit_invoice_api(request):
                     "date": i.updated_at,
                 }
                 for i in invoice.sold_items.all()]}
-        return Response(status=status.HTTP_201_CREATED,data=data)
+        return Response(status=status.HTTP_201_CREATED, data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
 def create_invoice_api(request):
     if request.method == "POST":
-        # print(request.data)
+        transactionDate = request.data.get('transactionDate').split('-')
+        day = int(transactionDate[0])
+        month = int(transactionDate[1])
+        year = int(transactionDate[2])
+        transactionDate = datetime.datetime(
+            year=year, month=month,
+            day=day, hour=datetime.datetime.now().hour,
+            minute=datetime.datetime.now().minute,
+            second=datetime.datetime.now().second,
+            microsecond=datetime.datetime.now().microsecond,
+        )
         amount_received = request.data.get('amount_received')
         total_amount = request.data.get('total_amount')
         discount = request.data.get('discount')
@@ -406,7 +417,8 @@ def create_invoice_api(request):
             date_due=request.data.get('dueDate'),
             invoice_no=str(invoiceNo),
             description=description,
-            customer=Customer.objects.get(id=customer)
+            customer=Customer.objects.get(id=customer),
+            updated_at= timezone.make_aware(transactionDate),
         )
         # datetime.date.
         reg.save()
@@ -490,7 +502,18 @@ def delete_invoice_api(request):
 @api_view(['POST'])
 def purchases_transaction_api(request):
     if request.method == "POST":
-        # print(request.data)
+
+        transactionDate = request.data.get('transactionDate').split('-')
+        day = int(transactionDate[0])
+        month = int(transactionDate[1])
+        year = int(transactionDate[2])
+        transactionDate = datetime.datetime(
+            year=year, month=month,
+            day=day, hour=datetime.datetime.now().hour,
+            minute=datetime.datetime.now().minute,
+            second=datetime.datetime.now().second,
+            microsecond=datetime.datetime.now().microsecond,
+        )
         amount_paid = request.data.get('amount_paid')
         total_amount = request.data.get('total_amount')
         customer = request.data.get('customer')
@@ -503,6 +526,7 @@ def purchases_transaction_api(request):
             total_amount=total_amount,
             bill_no=str(billNo),
             description=description,
+            updated_at=timezone.make_aware(transactionDate),
         )
         reg.save()
         if customer:
@@ -549,7 +573,19 @@ def purchases_transaction_api(request):
 @api_view(['POST'])
 def expenses_transaction_api(request):
     if request.method == "POST":
-        # print(request.data)
+
+        transactionDate = request.data.get('transactionDate').split('-')
+        day = int(transactionDate[0])
+        month = int(transactionDate[1])
+        year = int(transactionDate[2])
+        transactionDate = datetime.datetime(
+            year=year, month=month,
+            day=day, hour=datetime.datetime.now().hour,
+            minute=datetime.datetime.now().minute,
+            second=datetime.datetime.now().second,
+            microsecond=datetime.datetime.now().microsecond,
+        )
+
         amount = request.data.get('amount_paid')
         category = request.data.get('category')
         customer = request.data.get('customer')
@@ -561,6 +597,7 @@ def expenses_transaction_api(request):
             bill_no=str(billNo),
             description=description,
             expenses_category=category,
+            updated_at= timezone.make_aware(transactionDate),
         )
         reg.save()
         if customer:
@@ -584,7 +621,17 @@ def expenses_transaction_api(request):
 @api_view(['POST'])
 def cash_sales_transaction_api(request):
     if request.method == "POST":
-        # print(request.data)
+        transactionDate = request.data.get('transactionDate').split('-')
+        day = int(transactionDate[0])
+        month = int(transactionDate[1])
+        year = int(transactionDate[2])
+        transactionDate = datetime.datetime(
+            year=year, month=month,
+            day=day, hour=datetime.datetime.now().hour,
+            minute=datetime.datetime.now().minute,
+            second=datetime.datetime.now().second,
+            microsecond=datetime.datetime.now().microsecond,
+        )
         amount = request.data.get('amount')
         discount = request.data.get('discount')
         items = request.data.get('items')
@@ -595,6 +642,7 @@ def cash_sales_transaction_api(request):
             discount=discount,
             # description=description,
             receipt_no=str(request.data.get('receiptNo')),
+            updated_at= timezone.make_aware(transactionDate),
         )
 
         reg.save()
@@ -638,6 +686,17 @@ def cash_sales_transaction_api(request):
 @api_view(['POST'])
 def cash_sales_customer_transaction_api(request):
     if request.method == "POST":
+        transactionDate = request.data.get('transactionDate').split('-')
+        day = int(transactionDate[0])
+        month = int(transactionDate[1])
+        year = int(transactionDate[2])
+        transactionDate = datetime.datetime(
+            year=year, month=month,
+            day=day, hour=datetime.datetime.now().hour,
+            minute=datetime.datetime.now().minute,
+            second=datetime.datetime.now().second,
+            microsecond=datetime.datetime.now().microsecond,
+        )
         amount = request.data.get('amount')
         discount = request.data.get('discount')
         customer = request.data.get('customer')
@@ -650,6 +709,7 @@ def cash_sales_customer_transaction_api(request):
             description=description,
             customer=Customer.objects.get(id=customer),
             receipt_no=str(request.data.get('receiptNo')),
+            updated_at=timezone.make_aware(transactionDate),
         )
         reg.save()
 
@@ -783,7 +843,7 @@ def version_check(request, *args, **kwargs):
 def receive_feedback(request):
     if request.method == "POST":
         feedback = Feedback(
-            shop = Shop.objects.get(id=int(request.data.get('shopId'))),
+            shop=Shop.objects.get(id=int(request.data.get('shopId'))),
             customer=request.user,
             comments=request.data.get('description'),
             name=request.data.get('customerName'),

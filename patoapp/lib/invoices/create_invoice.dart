@@ -44,6 +44,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   String selectedUnit = "Items";
   String customerName = '';
 
+  DateTime transactionDate = DateTime.now();
   List<SingleProduct> addedItemsToSales = [];
   // List<SingleCustomer> customData = [];
   final addItemToSalesFormKey = GlobalKey<FormState>();
@@ -105,13 +106,31 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(DateTime.now())}",
-                      style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 14),
+                InkWell(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: transactionDate,
+                        firstDate: DateTime(DateTime.now().year - 3),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        initialDatePickerMode: DatePickerMode.day,
+                        helpText: "Select Transaction  Date");
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        transactionDate = pickedDate;
+                      });
+                    } else {}
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
+                        style: const TextStyle(
+                            fontStyle: FontStyle.italic, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -796,6 +815,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
               : invoiceDescription.text,
           'shopId': shopId,
           "customer": int.parse(selectedCustmer ?? '1'),
+          "transactionDate": DateFormat("dd-MM-yyyy").format(transactionDate),
         }),
       );
 

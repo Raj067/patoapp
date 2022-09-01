@@ -1254,6 +1254,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           "customer": selectedCustmer != null
               ? int.parse(selectedCustmer ?? '1')
               : null,
+          "transactionDate": DateFormat("dd-MM-yyyy").format(transactionDate),
         }),
       );
 
@@ -1325,6 +1326,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           "customer": selectedCustmer != null
               ? int.parse(selectedCustmer ?? '1')
               : null,
+          "transactionDate": DateFormat("dd-MM-yyyy").format(transactionDate),
         }),
       );
 
@@ -1402,6 +1404,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           "customer": selectedCustmer != null
               ? int.parse(selectedCustmer ?? '1')
               : null,
+          "transactionDate": DateFormat("dd-MM-yyyy").format(transactionDate),
         }),
       );
 

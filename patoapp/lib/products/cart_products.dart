@@ -451,6 +451,7 @@ class _ProductsCartState extends State<ProductsCart> {
           'items': items,
           'receiptNo': receiptNo,
           'shopId': shopId,
+          "transactionDate": DateFormat("dd-MM-yyyy").format(transactionDate),
         }),
       );
 
