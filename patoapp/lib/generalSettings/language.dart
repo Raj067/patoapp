@@ -24,10 +24,10 @@ class LanguageSettings extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
+      body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(

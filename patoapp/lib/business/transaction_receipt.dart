@@ -18,6 +18,8 @@ import 'package:image_downloader/image_downloader.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:path/path.dart' as pt;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:patoapp/animations/permission.dart';
 
 class TransactionReceipt extends StatefulWidget {
   final FinancialData data;
@@ -70,14 +72,21 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
       );
     }
     if (index == 1) {
-      final bytes = await capturePng();
-      final dir = await getExternalStorageDirectory();
-      String myPath = pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-      myPath = '$myPath/PatoWave/Receipt';
-      Directory('$myPath/').create();
-      final file = File('$myPath/Receipt-${widget.data.receipt}.png');
-      await file.writeAsBytes(bytes);
-      await ImageDownloader.open(file.path);
+      var status = await Permission.storage.request();
+      if (status.isGranted) {
+        final bytes = await capturePng();
+        final dir = await getExternalStorageDirectory();
+        String myPath =
+            pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+        myPath = '$myPath/PatoWave/Receipt';
+        Directory('$myPath/').create();
+        final file = File('$myPath/Receipt-${widget.data.receipt}.png');
+        await file.writeAsBytes(bytes);
+        await ImageDownloader.open(file.path);
+      } else {
+        // ignore: use_build_context_synchronously
+        permissionDenied(context);
+      }
     }
     if (index == 2) {
       final bytes = await capturePng();

@@ -801,6 +801,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
 
       if (response.statusCode == 201) {
         SingleInvoice myData = SingleInvoice(
+          issuedDate: DateTime.now().toIso8601String(),
           id: jsonDecode(response.body)['invoiceId'],
           shopId: shopId,
           customerId: int.parse(selectedCustmer ?? '1'),

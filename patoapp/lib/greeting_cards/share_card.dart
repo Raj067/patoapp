@@ -152,14 +152,8 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
               ),
               onPressed: () async {
                 final bytes = await capturePng();
-                final dir = await getExternalStorageDirectory();
-                String myPath =
-                    pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-                myPath = '$myPath/PatoWave/greeting-cards';
-                Directory('$myPath/').create();
-                String imageName =
-                    pt.basename(widget.myCard.greetingCard).replaceAll('.', '');
-                final file = File('$myPath/$imageName.png');
+                     final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/card.png');
                 await file.writeAsBytes(bytes);
                 // file.path
                 await Share.shareFiles([file.path],

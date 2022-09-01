@@ -21,7 +21,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         fields = ('id', 'shopId', 'amount_received',
                   'date_due', 'total_amount', 'discount',
                   'description', 'customer_data', 'items',
-                  'fullName', 'invoice_no',
+                  'fullName', 'invoice_no', 'created_at'
                   )
 
     def get_shopId(mySerializer, myModel):

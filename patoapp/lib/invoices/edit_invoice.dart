@@ -722,6 +722,7 @@ class _EditInvoiceState extends State<EditInvoice> {
 
       if (response.statusCode == 201) {
         SingleInvoice myData = SingleInvoice(
+          issuedDate: widget.invoice.issuedDate,
           id: widget.invoice.id,
           shopId: shopId,
           customerId: widget.invoice.customerId,

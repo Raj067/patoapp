@@ -12,6 +12,7 @@ class SingleInvoice {
   int shopId;
   int customerId;
   String fullName;
+  String issuedDate;
 
   SingleInvoice({
     required this.amountReceived,
@@ -25,6 +26,7 @@ class SingleInvoice {
     required this.items,
     required this.invoiceNo,
     required this.fullName,
+    required this.issuedDate,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -39,6 +41,7 @@ class SingleInvoice {
       'items': jsonEncode(items),
       'invoiceNo': invoiceNo.toString(),
       'description': description.toString(),
+      'issuedDate': issuedDate,
     };
   }
 }
@@ -56,5 +59,6 @@ SingleInvoice fromJsonInvoice(Map<String, dynamic> e) {
     items: jsonDecode(e['items']),
     invoiceNo: "${e['invoiceNo']}".toString(),
     description: e['description'].toString(),
+    issuedDate: e['issuedDate'],
   );
 }

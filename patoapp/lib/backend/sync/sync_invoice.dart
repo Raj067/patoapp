@@ -30,6 +30,7 @@ class SyncInvoice {
             items: e['items'],
             invoiceNo: e['invoice_no'],
             description: e['description'],
+            issuedDate: e['created_at'],
           );
 
           // Add data to the database

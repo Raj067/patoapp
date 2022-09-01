@@ -22,7 +22,7 @@ import 'package:patoapp/updates/updater.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patoapp/accounts/set_account.dart';
-
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -53,6 +53,13 @@ void main() {
       await DBHelperInvoice.initDb();
       await DBHelperInventory.initDb();
 
+      // Plugin must be initialized before using
+      await FlutterDownloader.initialize(
+          debug:
+              true, // optional: set to false to disable printing logs to console (default: true)
+          ignoreSsl:
+              true // option: set to false to disable working with http links (default: false)
+          );
 
       HttpOverrides.global = MyHttpOverrides();
       runApp(

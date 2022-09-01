@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/permission.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
@@ -31,6 +32,7 @@ import 'package:patoapp/themes/light_theme.dart';
 import 'package:pdf/pdf.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:printing/printing.dart';
 import 'package:path/path.dart' as pt;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -261,7 +263,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                           ),
                         ),
                         pw.Text(
-                          DateFormat('d-M-yyy').format(DateTime.now()),
+                          DateFormat('d-M-yyy').format(
+                            DateTime.parse(widget.invoice.issuedDate),
+                          ),
                         ),
                       ],
                     ),
@@ -330,7 +334,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                             fontWeight: pw.FontWeight.bold,
                           ),
                         ),
-                        
                         pw.Text(note ?? 'Thanks for your business'),
                       ],
                     ),
@@ -660,16 +663,22 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
         actions: [
           IconButton(
             onPressed: () async {
-              final bytes = await _generatePdf();
-              final dir = await getExternalStorageDirectory();
-              String myPath =
-                  pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-              myPath = '$myPath/PatoWave/Invoice';
-              Directory('$myPath/').create();
-              final file =
-                  File('$myPath/Invoice-${widget.invoice.invoiceNo}.pdf');
-              await file.writeAsBytes(bytes);
-              await ImageDownloader.open(file.path);
+              var status = await Permission.storage.request();
+              if (status.isGranted) {
+                final bytes = await _generatePdf();
+                final dir = await getExternalStorageDirectory();
+                String myPath =
+                    pt.dirname(pt.dirname(pt.dirname(pt.dirname(dir!.path))));
+                myPath = '$myPath/PatoWave/Invoice';
+                Directory('$myPath/').create();
+                final file =
+                    File('$myPath/Invoice-${widget.invoice.invoiceNo}.pdf');
+                await file.writeAsBytes(bytes);
+                await ImageDownloader.open(file.path);
+              } else {
+                // ignore: use_build_context_synchronously
+                permissionDenied(context);
+              }
             },
             icon: const Icon(
               Icons.download,
@@ -858,7 +867,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                             children: [
                               const Text('Issued Date: '),
                               Text(
-                                DateFormat('d-M-yyy').format(DateTime.now()),
+                                DateFormat('d MMM yyy').format(
+                                  DateTime.parse(widget.invoice.issuedDate),
+                                ),
                               ),
                             ],
                           ),
@@ -867,7 +878,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                             children: [
                               const Text('Due Date: '),
                               Text(
-                                DateFormat('d-M-yyy').format(
+                                DateFormat('d MMM yyy').format(
                                     DateTime.parse(widget.invoice.dueDate)),
                               ),
                             ],

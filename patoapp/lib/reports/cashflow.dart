@@ -101,41 +101,41 @@ class _CashFlowReportsState extends State<CashFlowReports> {
             color: patowaveWhite,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await Printing.layoutPdf(
-                  onLayout: (p.PdfPageFormat format) async =>
-                      await generateCashFlow(
-                        data: selectedFinancialData,
-                        profile: profile,
-                        pickedRangeDate: pickedRangeDate,
-                      ));
-            },
-            icon: const Icon(
-              Icons.print,
-              color: patowaveWhite,
-            ),
-          ),
-          IconButton(
-            onPressed: () async {
-              isProgressGoing = true;
-              setState(() {});
-              final file = await generateCashFlowPdf(
-                data: selectedFinancialData,
-                profile: profile,
-                pickedRangeDate: pickedRangeDate,
-              );
-              isProgressGoing = false;
-              setState(() {});
-              await ImageDownloader.open(file.path);
-            },
-            icon: const Icon(
-              Icons.download,
-              color: patowaveWhite,
-            ),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () async {
+        //       await Printing.layoutPdf(
+        //           onLayout: (p.PdfPageFormat format) async =>
+        //               await generateCashFlow(
+        //                 data: selectedFinancialData,
+        //                 profile: profile,
+        //                 pickedRangeDate: pickedRangeDate,
+        //               ));
+        //     },
+        //     icon: const Icon(
+        //       Icons.print,
+        //       color: patowaveWhite,
+        //     ),
+        //   ),
+        //   IconButton(
+        //     onPressed: () async {
+        //       isProgressGoing = true;
+        //       setState(() {});
+        //       final file = await generateCashFlowPdf(
+        //         data: selectedFinancialData,
+        //         profile: profile,
+        //         pickedRangeDate: pickedRangeDate,
+        //       );
+        //       isProgressGoing = false;
+        //       setState(() {});
+        //       await ImageDownloader.open(file.path);
+        //     },
+        //     icon: const Icon(
+        //       Icons.download,
+        //       color: patowaveWhite,
+        //     ),
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
