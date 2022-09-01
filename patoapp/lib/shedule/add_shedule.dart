@@ -6,10 +6,12 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/permission.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
@@ -559,13 +561,19 @@ class _AddSheduleNewState extends State<AddSheduleNew> {
       if (response.statusCode == 201) {
         // Setting shedule
         // if time is not future, hence pass
-        try {
-          _scheduledNotification(
-              id: jsonDecode(response.body)['id'],
-              title: myTitle.text,
-              description: description.text);
-        } catch (e) {
-          //
+        var status = await Permission.notification.request();
+        if (status.isGranted) {
+          try {
+            _scheduledNotification(
+                id: jsonDecode(response.body)['id'],
+                title: myTitle.text,
+                description: description.text);
+          } catch (e) {
+            //
+          }
+        } else {
+          // ignore: use_build_context_synchronously
+          permissionDenied(context);
         }
 
         // end of making shedule

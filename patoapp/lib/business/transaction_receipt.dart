@@ -74,6 +74,15 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     if (index == 1) {
       var status = await Permission.storage.request();
       if (status.isGranted) {
+        Get.snackbar(
+          // ignore: use_build_context_synchronously
+          backgroundColor: Theme.of(context).cardColor,
+          colorText:
+              // ignore: use_build_context_synchronously
+              Theme.of(context).textTheme.bodyLarge?.color,
+          '10%',
+          'start downloading...',
+        );
         final bytes = await capturePng();
         final dir = await getExternalStorageDirectory();
         String myPath =

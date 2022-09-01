@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:patoapp/api/apis.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
 import 'package:path/path.dart' as pt;
-import 'package:flutter_downloader/flutter_downloader.dart';
+// import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:patoapp/animations/permission.dart';
 
@@ -276,44 +277,37 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                       ),
                     ),
                     onPressed: () async {
-                      isProgressGoing = true;
                       var status = await Permission.storage.request();
                       if (status.isGranted) {
+                        Get.snackbar(
+                          // ignore: use_build_context_synchronously
+                          backgroundColor: Theme.of(context).cardColor,
+                          colorText:
+                              // ignore: use_build_context_synchronously
+                              Theme.of(context).textTheme.bodyLarge?.color,
+                          '10%',
+                          'start downloading...',
+                        );
+
+                        final bytes = await capturePng();
                         final dir = await getExternalStorageDirectory();
                         String myPath = pt.dirname(
                             pt.dirname(pt.dirname(pt.dirname(dir!.path))));
                         myPath = '$myPath/PatoWave/Greeting-Cards';
                         Directory('$myPath/').create();
-                        //
-                        String accessToken = await storage.read(key: 'access') ?? "";
-                        final taskId = await FlutterDownloader.enqueue(
-                          url: "$imageBaseUrl$cardImage",
-                          headers: getAuthHeaders(accessToken), // optional: header send with url (auth token etc)
-                          savedDir:myPath,
-                          showNotification:
-                              true, // show download progress in status bar (for Android)
-                          openFileFromNotification:
-                              true, // click on notification to open downloaded file (for Android)
-                        );
+                        String imageName =
+                            pt.basename('$cardImage').replaceAll('.', '');
+                        final file = File('$myPath/$imageName.png');
+                        await file.writeAsBytes(bytes);
+
+                        await ImageDownloader.open(file.path);
                       } else {
                         // ignore: use_build_context_synchronously
                         permissionDenied(context);
                       }
-
-                      setState(() {});
-                      // final bytes = await capturePng();
-                      // final dir = await getExternalStorageDirectory();
-                      // String myPath = pt.dirname(
-                      //     pt.dirname(pt.dirname(pt.dirname(dir!.path))));
-                      // myPath = '$myPath/PatoWave/Greeting-Cards';
-                      // Directory('$myPath/').create();
-                      // String imageName =
-                      //     pt.basename('$cardImage').replaceAll('.', '');
-                      // final file = File('$myPath/$imageName.png');
-                      // await file.writeAsBytes(bytes);
-                      // await ImageDownloader.open(file.path);
-                      isProgressGoing = false;
-                      setState(() {});
+                      if (Get.isBottomSheetOpen == true) {
+                        Get.back();
+                      }
                     },
                     child: Row(
                       children: [

@@ -60,260 +60,255 @@ class _SingleSheduleState extends State<SingleShedule> {
           ),
         ),
       ),
-      body: Container(
-        color: Theme.of(context).cardColor,
-        child: Column(
-          children: [
-            Container(
-              color: Theme.of(context).appBarTheme.backgroundColor,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        _singleDay(
-                          DateTime(
-                            eventDay.year,
-                            eventDay.month,
-                            eventDay.day - 2,
-                          ),
+      body: Column(
+        children: [
+          Container(
+            color: Theme.of(context).primaryColor,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      _singleDay(
+                        DateTime(
+                          eventDay.year,
+                          eventDay.month,
+                          eventDay.day - 2,
                         ),
-                        _singleDay(
-                          DateTime(
-                            eventDay.year,
-                            eventDay.month,
-                            eventDay.day - 1,
-                          ),
+                      ),
+                      _singleDay(
+                        DateTime(
+                          eventDay.year,
+                          eventDay.month,
+                          eventDay.day - 1,
                         ),
-                        _singleDayActive(eventDay),
-                        _singleDay(
-                          DateTime(
-                            eventDay.year,
-                            eventDay.month,
-                            eventDay.day + 1,
-                          ),
+                      ),
+                      _singleDayActive(eventDay),
+                      _singleDay(
+                        DateTime(
+                          eventDay.year,
+                          eventDay.month,
+                          eventDay.day + 1,
                         ),
-                        _singleDay(
-                          DateTime(
-                            eventDay.year,
-                            eventDay.month,
-                            eventDay.day + 2,
-                          ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      height: 15,
-                    ),
-                  ],
-                ),
+                      ),
+                      _singleDay(
+                        DateTime(
+                          eventDay.year,
+                          eventDay.month,
+                          eventDay.day + 2,
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 15,
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            widget.shedule.title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          widget.shedule.title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: sheduleColors[widget.shedule.color]
-                                .withAlpha(50),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(15),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.alarm,
-                                  color: sheduleColors[widget.shedule.color],
-                                  size: 18,
-                                ),
-                                Text(
-                                  "  From: ${widget.shedule.startTime} To: ${widget.shedule.endTime}",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: sheduleColors[widget.shedule.color],
-                                  ),
-                                ),
-                              ],
-                            ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color:
+                              sheduleColors[widget.shedule.color].withAlpha(50),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
                           ),
                         ),
-                        Container(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: sheduleColors[widget.shedule.color]
-                                    .withAlpha(50),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.repeat,
-                                      color:
-                                          sheduleColors[widget.shedule.color],
-                                      size: 18,
-                                    ),
-                                    Text(
-                                      " Repeat: ",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color:
-                                            sheduleColors[widget.shedule.color],
-                                      ),
-                                    ),
-                                    Text(
-                                      widget.shedule.repeat,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color:
-                                            sheduleColors[widget.shedule.color],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: sheduleColors[widget.shedule.color]
-                                    .withAlpha(50),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.alarm_on,
-                                      color:
-                                          sheduleColors[widget.shedule.color],
-                                      size: 18,
-                                    ),
-                                    Text(
-                                      " Remind: ",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color:
-                                            sheduleColors[widget.shedule.color],
-                                      ),
-                                    ),
-                                    Text(
-                                      "${widget.shedule.remind} minutes early",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color:
-                                            sheduleColors[widget.shedule.color],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // const Divider(),
-                        Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.shedule.description,
-                            textAlign: TextAlign.left,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                color: sheduleColors[widget.shedule.color],
+                                size: 18,
+                              ),
+                              Text(
+                                "  From: ${widget.shedule.startTime} To: ${widget.shedule.endTime}",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: sheduleColors[widget.shedule.color],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        // MaterialStateProperty<Color?>? backgroundColor,
-                        backgroundColor:
-                            MaterialStateProperty.all(patowaveErrorRed),
-                        minimumSize: MaterialStateProperty.all(
-                          const Size(45, 45),
-                        ),
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
+                      ),
+                      Container(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: sheduleColors[widget.shedule.color]
+                                  .withAlpha(50),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.repeat,
+                                    color: sheduleColors[widget.shedule.color],
+                                    size: 18,
+                                  ),
+                                  Text(
+                                    " Repeat: ",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.shedule.repeat,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: sheduleColors[widget.shedule.color]
+                                  .withAlpha(50),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.alarm_on,
+                                    color: sheduleColors[widget.shedule.color],
+                                    size: 18,
+                                  ),
+                                  Text(
+                                    " Remind: ",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                    ),
+                                  ),
+                                  Text(
+                                    "${widget.shedule.remind} minutes early",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color:
+                                          sheduleColors[widget.shedule.color],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.shedule.description,
+                          textAlign: TextAlign.left,
                         ),
                       ),
-                      onPressed: () {
-                        _deletingShedule(widget.shedule);
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.delete,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      // MaterialStateProperty<Color?>? backgroundColor,
+                      backgroundColor:
+                          MaterialStateProperty.all(patowaveErrorRed),
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(45, 45),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
                       ),
                     ),
+                    onPressed: () {
+                      _deletingShedule(widget.shedule);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.delete,
+                    ),
                   ),
-                  // Container(width: 10),
-                  // Expanded(
-                  //   child: ElevatedButton(
-                  //     style: ButtonStyle(
-                  //       // MaterialStateProperty<Color?>? backgroundColor,
-                  //       minimumSize: MaterialStateProperty.all(
-                  //         const Size(45, 45),
-                  //       ),
-                  //       shape: MaterialStateProperty.all(
-                  //         const RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.all(
-                  //             Radius.circular(30),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     onPressed: () {
-                  //       _sheduleCompleted(context);
-                  //     },
-                  //     child: const Text(
-                  //       "Completed",
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+                ),
+                // Container(width: 10),
+                // Expanded(
+                //   child: ElevatedButton(
+                //     style: ButtonStyle(
+                //       // MaterialStateProperty<Color?>? backgroundColor,
+                //       minimumSize: MaterialStateProperty.all(
+                //         const Size(45, 45),
+                //       ),
+                //       shape: MaterialStateProperty.all(
+                //         const RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.all(
+                //             Radius.circular(30),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     onPressed: () {
+                //       _sheduleCompleted(context);
+                //     },
+                //     child: const Text(
+                //       "Completed",
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

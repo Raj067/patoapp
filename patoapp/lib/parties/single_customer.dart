@@ -347,14 +347,13 @@ class _SingleCustomerPageState extends State<SingleCustomerPage> {
       path: widget.customer.phoneNumber,
       queryParameters: <String, String>{
         'body': Uri.encodeComponent("""
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
-unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Mambo vipi ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) Tsh: ${widget.customer.getAmount()}  kama yalivyo makubaliano, 
 Asante kwa kufanya biashara nasi.
-<LINK>
 
 $businessName
-Powered by 
-Patowave"""),
+Powered by Patowave
+https://patowave.com
+"""),
       },
     );
     launchUrl(smsLaunchUri);
@@ -375,14 +374,12 @@ Patowave"""),
       path: widget.customer.email,
       query: encodeQueryParameters(<String, String>{
         'subject': """
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
-unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Mambo vipi ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) Tsh: ${widget.customer.getAmount()}  kama yalivyo makubaliano, 
 Asante kwa kufanya biashara nasi.
-<LINK>
 
 $businessName
-Powered by 
-Patowave""",
+Powered by Patowave
+https://patowave.com""",
       }),
     );
 
@@ -394,14 +391,12 @@ Patowave""",
     String businessPhone = _profileController.myProfile.value.businessPhone;
     var whatsapp = widget.customer.phoneNumber;
     String message = """
-Habari ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) kama yalivyo makubaliano, 
-unaweza kubofya linki hii chini ili kuona taarifa za deni lako, 
+Mambo vipi ${widget.customer.fullName}, unakumbushwa kuja kulipa deni lako $businessName ($businessPhone) Tsh: ${widget.customer.getAmount()}  kama yalivyo makubaliano, 
 Asante kwa kufanya biashara nasi.
-<LINK>
 
 $businessName
-Powered by 
-Patowave""";
+Powered by Patowave
+https://patowave.com""";
     var whatsappAndroid =
         Uri.parse("whatsapp://send?phone=$whatsapp&text=$message");
     if (await canLaunchUrl(whatsappAndroid)) {

@@ -9,8 +9,11 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
+import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/invoice_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
+import 'package:patoapp/backend/models/business_financial_data.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
 // import 'package:patoapp/backend/db/db_products.dart';
 import 'package:patoapp/backend/models/invoice_model.dart';
@@ -49,6 +52,8 @@ class _EditInvoiceState extends State<EditInvoice> {
   final TextEditingController invoiceDescription = TextEditingController();
   final InvoiceController _invoiceController = Get.put(InvoiceController());
   final ProductController _productController = Get.put(ProductController());
+  final CustomerController _customerController = Get.put(CustomerController());
+  final BusinessController _businessController = Get.put(BusinessController());
 
   @override
   void dispose() {
@@ -246,7 +251,10 @@ class _EditInvoiceState extends State<EditInvoice> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                 child: Text(
-                  widget.invoice.fullName,
+                  _customerController.allCustomers
+                      .firstWhere(
+                          (element) => element.id == widget.invoice.customerId)
+                      .fullName,
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 14,
@@ -721,23 +729,36 @@ class _EditInvoiceState extends State<EditInvoice> {
       );
 
       if (response.statusCode == 201) {
-        SingleInvoice myData = SingleInvoice(
-          issuedDate: widget.invoice.issuedDate,
-          id: widget.invoice.id,
-          shopId: shopId,
-          customerId: widget.invoice.customerId,
-          fullName: widget.invoice.fullName,
-          amountReceived: receivedAmount.toInt(),
-          totalAmount: totalAmount.toInt() - discountAmount.toInt(),
-          discount: discountAmount.toInt(),
-          dueDate: dueDate.text,
-          items: items,
-          invoiceNo: invoiceNo,
-          description: invoiceDescription.text == ''
-              ? 'Invoice'
-              : invoiceDescription.text,
-        );
-        await _invoiceController.updateInvoice(myData);
+        int initialVal =
+            widget.invoice.totalAmount - widget.invoice.amountReceived;
+        widget.invoice.amountReceived = receivedAmount.toInt();
+        widget.invoice.totalAmount =
+            totalAmount.toInt() - discountAmount.toInt();
+        widget.invoice.discount = discountAmount.toInt();
+        widget.invoice.dueDate = dueDate.text;
+        widget.invoice.items = jsonDecode(response.body)['items'];
+        widget.invoice.invoiceNo = invoiceNo;
+        widget.invoice.description =
+            invoiceDescription.text == '' ? 'Invoice' : invoiceDescription.text;
+
+        _invoiceController.invoiceChangeUpdater(widget.invoice);
+        FinancialData val = _businessController.allFinancialData.firstWhere(
+            (element) => element.id == "invoice-${widget.invoice.id}");
+        _businessController.businessChangeUpdater(val);
+
+        // Update customer
+        SingleCustomer myDataCustomer = _customerController.allCustomers
+            .firstWhere((element) => element.id == widget.invoice.customerId);
+
+        myDataCustomer.amount += widget.invoice.totalAmount -
+            widget.invoice.amountReceived -
+            initialVal;
+
+        // myDataCustomer.financialData = [
+        //   payment,
+        //   ...myDataCustomer.financialData
+        // ];
+        _customerController.customerChangeUpdater(myDataCustomer);
         // widget.resetData();
         Get.back();
         Get.back();

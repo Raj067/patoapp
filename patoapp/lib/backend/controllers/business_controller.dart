@@ -62,4 +62,18 @@ class BusinessController extends GetxController {
     // 2. Send data to local DB
     deleteBusiness(business);
   }
+
+  businessChangeUpdater(FinancialData business) {
+    // after successfully updated
+    // 1. Update state
+    FinancialData oldCustomer =
+        allFinancialData.firstWhere((element) => element.id == business.id);
+    int index = allFinancialData.indexOf(oldCustomer);
+    allFinancialData.remove(oldCustomer);
+    allFinancialData.insert(index, business);
+
+    update();
+    // 2. Send data to local DB
+    updateBusiness(business);
+  }
 }

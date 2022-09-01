@@ -25,6 +25,8 @@ import 'package:patoapp/accounts/set_account.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:timezone/data/latest.dart' as tz;
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -53,6 +55,7 @@ void main() {
       await DBHelperInvoice.initDb();
       await DBHelperInventory.initDb();
 
+      tz.initializeTimeZones();
       // Plugin must be initialized before using
       await FlutterDownloader.initialize(
           debug:

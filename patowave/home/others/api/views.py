@@ -363,6 +363,8 @@ def edit_invoice_api(request):
                 product_unit=Product.objects.get(id=dx['id']).primary_unit,
                 quantity=dx['quantity'],
                 invoice_data=invoice,
+                purchases_price=Product.objects.get(
+                    id=dx.get('id')).purchases_price,
             )
             # Once transaction completed
             # successfully, decreasing the quantity of products
@@ -370,8 +372,18 @@ def edit_invoice_api(request):
             prod = Product.objects.get(id=dx['id'])
             prod.quantity = prod.quantity - dx['quantity']
             prod.save()
-
-        return Response(status=status.HTTP_201_CREATED)
+            data = { "items": [
+                {
+                    "id": i.id,
+                    "productId": i.product_id,
+                    "product": i.product_name,
+                    "quantity": i.quantity,
+                    "price": i.price,
+                    "product_unit": i.product_unit,
+                    "date": i.updated_at,
+                }
+                for i in invoice.sold_items.all()]}
+        return Response(status=status.HTTP_201_CREATED,data=data)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

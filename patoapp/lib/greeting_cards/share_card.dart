@@ -152,8 +152,8 @@ class _ShareGreetingCardState extends State<ShareGreetingCard> {
               ),
               onPressed: () async {
                 final bytes = await capturePng();
-                     final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/card.png');
+                final dir = await getApplicationDocumentsDirectory();
+                final file = File('${dir.path}/card.png');
                 await file.writeAsBytes(bytes);
                 // file.path
                 await Share.shareFiles([file.path],

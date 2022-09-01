@@ -568,7 +568,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 .firstWhere(
                     (element) => element.id == widget.invoice.customerId);
 
-            myDataCustomer.amount +=
+            myDataCustomer.amount -=
                 widget.invoice.totalAmount - widget.invoice.amountReceived;
 
             // myDataCustomer.financialData = [
@@ -685,6 +685,13 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
             onPressed: () async {
               var status = await Permission.storage.request();
               if (status.isGranted) {
+                Get.snackbar(
+                  backgroundColor: Theme.of(context).cardColor,
+                  colorText:
+                      Theme.of(context).textTheme.bodyLarge?.color,
+                  '10%',
+                  'start downloading...',
+                );
                 final bytes = await _generatePdf();
                 final dir = await getExternalStorageDirectory();
                 String myPath =
@@ -696,7 +703,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                 await file.writeAsBytes(bytes);
                 await ImageDownloader.open(file.path);
               } else {
-                // ignore: use_build_context_synchronously
                 permissionDenied(context);
               }
             },
