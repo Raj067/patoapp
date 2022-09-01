@@ -139,8 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () async {
-                            launchUrl(Uri.parse('${baseUrl}forgot-password/'));
+                          onPressed: () {
+                            launchUrl(
+                              Uri.parse('${baseUrl}forgot-password/'),
+                              mode: LaunchMode.externalApplication,
+                            );
                           },
                           child: const Text("Forgot Password?"),
                         ),
