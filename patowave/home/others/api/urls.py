@@ -94,4 +94,8 @@ api_urls = [
 
     # for version tracking
     path('api/version-check/', version_check, name='version_check'),
+
+    # Feedback receive_feedback
+     path('api/receive-feedback/', receive_feedback, name='receive_feedback'),
+
 ]

@@ -1,4 +1,3 @@
-from tokenize import String
 from home.models import *
 from .functions.func import get_shop
 from .serializer import *
@@ -764,3 +763,21 @@ def adjust_product_api(request):
 def version_check(request, *args, **kwargs):
     data = VersionTrack.objects.all().latest('id')
     return Response(data={'version': data.current_version})
+
+# Feedbacks
+
+
+@api_view(['POST'])
+def receive_feedback(request):
+    if request.method == "POST":
+        feedback = Feedback(
+            shop = Shop.objects.get(id=int(request.data.get('shopId'))),
+            customer=request.user,
+            comments=request.data.get('description'),
+            name=request.data.get('customerName'),
+            phone_number=request.data.get('phoneNumber'),
+            business_name=request.data.get('businessName'),
+        )
+        feedback.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)

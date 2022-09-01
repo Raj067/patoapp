@@ -13,7 +13,7 @@ import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/product_list.dart';
-// import 'package:patoapp/backend/sync/sync_all.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class ProductsCart extends StatefulWidget {
@@ -40,8 +40,8 @@ class _ProductsCartState extends State<ProductsCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Sale Transaction',
+        title: Text(
+          AppLocalizations.of(context)!.cashSales,
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -77,7 +77,7 @@ class _ProductsCartState extends State<ProductsCart> {
                   padding: const EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      "Receipt No $receiptNo",
+                      "${AppLocalizations.of(context)!.receipt} No $receiptNo",
                       style: const TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 14,
@@ -106,7 +106,7 @@ class _ProductsCartState extends State<ProductsCart> {
                     padding: const EdgeInsets.all(10),
                     child: Center(
                       child: Text(
-                        "Date: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
+                        "${AppLocalizations.of(context)!.date}: ${DateFormat("dd-MM-yyyy").format(transactionDate)}",
                         style: const TextStyle(
                             fontStyle: FontStyle.italic, fontSize: 14),
                       ),
@@ -129,8 +129,8 @@ class _ProductsCartState extends State<ProductsCart> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Discount",
+                      Text(
+                        AppLocalizations.of(context)!.discount,
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -147,8 +147,8 @@ class _ProductsCartState extends State<ProductsCart> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Total Amount",
+                      Text(
+                        AppLocalizations.of(context)!.totalAmount,
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold),
@@ -209,9 +209,7 @@ class _ProductsCartState extends State<ProductsCart> {
                     items: items,
                   );
                 },
-                child: const Text(
-                  "Save Transaction",
-                ),
+                child: Text(AppLocalizations.of(context)!.save),
               ),
             ),
           ],

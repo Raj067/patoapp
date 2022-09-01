@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 // import 'dart:io';
@@ -39,7 +41,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreviewInvoice extends StatefulWidget {
   final SingleInvoice invoice;
-  const PreviewInvoice({Key? key, required this.invoice}) : super(key: key);
+  final int paidAmount;
+  final int requiredAmount;
+  const PreviewInvoice({
+    Key? key,
+    required this.invoice,
+    required this.paidAmount,
+    required this.requiredAmount,
+  }) : super(key: key);
   @override
   State<PreviewInvoice> createState() => _PreviewInvoiceState();
 }
@@ -65,8 +74,6 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
   double subTotal = 0;
   double discount = 0;
   double tax = 0;
-  double paid = 0;
-  double balanceDue = 0;
   List<TableRow> myRowData = [];
 
   String? note = box.read('note');
@@ -394,7 +401,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                               ),
                             ),
                             pw.Text(
-                              'Tsh ${formatter.format(paid.toInt())}',
+                              'Tsh ${formatter.format(widget.paidAmount)}',
                               style: pw.TextStyle(
                                 fontWeight: pw.FontWeight.bold,
                               ),
@@ -420,7 +427,7 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                                   ),
                                 ),
                                 pw.Text(
-                                  'Tsh ${formatter.format(balanceDue.toInt())}',
+                                  'Tsh ${formatter.format(widget.requiredAmount)}',
                                   style: pw.TextStyle(
                                     fontWeight: pw.FontWeight.bold,
                                     color: p.PdfColors.white,
@@ -510,69 +517,82 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           onLayout: (p.PdfPageFormat format) async => await _generatePdf());
     }
     if (index == 1) {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => EditInvoice(
-            invoice: widget.invoice,
-          ),
-          fullscreenDialog: true,
-        ),
-      );
+      widget.requiredAmount == 0
+          ? ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("The invoice is closed"),
+              ),
+            )
+          : Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => EditInvoice(
+                  invoice: widget.invoice,
+                ),
+                fullscreenDialog: true,
+              ),
+            );
     }
     if (index == 2) {
       // api/delete-invoices/
-
-      String accessToken = await storage.read(key: 'access') ?? "";
-      showPleaseWait(
-        context: context,
-        builder: (context) => const ModalFit(),
-      );
-      try {
-        final response = await http.post(
-          Uri.parse('${baseUrl}api/delete-invoices/'),
-          headers: getAuthHeaders(accessToken),
-          body: jsonEncode(<String, dynamic>{
-            'id': widget.invoice.id,
-          }),
+      if (widget.requiredAmount == 0) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("The invoice is closed"),
+          ),
         );
-
-        if (response.statusCode == 201) {
-          _invoiceController.invoiceChangeDelete(widget.invoice);
-          FinancialData val = _businessController.allFinancialData.firstWhere(
-              (element) => element.id == "invoice-${widget.invoice.id}");
-          _businessController.businessChangeDelete(val);
-
-          // Update customer
-          SingleCustomer myDataCustomer = _customerController.allCustomers
-              .firstWhere((element) => element.id == widget.invoice.customerId);
-
-          myDataCustomer.amount +=
-              widget.invoice.totalAmount - widget.invoice.amountReceived;
-
-          // myDataCustomer.financialData = [
-          //   payment,
-          //   ...myDataCustomer.financialData
-          // ];
-          _customerController.customerChangeUpdater(myDataCustomer);
-          Get.back();
-          Get.back();
-        } else {
-          Get.back();
-          showErrorMessage(
-            context: context,
-            builder: (context) => const ModalFitError(),
-          );
-          // throw Exception('Failed to updated customer.');
-        }
-      } catch (e) {
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-        showTimeOutMessage(
+      } else {
+        String accessToken = await storage.read(key: 'access') ?? "";
+        showPleaseWait(
           context: context,
-          builder: (context) => const ModalFitTimeOut(),
+          builder: (context) => const ModalFit(),
         );
+
+        try {
+          final response = await http.post(
+            Uri.parse('${baseUrl}api/delete-invoices/'),
+            headers: getAuthHeaders(accessToken),
+            body: jsonEncode(<String, dynamic>{
+              'id': widget.invoice.id,
+            }),
+          );
+
+          if (response.statusCode == 201) {
+            _invoiceController.invoiceChangeDelete(widget.invoice);
+            FinancialData val = _businessController.allFinancialData.firstWhere(
+                (element) => element.id == "invoice-${widget.invoice.id}");
+            _businessController.businessChangeDelete(val);
+
+            // Update customer
+            SingleCustomer myDataCustomer = _customerController.allCustomers
+                .firstWhere(
+                    (element) => element.id == widget.invoice.customerId);
+
+            myDataCustomer.amount +=
+                widget.invoice.totalAmount - widget.invoice.amountReceived;
+
+            // myDataCustomer.financialData = [
+            //   payment,
+            //   ...myDataCustomer.financialData
+            // ];
+            _customerController.customerChangeUpdater(myDataCustomer);
+            Get.back();
+            Get.back();
+          } else {
+            Get.back();
+            showErrorMessage(
+              context: context,
+              builder: (context) => const ModalFitError(),
+            );
+            // throw Exception('Failed to updated customer.');
+          }
+        } catch (e) {
+          Navigator.pop(context);
+          showTimeOutMessage(
+            context: context,
+            builder: (context) => const ModalFitTimeOut(),
+          );
+        }
       }
     }
     if (index == 3) {
@@ -636,9 +656,9 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
     subTotal = widget.invoice.totalAmount.toDouble();
     discount = widget.invoice.discount.toDouble();
     tax = 0;
-    paid = widget.invoice.amountReceived.toDouble();
-    balanceDue = widget.invoice.totalAmount.toDouble() -
-        widget.invoice.amountReceived.toDouble();
+    // paid = widget.invoice.amountReceived.toDouble();
+    // balanceDue = widget.invoice.totalAmount.toDouble() -
+    //     widget.invoice.amountReceived.toDouble();
     super.initState();
   }
 
@@ -785,7 +805,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                                 'Paid Amount',
                                 style: TextStyle(),
                               ),
-                              Text("Tsh: ${formatter.format(paid)}"),
+                              Text(
+                                  "Tsh: ${formatter.format(widget.paidAmount)}"),
                             ],
                           ),
                           Row(
@@ -795,7 +816,8 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
                                 'Balance Due',
                                 style: TextStyle(),
                               ),
-                              Text("Tsh: ${formatter.format(balanceDue)}"),
+                              Text(
+                                  "Tsh: ${formatter.format(widget.requiredAmount)}"),
                             ],
                           ),
                         ],
@@ -957,21 +979,23 @@ class _PreviewInvoiceState extends State<PreviewInvoice> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => AddPaymentCustomerDialog(
-                customer: myCustomer!,
-                isPaymentIn: true,
-              ),
-              fullscreenDialog: true,
+      floatingActionButton: widget.requiredAmount == 0
+          ? Container()
+          : FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => AddPaymentCustomerDialog(
+                      customer: myCustomer!,
+                      isPaymentIn: true,
+                    ),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
+              label: const Text("Receive Payment"),
             ),
-          );
-        },
-        label: const Text("Receive Payment"),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,
         items: <BottomNavigationBarItem>[

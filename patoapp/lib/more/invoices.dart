@@ -302,6 +302,8 @@ class MainInvoicePage extends StatelessWidget {
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) => PreviewInvoice(
                                 invoice: dx,
+                                paidAmount: dx.totalAmount - requiredAmount,
+                                requiredAmount: requiredAmount,
                               ),
                               fullscreenDialog: true,
                             ),

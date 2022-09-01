@@ -1,5 +1,12 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patoapp/animations/error.dart';
+import 'package:patoapp/animations/please_wait.dart';
+import 'package:patoapp/animations/time_out.dart';
+import 'package:patoapp/api/apis.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
 class FeedbackDialog extends StatefulWidget {
@@ -205,7 +212,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                   ),
                 ),
                 onPressed: () {
-                  if (addFeedbackFormKey.currentState!.validate()) {}
+                  if (addFeedbackFormKey.currentState!.validate()) {
+                    _submitFeedback();
+                  }
                 },
                 child: const Text(
                   "Submit Feedback",
@@ -216,5 +225,50 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         ),
       ),
     );
+  }
+
+  _submitFeedback() async {
+    showPleaseWait(
+      context: context,
+      builder: (context) => const ModalFit(),
+    );
+    String accessToken = await storage.read(key: 'access') ?? "";
+    // shop ID
+    String? activeShop = await storage.read(key: 'activeShop');
+    int shopId = int.parse(activeShop ?? '0');
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}api/receive-feedback/'),
+        headers: getAuthHeaders(accessToken),
+        body: jsonEncode(<String, dynamic>{
+          'customerName': customerName.text,
+          'phoneNumber': phoneNumber.text,
+          'businessName': businessName.text,
+          'description': description.text,
+          'shopId': shopId,
+        }),
+      );
+      if (response.statusCode == 201) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        showErrorMessage(
+          context: context,
+          builder: (context) => const ModalFitError(),
+        );
+        // throw Exception('Failed to updated customer.');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      showTimeOutMessage(
+        context: context,
+        builder: (context) => const ModalFitTimeOut(),
+      );
+    }
   }
 }
