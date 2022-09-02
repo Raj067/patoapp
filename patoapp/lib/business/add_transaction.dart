@@ -1345,6 +1345,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
+        // updating the product data status
+        for (var dx in items) {
+          var product = _productController.allProducts
+              .firstWhere((element) => element.id == dx['id']);
+          product.quantity = (product.quantity + dx['quantity']).toInt();
+          _productController.productChangeUpdater(product);
+        }
         FinancialData myData = FinancialData(
           date: DateTime.parse(jsonDecode(response.body)['date']),
           isCashSale: false,
@@ -1495,6 +1502,13 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (response.statusCode == 201) {
+        // updating the product data status
+        for (var dx in items) {
+          var product = _productController.allProducts
+              .firstWhere((element) => element.id == dx['id']);
+          product.quantity = (product.quantity - dx['quantity']).toInt();
+          _productController.productChangeUpdater(product);
+        }
         FinancialData myData = FinancialData(
           date: DateTime.parse(jsonDecode(response.body)['date']),
           isCashSale: true,

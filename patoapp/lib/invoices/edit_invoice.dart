@@ -729,6 +729,13 @@ class _EditInvoiceState extends State<EditInvoice> {
       );
 
       if (response.statusCode == 201) {
+        // updating the product data status
+        for (var dx in items) {
+          var product = _productController.allProducts
+              .firstWhere((element) => element.id == dx['id']);
+          product.quantity = (dx['quantity']).toInt();
+          _productController.productChangeUpdater(product);
+        }
         int initialVal =
             widget.invoice.totalAmount - widget.invoice.amountReceived;
         widget.invoice.amountReceived = receivedAmount.toInt();

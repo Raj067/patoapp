@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,22 +26,16 @@ class _InventoryReportsState extends State<InventoryReports> {
   List<Map> myData = [];
   double stockIn = 0;
   double stockOut = 0;
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
 
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
+  final BusinessController _businessController = Get.put(BusinessController());
+  fetchBusinessDB() {
     stockIn = 0;
     stockOut = 0;
     myData = [];
-    for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
-        DateTime date = DateTime.parse(dx['date']);
-        if (date.isAfter(pickedRangeDate.start) &&
-            date.isBefore(pickedRangeDate.end)) {
-          findingAllData(fromJsonBusiness(dx));
-        }
+    for (var dx in _businessController.allFinancialData) {
+      if (dx.date.isAfter(pickedRangeDate.start) &&
+          dx.date.isBefore(pickedRangeDate.end)) {
+        findingAllData(dx);
       }
     }
     setState(() {});
@@ -49,7 +43,21 @@ class _InventoryReportsState extends State<InventoryReports> {
 
   findingAllData(FinancialData data) {
     for (var dx in data.details) {
-      if (dx['product'] != null) {
+      if (data.isInvoice) {
+        for (var dm in dx['data']) {
+          stockOut += dm['quantity'];
+          if (myData.map((e) => e['name']).toList().contains(dm['product'])) {
+            myData.firstWhere((element) => element['name'] == dm['product'])[
+                'stockOut'] += dm['quantity'];
+          } else {
+            myData.add({
+              'name': dm['product'],
+              'stockIn': 0,
+              'stockOut': dm['quantity'],
+            });
+          }
+        }
+      } else {
         data.isPurchases
             ? stockIn += dx['quantity']
             : stockOut += dx['quantity'];
@@ -64,7 +72,7 @@ class _InventoryReportsState extends State<InventoryReports> {
           myData.add({
             'name': dx['product'],
             'stockIn': data.isPurchases ? dx['quantity'] : 0,
-            'stockOut': data.isCashSale || data.isInvoice ? dx['quantity'] : 0,
+            'stockOut': data.isCashSale ? dx['quantity'] : 0,
           });
         }
       }

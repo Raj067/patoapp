@@ -32,8 +32,8 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
   List goodMorningData = [];
   bool isLoading = true;
   bool isProgressGoing = false;
-  final GlobalKey globalKey = GlobalKey();
-  Future<Uint8List> capturePng() async {
+  // final GlobalKey globalKey = GlobalKey();
+  Future<Uint8List> capturePng(GlobalKey globalKey) async {
     final RenderRepaintBoundary boundary =
         globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
     final ui.Image image = await boundary.toImage(pixelRatio: 5);
@@ -181,14 +181,19 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
     List<Widget> myCustomData = [];
     for (SingleGreetingCard element in thankYouData) {
       myCustomData.add(_singleCard(
+        GlobalKey(),
         element,
         cardImage: element.greetingCard,
         defaultText: element.description,
         id: element.id,
       ));
     }
-    return ListView(
-      children: myCustomData,
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return myCustomData[index];
+      },
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      itemCount: myCustomData.length,
     );
   }
 
@@ -196,14 +201,19 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
     List<Widget> myCustomData = [];
     for (SingleGreetingCard element in offersData) {
       myCustomData.add(_singleCard(
+        GlobalKey(),
         element,
         cardImage: element.greetingCard,
         defaultText: element.description,
         id: element.id,
       ));
     }
-    return ListView(
-      children: myCustomData,
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return myCustomData[index];
+      },
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      itemCount: myCustomData.length,
     );
   }
 
@@ -211,25 +221,34 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
     List<Widget> myCustomData = [];
     for (SingleGreetingCard element in goodMorningData) {
       myCustomData.add(_singleCard(
+        GlobalKey(),
         element,
         cardImage: element.greetingCard,
         defaultText: element.description,
         id: element.id,
       ));
     }
-    return ListView(
-      children: myCustomData,
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return myCustomData[index];
+      },
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      itemCount: myCustomData.length,
     );
+    // return ListView(
+    //   children: myCustomData,
+    // );
   }
 
   _singleCard(
+    GlobalKey globalKey,
     SingleGreetingCard myCard, {
     required cardImage,
     required defaultText,
     required id,
   }) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -289,7 +308,7 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
                           'start downloading...',
                         );
 
-                        final bytes = await capturePng();
+                        final bytes = await capturePng(globalKey);
                         final dir = await getExternalStorageDirectory();
                         String myPath = pt.dirname(
                             pt.dirname(pt.dirname(pt.dirname(dir!.path))));

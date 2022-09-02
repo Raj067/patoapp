@@ -18,7 +18,7 @@ class NotificationAll {
     required this.sheduleDate,
   });
   sheduleAll() async {
-    var val = NotifyDueDate(context: context, sheduleDate: DateTime.now());
+    var val = NotifyDueDate(context: context, sheduleDate: sheduleDate);
     val.initialize();
     var status = await Permission.notification.request();
     if (status.isGranted) {
