@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:image_downloader/image_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_profile.dart';
 import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/profile_details.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
-// import 'package:patoapp/reports/pdf/pdf_cashflow.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:printing/printing.dart';
-// import 'package:pdf/pdf.dart' as p;
+import 'package:patoapp/backend/controllers/business_controller.dart';
 
 class CashFlowReports extends StatefulWidget {
   const CashFlowReports({Key? key}) : super(key: key);
@@ -41,16 +39,13 @@ class _CashFlowReportsState extends State<CashFlowReports> {
   bool isProgressGoing = false;
   ProfileData profile =
       ProfileData(businessName: '', businessAddress: '', id: 0);
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
 
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
+  final BusinessController _businessController = Get.put(BusinessController());
+  fetchBusinessDB() {
     List<FinancialData> finalData = [];
-    for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
-        finalData.add(fromJsonBusiness(dx));
+    for (var dx in _businessController.allFinancialData) {
+      if (!dx.isInvoice) {
+        finalData.add(dx);
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
