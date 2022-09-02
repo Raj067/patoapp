@@ -84,7 +84,7 @@ class MorePage extends StatelessWidget {
                             onTap: () {
                               try {
                                 launchUrl(
-                                  Uri.parse('${baseUrl}tutorials/'),
+                                  Uri.parse('${siteUrl}tutorials/'),
                                   mode: LaunchMode.externalApplication,
                                 );
                               } catch (e) {
@@ -260,7 +260,7 @@ class MorePage extends StatelessWidget {
                             onTap: () {
                               try {
                                 launchUrl(
-                                  Uri.parse('${baseUrl}terms-conditions/'),
+                                  Uri.parse('${siteUrl}terms-conditions/'),
                                   mode: LaunchMode.externalApplication,
                                 );
                               } catch (e) {
@@ -302,7 +302,7 @@ class MorePage extends StatelessWidget {
                             onTap: () {
                               try {
                                 launchUrl(
-                                  Uri.parse('${baseUrl}privacy-policy/'),
+                                  Uri.parse('${siteUrl}privacy-policy/'),
                                   mode: LaunchMode.externalApplication,
                                 );
                               } catch (e) {

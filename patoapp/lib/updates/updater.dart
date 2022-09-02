@@ -85,8 +85,8 @@ class Updater extends StatelessWidget {
 }
 
 Future<bool> checkVersion() async {
-  int localServerVersion = 8;
-  int minRequiredVersion = 8;
+  int localServerVersion = 9;
+  int minRequiredVersion = 9;
   String accessToken = await storage.read(key: 'access') ?? "";
   try {
     var data = await http.get(

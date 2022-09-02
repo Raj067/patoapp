@@ -271,7 +271,7 @@ class MainInvoicePage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           requiredAmount == 0
-                              ? 'Completed'
+                              ? 'Closed'
                               : isOutStanding
                                   ? AppLocalizations.of(context)!.outstanding
                                   : AppLocalizations.of(context)!.overdue,
