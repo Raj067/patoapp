@@ -19,12 +19,9 @@ class BalanceSheet extends StatefulWidget {
 
 class _BalanceSheetState extends State<BalanceSheet> {
   DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day - 30,
-    ),
-    end: DateTime.now(),
+    start: DateTime(DateTime.now().year, DateTime.now().month),
+    end: DateTime(DateTime.now().year, DateTime.now().month)
+        .add(const Duration(days: 30)),
   );
   double inventoryInHandBalanceSheetVal = 0;
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
@@ -159,22 +156,22 @@ class _BalanceSheetState extends State<BalanceSheet> {
             topRight: Radius.circular(15),
           ),
           onTap: () async {
-            DateTimeRange? pickedDate = await showDateRangePicker(
-              context: context,
-              firstDate: DateTime(DateTime.now().year - 1),
-              lastDate: DateTime(DateTime.now().year + 1),
-              currentDate: DateTime.now(),
-              confirmText: "SELECT",
-              saveText: "SELECT",
-              helpText: "Select Transaction Date Range",
-              initialDateRange: pickedRangeDate,
-            );
-            if (pickedDate != null) {
-              setState(() {
-                pickedRangeDate = pickedDate;
-                fetchBusinessDB();
-              });
-            } else {}
+            // DateTimeRange? pickedDate = await showDateRangePicker(
+            //   context: context,
+            //   firstDate: DateTime(DateTime.now().year - 1),
+            //   lastDate: DateTime(DateTime.now().year + 1),
+            //   currentDate: DateTime.now(),
+            //   confirmText: "SELECT",
+            //   saveText: "SELECT",
+            //   helpText: "Select Transaction Date Range",
+            //   initialDateRange: pickedRangeDate,
+            // );
+            // if (pickedDate != null) {
+            //   setState(() {
+            //     pickedRangeDate = pickedDate;
+            //     fetchBusinessDB();
+            //   });
+            // } else {}
           },
           child: Padding(
             padding: const EdgeInsets.all(10),

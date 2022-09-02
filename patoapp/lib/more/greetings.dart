@@ -93,8 +93,13 @@ class _MainGreetingsCardsState extends State<MainGreetingsCards> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("No internent connection"),
+          duration: Duration(seconds: 5),
         ),
       );
+
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 

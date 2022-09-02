@@ -21,6 +21,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainEntryHomePage extends StatefulWidget {
   const MainEntryHomePage({Key? key}) : super(key: key);
@@ -129,14 +130,15 @@ class _MainEntryHomePageState extends State<MainEntryHomePage> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(15),
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute<void>(
-                        //     builder: (BuildContext context) =>
-                        //         const LanguageSettings(),
-                        //     fullscreenDialog: true,
-                        //   ),
-                        // );
+                        try {
+                          launchUrl(
+                            Uri.parse(
+                                'https://youtube.com/channel/UCv8cDScd_CVo5XbpfqYFURw'),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        } catch (e) {
+                          //
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(15),

@@ -78,6 +78,7 @@ dependencies:
   store_redirect: ^2.0.1
   permission_handler: ^8.0.1
   flutter_downloader:
+  month_picker_dialog: 0.4.0
   # flutter_bloc: ^8.1.1
   # in_app_review: ^2.0.4
 
@@ -193,7 +194,7 @@ flutter_native_splash:
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
   # color: "#ccc"
-  background_image: "assets/images/patosplash.png"
+  background_image: "assets/images/splash.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
   # the leading # character.

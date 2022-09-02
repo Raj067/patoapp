@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
-import 'package:patoapp/backend/models/business_financial_data.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
-// import 'package:patoapp/reports/accounting/starting_closing_inventory.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class ProfitLossReports extends StatefulWidget {
   const ProfitLossReports({Key? key}) : super(key: key);
@@ -18,35 +18,26 @@ class ProfitLossReports extends StatefulWidget {
 
 class _ProfitLossReportsState extends State<ProfitLossReports> {
   DateTimeRange pickedRangeDate = DateTimeRange(
-    start: DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day - 30,
-    ),
-    end: DateTime.now(),
+    start: DateTime(DateTime.now().year, DateTime.now().month),
+    end: DateTime(DateTime.now().year, DateTime.now().month)
+        .add(const Duration(days: 30)),
   );
+
+  final BusinessController _businessController = Get.put(BusinessController());
+
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
     data: [],
     pickedRangeDate: DateTimeRange(
-      start: DateTime.now(),
-      end: DateTime.now(),
+      start: DateTime(DateTime.now().year, DateTime.now().month),
+      end: DateTime(DateTime.now().year, DateTime.now().month)
+          .add(const Duration(days: 30)),
     ),
   );
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
-    List<FinancialData> finalData = [];
-    for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId) {
-        finalData.add(fromJsonBusiness(dx));
-      }
-    }
-    finalData.sort((b, a) => a.date.compareTo(b.date));
-    profitAndLoss =
-        ProfitAndLoss(data: finalData, pickedRangeDate: pickedRangeDate);
+  fetchBusinessDB() {
+    profitAndLoss = ProfitAndLoss(
+      data: _businessController.allFinancialData,
+      pickedRangeDate: pickedRangeDate,
+    );
     setState(() {});
   }
 
@@ -76,11 +67,6 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
       ),
       body: Column(
         children: [
-          // ElevatedButton(
-          //     onPressed: () {
-          //       getAllTransaction();
-          //     },
-          //     child: Text('Click')),
           _searchBox(context),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -144,22 +130,29 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
             topRight: Radius.circular(15),
           ),
           onTap: () async {
-            DateTimeRange? pickedDate = await showDateRangePicker(
-              context: context,
-              firstDate: DateTime(DateTime.now().year - 1),
-              lastDate: DateTime(DateTime.now().year + 1),
-              currentDate: DateTime.now(),
-              confirmText: "SELECT",
-              saveText: "SELECT",
-              helpText: "Select Transaction Date Range",
-              initialDateRange: pickedRangeDate,
-            );
-            if (pickedDate != null) {
-              setState(() {
-                pickedRangeDate = pickedDate;
-                fetchBusinessDB();
-              });
-            } else {}
+            // DateTimeRange? pickedDate = await showDateRangePicker(
+            //   context: context,
+            //   firstDate: DateTime(DateTime.now().year - 1),
+            //   lastDate: DateTime(DateTime.now().year + 1),
+            //   currentDate: DateTime.now(),
+            //   confirmText: "SELECT",
+            //   saveText: "SELECT",
+            //   helpText: "Select Transaction Date Range",
+            //   initialDateRange: pickedRangeDate,
+            // );
+            // DateTime date = await showMonthPicker(
+            //   context: context,
+            //   firstDate: DateTime.now().subtract(Duration(days: 300)),
+            //   initialDate: DateTime.now(),
+            //   lastDate: DateTime.now().add(Duration(days: 30)),
+            // ) as DateTime;
+            // print(date);
+            // if (pickedDate != null) {
+            //   setState(() {
+            //     pickedRangeDate = pickedDate;
+            //     fetchBusinessDB();
+            //   });
+            // } else {}
           },
           child: Padding(
             padding: const EdgeInsets.all(10),

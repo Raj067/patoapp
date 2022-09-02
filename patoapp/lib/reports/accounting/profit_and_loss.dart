@@ -106,21 +106,22 @@ class ProfitAndLoss {
       DateTime date = dx.date;
       if (date.isAfter(pickedRangeDate.start) &&
           date.isBefore(pickedRangeDate.end)) {
-        try {
-          if (dx.isCashSale) {
-            for (Map dw in dx.details) {
-              cogas += dw['quantity'] * dw['purchases_price'];
-            }
-          } else if (dx.isInvoice) {
-            for (Map dw in dx.details[0]['data']) {
-              cogas += dw['quantity'] * dw['purchases_price'];
-            }
+        if (dx.isCashSale) {
+          for (Map dw in dx.details) {
+            dw['purchases_price'] == null
+                ? 0
+                : cogas += dw['quantity'] * dw['purchases_price'];
           }
-        } catch (e) {
-          // Purchases price is null
+        } else if (dx.isInvoice) {
+          for (Map dw in dx.details[0]['data']) {
+            dw['purchases_price'] == null
+                ? 0
+                : cogas += dw['quantity'] * dw['purchases_price'];
+          }
         }
+
         // for cost of sales
-        if (dx.isExpenses &&
+        else if (dx.isExpenses &&
             "cost of services" == dx.getDescriptionName().toLowerCase()) {
           cogas += dx.amount;
         }
