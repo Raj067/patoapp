@@ -33,8 +33,9 @@ DEBUG = True if ENVIRONMENT.get('DEBUG').lower() == 'true' else False
 
 ALLOWED_HOSTS = ALLOWED_HOSTS = [
     '139.144.63.15', '139.144.63.15:9000', '127.0.0.1', 'localhost',
-    'www.api.patowave.com', 'api.patowave.com']
-CSRF_TRUSTED_ORIGINS = ['https://api.patowave.com', 'http://api.patowave.com']
+    'www.api.patowave.com', 'api.patowave.com', 'www.patowave.com', 'patowave.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.patowave.com', 'http://api.patowave.com',
+                        'https://patowave.com', 'https://www.patowave.com']
 
 # Application definition
 
