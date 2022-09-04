@@ -48,7 +48,8 @@ class _SalesReportsState extends State<SalesReports> {
         DateTime date = DateTime.parse(dx['date']);
         if (date.isAfter(pickedRangeDate.start) &&
             date.isBefore(pickedRangeDate.end) &&
-            (dx['isCashSale'] == 1 || dx['isInvoice'] == 1)) {
+            (fromJsonBusiness(dx).isCashSale ||
+                fromJsonBusiness(dx).isInvoice)) {
           finalData.add(fromJsonBusiness(dx));
         }
       }
@@ -354,11 +355,9 @@ class _SalesReportsState extends State<SalesReports> {
     List<Widget> data = [];
     int val = 0;
     for (var element in allFinancialData) {
-      if (!element.isDeleted) {
-        val += element.amount;
-        data.add(_singleFinancialData(context, element));
-        data.add(const Divider(height: 0));
-      }
+      val += element.amount;
+      data.add(_singleFinancialData(context, element));
+      data.add(const Divider(height: 0));
     }
     totalAmount = val;
     return data;

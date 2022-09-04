@@ -29,7 +29,6 @@ class _CashFlowReportsState extends State<CashFlowReports> {
     end: DateTime.now(),
   );
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
-    data: [],
     pickedRangeDate: DateTimeRange(
       start: DateTime.now(),
       end: DateTime.now(),
@@ -49,8 +48,7 @@ class _CashFlowReportsState extends State<CashFlowReports> {
       }
     }
     finalData.sort((b, a) => a.date.compareTo(b.date));
-    profitAndLoss =
-        ProfitAndLoss(data: finalData, pickedRangeDate: pickedRangeDate);
+    profitAndLoss = ProfitAndLoss(pickedRangeDate: pickedRangeDate);
     selectedFinancialData = finalData;
     setState(() {});
   }

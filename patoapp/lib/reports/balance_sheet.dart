@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/db/db_business.dart';
 import 'package:patoapp/backend/db/db_products.dart';
-import 'package:patoapp/backend/models/business_financial_data.dart';
 import 'package:patoapp/backend/models/product_list.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
 import 'package:patoapp/themes/light_theme.dart';
@@ -25,27 +23,14 @@ class _BalanceSheetState extends State<BalanceSheet> {
   );
   double inventoryInHandBalanceSheetVal = 0;
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
-    data: [],
     pickedRangeDate: DateTimeRange(
       start: DateTime.now(),
       end: DateTime.now(),
     ),
   );
-  fetchBusinessDB() async {
-    // shop ID
-    String? activeShop = await storage.read(key: 'activeShop');
-    int shopId = int.parse(activeShop ?? '0');
-
-    List<Map<String, dynamic>> business = await DBHelperBusiness.query();
-    List<FinancialData> finalData = [];
-    for (Map<String, dynamic> dx in business) {
-      if (dx['shopId'] == shopId && dx['isInvoice'] == 0) {
-        finalData.add(fromJsonBusiness(dx));
-      }
-    }
-    finalData.sort((b, a) => a.date.compareTo(b.date));
+  fetchBusinessDB(){
     profitAndLoss =
-        ProfitAndLoss(data: finalData, pickedRangeDate: pickedRangeDate);
+        ProfitAndLoss(pickedRangeDate: pickedRangeDate);
     setState(() {});
   }
 

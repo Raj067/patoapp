@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/backend/controllers/customers_controller.dart';
 import 'package:patoapp/backend/controllers/products_controller.dart';
 // import 'package:patoapp/backend/db/db_customer.dart';
@@ -27,10 +28,10 @@ class ProfitAndLoss {
 
   var productList = Get.put(ProductController()).allProducts;
 
-  List<FinancialData> data;
+  List<FinancialData> data = Get.put(BusinessController()).allFinancialData;
   DateTimeRange pickedRangeDate;
   ProfitAndLoss({
-    required this.data,
+    // required this.data,
     required this.pickedRangeDate,
   });
   double accountPayable() {
@@ -108,15 +109,15 @@ class ProfitAndLoss {
           date.isBefore(pickedRangeDate.end)) {
         if (dx.isCashSale) {
           for (Map dw in dx.details) {
-            dw['purchases_price'] == null
+            dw['purchasesPrice'] == null
                 ? 0
-                : cogas += dw['quantity'] * dw['purchases_price'];
+                : cogas += dw['quantity'] * dw['purchasesPrice'];
           }
         } else if (dx.isInvoice) {
           for (Map dw in dx.details[0]['data']) {
-            dw['purchases_price'] == null
+            dw['purchasesPrice'] == null
                 ? 0
-                : cogas += dw['quantity'] * dw['purchases_price'];
+                : cogas += dw['quantity'] * dw['purchasesPrice'];
           }
         }
 

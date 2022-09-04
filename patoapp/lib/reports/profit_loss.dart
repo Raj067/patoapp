@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patoapp/api/apis.dart';
-import 'package:patoapp/backend/controllers/business_controller.dart';
 import 'package:patoapp/reports/accounting/profit_and_loss.dart';
 import 'package:patoapp/themes/light_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class ProfitLossReports extends StatefulWidget {
   const ProfitLossReports({Key? key}) : super(key: key);
@@ -23,10 +20,7 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
         .add(const Duration(days: 29)),
   );
 
-  final BusinessController _businessController = Get.put(BusinessController());
-
   ProfitAndLoss profitAndLoss = ProfitAndLoss(
-    data: [],
     pickedRangeDate: DateTimeRange(
       start: DateTime(DateTime.now().year, DateTime.now().month),
       end: DateTime(DateTime.now().year, DateTime.now().month)
@@ -35,7 +29,6 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
   );
   fetchBusinessDB() {
     profitAndLoss = ProfitAndLoss(
-      data: _businessController.allFinancialData,
       pickedRangeDate: pickedRangeDate,
     );
     setState(() {});
