@@ -6,8 +6,8 @@ const storage = FlutterSecureStorage();
 
 String siteUrl = "https://patowave.com/";
 
-String url = "http://localhost:8000";
-// String url = "https://api.patowave.com";
+// String url = "http://localhost:8000";
+String url = "https://api.patowave.com";
 String baseUrl = "$url/";
 String imageBaseUrl = url;
 var formatter = NumberFormat('#,###,###');

@@ -2,9 +2,13 @@ import 'package:patoapp/backend/sync/sync_business.dart';
 import 'package:patoapp/backend/sync/sync_customers.dart';
 import 'package:patoapp/backend/sync/sync_invoice.dart';
 import 'package:patoapp/backend/sync/sync_products.dart';
+import 'package:patoapp/backend/sync/sync_profile.dart';
 
 // To be put after every transction that affect other aspect
 syncAllImportantData() async {
+  // sync profile
+  SyncProfile syncProfile = SyncProfile();
+  syncProfile.fetchData();
   // Sync Customer
   SyncCustomers syncCustomer = SyncCustomers();
   syncCustomer.fetchData();
