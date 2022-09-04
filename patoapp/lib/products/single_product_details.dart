@@ -113,14 +113,12 @@ class _SingleProductDetailsState extends State<SingleProductDetails> {
                                 uploadedImage = await image!.readAsBytes();
 
                                 // ignore: use_build_context_synchronously
-                                await uploadImageFile(
+                                String link = await uploadImageFile(
                                   File(image.path),
                                   'api/update-product-thumbnail/${widget.product.id}/',
                                   context,
                                 );
-
-                                // widget.product.thumbnail = '$imageBaseUrl${dx['product_image']}';
-
+                                widget.product.thumbnail = link;
                                 _productController
                                     .productChangeUpdater(widget.product);
                                 setState(() {});

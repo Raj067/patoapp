@@ -44,25 +44,6 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
     return pngBytes;
   }
 
-  // String shopName = "";
-  // String address = "";
-  // String telphone = "";
-  // bool isLoading = true;
-  // fetchData() async {
-  //   // shop ID
-  //   String? activeShop = await storage.read(key: 'activeShop');
-  //   int shopId = int.parse(activeShop ?? '0');
-  //   List<Map<String, dynamic>> profile = await DBHelperProfile.getItem(shopId);
-
-  //   shopName = profile[0]['businessName'];
-  //   address = profile[0]['businessAddress'];
-  //   telphone = profile[0]['businessPhone'] == ''
-  //       ? '-'
-  //       : "+255${profile[0]['businessPhone']}";
-  //   isLoading = false;
-  //   setState(() {});
-  // }
-
   void _onItemTapped(int index) async {
     if (index == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -353,6 +334,39 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             widget.data.getDescriptionName(),
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              color: patowaveBlack,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
+        widget.data.isCashSale
+            ? Column(
+                children: [
+                  Container(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Customer:",
+                        style: TextStyle(
+                          color: patowaveBlack,
+                        ),
+                      ),
+                      Container(width: 20),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            widget.data.getDescriptionName() == 'Cash Sales'
+                                ? '-'
+                                : widget.data.getDescriptionName(),
                             textAlign: TextAlign.right,
                             style: const TextStyle(
                               color: patowaveBlack,

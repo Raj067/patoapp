@@ -211,11 +211,18 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                         uploadedImage = await image!.readAsBytes();
 
                         // ignore: use_build_context_synchronously
-                        await uploadImageFile(
+                        String link = await uploadImageFile(
                           File(image.path),
                           'api/update-shop-logo/',
                           context,
                         );
+                        widget.profileData.businessLogo = link;
+                        _profileController
+                            .myProfileChangeUpdaterProfile(widget.profileData);
+                        // update shop
+                        _profileController
+                            .myProfileChangeUpdater(widget.profileData);
+
                         setState(() {});
                       },
                       child: widget.profileData.businessLogo == ""
@@ -450,7 +457,7 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                     // update shop
                     _profileController
                         .myProfileChangeUpdater(widget.profileData);
-
+                    setState(() {});
                     // _controller.clear();
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
