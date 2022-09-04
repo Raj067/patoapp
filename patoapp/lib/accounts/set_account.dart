@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:patoapp/accounts/language_account.dart';
@@ -6,6 +7,8 @@ import 'package:patoapp/animations/error.dart';
 import 'package:patoapp/animations/please_wait.dart';
 import 'package:patoapp/animations/time_out.dart';
 import 'package:patoapp/api/apis.dart';
+import 'package:patoapp/backend/controllers/profile_controller.dart';
+import 'package:patoapp/backend/models/profile_details.dart';
 // import 'package:patoapp/pages/index.dart';
 import 'package:patoapp/themes/light_theme.dart';
 
@@ -19,6 +22,7 @@ class SetAccountPage extends StatefulWidget {
 class _SetAccountPageState extends State<SetAccountPage> {
   final setAccountFormKey = GlobalKey<FormState>();
 
+  ProfileController get _profileController => Get.put(ProfileController());
   TextEditingController businessName = TextEditingController();
   TextEditingController businessEmail = TextEditingController();
   TextEditingController businessAddress = TextEditingController();
@@ -206,6 +210,17 @@ class _SetAccountPageState extends State<SetAccountPage> {
       );
 
       if (response.statusCode == 201) {
+        // Activate shop
+        ProfileData profile = ProfileData(
+          id: jsonDecode(response.body)['id'],
+          businessName: businessName.text,
+          businessEmail: businessEmail.text,
+          businessAddress: businessAddress.text,
+          instagramName: instagramName.text,
+        );
+        // widget.refreshData(); profileChangeAdd
+        _profileController.profileChangeAdd(profile);
+        _profileController.myProfileChangeUpdaterProfile(profile);
         await storage.write(
             key: "activeShop", value: "${jsonDecode(response.body)['id']}");
         // ignore: use_build_context_synchronously
