@@ -333,9 +333,9 @@ class _SalesReportsState extends State<SalesReports> {
             ),
           ),
           Container(width: 20),
-          data.isIncome()
+          data.isInvoice
               ? Text(
-                  "Tsh ${formatter.format(data.amount)}",
+                  "Tsh ${formatter.format(data.details[0]['total_amount'])}",
                   style: const TextStyle(
                     color: patowaveGreen,
                   ),
@@ -343,7 +343,7 @@ class _SalesReportsState extends State<SalesReports> {
               : Text(
                   "Tsh ${formatter.format(data.amount)}",
                   style: const TextStyle(
-                    color: patowaveErrorRed,
+                    color: patowaveGreen,
                   ),
                 ),
         ],

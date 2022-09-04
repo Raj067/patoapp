@@ -443,6 +443,7 @@ def create_invoice_api(request):
         data = {
             'invoiceId': reg.id,
             'date': reg.created_at,
+            'name':reg.customer.customer_name,
             "details": [{
                 "total_amount": reg.total_amount,
                 "due_date": reg.date_due,

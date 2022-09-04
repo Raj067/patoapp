@@ -942,12 +942,12 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           isPaymentOut: false,
           isPurchases: false,
           isInvoice: true,
-          name: myDataCustomer.fullName,
+          name: jsonDecode(response.body)['name'],
           description: invoiceDescription.text == ''
               ? 'Invoice'
               : invoiceDescription.text,
           details: jsonDecode(response.body)['details'],
-          amount: totalAmount.toInt() - discountAmount.toInt(),
+          amount: receivedAmount.toInt(),
           receipt: "$invoiceNo",
           discount: discountAmount.toInt(),
           id: "invoice-${jsonDecode(response.body)['invoiceId']}",

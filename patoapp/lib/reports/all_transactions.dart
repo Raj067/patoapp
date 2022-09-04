@@ -57,7 +57,8 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.allTransactions,
+        title: Text(
+          AppLocalizations.of(context)!.allTransactions,
           style: const TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -225,12 +226,19 @@ class _AllTransactionsReportsState extends State<AllTransactionsReports> {
           ),
           Container(width: 20),
           data.isIncome()
-              ? Text(
-                  "Tsh ${formatter.format(data.amount)}",
-                  style: const TextStyle(
-                    color: patowaveGreen,
-                  ),
-                )
+              ? data.isInvoice
+                  ? Text(
+                      "Tsh ${formatter.format(data.details[0]['total_amount'])}",
+                      style: const TextStyle(
+                        color: patowaveGreen,
+                      ),
+                    )
+                  : Text(
+                      "Tsh ${formatter.format(data.amount)}",
+                      style: const TextStyle(
+                        color: patowaveGreen,
+                      ),
+                    )
               : Text(
                   "Tsh ${formatter.format(data.amount)}",
                   style: const TextStyle(

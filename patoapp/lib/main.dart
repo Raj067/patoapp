@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
 
   updateVersion() async {
     String? lang = await storage.read(key: 'languageCode');
-    _locale = Locale(lang ?? 'en', '');
+    _locale = Locale(lang ?? 'sw', '');
     _checkVersion = await checkVersion();
     setState(() {});
   }
@@ -150,8 +150,8 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('sw', ''), // Swahili, no country code
+        Locale('sw', ''), // English, no country code
+        Locale('en', ''), // Swahili, no country code
       ],
       locale: _locale,
       localeResolutionCallback: (locale, supportedLocales) {

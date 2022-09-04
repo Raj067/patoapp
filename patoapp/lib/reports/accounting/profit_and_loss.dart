@@ -109,15 +109,15 @@ class ProfitAndLoss {
           date.isBefore(pickedRangeDate.end)) {
         if (dx.isCashSale) {
           for (Map dw in dx.details) {
-            dw['purchasesPrice'] == null
+            dw['purchases_price'] == null
                 ? 0
-                : cogas += dw['quantity'] * dw['purchasesPrice'];
+                : cogas += dw['quantity'] * dw['purchases_price'];
           }
         } else if (dx.isInvoice) {
           for (Map dw in dx.details[0]['data']) {
-            dw['purchasesPrice'] == null
+            dw['purchases_price'] == null
                 ? 0
-                : cogas += dw['quantity'] * dw['purchasesPrice'];
+                : cogas += dw['quantity'] * dw['purchases_price'];
           }
         }
 
