@@ -438,12 +438,26 @@ class _EditMyBusinessState extends State<EditMyBusiness> {
                     final file = File('${dir.path}/signature.png');
                     await file.writeAsBytes(myImage!);
                     // ignore: use_build_context_synchronously
-                    await uploadImageFile(
+                    String link = await uploadImageFile(
                       File(file.path),
                       'api/update-shop-signature/',
                       context,
                     );
-                    _controller.clear();
+                    // print(link);
+                    widget.profileData.businessSignature = link;
+                    _profileController
+                        .myProfileChangeUpdaterProfile(widget.profileData);
+                    // update shop
+                    _profileController
+                        .myProfileChangeUpdater(widget.profileData);
+
+                    // _controller.clear();
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Saved Successfully"),
+                      ),
+                    );
                   },
                   child: const Text("Save"),
                 ),

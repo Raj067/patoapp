@@ -265,6 +265,7 @@ class _TopProfileIconState extends State<TopProfileIcon> {
             ),
           ),
           Container(height: 10),
+          // Text(_profileController.myProfile.value.businessSignature),
           Obx(
             () => _profileController.myProfile.value.businessSignature == ""
                 ? Card(

@@ -20,7 +20,7 @@ class _ProfitLossReportsState extends State<ProfitLossReports> {
   DateTimeRange pickedRangeDate = DateTimeRange(
     start: DateTime(DateTime.now().year, DateTime.now().month),
     end: DateTime(DateTime.now().year, DateTime.now().month)
-        .add(const Duration(days: 30)),
+        .add(const Duration(days: 29)),
   );
 
   final BusinessController _businessController = Get.put(BusinessController());

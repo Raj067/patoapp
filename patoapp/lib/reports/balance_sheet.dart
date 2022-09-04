@@ -21,7 +21,7 @@ class _BalanceSheetState extends State<BalanceSheet> {
   DateTimeRange pickedRangeDate = DateTimeRange(
     start: DateTime(DateTime.now().year, DateTime.now().month),
     end: DateTime(DateTime.now().year, DateTime.now().month)
-        .add(const Duration(days: 30)),
+        .add(const Duration(days: 29)),
   );
   double inventoryInHandBalanceSheetVal = 0;
   ProfitAndLoss profitAndLoss = ProfitAndLoss(

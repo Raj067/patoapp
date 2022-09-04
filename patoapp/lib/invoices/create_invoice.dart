@@ -42,7 +42,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
   String? selectedProductValueSales;
 
   String selectedUnit = "Items";
-  String customerName = '';
 
   DateTime transactionDate = DateTime.now();
   List<SingleProduct> addedItemsToSales = [];
@@ -910,12 +909,18 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           product.quantity = (product.quantity - dx['quantity']).toInt();
           _productController.productChangeUpdater(product);
         }
+
+        // Customer
+        SingleCustomer myDataCustomer = _customerController.allCustomers
+            .firstWhere(
+                (element) => element.id == int.parse(selectedCustmer ?? '1'));
+
         SingleInvoice myData = SingleInvoice(
           issuedDate: DateTime.now().toIso8601String(),
           id: jsonDecode(response.body)['invoiceId'],
           shopId: shopId,
           customerId: int.parse(selectedCustmer ?? '1'),
-          fullName: customerName,
+          fullName: myDataCustomer.fullName,
           amountReceived: receivedAmount.toInt(),
           totalAmount: totalAmount.toInt() - discountAmount.toInt(),
           discount: discountAmount.toInt(),
@@ -937,7 +942,7 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
           isPaymentOut: false,
           isPurchases: false,
           isInvoice: true,
-          name: customerName,
+          name: myDataCustomer.fullName,
           description: invoiceDescription.text == ''
               ? 'Invoice'
               : invoiceDescription.text,
@@ -951,9 +956,6 @@ class _CreateNewInvoiceState extends State<CreateNewInvoice> {
         _businessController.businessChangeAdd(myFinancialData);
 
         // Update customer
-        SingleCustomer myDataCustomer = _customerController.allCustomers
-            .firstWhere(
-                (element) => element.id == int.parse(selectedCustmer ?? '1'));
 
         Map payment = {
           "name": "Sale Invoice",

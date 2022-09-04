@@ -197,7 +197,7 @@ def update_shop_logo(request):
         shop = Shop.objects.get(id=int(request.data.get('shopId')))
         shop.logo = request.data.get('file')
         shop.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'img': shop.logo.url})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -207,7 +207,7 @@ def update_shop_signature(request):
         shop = Shop.objects.get(id=int(request.data.get('shopId')))
         shop.signature = request.data.get('file')
         shop.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED, data={'img': shop.signature.url})
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -418,7 +418,7 @@ def create_invoice_api(request):
             invoice_no=str(invoiceNo),
             description=description,
             customer=Customer.objects.get(id=customer),
-            updated_at= timezone.make_aware(transactionDate),
+            updated_at=timezone.make_aware(transactionDate),
         )
         # datetime.date.
         reg.save()
@@ -597,7 +597,7 @@ def expenses_transaction_api(request):
             bill_no=str(billNo),
             description=description,
             expenses_category=category,
-            updated_at= timezone.make_aware(transactionDate),
+            updated_at=timezone.make_aware(transactionDate),
         )
         reg.save()
         if customer:
@@ -642,7 +642,7 @@ def cash_sales_transaction_api(request):
             discount=discount,
             # description=description,
             receipt_no=str(request.data.get('receiptNo')),
-            updated_at= timezone.make_aware(transactionDate),
+            updated_at=timezone.make_aware(transactionDate),
         )
 
         reg.save()

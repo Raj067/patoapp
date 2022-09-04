@@ -57,7 +57,7 @@ class _InventoryReportsState extends State<InventoryReports> {
             });
           }
         }
-      } else {
+      } else if(data.isPurchases||data.isCashSale) {
         data.isPurchases
             ? stockIn += dx['quantity']
             : stockOut += dx['quantity'];
