@@ -1,0 +1,44 @@
+{
+  "pages": [
+    {
+      "name": "Dashboard eCommerce",
+      "icon": "bx-home-circle",
+      "url": "dashboards/ecommerce"
+    },
+    {
+      "name": "Dashboard eCommerce2",
+      "icon": "bx-home-circle",
+      "url": "dashboards/ecommerce"
+    }
+  ],
+  "files": [
+    {
+      "name": "Class Attendance",
+      "subtitle": "By Tommy Shelby",
+      "src": "img/icons/misc/search-xls.png",
+      "meta": "17kb",
+      "url": "javascript:;"
+    },
+    {
+      "name": "Class Attendance2",
+      "subtitle": "By Tommy Shelby",
+      "src": "img/icons/misc/search-xls.png",
+      "meta": "17kb",
+      "url": "javascript:;"
+    }
+  ],
+  "members": [
+    {
+      "name": "John Doe",
+      "subtitle": "Admin",
+      "src": "img/avatars/1.png",
+      "url": "app/user/view/account"
+    },
+    {
+      "name": "John Doe2",
+      "subtitle": "Admin",
+      "src": "img/avatars/1.png",
+      "url": "app/user/view/account"
+    }
+  ]
+}

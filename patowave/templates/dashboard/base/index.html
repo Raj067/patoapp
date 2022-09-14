@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed " dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name="description"
+        content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Minfoxy built for developers!" />
+    <meta name="keywords" content="admin,minfoxy">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/dashboard/custom/images/icon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/dashboard/assets/fonts/fontawesome.css">
+
+    <!-- Core CSS -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.write('<link rel="stylesheet" href="/static/dashboard/assets/css/core-dark.css">')
+            document.write('<link rel="stylesheet" href="/static/dashboard/assets/css/theme-semi-dark-dark.css">')
+
+        } else {
+            document.write('<link rel="stylesheet" href="/static/dashboard/assets/css/core.css"/>')
+            document.write('<link rel="stylesheet" href="/static/dashboard/assets/css/theme-semi-dark.css"/>')
+        }
+    </script>
+    <link rel="stylesheet" href="/static/dashboard/assets/css/demo.css" />
+
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/typeahead.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/select2.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/formValidation.min.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="/static/dashboard/assets/css/libs/flatpickr.css" />
+
+
+
+    <!-- Helpers -->
+    <script src="/static/dashboard/assets/js/helpers.js"></script>
+
+    <script src="/static/dashboard/assets/js/config.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar  ">
+        <div class="layout-container">
+            <!-- Menu -->
+            {% include 'dashboard/base/menu.html' %}
+            <!-- / Menu -->
+            <!-- for highliting the side button -->
+            {% block active %}
+            <!--  -->
+            {% endblock %}
+            <!-- end -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                {% include 'dashboard/base/nav-bar.html' %}
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    {% include 'dashboard/base/toasts.html' %}
+                    <!-- Content -->
+                    {% block content %}
+                    <!--  -->
+                    {% endblock %}
+                    <!-- / Content -->
+
+                    <!-- Footer -->
+                    {% include 'dashboard/base/footer.html' %}
+                    <!-- / Footer -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target"></div>
+
+    </div>
+    <!-- / Layout wrapper -->
+
+
+    <!-- Core JS -->
+    {% include 'dashboard/base/script.html' %}
+    <!--  -->
+    {% block pagejs %}
+    <!--  -->
+    {% endblock %}
+
+</body>
+
+</html>
