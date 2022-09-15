@@ -1,26 +1,27 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<div id="nav-menu-main">
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
 
-    <div class="app-brand demo ">
-        <a href="/dashboard/" class="app-brand-link">
+        <div class="app-brand demo ">
+            <a href="/dashboard/" class="app-brand-link">
 
-            <span class="app-brand-logo demo">
-            </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2"
-                style="color: #33796f!important;text-transform: none!important;">PatoWave</span>
-        </a>
+                <span class="app-brand-logo demo">
+                </span>
+                <span class="app-brand-text demo menu-text fw-bolder ms-2"
+                    style="color: #33796f!important;text-transform: none!important;">PatoWave</span>
+            </a>
 
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
-    </div>
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+        </div>
 
-    <div class="menu-inner-shadow"></div>
+        <div class="menu-inner-shadow"></div>
 
 
 
-    <ul class="menu-inner py-1" id="my-nav-aside">
-        <li class="menu-item" id="menu1">
+        <ul class="menu-inner py-1" id="my-nav-aside">
+            <!-- <li class="menu-item" id="menu1">
             <a href="/dashboard/#overview/" class="menu-link" onclick="setActive(1)">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Overview">Overview</div>
@@ -80,20 +81,7 @@
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Documents">Documents</div>
             </a>
-        </li>
-    </ul>
-</aside>
-<script>
-    function setActive(id = 1) {
-        for (let index = 1; index < 11; index++) {
-            if (index != id) {
-                var data = document.getElementById(`menu${index}`)
-                data.className = 'menu-item'
-            }
-        }
-        var data = document.getElementById(`menu${id}`)
-        data.className = 'menu-item active'
-
-    }
-    setActive(id = 1);
-</script>
+        </li> -->
+        </ul>
+    </aside>
+</div>
