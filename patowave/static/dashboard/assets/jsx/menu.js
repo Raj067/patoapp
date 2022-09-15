@@ -8,20 +8,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function Overview(params) {
-    return React.createElement(
-        'h1',
-        null,
-        'Overview'
-    );
-}
-function Sales(params) {
-    return React.createElement(
-        'h1',
-        null,
-        'Sales'
-    );
-}
+var domContainer = document.getElementById('root');
+var root = ReactDOM.createRoot(domContainer);
+root.render(React.createElement(Overview));
 
 var NavigationMenu = function (_React$Component) {
     _inherits(NavigationMenu, _React$Component);
@@ -110,7 +99,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#expenses/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 3 });
+                                    root.render(React.createElement(Expenses));
+                                    _this2.setState({ selected: 3 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bxs-user-account' }),
                             React.createElement(
@@ -126,7 +116,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#contacts/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 4 });
+                                    root.render(React.createElement(Contacts));
+                                    _this2.setState({ selected: 4 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -142,7 +133,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#products/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 5 });
+                                    root.render(React.createElement(Products));
+                                    _this2.setState({ selected: 5 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -158,7 +150,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#warehouse/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 6 });
+                                    root.render(React.createElement(Warehouse));
+                                    _this2.setState({ selected: 6 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -174,7 +167,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#cash&bank/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 7 });
+                                    root.render(React.createElement(Bank));
+                                    _this2.setState({ selected: 7 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -190,7 +184,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#accounting/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 8 });
+                                    root.render(React.createElement(Accounting));
+                                    _this2.setState({ selected: 8 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -206,7 +201,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#reports/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 9 });
+                                    root.render(React.createElement(Reports));
+                                    _this2.setState({ selected: 9 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(
@@ -222,7 +218,8 @@ var NavigationMenu = function (_React$Component) {
                         React.createElement(
                             'a',
                             { href: '/dashboard/#documents/', className: 'menu-link', onClick: function onClick() {
-                                    return _this2.setState({ selected: 10 });
+                                    root.render(React.createElement(Documents));
+                                    _this2.setState({ selected: 10 });
                                 } },
                             React.createElement('i', { className: 'menu-icon tf-icons bx bx-calendar' }),
                             React.createElement(

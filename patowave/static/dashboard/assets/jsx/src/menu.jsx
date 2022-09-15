@@ -1,11 +1,10 @@
 'use strict';
 
-function Overview(params) {
-    return <h1>Overview</h1>
-}
-function Sales(params) {
-    return <h1>Sales</h1>
-}
+
+const domContainer = document.getElementById('root');
+const root = ReactDOM.createRoot(domContainer);
+root.render(React.createElement(Overview));
+
 class NavigationMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -34,8 +33,6 @@ class NavigationMenu extends React.Component {
 
     <div className="menu-inner-shadow"></div>
 
-
-
     <ul className="menu-inner py-1" id="my-nav-aside">
         <li className={this.state.selected == 1?"menu-item active":"menu-item"}>
             <a href="/dashboard/#overview/" className="menu-link" onClick ={() => {
@@ -57,49 +54,71 @@ class NavigationMenu extends React.Component {
             </a>
         </li>
         <li className={this.state.selected == 3?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#expenses/" className="menu-link"  onClick ={() => this.setState({ selected: 3 })}>
+                <a href="/dashboard/#expenses/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Expenses));
+                    this.setState({ selected: 3 })
+                }}>
                 <i className='menu-icon tf-icons bx bxs-user-account'></i>
                 <div data-i18n="Expenses">Expenses</div>
             </a>
         </li>
         <li className={this.state.selected == 4?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#contacts/" className="menu-link"  onClick ={() => this.setState({ selected: 4 })}>
+                <a href="/dashboard/#contacts/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Contacts));
+                this.setState({ selected: 4 })}}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Contacts">Contacts</div>
             </a>
         </li>
         <li className={this.state.selected == 5?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#products/" className="menu-link"  onClick ={() => this.setState({ selected: 5 })}>
+            <a href="/dashboard/#products/" className="menu-link"  onClick ={() => {
+                root.render(React.createElement(Products));
+                this.setState({ selected: 5 })}}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Products">Products</div>
             </a>
         </li>
         <li className={this.state.selected == 6?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#warehouse/" className="menu-link"  onClick ={() => this.setState({ selected: 6 })}>
+                <a href="/dashboard/#warehouse/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Warehouse));
+                    this.setState({ selected: 6 })
+                }}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Warehouse">Warehouse</div>
             </a>
         </li>
         <li className={this.state.selected == 7?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#cash&bank/" className="menu-link"  onClick ={() => this.setState({ selected: 7 })}>
+                <a href="/dashboard/#cash&bank/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Bank));
+                    this.setState({ selected: 7 })
+                }}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Cash & Bank">Cash & Bank</div>
             </a>
         </li>
         <li className={this.state.selected == 8?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#accounting/" className="menu-link"  onClick ={() => this.setState({ selected: 8 })}>
+                <a href="/dashboard/#accounting/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Accounting));
+                    this.setState({ selected: 8 })
+                }}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Accounting">Accounting</div>
             </a>
         </li>
         <li className={this.state.selected == 9?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#reports/" className="menu-link"  onClick ={() => this.setState({ selected: 9 })}>
+                <a href="/dashboard/#reports/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Reports));
+                    this.setState({ selected: 9 })
+                }}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Reports">Reports</div>
             </a>
         </li>
         <li className={this.state.selected == 10?"menu-item active":"menu-item"}>
-            <a href="/dashboard/#documents/" className="menu-link"  onClick ={() => this.setState({ selected: 10 })}>
+                <a href="/dashboard/#documents/" className="menu-link" onClick={() => {
+                    root.render(React.createElement(Documents));
+                    this.setState({ selected: 10 })
+                }}>
                 <i className="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Documents">Documents</div>
             </a>
