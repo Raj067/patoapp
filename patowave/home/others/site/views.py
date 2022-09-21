@@ -21,3 +21,7 @@ def single_tutorial(request, slug, *args, **kwargs):
 
 def tutorial(request, *args, **kwargs):
     return render(request, 'site/tutorial.html', {})
+
+
+def faqs(request, *args, **kwargs):
+    return render(request, 'site/faqs.html', {})

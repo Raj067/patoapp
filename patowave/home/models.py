@@ -454,3 +454,20 @@ class Tutorial(models.Model):
 
     def get_absolute_url(self):
         return reverse('single_tutorial', kwargs={'slug': self.slug})
+
+
+class Faq(models.Model):
+    question = models.CharField(max_length=500)
+    answer = HTMLField()
+    
+    english = models.BooleanField(default=True)
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+    def __str__(self) -> str:
+        return self.question
+
