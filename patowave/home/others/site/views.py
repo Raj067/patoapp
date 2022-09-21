@@ -13,3 +13,11 @@ def single_blog(request, slug, *args, **kwargs):
 
 def blog(request, *args, **kwargs):
     return render(request, 'site/blog.html', {})
+
+
+def single_tutorial(request, slug, *args, **kwargs):
+    return render(request, 'site/single_tutorial.html', {})
+
+
+def tutorial(request, *args, **kwargs):
+    return render(request, 'site/tutorial.html', {})

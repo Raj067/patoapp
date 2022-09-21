@@ -79,6 +79,10 @@ class BloggingAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'published_at']
 
 
+class TutorialAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'published_at']
+
+
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(ShopUser, ShopUserAdmin)
 admin.site.register(Product, ProductAdmin)
@@ -100,6 +104,7 @@ admin.site.register(Shedule)
 admin.site.register(InventoryTrack)
 admin.site.register(VersionTrack)
 admin.site.register(Blogging, BloggingAdmin)
+admin.site.register(Tutorial, TutorialAdmin)
 
 admin.site.site_header = "Patowave Admin"
 admin.site.site_title = "Patowave Admin Portal"
