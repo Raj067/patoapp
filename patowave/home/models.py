@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-
+from tinymce.models import HTMLField
+from django.urls import reverse
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -403,3 +404,28 @@ class VersionTrack(models.Model):
 
     def __str__(self) -> str:
         return self.version_name
+
+
+class Blogging(models.Model):
+    content = HTMLField()
+    author = models.CharField(max_length=500)
+    title = models.CharField(max_length=500)
+    metadata = models.TextField()
+    keywords = models.CharField(max_length=500)
+    published = models.BooleanField(default=True)
+    featured_image = models.ImageField(upload_to='blogs/')
+    slug = models.SlugField(unique=True)
+    english = models.BooleanField(default=True)
+    published_at = models.DateTimeField()
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+    def __str__(self) -> str:
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('single_blog', kwargs={'slug': self.slug})
