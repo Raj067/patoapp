@@ -31,10 +31,13 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('main-dashboard/admin/', admin.site.urls),
+    path('api/', include('home.others.api.urls')),
+    path('dashboard/', include('home.others.dashboard.urls')),
+    path('', include('home.others.web.urls')),
+    path('', include('home.urls')),
+    path('accounts/', include('accounts.urls')),
     path('api-auth/', include('rest_framework.urls')),
 ]
-
-urlpatterns += accounts_urls + home_urls
 
 urlpatterns += staticfiles_urlpatterns()
 

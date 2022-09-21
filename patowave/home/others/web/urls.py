@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import *
 
-web_urls = [
+urlpatterns = [
     path('', home_page, name="home_page"),
     path('demo/', demo_page, name="demo_page"),
     path('about/', about_page, name="about_page"),
