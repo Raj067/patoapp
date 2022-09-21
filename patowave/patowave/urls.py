@@ -33,7 +33,7 @@ urlpatterns = [
     path('main-dashboard/admin/', admin.site.urls),
     path('api/', include('home.others.api.urls')),
     path('dashboard/', include('home.others.dashboard.urls')),
-    path('beta/', include('home.others.web.urls')),
+    path('beta/', include('home.others.site.urls')),
     path('', include('home.urls')),
     path('accounts/', include('accounts.urls')),
     path('api-auth/', include('rest_framework.urls')),
