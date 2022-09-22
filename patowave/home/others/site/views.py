@@ -37,3 +37,7 @@ def terms(request, *args, **kwargs):
 
 def policies(request, *args, **kwargs):
     return render(request, 'site/policies.html', {})
+
+
+def about(request, *args, **kwargs):
+    return render(request, 'site/about.html', {})
