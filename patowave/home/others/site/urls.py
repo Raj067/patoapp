@@ -8,4 +8,7 @@ urlpatterns = [
     path('tutorial/', tutorial, name='tutorial'),
     path('tutorial/<slug:slug>/', single_tutorial, name='single_tutorial'),
     path('faqs/', faqs, name='faqs'),
+    path('contact-us/', contact, name='contact'),
+    path('terms-and-conditions/', terms, name='terms'),
+    path('privacy-policy/', policies, name='policies'),
 ]

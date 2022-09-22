@@ -25,3 +25,15 @@ def tutorial(request, *args, **kwargs):
 
 def faqs(request, *args, **kwargs):
     return render(request, 'site/faqs.html', {})
+
+
+def contact(request, *args, **kwargs):
+    return render(request, 'site/contact.html', {})
+
+
+def terms(request, *args, **kwargs):
+    return render(request, 'site/terms.html', {})
+
+
+def policies(request, *args, **kwargs):
+    return render(request, 'site/policies.html', {})
