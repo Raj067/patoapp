@@ -18,12 +18,12 @@ def contact_page(request, *args, **kwargs):
     return render(request, 'web/contact.html', {})
 
 
-def privacy_policy(request, *args, **kwargs):
-    return render(request, 'privacy_policy.html', {})
+# def privacy_policy(request, *args, **kwargs):
+#     return render(request, 'privacy_policy.html', {})
 
 
-def terms_conditions(request, *args, **kwargs):
-    return render(request, 'terms.html', {})
+# def terms_conditions(request, *args, **kwargs):
+#     return render(request, 'terms.html', {})
 
 def forgot_password(request, *args, **kwargs):
     return render(request, 'forgot-password.html', {})
