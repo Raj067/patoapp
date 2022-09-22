@@ -270,9 +270,9 @@ body.ltr .sp-megamenu-parent .sp-dropdown .sp-dropdown-items .sp-has-child>a::af
     -webkit-box-shadow: 0 2px 3px rgba(96, 96, 96, .1);
     -moz-box-shadow: 0 2px 3px rgba(96, 96, 96, .1);
     box-shadow: 0 2px 3px rgba(96, 96, 96, .1);
-    -webkit-border-radius: 8px;
+    /* -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
-    -o-border-radius: 8px;
+    -o-border-radius: 8px; */
     border: solid 1px #eee;
 }
 

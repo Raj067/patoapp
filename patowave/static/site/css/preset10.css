@@ -10,7 +10,7 @@ body,
 }
 
 .sp-preloader>div {
-    background: #ff523d;
+    background: #2F695F;
 }
 
 .sp-preloader>div:after {
@@ -18,7 +18,7 @@ body,
 }
 
 #sp-top-bar {
-    background: #ff523d;
+    background: #2F695F;
     color: #fff;
 }
 
@@ -37,7 +37,7 @@ a {
 a:hover,
 a:focus,
 a:active {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 h1 a:hover,
@@ -46,7 +46,7 @@ h3 a:hover,
 h4 a:hover,
 h5 a:hover,
 h6 a:hover {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .tags>li {
@@ -54,14 +54,14 @@ h6 a:hover {
 }
 
 .tags>li a {
-    background: #ff523d;
+    background: #2F695F;
     color: #fff;
-    border: 1px solid #ff523d;
+    border: 1px solid #2F695F;
 }
 
 .tags>li a:hover {
     background: transparent;
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .article-social-share .social-share-icon ul li a {
@@ -83,12 +83,12 @@ h6 a:hover {
 }
 
 .sp-megamenu-parent>li:hover>a {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-megamenu-parent>li.active>a,
 .sp-megamenu-parent>li.active:hover>a {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-megamenu-parent .sp-dropdown .sp-dropdown-inner {
@@ -100,11 +100,11 @@ h6 a:hover {
 }
 
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item>a:hover {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item.active>a {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-megamenu-parent .sp-mega-group>li>a {
@@ -118,7 +118,7 @@ h6 a:hover {
 #offcanvas-toggler>.fa:hover,
 #offcanvas-toggler>.fa:focus,
 #offcanvas-toggler>.fa:active {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .offcanvas-menu {
@@ -147,21 +147,21 @@ h6 a:hover {
 }
 
 .btn-primary {
-    border-color: #ff523d;
-    background-color: #ff523d;
+    border-color: #2F695F;
+    background-color: #2F695F;
 }
 
 .btn-primary:hover {
-    border-color: #ff523d;
-    background-color: #ff523d;
+    border-color: #2F695F;
+    background-color: #2F695F;
 }
 
 ul.social-icons>li a:hover {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-page-title {
-    background: #ff523d;
+    background: #2F695F;
 }
 
 .layout-boxed .body-innerwrapper {
@@ -173,7 +173,7 @@ ul.social-icons>li a:hover {
 }
 
 .sp-module ul>li>a:hover {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-module .latestnews>div>a {
@@ -181,15 +181,15 @@ ul.social-icons>li a:hover {
 }
 
 .sp-module .latestnews>div>a:hover {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .sp-module .tagscloud .tag-name:hover {
-    background: #ff523d;
+    background: #2F695F;
 }
 
 .search .btn-toolbar button {
-    background: #ff523d;
+    background: #2F695F;
 }
 
 #sp-footer,
@@ -198,7 +198,7 @@ ul.social-icons>li a:hover {
 }
 
 .sp-comingsoon body {
-    background-color: #ff523d;
+    background-color: #2F695F;
 }
 
 .pagination>li>a,
@@ -215,29 +215,29 @@ ul.social-icons>li a:hover {
 
 .pagination>.active>a,
 .pagination>.active>span {
-    border-color: #ff523d;
-    background-color: #ff523d;
+    border-color: #2F695F;
+    background-color: #2F695F;
 }
 
 .pagination>.active>a:hover,
 .pagination>.active>span:hover,
 .pagination>.active>a:focus,
 .pagination>.active>span:focus {
-    border-color: #ff523d;
-    background-color: #ff523d;
+    border-color: #2F695F;
+    background-color: #2F695F;
 }
 
 .error-code,
 .coming-soon-number {
-    color: #ff523d;
+    color: #2F695F;
 }
 
 .text-primary {
-    color: #ff523d !important;
+    color: #2F695F !important;
 }
 
 .color-main {
-    color: #ff523d !important;
+    color: #2F695F !important;
 }
 
 .text-secondary {
@@ -245,6 +245,6 @@ ul.social-icons>li a:hover {
 }
 
 :root {
-    --maincolor: #ff523d;
+    --maincolor: #2F695F;
     --secondcolor: #42558c;
 }

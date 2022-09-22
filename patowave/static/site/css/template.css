@@ -289,7 +289,7 @@ ul.social-icons>li:not(:last-child) {
 
 #sp-header.header-with-modal-menu a:hover,
 #sp-header.header-with-modal-menu a:focus {
-    color: #ed145b
+    color: #2F695F
 }
 
 #sp-header.header-with-modal-menu .sp-contact-info>li {
@@ -487,7 +487,7 @@ ul.social-icons>li:not(:last-child) {
 }
 
 #sp-header-topbar a:hover {
-    color: #ed145b
+    color: #2F695F
 }
 
 #sp-header-topbar .sp-contact-info {
@@ -605,7 +605,7 @@ body.modal-menu-active {
 #modal-menu .sp-megamenu-parent>li:hover>span,
 #modal-menu .sp-megamenu-parent>li.active>a,
 #modal-menu .sp-megamenu-parent>li.active>span {
-    color: #ed145b
+    color: #2F695F
 }
 
 #modal-menu .sp-megamenu-parent>li:hover>a:after,
@@ -744,7 +744,7 @@ body.modal-menu-active {
 
 #modal-menu .modules-wrapper a:hover,
 #modal-menu .modules-wrapper a:focus {
-    color: #ed145b
+    color: #2F695F
 }
 
 #modal-menu .modules-wrapper .sp-module {
@@ -2559,7 +2559,7 @@ body.contentpane.com-contact.view-contacts.layout-modal .container-popup #adminF
     float: left
 }
 
-.com-media.view-imagesList ul.manager>li.thumbnail>a {}
+/* .com-media.view-imagesList ul.manager>li.thumbnail>a {} */
 
 .com-media.view-imagesList ul.manager>li.thumbnail>a.selected {
     border: 2px solid green;
@@ -3407,31 +3407,31 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 
 @keyframes audioWave {
     25% {
-        background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+        background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
         background-repeat: no-repeat;
         background-size: 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em
     }
 
     37.5% {
-        background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+        background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
         background-repeat: no-repeat;
         background-size: 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em
     }
 
     50% {
-        background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+        background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
         background-repeat: no-repeat;
         background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em
     }
 
     62.5% {
-        background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+        background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
         background-repeat: no-repeat;
         background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em
     }
 
     75% {
-        background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+        background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
         background-repeat: no-repeat;
         background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em
     }
@@ -3580,7 +3580,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 }
 
 .sp-pre-loader .sp-loader-clock {
-    border: 3px solid #ed145b;
+    border: 3px solid #2F695F;
     border-radius: 60px;
     bottom: 0;
     height: 80px;
@@ -3595,7 +3595,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 .sp-pre-loader .sp-loader-clock:after {
     content: '';
     position: absolute;
-    background-color: #ed145b;
+    background-color: #2F695F;
     top: 2px;
     left: 48%;
     height: 38px;
@@ -3610,7 +3610,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 .sp-pre-loader .sp-loader-clock:before {
     content: '';
     position: absolute;
-    background-color: #ed145b;
+    background-color: #2F695F;
     top: 6px;
     left: 48%;
     height: 35px;
@@ -3627,7 +3627,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
     height: 80px;
     width: 80px;
     border-radius: 80px;
-    border: 3px solid fade(#ed145b, 70%);
+    border: 3px solid fade(#2F695F, 70%);
     left: 0;
     top: 0;
     right: 0;
@@ -3647,7 +3647,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
     width: 11px;
     height: 11px;
     border-radius: 10px;
-    background-color: #ed145b
+    background-color: #2F695F
 }
 
 .sp-pre-loader .sp-loader-bubble-loop {
@@ -3660,7 +3660,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
     bottom: 0;
     margin: auto;
     border-radius: 12px;
-    background-color: #ed145b;
+    background-color: #2F695F;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     -webkit-animation: loader6 1s ease-in-out infinite;
@@ -3706,7 +3706,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
     content: '';
     display: block;
     border-radius: 50%;
-    border: 2px solid #ed145b;
+    border: 2px solid #2F695F;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -3764,7 +3764,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
     position: absolute;
     width: 2px;
     height: 0;
-    background-color: #ed145b;
+    background-color: #2F695F;
     bottom: 0
 }
 
@@ -3807,7 +3807,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 .sp-pre-loader .sp-loader-audio-wave {
     width: 3em;
     height: 2em;
-    background: linear-gradient(#ed145b, #ed145b) 0 50%, linear-gradient(#ed145b, #ed145b) 0.625em 50%, linear-gradient(#ed145b, #ed145b) 1.25em 50%, linear-gradient(#ed145b, #ed145b) 1.875em 50%, linear-gradient(#ed145b, #ed145b) 2.5em 50%;
+    background: linear-gradient(#2F695F, #2F695F) 0 50%, linear-gradient(#2F695F, #2F695F) 0.625em 50%, linear-gradient(#2F695F, #2F695F) 1.25em 50%, linear-gradient(#2F695F, #2F695F) 1.875em 50%, linear-gradient(#2F695F, #2F695F) 2.5em 50%;
     background-repeat: no-repeat;
     background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em;
     animation: audioWave 1.5s linear infinite;
@@ -3840,7 +3840,7 @@ body.ltr .offcanvas-menu .offcanvas-inner ul.menu>li ul {
 }
 
 .sp-pre-loader .sp-loader-with-logo .line {
-    background: #ed145b;
+    background: #2F695F;
     height: 5px;
     left: 0;
     position: absolute;

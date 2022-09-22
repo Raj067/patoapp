@@ -623,16 +623,17 @@
                                                 <div class="sppb-addon sppb-addon-articles ">
                                                     <div class="sppb-addon-content">
                                                         <div class="sppb-row">
+                                                            {% for dx in blogs %}
                                                             <div class="sppb-col-sm-4">
                                                                 <div class="sppb-addon-article">
                                                                     <div class="blog-post-img">
                                                                         <div class="hover-overlay">
                                                                             <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor"
+                                                                                href="/blog/{{dx.slug}}/"
                                                                                 itemprop="url"><img
                                                                                     class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-1-img.jpg#joomlaImage://local-images/blog/post-1-img.jpg?width=800&height=700"
-                                                                                    alt="Integer urna turpis donec ipsum a porta justo auctor"
+                                                                                    src="{{dx.featured_image.url}}"
+                                                                                    alt="{{dx.title}}"
                                                                                     itemprop="thumbnailUrl"
                                                                                     loading="lazy"></a>
                                                                             <div class="item-overlay">
@@ -642,248 +643,25 @@
                                                                     <div class="blog-post-txt">
                                                                         <div class="p-md post-tag">
                                                                             <span
-                                                                                class="sppb-meta-category">OLMO</span><span
+                                                                                class="sppb-meta-category">{{dx.author}}</span><span
                                                                                 class="separator">|</span><span
                                                                                 class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
+                                                                                itemprop="datePublished">{{dx.published_at|timesince}}
+                                                                                ago </span>
                                                                         </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor"
-                                                                                itemprop="url">Integer
-                                                                                urna turpis donec
-                                                                                ipsum a porta justo
-                                                                                auctor</a></h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
-                                                                        </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor"
-                                                                            itemprop="url">Read
-                                                                            More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="sppb-col-sm-4">
-                                                                <div class="sppb-addon-article">
-                                                                    <div class="blog-post-img">
-                                                                        <div class="hover-overlay">
-                                                                            <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/a-ligula-risus-auctor-tempus"
-                                                                                itemprop="url"><img
-                                                                                    class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-5-img.jpg#joomlaImage://local-images/blog/post-5-img.jpg?width=800&height=900"
-                                                                                    alt="A ligula risus auctor tempus"
-                                                                                    itemprop="thumbnailUrl"
-                                                                                    loading="lazy"></a>
-                                                                            <div class="item-overlay">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="blog-post-txt">
-                                                                        <div class="p-md post-tag">
-                                                                            <span
-                                                                                class="sppb-meta-category">OLMO</span><span
-                                                                                class="separator">|</span><span
-                                                                                class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
-                                                                        </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/a-ligula-risus-auctor-tempus"
-                                                                                itemprop="url">A
-                                                                                ligula risus auctor
-                                                                                tempus</a></h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
-                                                                        </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/a-ligula-risus-auctor-tempus"
-                                                                            itemprop="url">Read
-                                                                            More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="sppb-col-sm-4">
-                                                                <div class="sppb-addon-article">
-                                                                    <div class="blog-post-img">
-                                                                        <div class="hover-overlay">
-                                                                            <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris"
-                                                                                itemprop="url"><img
-                                                                                    class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-2-img.jpg#joomlaImage://local-images/blog/post-2-img.jpg?width=800&height=700"
-                                                                                    alt="Donec sapien augue integer turpis at cursus porta mauris"
-                                                                                    itemprop="thumbnailUrl"
-                                                                                    loading="lazy"></a>
-                                                                            <div class="item-overlay">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="blog-post-txt">
-                                                                        <div class="p-md post-tag">
-                                                                            <span
-                                                                                class="sppb-meta-category">OLMO</span><span
-                                                                                class="separator">|</span><span
-                                                                                class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
-                                                                        </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris"
-                                                                                itemprop="url">Donec
-                                                                                sapien augue integer
-                                                                                turpis at cursus
-                                                                                porta mauris</a>
+                                                                        <h5 class="h5-md"><a href="/blog/{{dx.slug}}/"
+                                                                                itemprop="url">{{dx.title|truncatechars:15}}</a>
                                                                         </h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
+                                                                        <p class="p-lg">
+                                                                            {{dx.content|truncatechars_html:250|safe}}
                                                                         </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris"
+                                                                            href="/blog/{{dx.slug}}/"
                                                                             itemprop="url">Read
                                                                             More</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="sppb-col-sm-4">
-                                                                <div class="sppb-addon-article">
-                                                                    <div class="blog-post-img">
-                                                                        <div class="hover-overlay">
-                                                                            <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris-2"
-                                                                                itemprop="url"><img
-                                                                                    class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-6-img.jpg#joomlaImage://local-images/blog/post-6-img.jpg?width=800&height=900"
-                                                                                    alt="Mauris donec magnis and sapien ociis etiam sapien congue undo augue "
-                                                                                    itemprop="thumbnailUrl"
-                                                                                    loading="lazy"></a>
-                                                                            <div class="item-overlay">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="blog-post-txt">
-                                                                        <div class="p-md post-tag">
-                                                                            <span
-                                                                                class="sppb-meta-category">OLMO</span><span
-                                                                                class="separator">|</span><span
-                                                                                class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
-                                                                        </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris-2"
-                                                                                itemprop="url">Mauris
-                                                                                donec magnis and
-                                                                                sapien ociis etiam
-                                                                                sapien congue undo
-                                                                                augue </a></h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
-                                                                        </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/donec-sapien-augue-integer-turpis-at-cursus-porta-mauris-2"
-                                                                            itemprop="url">Read
-                                                                            More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="sppb-col-sm-4">
-                                                                <div class="sppb-addon-article">
-                                                                    <div class="blog-post-img">
-                                                                        <div class="hover-overlay">
-                                                                            <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/a-ligula-risus-auctor-tempus-2"
-                                                                                itemprop="url"><img
-                                                                                    class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-4-img.jpg#joomlaImage://local-images/blog/post-4-img.jpg?width=800&height=700"
-                                                                                    alt="Laoreet undo magna at suscipit undo egestas magna ipsum ligula "
-                                                                                    itemprop="thumbnailUrl"
-                                                                                    loading="lazy"></a>
-                                                                            <div class="item-overlay">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="blog-post-txt">
-                                                                        <div class="p-md post-tag">
-                                                                            <span
-                                                                                class="sppb-meta-category">OLMO</span><span
-                                                                                class="separator">|</span><span
-                                                                                class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
-                                                                        </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/a-ligula-risus-auctor-tempus-2"
-                                                                                itemprop="url">Laoreet
-                                                                                undo magna at
-                                                                                suscipit undo
-                                                                                egestas magna ipsum
-                                                                                ligula </a></h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
-                                                                        </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/a-ligula-risus-auctor-tempus-2"
-                                                                            itemprop="url">Read
-                                                                            More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="sppb-col-sm-4">
-                                                                <div class="sppb-addon-article">
-                                                                    <div class="blog-post-img">
-                                                                        <div class="hover-overlay">
-                                                                            <a class="sppb-article-img-wrap"
-                                                                                href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor-2"
-                                                                                itemprop="url"><img
-                                                                                    class="sppb-img-responsive"
-                                                                                    src="/images/blog/post-7-img.jpg#joomlaImage://local-images/blog/post-7-img.jpg?width=800&height=900"
-                                                                                    alt="An augue cubilia laoreet undo magna and suscipit egestas volutpat "
-                                                                                    itemprop="thumbnailUrl"
-                                                                                    loading="lazy"></a>
-                                                                            <div class="item-overlay">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="blog-post-txt">
-                                                                        <div class="p-md post-tag">
-                                                                            <span
-                                                                                class="sppb-meta-category">OLMO</span><span
-                                                                                class="separator">|</span><span
-                                                                                class="sppb-meta-date"
-                                                                                itemprop="datePublished">16
-                                                                                September
-                                                                                2021</span>
-                                                                        </div>
-                                                                        <h5 class="h5-md"><a
-                                                                                href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor-2"
-                                                                                itemprop="url">An
-                                                                                augue cubilia
-                                                                                laoreet undo magna
-                                                                                and suscipit egestas
-                                                                                volutpat </a></h5>
-                                                                        <p class="p-lg">Donec sapien
-                                                                            augue integer turpis
-                                                                            urna cursus porta,
-                                                                            mauris augue...
-                                                                        </p><a class="sppb-readmore"
-                                                                            href="/hidden-blog/integer-urna-turpis-donec-ipsum-a-porta-justo-auctor-2"
-                                                                            itemprop="url">Read
-                                                                            More</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                 </div>

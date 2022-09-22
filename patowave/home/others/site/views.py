@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from home.models import *
 # Create your views here.
 
 
@@ -8,11 +8,13 @@ def home(request, *args, **kwargs):
 
 
 def single_blog(request, slug, *args, **kwargs):
-    return render(request, 'site/single_blog.html', {})
+    blog = Blogging.objects.get(slug=slug)
+    return render(request, 'site/single_blog.html', {'blog': blog})
 
 
 def blog(request, *args, **kwargs):
-    return render(request, 'site/blog.html', {})
+    blogs = Blogging.objects.all()
+    return render(request, 'site/blog.html', {'blogs': blogs})
 
 
 def single_tutorial(request, slug, *args, **kwargs):
