@@ -431,31 +431,6 @@ class Blogging(models.Model):
         return reverse('single_blog', kwargs={'slug': self.slug})
 
 
-class Tutorial(models.Model):
-    content = HTMLField()
-    author = models.CharField(max_length=500)
-    title = models.CharField(max_length=500)
-    metadata = models.TextField()
-    keywords = models.CharField(max_length=500)
-    published = models.BooleanField(default=True)
-    featured_image = models.ImageField(upload_to='tutorial/')
-    slug = models.SlugField(unique=True)
-    english = models.BooleanField(default=True)
-    published_at = models.DateTimeField()
-    # Registration
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ("-id",)
-
-    def __str__(self) -> str:
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('single_tutorial', kwargs={'slug': self.slug})
-
-
 class Faq(models.Model):
     question = models.CharField(max_length=500)
     answer = HTMLField()

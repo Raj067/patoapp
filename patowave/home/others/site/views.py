@@ -17,14 +17,6 @@ def blog(request, *args, **kwargs):
     return render(request, 'site/blog.html', {'blogs': blogs})
 
 
-def single_tutorial(request, slug, *args, **kwargs):
-    return render(request, 'site/single_tutorial.html', {})
-
-
-def tutorial(request, *args, **kwargs):
-    return render(request, 'site/tutorial.html', {})
-
-
 def faqs(request, *args, **kwargs):
     my_faqs = Faq.objects.all()
     faqs1 = my_faqs[:len(my_faqs)//2]
