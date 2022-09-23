@@ -36,7 +36,8 @@
         margin-right: 0px;
         margin-bottom: 0px;
         margin-left: 0px;
-        background-image: url(https://olmo.codelayers.net/images/2021/09/26/faqs-page.jpg);
+        /* background-image: url(https://olmo.codelayers.net/images/2021/09/26/faqs-page.jpg); */
+        background-color: #33796F;
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: scroll;
@@ -486,17 +487,42 @@
         height: 30px;
     }
 </style>
+<style
+    nonce="ZThhMmFhYmI5ZjAwY2RlOGIyN2QzNTA2MjMzNWQ3YjNjY2EwMmExZWE3YmFiODlkMDMzMjdlZjJlMjlmZDdjNTRhZWJhNmVmZjRjOTZhOTUyNTU4ZTA0YTUzOTUwNTMzYjk5YjI1ZTMzZGM3ZWJhZDE2NjlmZDQ0OTc2MzJiZTA=">
+    .sp-megamenu-parent>li.menu-link>a {
+        color: #ffffff;
+        background-color: transparent;
+        border-color: #fff;
+    }
+
+    #sp-header.header-sticky .sp-megamenu-parent>li.menu-link>a {
+        color: #1d293f;
+        background-color: transparent;
+        border-color: #1d293f;
+    }
+
+    .sp-megamenu-parent>li.menu-link>a:hover,
+    #sp-header.header-sticky .sp-megamenu-parent>li.menu-link>a:hover {
+        color: #fff;
+        background-color: var(--maincolor);
+        border-color: var(--maincolor);
+    }
+
+    .sp-megamenu-parent>li>a,
+    .sp-megamenu-parent>li>span {
+        color: #ffffff;
+    }
+
+    #sp-header.header-sticky .sp-megamenu-parent>li>a {
+        color: #463853;
+    }
+</style>
 <main id="sp-component" class="col-lg-12 ">
     <div class="sp-column ">
         <div id="system-message-container" aria-live="polite">
         </div>
 
-
-
-
         <div id="sp-page-builder" class="sp-page-builder  page-42">
-
-
             <div class="page-content">
                 <section id="section-id-1632685773838" class="sppb-section sppb-section-content-center">
                     <div class="sppb-shape-container sppb-bottom-shape  sppb-shape-invert"><svg
@@ -551,241 +577,52 @@
                                                     <div class="sppb-col-md-6" id="column-wrap-id-1632685773850">
                                                         <div id="column-id-1632685773850" class="sppb-column">
                                                             <div class="sppb-column-addons">
-                                                                <div id="sppb-addon-wrapper-1632685773851"
-                                                                    class="sppb-addon-wrapper">
+                                                                {% for dx in faqs1 %}
+                                                                <div class="sppb-addon-wrapper">
                                                                     <div id="sppb-addon-1632685773851"
                                                                         class="clearfix ">
                                                                         <div class="sppb-addon sppb-addon-text-block  ">
                                                                             <h5 class="sppb-addon-title">
-                                                                                Can I see OLMO in
-                                                                                action before
-                                                                                purchasing?</h5>
+                                                                                {{dx.question}}</h5>
                                                                             <div class="sppb-addon-content">
-                                                                                Etiam amet mauris
-                                                                                suscipit in odio
-                                                                                integer congue metus
-                                                                                vitae arcu mollis
-                                                                                blandit ultrice
-                                                                                ligula egestas and
-                                                                                magna suscipit
-                                                                                lectus magna
-                                                                                suscipit luctus
-                                                                                blandit vitae</div>
+                                                                                {{dx.answer|safe}}</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div id="sppb-addon-wrapper-1632685773852"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773852"
-                                                                        class="clearfix ">
+                                                                <div class="sppb-addon-wrapper">
+                                                                    <div class="clearfix ">
                                                                         <div class="sppb-empty-space  clearfix">
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div id="sppb-addon-wrapper-1632685773853"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773853"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-addon sppb-addon-text-block  ">
-                                                                            <h5 class="sppb-addon-title">
-                                                                                Can I see OLMO in
-                                                                                action before
-                                                                                purchasing?</h5>
-                                                                            <div class="sppb-addon-content">
-                                                                                Etiam amet mauris
-                                                                                suscipit in odio
-                                                                                integer congue metus
-                                                                                vitae arcu mollis
-                                                                                blandit ultrice
-                                                                                ligula egestas and
-                                                                                magna suscipit
-                                                                                lectus magna
-                                                                                suscipit luctus
-                                                                                blandit vitae</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="sppb-addon-wrapper-1632685773854"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773854"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-empty-space  clearfix">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="sppb-addon-wrapper-1632685773855"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773855"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-addon sppb-addon-text-block  ">
-                                                                            <h5 class="sppb-addon-title">
-                                                                                Can I use OLMO on
-                                                                                different devices?
-                                                                            </h5>
-                                                                            <div class="sppb-addon-content">
-                                                                                <ul class="simple-list">
-                                                                                    <li class="list-item">
-                                                                                        <p class="p-lg">
-                                                                                            Fringilla
-                                                                                            risus,
-                                                                                            luctus
-                                                                                            mauris
-                                                                                            orci
-                                                                                            auctor
-                                                                                            purus
-                                                                                            ligula
-                                                                                            euismod
-                                                                                            pretium
-                                                                                            purus
-                                                                                            pretium
-                                                                                            rutrum
-                                                                                            tempor
-                                                                                            sapien
-                                                                                        </p>
-                                                                                    </li>
-                                                                                    <li class="list-item">
-                                                                                        <p class="p-lg">
-                                                                                            Nemo
-                                                                                            ipsam
-                                                                                            egestas
-                                                                                            volute
-                                                                                            turpis
-                                                                                            dolores
-                                                                                            ut
-                                                                                            aliquam
-                                                                                            quaerat
-                                                                                            sodales
-                                                                                            sapien
-                                                                                            undo
-                                                                                            pretium
-                                                                                            a purus
-                                                                                        </p>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                {% endfor %}
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="sppb-col-md-6" id="column-wrap-id-1632685773856">
                                                         <div id="column-id-1632685773856" class="sppb-column">
                                                             <div class="sppb-column-addons">
-                                                                <div id="sppb-addon-wrapper-1632685773857"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773857"
+                                                                {% for dx in faqs2 %}
+                                                                <div class="sppb-addon-wrapper">
+                                                                    <div id="sppb-addon-1632685773851"
                                                                         class="clearfix ">
                                                                         <div class="sppb-addon sppb-addon-text-block  ">
                                                                             <h5 class="sppb-addon-title">
-                                                                                Do you have a free
-                                                                                trial?</h5>
+                                                                                {{dx.question}}</h5>
                                                                             <div class="sppb-addon-content">
-                                                                                Cubilia laoreet
-                                                                                augue egestas and
-                                                                                luctus donec
-                                                                                curabite diam vitae
-                                                                                dapibus libero and
-                                                                                quisque gravida
-                                                                                donec and neque.
-                                                                                Blandit justo
-                                                                                aliquam molestie
-                                                                                nunc sapien</div>
+                                                                                {{dx.answer|safe}}</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div id="sppb-addon-wrapper-1632685773858"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773858"
-                                                                        class="clearfix ">
+                                                                <div class="sppb-addon-wrapper">
+                                                                    <div class="clearfix ">
                                                                         <div class="sppb-empty-space  clearfix">
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div id="sppb-addon-wrapper-1632685773859"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773859"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-addon sppb-addon-text-block  ">
-                                                                            <h5 class="sppb-addon-title">
-                                                                                How does OLMO handle
-                                                                                my privacy?</h5>
-                                                                            <div class="sppb-addon-content">
-                                                                                <p class="p-lg">
-                                                                                    Etiam amet
-                                                                                    mauris suscipit
-                                                                                    sit amet in
-                                                                                    odio. Integer
-                                                                                    congue leo
-                                                                                    metus. Vitae
-                                                                                    arcu mollis
-                                                                                    blandit ultrice
-                                                                                    ligula</p>
-                                                                                <p class="p-lg">An
-                                                                                    enim nullam
-                                                                                    tempor sapien
-                                                                                    gravida donec
-                                                                                    congue leo
-                                                                                    metus. Vitae
-                                                                                    arcu mollis
-                                                                                    blandit integer
-                                                                                    at velna</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="sppb-addon-wrapper-1632685773860"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773860"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-empty-space  clearfix">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="sppb-addon-wrapper-1632685773861"
-                                                                    class="sppb-addon-wrapper">
-                                                                    <div id="sppb-addon-1632685773861"
-                                                                        class="clearfix ">
-                                                                        <div class="sppb-addon sppb-addon-text-block  ">
-                                                                            <h5 class="sppb-addon-title">
-                                                                                I have an issue with
-                                                                                my account</h5>
-                                                                            <div class="sppb-addon-content">
-                                                                                <ul class="simple-list">
-                                                                                    <li class="list-item">
-                                                                                        <p class="p-lg">
-                                                                                            Fringilla
-                                                                                            risus,
-                                                                                            luctus
-                                                                                            mauris
-                                                                                            orci
-                                                                                            auctor
-                                                                                            purus
-                                                                                        </p>
-                                                                                    </li>
-                                                                                    <li class="list-item">
-                                                                                        <p class="p-lg">
-                                                                                            Quaerat
-                                                                                            sodales
-                                                                                            sapien
-                                                                                            euismod
-                                                                                            blandit
-                                                                                            purus
-                                                                                            and
-                                                                                            ipsum
-                                                                                            primis
-                                                                                            in
-                                                                                            cubilia
-                                                                                            laoreet
-                                                                                            augue
-                                                                                            luctus
-                                                                                        </p>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                {% endfor %}
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -801,7 +638,7 @@
                                             <div id="sppb-addon-1632685773863" class="clearfix ">
                                                 <div class="sppb-addon sppb-addon-text-block sppb-text-center ">
                                                     <h5 class="sppb-addon-title">Have more
-                                                        questions? <a href="#">Ask your question
+                                                        questions? <a href="/contact-us/">Ask your question
                                                             here</a></h5>
                                                     <div class="sppb-addon-content"></div>
                                                 </div>
@@ -869,7 +706,8 @@
                                                                         <div
                                                                             class="sppb-addon sppb-addon-button-group text-lg-center sppb-text-left">
                                                                             <div class="sppb-addon-content">
-                                                                                <a href="#" id="btn-1632685773871"
+                                                                                <a href="/contact-us/"
+                                                                                    id="btn-1632685773871"
                                                                                     class="sppb-btn  sppb-btn-primary sppb-btn-rounded sppb-btn-flat">Contact
                                                                                     Us</a>
                                                                             </div>

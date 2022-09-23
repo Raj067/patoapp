@@ -26,7 +26,10 @@ def tutorial(request, *args, **kwargs):
 
 
 def faqs(request, *args, **kwargs):
-    return render(request, 'site/faqs.html', {})
+    my_faqs = Faq.objects.all()
+    faqs1 = my_faqs[:len(my_faqs)//2]
+    faqs2 = my_faqs[len(my_faqs)//2:]
+    return render(request, 'site/faqs.html', {'faqs1':faqs1,'faqs2':faqs2})
 
 
 def contact(request, *args, **kwargs):
