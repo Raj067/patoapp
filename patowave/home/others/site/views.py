@@ -8,12 +8,12 @@ def home(request, *args, **kwargs):
 
 
 def single_blog(request, slug, *args, **kwargs):
-    blog = Blogging.objects.get(slug=slug)
+    blog = Blog.objects.get(slug=slug)
     return render(request, 'site/single_blog.html', {'blog': blog})
 
 
 def blog(request, *args, **kwargs):
-    blogs = Blogging.objects.all()
+    blogs = Blog.objects.all()
     return render(request, 'site/blog.html', {'blogs': blogs})
 
 
@@ -21,7 +21,7 @@ def faqs(request, *args, **kwargs):
     my_faqs = Faq.objects.all()
     faqs1 = my_faqs[:len(my_faqs)//2]
     faqs2 = my_faqs[len(my_faqs)//2:]
-    return render(request, 'site/faqs.html', {'faqs1':faqs1,'faqs2':faqs2})
+    return render(request, 'site/faqs.html', {'faqs1': faqs1, 'faqs2': faqs2})
 
 
 def contact(request, *args, **kwargs):

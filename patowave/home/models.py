@@ -406,7 +406,7 @@ class VersionTrack(models.Model):
         return self.version_name
 
 
-class Blogging(models.Model):
+class Blog(models.Model):
     content = HTMLField()
     author = models.CharField(max_length=500)
     title = models.CharField(max_length=500)

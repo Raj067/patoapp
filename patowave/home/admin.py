@@ -103,7 +103,7 @@ admin.site.register(GreetingCard)
 admin.site.register(Shedule)
 admin.site.register(InventoryTrack)
 admin.site.register(VersionTrack)
-admin.site.register(Blogging, BloggingAdmin)
+admin.site.register(Blog, BloggingAdmin)
 admin.site.register(Faq, FaqAdmin)
 
 admin.site.site_header = "Patowave Admin"
