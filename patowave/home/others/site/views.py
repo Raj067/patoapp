@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from home.models import *
 import random
@@ -17,7 +18,18 @@ def single_blog(request, slug, *args, **kwargs):
 
 
 def blog(request, *args, **kwargs):
-    blogs = Blog.objects.all()
+    # blogs = Blog.objects.all()
+    data_list = Blog.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(data_list, 3)
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)
+
     return render(request, 'site/blog.html', {'blogs': blogs})
 
 

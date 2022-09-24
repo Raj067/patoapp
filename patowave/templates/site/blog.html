@@ -599,9 +599,9 @@
                                             <div id="sppb-addon-1632702923790" class="clearfix ">
                                                 <div class="sppb-addon sppb-addon-articles ">
                                                     <div class="sppb-addon-content">
-                                                        <div class="sppb-row">
+                                                        <div class="sppb-row infinite-container">
                                                             {% for dx in blogs %}
-                                                            <div class="sppb-col-sm-4">
+                                                            <div class="sppb-col-sm-4 infinite-item">
                                                                 <div class="sppb-addon-article">
                                                                     <div class="blog-post-img">
                                                                         <div class="hover-overlay">
@@ -639,6 +639,16 @@
                                                                 </div>
                                                             </div>
                                                             {% endfor %}
+                                                        </div>
+                                                        {% if blogs.has_next %}
+                                                        <a class="infinite-more-link"
+                                                            href="?page={{ blogs.next_page_number }}"></a>
+                                                        {% endif %}
+                                                        <div class="d-flex justify-content-center"
+                                                            style="display:none;">
+                                                            <div class="spinner-border text-primary" role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -762,4 +772,24 @@
         </div>
     </div>
 </main>
+<script src="/static/site/infinity/jquery-2.2.4.min.js"></script>
+<script src="/static/site/infinity/jquery.waypoints.min.js"></script>
+<script src="/static/site/infinity/infinite.min.js"></script>
+<script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        handler: function (direction) {
+
+        },
+        offset: 'bottom-in-view',
+
+        onBeforePageLoad: function () {
+            $('.spinner-border').show();
+        },
+        onAfterPageLoad: function () {
+            $('.spinner-border').hide();
+        }
+
+    });
+</script>
 {% endblock %}
