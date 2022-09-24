@@ -361,6 +361,101 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="article-author-information"
+                                            style="background-color: #f5f5f5!important;padding:50px!important">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <img class="me-3" src="{{blog.author_profile.avatar.url}}"
+                                                        alt="{{blog.author_profile.full_name}}" width="100px"
+                                                        height="100px">
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h5 class="mt-0">{{blog.author_profile.full_name}}</h5>
+                                                    <div class="author-bio">
+                                                        {{blog.author_profile.about}}<div class="author-website mt-2">
+                                                            <a target="_blank" rel="noopener noreferrer"
+                                                                href="{{blog.author_profile.facebook_link}}">Facebook</a>
+                                                            <a target="_blank" rel="noopener noreferrer"
+                                                                href="{{blog.author_profile.instagram_link}}">Instagram</a>
+                                                            <a target="_blank" rel="noopener noreferrer"
+                                                                href="{{blog.author_profile.linkedin_link}}">Linkedin</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="section-id-1632702923819" class="sppb-section"
+                    style="padding-top: 50px;padding-bottom: 50px;">
+                    <div class="sppb-row-container">
+                        <div class="sppb-row">
+                            <div class="sppb-col-md-12" id="column-wrap-id-1632702923783">
+                                <div id="column-id-1632702923783" class="sppb-column">
+                                    <div class="sppb-column-addons">
+                                        <div id="sppb-addon-wrapper-1632702923787" class="sppb-addon-wrapper">
+                                            <div id="sppb-addon-1632702923787" class="clearfix ">
+                                                <div class="sppb-addon sppb-addon-text-block sppb-text-center "
+                                                    style="padding-top: 50px;padding-bottom: 50px;">
+                                                    <h2 class="sppb-addon-title">Realated Articles
+                                                    </h2>
+                                                    <div class="sppb-addon-content"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="sppb-addon-wrapper-1632702923790" class="sppb-addon-wrapper">
+                                            <div id="sppb-addon-1632702923790" class="clearfix ">
+                                                <div class="sppb-addon sppb-addon-articles ">
+                                                    <div class="sppb-addon-content">
+                                                        <div class="sppb-row">
+                                                            {% for dx in blogs %}
+                                                            <div class="sppb-col-sm-4">
+                                                                <div class="sppb-addon-article">
+                                                                    <div class="blog-post-img">
+                                                                        <div class="hover-overlay">
+                                                                            <a class="sppb-article-img-wrap"
+                                                                                href="/blog/{{dx.slug}}/"
+                                                                                itemprop="url"><img
+                                                                                    class="sppb-img-responsive"
+                                                                                    src="{{dx.featured_image.url}}"
+                                                                                    alt="{{dx.title}}"
+                                                                                    itemprop="thumbnailUrl"
+                                                                                    loading="lazy"></a>
+                                                                            <div class="item-overlay">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="blog-post-txt">
+                                                                        <div class="p-md post-tag">
+                                                                            <span
+                                                                                class="sppb-meta-category">{{dx.author_profile.full_name}}</span><span
+                                                                                class="separator">|</span><span
+                                                                                class="sppb-meta-date"
+                                                                                itemprop="datePublished">{{dx.published_at|timesince}}
+                                                                                ago </span>
+                                                                        </div>
+                                                                        <h5 class="h5-md"><a href="/blog/{{dx.slug}}/"
+                                                                                itemprop="url">{{dx.title}}</a>
+                                                                        </h5>
+                                                                        <p class="p-lg">
+                                                                            {{dx.content|truncatechars_html:250|safe}}
+                                                                        </p><a class="sppb-readmore"
+                                                                            href="/blog/{{dx.slug}}/"
+                                                                            itemprop="url">Read
+                                                                            More</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

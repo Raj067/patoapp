@@ -547,12 +547,14 @@
                                                                             class="sppb-addon sppb-addon-text-block sppb-text-center ">
                                                                             <h2 class="sppb-addon-title"
                                                                                 style="color:white!important">
-                                                                                Relevant news and
-                                                                                more for you.
-                                                                                Welcome to our blog
+                                                                                PatoWave blog
                                                                             </h2>
-                                                                            <div class="sppb-addon-content">
-                                                                            </div>
+                                                                            <h5 class="sppb-addon-content"
+                                                                                style="color:white!important">
+                                                                                Skyrocket Your Business Growth With
+                                                                                PatoWave Articles on Accounting,
+                                                                                Finance, Business, Sales and More
+                                                                            </h5>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -618,14 +620,14 @@
                                                                     <div class="blog-post-txt">
                                                                         <div class="p-md post-tag">
                                                                             <span
-                                                                                class="sppb-meta-category">{{dx.author}}</span><span
+                                                                                class="sppb-meta-category">{{dx.author_profile.full_name}}</span><span
                                                                                 class="separator">|</span><span
                                                                                 class="sppb-meta-date"
                                                                                 itemprop="datePublished">{{dx.published_at|timesince}}
                                                                                 ago </span>
                                                                         </div>
                                                                         <h5 class="h5-md"><a href="/blog/{{dx.slug}}/"
-                                                                                itemprop="url">{{dx.title|truncatechars:15}}</a>
+                                                                                itemprop="url">{{dx.title}}</a>
                                                                         </h5>
                                                                         <p class="p-lg">
                                                                             {{dx.content|truncatechars_html:250|safe}}

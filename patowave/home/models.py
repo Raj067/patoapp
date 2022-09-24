@@ -406,9 +406,41 @@ class VersionTrack(models.Model):
         return self.version_name
 
 
+class AuthorBlog(models.Model):
+    full_name = models.CharField(max_length=500)
+    avatar = models.ImageField(
+        upload_to='author/', blank=False, null=True)
+    email = models.EmailField()
+    facebook_link = models.CharField(max_length=500)
+    linkedin_link = models.CharField(max_length=500)
+    about = models.TextField()
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-id",)
+
+    def __str__(self) -> str:
+        return self.full_name
+
+
 class Blog(models.Model):
+    author_profile = models.ForeignKey(
+        AuthorBlog, on_delete=models.CASCADE, null=True, blank=False)
+    choice = [
+        ('Accounting', 'Accounting'),
+        ('Finance', 'Finance'),
+        ('Business', 'Business'),
+        ('Sales', 'Sales'),
+        ('Mindset', 'Mindset'),
+    ]
+    blog_category = models.CharField(
+        max_length=100, choices=choice, default='Accounting')
+
     content = HTMLField()
-    author = models.CharField(max_length=500)
+    # author = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
     metadata = models.TextField()
     keywords = models.CharField(max_length=500)
@@ -434,7 +466,7 @@ class Blog(models.Model):
 class Faq(models.Model):
     question = models.CharField(max_length=500)
     answer = HTMLField()
-    
+
     english = models.BooleanField(default=True)
     # Registration
     created_at = models.DateTimeField(auto_now_add=True)
@@ -445,4 +477,3 @@ class Faq(models.Model):
 
     def __str__(self) -> str:
         return self.question
-

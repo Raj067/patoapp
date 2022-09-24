@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from home.models import *
+import random
 # Create your views here.
 
 
@@ -9,7 +10,10 @@ def home(request, *args, **kwargs):
 
 def single_blog(request, slug, *args, **kwargs):
     blog = Blog.objects.get(slug=slug)
-    return render(request, 'site/single_blog.html', {'blog': blog})
+    blogs = [i for i in Blog.objects.all()]
+    random.shuffle(blogs)
+    blogs = blogs[:3]
+    return render(request, 'site/single_blog.html', {'blog': blog, 'blogs': blogs})
 
 
 def blog(request, *args, **kwargs):

@@ -76,11 +76,15 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 
 class BloggingAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'published_at']
+    list_display = ['title', 'author_profile', 'published_at']
 
 
 class FaqAdmin(admin.ModelAdmin):
     list_display = ['question', 'created_at']
+
+
+class AuthorBlogAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'email',  'created_at']
 
 
 admin.site.register(Shop, ShopAdmin)
@@ -104,7 +108,9 @@ admin.site.register(Shedule)
 admin.site.register(InventoryTrack)
 admin.site.register(VersionTrack)
 admin.site.register(Blog, BloggingAdmin)
+admin.site.register(AuthorBlog, AuthorBlogAdmin)
 admin.site.register(Faq, FaqAdmin)
+
 
 admin.site.site_header = "Patowave Admin"
 admin.site.site_title = "Patowave Admin Portal"
