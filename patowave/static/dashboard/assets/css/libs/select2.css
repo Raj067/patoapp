@@ -622,7 +622,7 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
 
 .light-style .select2-dark .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background: rgba(35, 52, 70, .08) !important;
-    color: #233446 !important
+    color: #152a27 !important
 }
 
 .light-style .select2-dark .select2-container--default .select2-selection--multiple .select2-selection__choice:hover {

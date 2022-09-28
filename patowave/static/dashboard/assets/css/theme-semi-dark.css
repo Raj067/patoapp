@@ -1742,7 +1742,7 @@ li.ui-timepicker-selected,
 }
 
 .bg-menu-theme {
-  background-color: #233446 !important;
+  background-color: #152a27 !important;
   color: #c4cdd5;
 }
 
@@ -1813,7 +1813,7 @@ li.ui-timepicker-selected,
 
 .bg-menu-theme .menu-inner-shadow {
   background: linear-gradient(
-    #233446 41%,
+    #152a27 41%,
     rgba(35, 52, 70, 0.11) 95%,
     rgba(35, 52, 70, 0)
   );
