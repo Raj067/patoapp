@@ -17,46 +17,107 @@
 
     <ul class="menu-inner py-1" id="my-nav-aside">
         <li class="menu-item">
-            <a href="/dashboard/#/dashboard" class="menu-link">
+            <a href="/dashboard/#/overview" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
+                <div data-i18n="Dashboards">Overview</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="/dashboard/#/Sales" class="menu-link">
+            <a href="/dashboard/#/sales" class="menu-link" onclick="salesFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Sales</div>
             </a>
         </li>
-        <li class="menu-item" id="account-page">
-            <a href="/dashboard/account/" class="menu-link">
-                <i class='menu-icon tf-icons bx bxs-user-account'></i>
-                <div data-i18n="Account">Account</div>
+        <li class="menu-item">
+            <a href="/dashboard/#/expenses" class="menu-link" onclick="expensesFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Expenses</div>
             </a>
         </li>
-        <!-- <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon tf-icons bx bx-bar-chart-alt-2'></i>
-                <div data-i18n="Charts">Charts</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="/dashboard/charts/" class="menu-link">
-                        <div data-i18n="Analytics">Analytics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="/dashboard/charts/" class="menu-link">
-                        <div data-i18n="CRM">CRM</div>
-                    </a>
-                </li>
-            </ul>
-        </li> -->
         <li class="menu-item">
-            <a href="/accounts/logout/" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Logout">Logout</div>
+            <a href="/dashboard/#/contacts" class="menu-link" onclick="contactsFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Contacts</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/products" class="menu-link" onclick="productsFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Products</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/warehouse" class="menu-link" onclick="warehouseFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Warehouse</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/cash&bank" class="menu-link" onclick="bankFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Cash & Bank</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/accounting" class="menu-link" onclick="accountingFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Accounting</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/reports" class="menu-link" onclick="reportsFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Reports</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/dashboard/#/documents" class="menu-link" onclick="documentsFunc()">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Sales">Documents</div>
             </a>
         </li>
     </ul>
 </aside>
+<script>
+    function overviewFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/overview.html' %}`;
+    } function salesFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/sales.html' %}`;
+    }
+    function expensesFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/expenses.html' %}`;
+    }
+    function contactsFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/contacts.html' %}`;
+    }
+    function productsFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/products.html' %}`;
+    }
+    function warehouseFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/warehouse.html' %}`;
+    }
+    function bankFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/bank.html' %}`;
+    }
+    function accountingFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/accounting.html' %}`;
+    }
+    function reportsFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/reports.html' %}`;
+    }
+    function documentsFunc() {
+        var doc = document.getElementById('root')
+        doc.innerHTML = `{% include 'dashboard/documents.html' %}`;
+        alert('hello there');
+    }
+
+</script>
