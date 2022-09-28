@@ -6,246 +6,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Overview = function (_React$Component) {
-    _inherits(Overview, _React$Component);
-
-    function Overview() {
-        _classCallCheck(this, Overview);
-
-        return _possibleConstructorReturn(this, (Overview.__proto__ || Object.getPrototypeOf(Overview)).apply(this, arguments));
-    }
-
-    _createClass(Overview, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Overview"
-            );
-        }
-    }]);
-
-    return Overview;
-}(React.Component);
-
-var Sales = function (_React$Component2) {
-    _inherits(Sales, _React$Component2);
-
-    function Sales() {
-        _classCallCheck(this, Sales);
-
-        return _possibleConstructorReturn(this, (Sales.__proto__ || Object.getPrototypeOf(Sales)).apply(this, arguments));
-    }
-
-    _createClass(Sales, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello sales"
-            );
-        }
-    }]);
-
-    return Sales;
-}(React.Component);
-
-var Expenses = function (_React$Component3) {
-    _inherits(Expenses, _React$Component3);
-
-    function Expenses() {
-        _classCallCheck(this, Expenses);
-
-        return _possibleConstructorReturn(this, (Expenses.__proto__ || Object.getPrototypeOf(Expenses)).apply(this, arguments));
-    }
-
-    _createClass(Expenses, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Expenses"
-            );
-        }
-    }]);
-
-    return Expenses;
-}(React.Component);
-
-var Contacts = function (_React$Component4) {
-    _inherits(Contacts, _React$Component4);
-
-    function Contacts() {
-        _classCallCheck(this, Contacts);
-
-        return _possibleConstructorReturn(this, (Contacts.__proto__ || Object.getPrototypeOf(Contacts)).apply(this, arguments));
-    }
-
-    _createClass(Contacts, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Contacts"
-            );
-        }
-    }]);
-
-    return Contacts;
-}(React.Component);
-
-var Products = function (_React$Component5) {
-    _inherits(Products, _React$Component5);
-
-    function Products() {
-        _classCallCheck(this, Products);
-
-        return _possibleConstructorReturn(this, (Products.__proto__ || Object.getPrototypeOf(Products)).apply(this, arguments));
-    }
-
-    _createClass(Products, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Products"
-            );
-        }
-    }]);
-
-    return Products;
-}(React.Component);
-
-var Warehouse = function (_React$Component6) {
-    _inherits(Warehouse, _React$Component6);
-
-    function Warehouse() {
-        _classCallCheck(this, Warehouse);
-
-        return _possibleConstructorReturn(this, (Warehouse.__proto__ || Object.getPrototypeOf(Warehouse)).apply(this, arguments));
-    }
-
-    _createClass(Warehouse, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Warehouse"
-            );
-        }
-    }]);
-
-    return Warehouse;
-}(React.Component);
-
-var Bank = function (_React$Component7) {
-    _inherits(Bank, _React$Component7);
-
-    function Bank() {
-        _classCallCheck(this, Bank);
-
-        return _possibleConstructorReturn(this, (Bank.__proto__ || Object.getPrototypeOf(Bank)).apply(this, arguments));
-    }
-
-    _createClass(Bank, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Bank"
-            );
-        }
-    }]);
-
-    return Bank;
-}(React.Component);
-
-var Accounting = function (_React$Component8) {
-    _inherits(Accounting, _React$Component8);
-
-    function Accounting() {
-        _classCallCheck(this, Accounting);
-
-        return _possibleConstructorReturn(this, (Accounting.__proto__ || Object.getPrototypeOf(Accounting)).apply(this, arguments));
-    }
-
-    _createClass(Accounting, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Accounting"
-            );
-        }
-    }]);
-
-    return Accounting;
-}(React.Component);
-
-var Reports = function (_React$Component9) {
-    _inherits(Reports, _React$Component9);
-
-    function Reports() {
-        _classCallCheck(this, Reports);
-
-        return _possibleConstructorReturn(this, (Reports.__proto__ || Object.getPrototypeOf(Reports)).apply(this, arguments));
-    }
-
-    _createClass(Reports, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Reports"
-            );
-        }
-    }]);
-
-    return Reports;
-}(React.Component);
-
-var Documents = function (_React$Component10) {
-    _inherits(Documents, _React$Component10);
-
-    function Documents() {
-        _classCallCheck(this, Documents);
-
-        return _possibleConstructorReturn(this, (Documents.__proto__ || Object.getPrototypeOf(Documents)).apply(this, arguments));
-    }
-
-    _createClass(Documents, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "h1",
-                null,
-                "Hello Documents"
-            );
-        }
-    }]);
-
-    return Documents;
-}(React.Component);
-
-var Dashboard = function (_React$Component11) {
-    _inherits(Dashboard, _React$Component11);
+var Dashboard = function (_React$Component) {
+    _inherits(Dashboard, _React$Component);
 
     function Dashboard(props) {
         _classCallCheck(this, Dashboard);
 
-        var _this11 = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-        _this11.state = { active: 0 };
-        return _this11;
+        _this.state = { active: 0 };
+        return _this;
     }
 
     _createClass(Dashboard, [{
@@ -594,7 +364,7 @@ var Dashboard = function (_React$Component11) {
     }, {
         key: "menu",
         value: function menu() {
-            var _this12 = this;
+            var _this2 = this;
 
             return React.createElement(
                 "aside",
@@ -633,7 +403,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/overview", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 0 });
+                                    _this2.setState({ active: 0 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -649,7 +419,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/sales", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 1 });
+                                    _this2.setState({ active: 1 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -665,7 +435,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/expenses", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 2 });
+                                    _this2.setState({ active: 2 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -681,7 +451,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/contacts", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 3 });
+                                    _this2.setState({ active: 3 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -697,7 +467,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/products", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 4 });
+                                    _this2.setState({ active: 4 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -713,7 +483,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/warehouse", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 5 });
+                                    _this2.setState({ active: 5 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -729,7 +499,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/cash&bank", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 6 });
+                                    _this2.setState({ active: 6 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -745,7 +515,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/accounting", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 7 });
+                                    _this2.setState({ active: 7 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -761,7 +531,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/reports", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 8 });
+                                    _this2.setState({ active: 8 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -777,7 +547,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "a",
                             { href: "/dashboard/#/documents", className: "menu-link", onClick: function onClick() {
-                                    _this12.setState({ active: 9 });
+                                    _this2.setState({ active: 9 });
                                 } },
                             React.createElement("i", { className: "menu-icon tf-icons bx bx-home-circle" }),
                             React.createElement(
@@ -789,6 +559,31 @@ var Dashboard = function (_React$Component11) {
                     )
                 )
             );
+        }
+    }, {
+        key: "home",
+        value: function home() {
+            if (this.state.active == 0) {
+                return React.createElement(Overview, null);
+            } else if (this.state.active == 1) {
+                return React.createElement(Sales, null);
+            } else if (this.state.active == 2) {
+                return React.createElement(Expenses, null);
+            } else if (this.state.active == 3) {
+                return React.createElement(Contacts, null);
+            } else if (this.state.active == 4) {
+                return React.createElement(Products, null);
+            } else if (this.state.active == 5) {
+                return React.createElement(Warehouse, null);
+            } else if (this.state.active == 6) {
+                return React.createElement(Bank, null);
+            } else if (this.state.active == 7) {
+                return React.createElement(Accounting, null);
+            } else if (this.state.active == 8) {
+                return React.createElement(Reports, null);
+            } else if (this.state.active == 9) {
+                return React.createElement(Documents, null);
+            }
         }
     }, {
         key: "render",
@@ -807,6 +602,7 @@ var Dashboard = function (_React$Component11) {
                         React.createElement(
                             "div",
                             { className: "content-wrapper" },
+                            this.home(),
                             React.createElement("div", { className: "content-backdrop fade" })
                         )
                     )
@@ -819,9 +615,6 @@ var Dashboard = function (_React$Component11) {
 
     return Dashboard;
 }(React.Component);
-
-var rootPro = document.getElementById('root');
-var projectRoot = ReactDOM.createRoot(rootPro);
 
 var rootDiv = document.getElementById('root');
 var root = ReactDOM.createRoot(rootDiv);

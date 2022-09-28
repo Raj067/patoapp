@@ -1,65 +1,4 @@
 
-class Overview extends React.Component{
-    render() {
-    return <h1>Hello Overview</h1>
-}
-}
-
-class Sales extends React.Component{
-    render() {
-    return <h1>Hello sales</h1>
-}
-}
-
-class Expenses extends React.Component{
-    render() {
-    return <h1>Hello Expenses</h1>
-}
-}
-
-class Contacts extends React.Component{
-    render() {
-    return <h1>Hello Contacts</h1>
-}
-}
-
-class Products extends React.Component{
-    render() {
-    return <h1>Hello Products</h1>
-}
-}
-
-class Warehouse extends React.Component{
-    render() {
-    return <h1>Hello Warehouse</h1>
-}
-}
-
-class Bank extends React.Component{
-    render() {
-    return <h1>Hello Bank</h1>
-}
-}
-
-class Accounting extends React.Component{
-    render() {
-    return <h1>Hello Accounting</h1>
-}
-}
-
-class Reports extends React.Component{
-    render() {
-    return <h1>Hello Reports</h1>
-}
-}
-
-class Documents extends React.Component{
-    render() {
-    return <h1>Hello Documents</h1>
-}
-}
-
-
 class Dashboard extends React.Component {
        constructor(props) {
     super(props);
@@ -319,6 +258,29 @@ class Dashboard extends React.Component {
     </ul>
 </aside>
     }
+    home() {
+if (this.state.active==0) {
+    return <Overview />;
+    } else if(this.state.active==1) {
+        return <Sales />;
+    } else if(this.state.active==2) {
+        return <Expenses />;
+    } else if(this.state.active==3) {
+        return <Contacts />;
+    } else if(this.state.active==4) {
+        return <Products />;
+    } else if(this.state.active==5) {
+        return <Warehouse />;
+    } else if(this.state.active==6) {
+        return <Bank />;
+    } else if(this.state.active==7) {
+        return <Accounting />;
+    } else if(this.state.active==8) {
+        return <Reports />;
+    } else if(this.state.active==9) {
+        return <Documents />;
+    }
+    }
     render() {
         return     <div className="layout-wrapper layout-content-navbar  ">
         <div className="layout-container">
@@ -327,7 +289,7 @@ class Dashboard extends React.Component {
             <div className="layout-page">
                 {this.navBar()}
                 <div className="content-wrapper">
-                    
+                        {this.home()}
                     <div className="content-backdrop fade"></div>
                 </div>
             </div>
@@ -340,8 +302,6 @@ class Dashboard extends React.Component {
     </div>
     }
 }
-var rootPro = document.getElementById('root')
-const projectRoot = ReactDOM.createRoot(rootPro);
 
 var rootDiv = document.getElementById('root')
 const root = ReactDOM.createRoot(rootDiv);
