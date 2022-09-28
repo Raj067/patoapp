@@ -17,6 +17,7 @@ class NavigationMenu extends React.Component {
     }
     return <div id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
 
+        
     <div className="app-brand demo ">
         <a href="/dashboard/" className="app-brand-link">
 

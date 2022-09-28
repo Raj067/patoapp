@@ -87,10 +87,14 @@ class AuthorBlogAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'email',  'created_at']
 
 
+class WareHouseAdmin(admin.ModelAdmin):
+    list_display = ['name', 'shop',  'created_at']
+
+
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(ShopUser, ShopUserAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Service, ServiceAdmin)
+# admin.site.register(Service, ServiceAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Invoice)
 admin.site.register(InvoiceSoldItem)
@@ -110,6 +114,7 @@ admin.site.register(VersionTrack)
 admin.site.register(Blog, BloggingAdmin)
 admin.site.register(AuthorBlog, AuthorBlogAdmin)
 admin.site.register(Faq, FaqAdmin)
+admin.site.register(WareHouse, WareHouseAdmin)
 
 
 admin.site.site_header = "Patowave Admin"

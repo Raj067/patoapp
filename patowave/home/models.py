@@ -53,9 +53,24 @@ class Shop(models.Model):
         return self.logo.url
 
 
+class WareHouse(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    address1 = models.CharField(max_length=100)
+    address2 = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    is_primary = models.BooleanField(default=True)
+
+    # Registration
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class ShopUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     # One user can possess several shops or roles
     # hence all the roles possessed by user should be defined here
     is_admin = models.BooleanField(default=True)
@@ -69,6 +84,8 @@ class ShopUser(models.Model):
 
 class Product(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length=100, null=True, blank=True)
     purchases_price = models.IntegerField(default=0)
@@ -108,26 +125,30 @@ class Product(models.Model):
         return self.product_image.url
 
 
-class Service(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    service_name = models.CharField(max_length=100)
-    service_charge = models.IntegerField()
-    service_unit = models.CharField(max_length=100)
-    service_description = models.CharField(max_length=100)
+# class Service(models.Model):
+#     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+#     warehouse = models.ForeignKey(
+#         WareHouse, on_delete=models.CASCADE, null=True, blank=True)
+#     service_name = models.CharField(max_length=100)
+#     service_charge = models.IntegerField()
+#     service_unit = models.CharField(max_length=100)
+#     service_description = models.CharField(max_length=100)
 
-    # Registration
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+#     # Registration
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ("-id",)
+#     class Meta:
+#         ordering = ("-id",)
 
-    def __str__(self) -> str:
-        return self.service_name
+#     def __str__(self) -> str:
+#         return self.service_name
 
 
 class Customer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer_name = models.CharField(max_length=100)
     customer_number = models.CharField(max_length=100)
     customer_email = models.EmailField(null=True, blank=True)
@@ -152,6 +173,8 @@ class Customer(models.Model):
 
 class CashSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     # product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)
     product_id = models.IntegerField()
@@ -171,6 +194,8 @@ class CashSoldItem(models.Model):
 
 class CashSoldItemCustomer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(max_length=100)
     product_id = models.IntegerField()
     quantity = models.IntegerField()
@@ -190,6 +215,8 @@ class CashSoldItemCustomer(models.Model):
 
 class PurchasedItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(max_length=100)
     product_id = models.IntegerField()
     quantity = models.IntegerField()
@@ -207,6 +234,8 @@ class PurchasedItem(models.Model):
 
 class InvoiceSoldItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(max_length=100)
     product_id = models.IntegerField()
     quantity = models.IntegerField()
@@ -225,6 +254,8 @@ class InvoiceSoldItem(models.Model):
 
 class CashSale(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     sold_items = models.ManyToManyField(
         CashSoldItem, blank=True, related_name='sales_data_name')
     receipt_no = models.CharField(max_length=50, default="123")
@@ -241,6 +272,8 @@ class CashSale(models.Model):
 
 class CashSaleCustomer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     sold_items = models.ManyToManyField(
         CashSoldItemCustomer, blank=True, related_name='sales_data_customer')
     receipt_no = models.CharField(max_length=50, default="123")
@@ -259,6 +292,8 @@ class CashSaleCustomer(models.Model):
 
 class Invoice(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     invoice_no = models.CharField(max_length=50, default="123")
     amount_received = models.IntegerField()
@@ -280,6 +315,8 @@ class Invoice(models.Model):
 
 class Purchase(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, null=True, blank=True)
     amount_paid = models.IntegerField()
@@ -300,6 +337,8 @@ class Purchase(models.Model):
 
 class Feedback(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.TextField()
     name = models.CharField(max_length=500)
@@ -317,6 +356,8 @@ class Feedback(models.Model):
 
 class Payment(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     receipt_no = models.CharField(max_length=50, default="123")
     is_payment_in = models.BooleanField(default=True)
@@ -336,6 +377,8 @@ class Payment(models.Model):
 
 class Expense(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, null=True, blank=True)
     bill_no = models.CharField(max_length=50, default="123")
@@ -374,6 +417,8 @@ class GreetingCard(models.Model):
 
 class InventoryTrack(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(
+        WareHouse, on_delete=models.CASCADE, null=True, blank=True)
 
     product_id = models.IntegerField()
     product_name = models.CharField(max_length=500)

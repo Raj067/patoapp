@@ -1,87 +1,62 @@
-<div id="nav-menu-main">
-    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
+    <div class="app-brand demo ">
+        <a href="/dashboard/" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <img src="/static/images/icon.png" alt="PatoWave" srcset="" width="25px" height="25px">
+            </span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2"
+                style="color: #33796f!important;text-transform: none!important;">PatoWave</span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+    </div>
 
-        <div class="app-brand demo ">
-            <a href="/dashboard/" class="app-brand-link">
+    <div class="menu-inner-shadow"></div>
 
-                <span class="app-brand-logo demo">
-                </span>
-                <span class="app-brand-text demo menu-text fw-bolder ms-2"
-                    style="color: #33796f!important;text-transform: none!important;">PatoWave</span>
-            </a>
-
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-                <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-        </div>
-
-        <div class="menu-inner-shadow"></div>
-
-
-
-        <ul class="menu-inner py-1" id="my-nav-aside">
-            <!-- <li class="menu-item" id="menu1">
-            <a href="/dashboard/#overview/" class="menu-link" onclick="setActive(1)">
+    <ul class="menu-inner py-1" id="my-nav-aside">
+        <li class="menu-item">
+            <a href="/dashboard/#/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Overview">Overview</div>
+                <div data-i18n="Dashboards">Dashboards</div>
             </a>
         </li>
-
-        <li class="menu-item" id="menu2">
-            <a href="/dashboard/#sales/" class="menu-link" onclick="setActive(2)">
-                <i class='menu-icon tf-icons bx bx-group'></i>
+        <li class="menu-item">
+            <a href="/dashboard/#/Sales" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Sales</div>
             </a>
         </li>
-        <li class="menu-item" id="menu3">
-            <a href="/dashboard/#expenses/" class="menu-link" onclick="setActive(3)">
+        <li class="menu-item" id="account-page">
+            <a href="/dashboard/account/" class="menu-link">
                 <i class='menu-icon tf-icons bx bxs-user-account'></i>
-                <div data-i18n="Expenses">Expenses</div>
+                <div data-i18n="Account">Account</div>
             </a>
         </li>
-        <li class="menu-item" id="menu4">
-            <a href="/dashboard/#contacts/" class="menu-link" onclick="setActive(4)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Contacts">Contacts</div>
+        <!-- <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class='menu-icon tf-icons bx bx-bar-chart-alt-2'></i>
+                <div data-i18n="Charts">Charts</div>
             </a>
-        </li>
-        <li class="menu-item" id="menu5">
-            <a href="/dashboard/#products/" class="menu-link" onclick="setActive(5)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Products">Products</div>
-            </a>
-        </li>
-        <li class="menu-item" id="menu6">
-            <a href="/dashboard/#warehouse/" class="menu-link" onclick="setActive(6)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Warehouse">Warehouse</div>
-            </a>
-        </li>
-        <li class="menu-item" id="menu7">
-            <a href="/dashboard/#cash&bank/" class="menu-link" onclick="setActive(7)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Cash & Bank">Cash & Bank</div>
-            </a>
-        </li>
-        <li class="menu-item" id="menu8">
-            <a href="/dashboard/#accounting/" class="menu-link" onclick="setActive(8)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Accounting">Accounting</div>
-            </a>
-        </li>
-        <li class="menu-item" id="menu9">
-            <a href="/dashboard/#reports/" class="menu-link" onclick="setActive(9)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Reports">Reports</div>
-            </a>
-        </li>
-        <li class="menu-item" id="menu10">
-            <a href="/dashboard/#documents/" class="menu-link" onclick="setActive(10)">
-                <i class="menu-icon tf-icons bx bx-calendar"></i>
-                <div data-i18n="Documents">Documents</div>
-            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/dashboard/charts/" class="menu-link">
+                        <div data-i18n="Analytics">Analytics</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/dashboard/charts/" class="menu-link">
+                        <div data-i18n="CRM">CRM</div>
+                    </a>
+                </li>
+            </ul>
         </li> -->
-        </ul>
-    </aside>
-</div>
+        <li class="menu-item">
+            <a href="/accounts/logout/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Logout">Logout</div>
+            </a>
+        </li>
+    </ul>
+</aside>
