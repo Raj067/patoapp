@@ -16,61 +16,61 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1" id="my-nav-aside">
-        <li class="menu-item">
-            <a href="/dashboard/#/overview" class="menu-link">
+        <li class="menu-item" id="overview-page">
+            <a href="/dashboard/#/overview" class="menu-link" onclick="overviewFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Dashboards">Overview</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="sales-page">
             <a href="/dashboard/#/sales" class="menu-link" onclick="salesFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Sales</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="expenses-page">
             <a href="/dashboard/#/expenses" class="menu-link" onclick="expensesFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Expenses</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="contacts-page">
             <a href="/dashboard/#/contacts" class="menu-link" onclick="contactsFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Contacts</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="products-page">
             <a href="/dashboard/#/products" class="menu-link" onclick="productsFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Products</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="warehouse-page">
             <a href="/dashboard/#/warehouse" class="menu-link" onclick="warehouseFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Warehouse</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="bank-page">
             <a href="/dashboard/#/cash&bank" class="menu-link" onclick="bankFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Cash & Bank</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="accounting-page">
             <a href="/dashboard/#/accounting" class="menu-link" onclick="accountingFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Accounting</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="reports-page">
             <a href="/dashboard/#/reports" class="menu-link" onclick="reportsFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Reports</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" id="documents-page">
             <a href="/dashboard/#/documents" class="menu-link" onclick="documentsFunc()">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Sales">Documents</div>
@@ -79,42 +79,70 @@
     </ul>
 </aside>
 <script>
+    var data = document.getElementById('overview-page')
+    data.className = 'menu-item active'
+
+    function chageActive(val) {
+
+        var allData = ['overview', 'sales', 'expenses', 'contacts', 'products', 'warehouse',
+            'bank', 'accounting', 'reports', 'documents'
+        ];
+        allData.forEach(e => {
+            if (e == val) {
+                document.getElementById(`${e}-page`).className = 'menu-item active'
+            } else {
+                document.getElementById(`${e}-page`).className = 'menu-item'
+            }
+
+        });
+    }
+
     function overviewFunc() {
+        chageActive('overview');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/overview.html' %}`;
     } function salesFunc() {
+        chageActive('sales');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/sales.html' %}`;
     }
     function expensesFunc() {
+        chageActive('expenses');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/expenses.html' %}`;
     }
     function contactsFunc() {
+        chageActive('contacts');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/contacts.html' %}`;
     }
     function productsFunc() {
+        chageActive('products');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/products.html' %}`;
     }
     function warehouseFunc() {
+        chageActive('warehouse');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/warehouse.html' %}`;
     }
     function bankFunc() {
+        chageActive('bank');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/bank.html' %}`;
     }
     function accountingFunc() {
+        chageActive('accounting');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/accounting.html' %}`;
     }
     function reportsFunc() {
+        chageActive('reports');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/reports.html' %}`;
     }
     function documentsFunc() {
+        chageActive('documents');
         var doc = document.getElementById('root')
         doc.innerHTML = `{% include 'dashboard/documents.html' %}`;
         alert('hello there');
