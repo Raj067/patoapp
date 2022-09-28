@@ -662,7 +662,7 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
 
 .dark-style .select2-container--default .select2-selection {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    background-color: #2b2c40;
+    background-color: #152a27;
     border: 1px solid #444564;
     border-radius: .375rem
 }
@@ -744,7 +744,7 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
 
 .dark-style .select2-container--default .select2-search--dropdown .select2-search__field {
     border: 1px solid #444564;
-    background: #2b2c40;
+    background: #152a27;
     border-radius: .375rem
 }
 

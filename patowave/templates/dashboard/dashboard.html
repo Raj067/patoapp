@@ -4,6 +4,10 @@
 <!--  -->
 
 {% block content %}
+<script>
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+</script>
 <div id="root">
     {% include 'dashboard/overview.html' %}
 </div>

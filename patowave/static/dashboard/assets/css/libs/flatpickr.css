@@ -874,7 +874,7 @@ html:not([dir=rtl]) .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-weeks {
 .dark-style .flatpickr-input:not(.is-invalid):not(.is-valid)~.form-control:disabled,
 .dark-style .flatpickr-input:not(.is-invalid):not(.is-valid)[readonly],
 .dark-style .flatpickr-input:not(.is-invalid):not(.is-valid)~.form-control[readonly] {
-    background-color: #2b2c40
+    background-color: #152a27
 }
 
 .dark-style .flatpickr-days {
@@ -919,7 +919,7 @@ html:not([dir=rtl]) .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-weeks {
 
 .dark-style .flatpickr-month option.flatpickr-monthDropdown-month {
     color: #a3a4cc;
-    background: #2b2c40
+    background: #152a27
 }
 
 .dark-style .flatpickr-current-month {

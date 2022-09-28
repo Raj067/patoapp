@@ -146,11 +146,11 @@
 }
 
 body {
-    background: #232333
+    background: #10201e
 }
 
 .bg-body {
-    background: #232333 !important
+    background: #10201e !important
 }
 
 .text-primary {
@@ -1490,7 +1490,7 @@ li.ui-timepicker-selected,
 }
 
 .bg-navbar-theme {
-    background-color: #2b2c40 !important;
+    background-color: #152a27 !important;
     color: #a3a4cc
 }
 
@@ -1513,7 +1513,7 @@ li.ui-timepicker-selected,
 
 .bg-navbar-theme .search-input-wrapper .search-input,
 .bg-navbar-theme .search-input-wrapper .search-toggler {
-    background-color: #2b2c40 !important;
+    background-color: #152a27 !important;
     color: #a3a4cc
 }
 
@@ -1588,7 +1588,7 @@ li.ui-timepicker-selected,
 }
 
 .bg-menu-theme {
-    background-color: #191924 !important;
+    background-color: #152a27 !important;
     color: #c4cdd5
 }
 
@@ -1644,7 +1644,7 @@ li.ui-timepicker-selected,
 }
 
 .bg-menu-theme .menu-inner-shadow {
-    background: linear-gradient(#191924 41%, rgba(25, 25, 36, 0.11) 95%, rgba(25, 25, 36, 0))
+    background: linear-gradient(#152a27 41%, rgba(25, 25, 36, 0.11) 95%, rgba(25, 25, 36, 0))
 }
 
 .bg-menu-theme .menu-text {
@@ -1729,7 +1729,7 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
 
 .app-brand .layout-menu-toggle {
     background-color: #33796f;
-    border: 7px solid #232333
+    border: 7px solid #10201e
 }
 
 .app-brand .layout-menu-toggle i {
@@ -1737,7 +1737,7 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
 }
 
 .bg-footer-theme {
-    background-color: #232333 !important;
+    background-color: #10201e !important;
     color: #a3a4cc
 }
 

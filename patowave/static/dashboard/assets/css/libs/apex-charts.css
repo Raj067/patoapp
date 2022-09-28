@@ -768,13 +768,13 @@
 }
 
 .dark-style .apexcharts-canvas .apexcharts-tooltip {
-    background: #232333;
+    background: #10201e;
     border-color: #444564;
     box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .2)
 }
 
 .dark-style .apexcharts-canvas .apexcharts-tooltip .apexcharts-tooltip-title {
-    background: #232333;
+    background: #10201e;
     border-color: #444564;
     font-family: var(--bs-font-sans-serif) !important;
     font-weight: 600
@@ -782,7 +782,7 @@
 
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip {
-    background: #232333;
+    background: #10201e;
     color: #fff;
     border-color: #444564
 }
@@ -791,7 +791,7 @@
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-yaxistooltip-bottom:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-xaxistooltip-bottom:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-yaxistooltip-bottom:after {
-    border-bottom-color: #232333
+    border-bottom-color: #10201e
 }
 
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-xaxistooltip-bottom:before,
@@ -805,7 +805,7 @@
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-yaxistooltip-left:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-xaxistooltip-left:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-yaxistooltip-left:after {
-    border-left-color: #232333
+    border-left-color: #10201e
 }
 
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-xaxistooltip-left:before,
@@ -819,7 +819,7 @@
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-yaxistooltip-right:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-xaxistooltip-right:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-yaxistooltip-right:after {
-    border-right-color: #232333
+    border-right-color: #10201e
 }
 
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-xaxistooltip-right:before,
@@ -833,7 +833,7 @@
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-yaxistooltip-top:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-xaxistooltip-top:after,
 .dark-style .apexcharts-canvas .apexcharts-yaxistooltip.apexcharts-yaxistooltip-top:after {
-    border-top-color: #232333
+    border-top-color: #10201e
 }
 
 .dark-style .apexcharts-canvas .apexcharts-xaxistooltip.apexcharts-xaxistooltip-top:before,
