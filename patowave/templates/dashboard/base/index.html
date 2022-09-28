@@ -61,44 +61,8 @@
 </head>
 
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar  ">
-        <div class="layout-container">
-            <!-- Menu -->
-            {% include 'dashboard/base/menu.html' %}
 
-            <div class="layout-page">
-                <!-- Navbar -->
-                {% include 'dashboard/base/nav-bar.html' %}
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    {% include 'dashboard/base/toasts.html' %}
-                    <!-- Content -->
-                    {% block content %}
-                    <!--  -->
-                    {% endblock %}
-                    <!-- / Content -->
-
-                    <!-- Footer -->
-                    {% include 'dashboard/base/footer.html' %}
-                    <!-- / Footer -->
-                    <div class="content-backdrop fade"></div>
-                </div>
-                <!-- Content wrapper -->
-            </div>
-            <!-- / Layout page -->
-        </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
-
-        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-        <div class="drag-target"></div>
-
-    </div>
-    <!-- / Layout wrapper -->
-
+    <div id="root"></div>
 
     <!-- Core JS -->
     {% include 'dashboard/base/script.html' %}
@@ -110,7 +74,7 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 
     <!-- Load our React component. -->
-    <script src="like_button.js"></script>
+    <script src="/static/dashboard/assets/jsx/dashboard.js"></script>
 
 </body>
 
